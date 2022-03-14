@@ -39,24 +39,18 @@ export default function Footer() {
           </Stack>
           <Stack align="flex-start">
             <ListHeader>Be a Guest</ListHeader>
-            <Link href="#">Info1</Link>
-            <Link href="#">Info2</Link>
-            <Link href="#">Info3</Link>
-            <Link href="#">Info4</Link>
+            <Link href="/comingsoon">Coming Soon</Link>
           </Stack>
           <Stack align="flex-start">
             <ListHeader>Be a Host</ListHeader>
-            <Link href="#">Info1</Link>
-            <Link href="#">Info2</Link>
-            <Link href="#">Info3</Link>
-            <Link href="#">Info4</Link>
+            <Link href="/comingsoon">Coming Soon</Link>
           </Stack>
           <Stack align="flex-start">
             <ListHeader>Support</ListHeader>
-            <Link href="#">Help Center</Link>
-            <Link href="#">Terms of Service</Link>
-            <Link href="#">Legal</Link>
-            <Link href="#">Privacy Policy</Link>
+            <Link href="/help">Help Center</Link>
+            <Link href="/terms">Terms of Service</Link>
+            <Link href="/imprint">Legal</Link>
+            <Link href="/privacy">Privacy Policy</Link>
           </Stack>
         </SimpleGrid>
       </Container>

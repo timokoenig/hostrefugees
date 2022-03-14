@@ -1,8 +1,7 @@
 import Head from 'next/head'
 import React from 'react'
 import Footer from '../components/footer'
-import Hero from '../components/hero'
-import Introduction from '../components/introduction'
+import HeroComingSoon from '../components/hero-comingsoon'
 
 const IndexPage = () => {
   return (
@@ -10,10 +9,7 @@ const IndexPage = () => {
       <Head>
         <title>HostRefugees</title>
       </Head>
-      {/* <Navigation /> */}
-      <Hero />
-      <Introduction />
-      {/* <Map /> */}
+      <HeroComingSoon />
       <Footer />
     </>
   )
