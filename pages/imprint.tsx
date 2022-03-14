@@ -2,12 +2,14 @@ import { Box, Container, Heading, Text } from '@chakra-ui/react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import Footer from '../components/footer'
+import Layout from '../components/layout'
 import Navigation from '../components/navigation'
+import Spacer from '../components/spacer'
 
 const ImprintPage = () => {
   const { t } = useTranslation('common')
   return (
-    <>
+    <Layout>
       <Navigation />
       <Container maxW="7xl">
         <Box align="center">
@@ -31,8 +33,9 @@ const ImprintPage = () => {
           </Text>
         </Box>
       </Container>
+      <Spacer />
       <Footer />
-    </>
+    </Layout>
   )
 }
 
