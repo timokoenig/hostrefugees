@@ -23,7 +23,7 @@ const features = [0, 1, 2, 3, 4, 6, 7, 8].map((_, i) => {
 
 export default function Introduction() {
   return (
-    <Box p={4}>
+    <Box p={4} mb="20">
       <Stack spacing={4} as={Container} maxW="3xl" textAlign="center">
         <Heading fontSize="3xl">This is the headline</Heading>
         <Text color="gray.600" fontSize="xl">
