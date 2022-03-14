@@ -22,6 +22,9 @@ NEXT_PUBLIC_CONTACT_ADDRESS_COUNTRY=xxx
 NEXT_PUBLIC_CONTACT_EMAIL=xxx
 NEXT_PUBLIC_CONTACT_WEBSITE=hostrefugees.eu
 NEXT_PUBLIC_VERSION=0.0.1
+
+SECRET_COOKIE_PASSWORD=complex_password_at_least_32_characters_long
+NODE_ENV=development
 ```
 
 Then run the following two commands to start your local server:
@@ -30,6 +33,14 @@ Then run the following two commands to start your local server:
 npm install
 npm run dev
 ```
+
+## Production Build
+
+Make sure to set the **NODE_ENV** to `production` to secure the iron session.
+
+## Iron Session
+
+https://github.com/vvo/iron-session
 
 ## Snapshot Tests
 

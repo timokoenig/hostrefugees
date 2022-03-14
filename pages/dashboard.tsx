@@ -3,6 +3,7 @@ import Layout from 'components/layout'
 import Spacer from 'components/spacer'
 import Head from 'next/head'
 import React from 'react'
+import { withSessionSsr } from 'utils/session'
 import Footer from '../components/footer'
 import Navigation from '../components/navigation'
 
@@ -21,5 +22,9 @@ const DashboardPage = () => {
     </>
   )
 }
+
+export const getServerSideProps = withSessionSsr(async function getServerSideProps() {
+  return { props: {} }
+})
 
 export default DashboardPage

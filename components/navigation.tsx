@@ -48,7 +48,7 @@ export default function Navigation() {
             onClick={isOpen ? onClose : onOpen}
           />
           <HStack spacing={8} alignItems="center">
-            <Heading size="md" fontweight="extrabold" color="blue.500">
+            <Heading size="md" fontWeight="extrabold" color="blue.500">
               <Link href="/">HostRefugees.eu</Link>
             </Heading>
             <HStack as="nav" spacing={4} display={{ base: 'none', md: 'flex' }}>
