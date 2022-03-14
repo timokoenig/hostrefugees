@@ -67,6 +67,15 @@ export default function Navigation() {
             >
               Become a Host
             </Button>
+            <Button
+              variant="ghost"
+              // colorScheme="blue"
+              size="sm"
+              mr={4}
+              onClick={() => router.push('/login')}
+            >
+              Login
+            </Button>
             {/* <Menu>
               <MenuButton as={Button} rounded="full" variant="link" cursor="pointer" minW={0}>
                 <Avatar
