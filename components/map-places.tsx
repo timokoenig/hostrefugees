@@ -39,7 +39,7 @@ const AnyReactComponent = ({ lat, lng }: { lat: number; lng: number }) => (
   </Box>
 )
 
-export default function Map() {
+export default function MapPlaces() {
   const places = [1, 2, 3, 4]
   return (
     <Container maxW="7xl" py={10}>
