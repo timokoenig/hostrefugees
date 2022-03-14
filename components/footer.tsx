@@ -28,8 +28,10 @@ export default function Footer() {
         <SimpleGrid templateColumns={{ sm: '1fr 1fr', md: '2fr 1fr 1fr 1fr' }} spacing={8}>
           <Stack spacing={6}>
             <Box>
-              <Heading size="md" fontWeight="extrabold">
-                HostRefugee.eu
+              <Heading size="md" fontWeight="extrabold" color="blue.500">
+                <Link href="https://hostrefugees.eu" target="blank">
+                  HostRefugees.eu
+                </Link>
               </Heading>
             </Box>
             <Text fontSize="sm">© 2022 Timo Koenig. All rights reserved</Text>
