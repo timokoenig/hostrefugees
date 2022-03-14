@@ -49,4 +49,4 @@ Note: If you do not add a translation in any given language, the app will defaul
 
 ---
 
-<p align="center">Made with <span style="color: red">♥</span> for the community</p>
+<p align="center">Made with <span style="color: red">♥</span> for the people</p>
