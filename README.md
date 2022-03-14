@@ -8,6 +8,8 @@
 
 </div>
 
+Want to join or help out? Send me a message on Twitter [@timokoenig](https://twitter.com/timokoenig)
+
 ## Getting Started
 
 Add the following variables to your _.env_ file:
