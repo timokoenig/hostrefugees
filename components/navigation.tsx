@@ -63,7 +63,7 @@ export default function Navigation() {
               colorScheme="blue"
               size="sm"
               mr={4}
-              onClick={() => router.push('/')}
+              onClick={() => router.push('/become-host')}
             >
               Become a Host
             </Button>
