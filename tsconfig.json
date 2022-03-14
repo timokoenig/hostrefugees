@@ -8,11 +8,7 @@
       "es2019"
     ],
     "baseUrl": ".",
-    "paths": {
-      "@/*": [
-        "*"
-      ]
-    },
+    "paths": {},
     "moduleResolution": "node",
     "strict": true,
     "allowJs": true,
