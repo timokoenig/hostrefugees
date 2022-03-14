@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import React from 'react'
+import { withSessionSsr } from 'utils/session'
 import Footer from '../components/footer'
 import Layout from '../components/layout'
 import Navigation from '../components/navigation'
@@ -21,5 +22,9 @@ const RegisterPage = () => {
     </>
   )
 }
+
+export const getServerSideProps = withSessionSsr(async function getServerSideProps() {
+  return { props: {} }
+})
 
 export default RegisterPage

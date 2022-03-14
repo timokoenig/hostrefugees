@@ -8,7 +8,9 @@ export function withSessionRoute(handler: NextApiHandler) {
 }
 
 // Theses types are compatible with InferGetStaticPropsType https://nextjs.org/docs/basic-features/data-fetching#typescript-use-getstaticprops
-export function withSessionSsr<P extends { [key: string]: unknown } = { [key: string]: unknown }>(
+export function withoutSessionSsr<
+  P extends { [key: string]: unknown } = { [key: string]: unknown }
+>(
   handler: (
     context: GetServerSidePropsContext
   ) => GetServerSidePropsResult<P> | Promise<GetServerSidePropsResult<P>>
@@ -18,6 +20,24 @@ export function withSessionSsr<P extends { [key: string]: unknown } = { [key: st
       return {
         redirect: {
           destination: '/',
+          permanent: false,
+        },
+      }
+    }
+    return handler(context)
+  }, sessionConfig)
+}
+
+export function withSessionSsr<P extends { [key: string]: unknown } = { [key: string]: unknown }>(
+  handler: (
+    context: GetServerSidePropsContext
+  ) => GetServerSidePropsResult<P> | Promise<GetServerSidePropsResult<P>>
+) {
+  return withIronSessionSsr(context => {
+    if (context.req.session.user !== undefined) {
+      return {
+        redirect: {
+          destination: '/dashboard',
           permanent: false,
         },
       }

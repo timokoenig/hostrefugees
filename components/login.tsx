@@ -12,9 +12,31 @@ import {
   Text,
   useColorModeValue,
 } from '@chakra-ui/react'
-import React from 'react'
+import { useRouter } from 'next/router'
+import React, { useState } from 'react'
 
 const Login = () => {
+  const [username, setUsername] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
+  const router = useRouter()
+
+  const onLogin = async () => {
+    try {
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      })
+      if (res.ok) {
+        await router.push('/dashboard')
+      }
+    } catch (err: unknown) {
+      console.log(err)
+    }
+  }
+
   return (
     <Flex align="center">
       <Stack spacing={8} mx="auto" maxW="lg" py={12} px={6}>
@@ -25,11 +47,11 @@ const Login = () => {
           <Stack spacing={4}>
             <FormControl id="email">
               <FormLabel>Email address</FormLabel>
-              <Input type="email" />
+              <Input type="email" onChange={e => setUsername(e.target.value)} />
             </FormControl>
             <FormControl id="password">
               <FormLabel>Password</FormLabel>
-              <Input type="password" />
+              <Input type="password" onChange={e => setPassword(e.target.value)} />
             </FormControl>
             <Stack spacing={10}>
               <Stack
@@ -46,6 +68,7 @@ const Login = () => {
                 _hover={{
                   bg: 'blue.500',
                 }}
+                onClick={onLogin}
               >
                 Sign in
               </Button>
