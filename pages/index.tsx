@@ -1,17 +1,15 @@
-import { Container, Heading } from '@chakra-ui/react'
 import Head from 'next/head'
 import React from 'react'
 import Footer from '../components/footer'
+import Hero from '../components/hero'
 
 const IndexPage = () => {
   return (
     <>
-      <Container marginTop={10}>
-        <Head>
-          <title>HostRefugees</title>
-        </Head>
-        <Heading>HostRefugees.eu</Heading>
-      </Container>
+      <Head>
+        <title>HostRefugees</title>
+      </Head>
+      <Hero />
       <Footer />
     </>
   )
