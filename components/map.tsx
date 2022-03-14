@@ -40,7 +40,7 @@ const AnyReactComponent = ({ lat, lng }: { lat: number; lng: number }) => (
 )
 
 export default function Map() {
-  const places = [1, 2, 3]
+  const places = [1, 2, 3, 4]
   return (
     <Container maxW="7xl" py={10}>
       <Box mb="5" textAlign="center">

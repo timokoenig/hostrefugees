@@ -3,7 +3,9 @@ import Spacer from 'components/spacer'
 import Head from 'next/head'
 import React from 'react'
 import Footer from '../components/footer'
-import HeroComingSoon from '../components/hero-comingsoon'
+import Hero from '../components/hero'
+import Introduction from '../components/introduction'
+import Map from '../components/map'
 import Navigation from '../components/navigation'
 
 const IndexPage = () => {
@@ -14,9 +16,9 @@ const IndexPage = () => {
       </Head>
       <Layout>
         <Navigation />
-        <HeroComingSoon disableBackButton={true} />
-        {/* <Introduction /> */}
-        {/* <Map /> */}
+        <Hero />
+        <Introduction />
+        <Map />
         <Spacer />
         <Footer />
       </Layout>
