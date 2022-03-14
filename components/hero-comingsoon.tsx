@@ -3,7 +3,11 @@ import { Button, Container, Flex, Heading, Image, Stack, Text } from '@chakra-ui
 import { useRouter } from 'next/router'
 import React from 'react'
 
-export default function ComingSoon() {
+type Props = {
+  disableBackButton?: boolean
+}
+
+export default function ComingSoon(props: Props) {
   const router = useRouter()
   return (
     <Container maxW="7xl">
@@ -43,20 +47,22 @@ export default function ComingSoon() {
           <Text color="gray.500" fontSize="3xl" fontWeight="semibold">
             Coming soon!
           </Text>
-          <Stack spacing={{ base: 4, sm: 6 }} direction={{ base: 'column', sm: 'row' }}>
-            <Button
-              rounded="full"
-              size="lg"
-              fontWeight="normal"
-              px={6}
-              colorScheme="blue"
-              bg="blue.500"
-              _hover={{ bg: 'blue.600' }}
-              onClick={() => router.replace('/')}
-            >
-              Go Back
-            </Button>
-          </Stack>
+          {props.disableBackButton !== true && (
+            <Stack spacing={{ base: 4, sm: 6 }} direction={{ base: 'column', sm: 'row' }}>
+              <Button
+                rounded="full"
+                size="lg"
+                fontWeight="normal"
+                px={6}
+                colorScheme="blue"
+                bg="blue.500"
+                _hover={{ bg: 'blue.600' }}
+                onClick={() => router.replace('/')}
+              >
+                Go Back
+              </Button>
+            </Stack>
+          )}
         </Stack>
         <Flex flex={1} justify="center" align="center" position="relative" w="full">
           <Image src="/svg/undraw_ukraine_biyg.svg" />

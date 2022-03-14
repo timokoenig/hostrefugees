@@ -1,5 +1,7 @@
-import { Container, Heading, Link, List, ListItem, Text } from '@chakra-ui/react'
+import { Box, Container, Heading, Link, List, ListItem, Text } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
+import Footer from '../components/footer'
+import Navigation from '../components/navigation'
 
 type Props = {
   contactName: string
@@ -1331,10 +1333,16 @@ const PrivacyPage = () => {
   }
 
   return (
-    <Container marginTop={10}>
-      <Heading mb="5">Privacy Policy</Heading>
-      {lang == 'de' ? <PrivacyDE {...props} /> : <PrivacyEN {...props} />}
-    </Container>
+    <>
+      <Navigation />
+      <Container maxW="7xl">
+        <Box textAlign="left">
+          <Heading mb="5">Privacy Policy</Heading>
+          {lang == 'de' ? <PrivacyDE {...props} /> : <PrivacyEN {...props} />}
+        </Box>
+      </Container>
+      <Footer />
+    </>
   )
 }
 

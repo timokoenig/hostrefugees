@@ -1,6 +1,5 @@
-import { AddIcon, CloseIcon, HamburgerIcon } from '@chakra-ui/icons'
+import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons'
 import {
-  Avatar,
   Box,
   Button,
   Center,
@@ -9,18 +8,14 @@ import {
   HStack,
   IconButton,
   Link,
-  Menu,
-  MenuButton,
-  MenuDivider,
-  MenuItem,
-  MenuList,
   Stack,
   useColorModeValue,
   useDisclosure,
 } from '@chakra-ui/react'
+import { useRouter } from 'next/router'
 import React, { ReactNode } from 'react'
 
-const Links = ['Dashboard', 'Projects', 'Team']
+const Links: string[] = []
 
 const NavLink = ({ children }: { children: ReactNode }) => (
   <Link
@@ -39,6 +34,7 @@ const NavLink = ({ children }: { children: ReactNode }) => (
 
 export default function Navigation() {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const router = useRouter()
 
   return (
     <Box px={4}>
@@ -53,9 +49,7 @@ export default function Navigation() {
           />
           <HStack spacing={8} alignItems="center">
             <Heading size="md" fontweight="extrabold" color="blue.500">
-              <Link href="/" target="_blank">
-                HostRefugees.eu
-              </Link>
+              <Link href="/">HostRefugees.eu</Link>
             </Heading>
             <HStack as="nav" spacing={4} display={{ base: 'none', md: 'flex' }}>
               {Links.map(link => (
@@ -64,10 +58,16 @@ export default function Navigation() {
             </HStack>
           </HStack>
           <Flex alignItems="center">
-            <Button variant="solid" colorScheme="blue" size="sm" mr={4} leftIcon={<AddIcon />}>
-              Action
+            <Button
+              variant="solid"
+              colorScheme="blue"
+              size="sm"
+              mr={4}
+              onClick={() => router.push('/')}
+            >
+              Become a Host
             </Button>
-            <Menu>
+            {/* <Menu>
               <MenuButton as={Button} rounded="full" variant="link" cursor="pointer" minW={0}>
                 <Avatar
                   size="sm"
@@ -80,7 +80,7 @@ export default function Navigation() {
                 <MenuDivider />
                 <MenuItem>Link 3</MenuItem>
               </MenuList>
-            </Menu>
+            </Menu> */}
           </Flex>
         </Flex>
       </Center>
