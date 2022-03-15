@@ -40,7 +40,8 @@ const FilterModal = (props: Props) => {
             </Text>
             <NumberInput
               active={props.filter.adults !== null}
-              value={props.filter.adults ?? 0}
+              value={props.filter.adults ?? 1}
+              min={1}
               onChange={newVal => props.onChange({ ...props.filter, adults: newVal })}
             />
           </Flex>
@@ -61,7 +62,7 @@ const FilterModal = (props: Props) => {
           </Button>
           <Box flex="1" />
           <Button colorScheme="blue" onClick={props.onClose}>
-            Close
+            Apply
           </Button>
         </ModalFooter>
       </ModalContent>

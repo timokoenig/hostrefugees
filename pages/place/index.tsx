@@ -1,4 +1,5 @@
-import { Box, Button, Container, Heading, SimpleGrid, useDisclosure } from '@chakra-ui/react'
+import { Box, Button, Container, Heading, List, SimpleGrid, useDisclosure } from '@chakra-ui/react'
+import PlaceItem from 'components/place/item'
 import Map from 'components/place/map'
 import React, { useState } from 'react'
 import { User } from 'utils/model'
@@ -23,18 +24,24 @@ const PlacePage = (props: Props) => {
     return count
   })()
 
+  const places = [1, 2, 3, 4]
+
   return (
     <Layout>
       <Navigation user={props.user} />
       <Container maxW="7xl">
         <Heading mb="10">
-          Available Places{' '}
+          {places.length} Places Available{' '}
           <Button size="sm" ml="5" colorScheme="blue" onClick={onOpen}>
             Filter{filterCount > 0 ? ` (${filterCount})` : ''}
           </Button>
         </Heading>
         <SimpleGrid columns={2} spacing="10">
-          <Box>12 places available</Box>
+          <List spacing="5">
+            {places.map(place => (
+              <PlaceItem key={place} />
+            ))}
+          </List>
           <Box>
             <Map />
           </Box>
