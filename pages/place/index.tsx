@@ -1,4 +1,6 @@
-import { Box, Container, Text } from '@chakra-ui/react'
+import { Box, Container, Heading, SimpleGrid } from '@chakra-ui/react'
+import Filter from 'components/place/filter'
+import Map from 'components/place/map'
 import React from 'react'
 import { User } from 'utils/model'
 import { withSessionSsr } from 'utils/session'
@@ -16,9 +18,14 @@ const PlacePage = (props: Props) => {
     <Layout>
       <Navigation user={props.user} />
       <Container maxW="7xl">
-        <Box align="center">
-          <Text>Places</Text>
-        </Box>
+        <Heading mb="10">Available Places</Heading>
+        <Filter />
+        <SimpleGrid columns={2} spacing="10">
+          <Box>12 places available</Box>
+          <Box>
+            <Map />
+          </Box>
+        </SimpleGrid>
       </Container>
       <Spacer />
       <Footer />
