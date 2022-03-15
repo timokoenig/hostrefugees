@@ -1,29 +1,38 @@
-import { Button, HStack, Input, useNumberInput } from '@chakra-ui/react'
+import { Button, HStack, Text } from '@chakra-ui/react'
 import React from 'react'
 
 type Props = {
   value: number
+  min?: number
+  max?: number
   onChange: (newValue: number) => void
 }
 
 const NumberInput = (props: Props) => {
-  const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } = useNumberInput({
-    step: 1,
-    defaultValue: 1,
-    min: 1,
-    max: 10,
-    precision: 0,
-  })
+  const min = props.min ?? 0
+  const max = props.max ?? 10
 
-  const inc = getIncrementButtonProps()
-  const dec = getDecrementButtonProps()
-  const input = getInputProps({ readOnly: true })
+  const onInc = () => {
+    if (props.value + 1 > max) return
+    props.onChange(props.value + 1)
+  }
+
+  const onDec = () => {
+    if (props.value - 1 < min) return
+    props.onChange(props.value - 1)
+  }
 
   return (
     <HStack maxW="320px">
-      <Button {...inc}>+</Button>
-      <Input {...input} onChange={e => props.onChange(parseInt(e.target.value, 10))} />
-      <Button {...dec}>-</Button>
+      <Button onClick={onDec} isDisabled={props.value == min}>
+        -
+      </Button>
+      <Text fontWeight="semibold" px="5">
+        {props.value}
+      </Text>
+      <Button onClick={onInc} isDisabled={props.value == max}>
+        +
+      </Button>
     </HStack>
   )
 }
