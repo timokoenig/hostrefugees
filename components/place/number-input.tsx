@@ -2,6 +2,7 @@ import { Button, HStack, Text } from '@chakra-ui/react'
 import React from 'react'
 
 type Props = {
+  active: boolean
   value: number
   min?: number
   max?: number
@@ -27,7 +28,7 @@ const NumberInput = (props: Props) => {
       <Button onClick={onDec} isDisabled={props.value == min}>
         -
       </Button>
-      <Text fontWeight="semibold" px="5">
+      <Text fontWeight="semibold" px="5" color={props.active ? 'blue.500' : 'black'}>
         {props.value}
       </Text>
       <Button onClick={onInc} isDisabled={props.value == max}>
