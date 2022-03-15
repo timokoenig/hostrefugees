@@ -7,10 +7,11 @@ export enum UserRole {
 export type User = {
   id: string
   firstname: string
-  lastname?: string
+  lastname: string
   password: string
   email: string
   role: UserRole
+  languages: string[]
 }
 
 export enum PlaceType {
@@ -48,4 +49,21 @@ export type Place = {
   houseRules: string
   availabilityStart: Date
   availabilityEnd?: Date
+}
+
+export enum RequestStatus {
+  Accepted = 'accepted',
+  Declined = 'declined',
+  Canceled = 'canceled',
+}
+
+export type Request = {
+  id: string
+  createdAt: Date
+  updatedAt: Date
+  author: User
+  place: Place
+  startDate: Date
+  endDate?: Date
+  Status?: RequestStatus
 }
