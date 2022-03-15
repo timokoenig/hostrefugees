@@ -75,7 +75,7 @@ const RequestPage = (props: Props) => {
             transform: 'translateY(2px)',
             boxShadow: 'lg',
           }}
-          onClick={() => router.push('/place/1/confirmation')}
+          onClick={() => router.replace('/place/1/confirmation')}
         >
           Confirm Request
         </Button>
