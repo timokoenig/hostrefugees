@@ -1,4 +1,4 @@
-import { Box, Container, Heading } from '@chakra-ui/react'
+import { Box, Button, Container, Flex, Heading, Text } from '@chakra-ui/react'
 import Layout from 'components/layout'
 import Spacer from 'components/spacer'
 import Head from 'next/head'
@@ -21,11 +21,77 @@ const RequestPage = (props: Props) => {
       <Layout>
         <Navigation user={props.user} />
         <Container maxW="7xl">
-          <Box align="center">
-            <Heading as="h2" size="xl">
-              Request Detail Update
-            </Heading>
-          </Box>
+          <Heading>Request to stay at</Heading>
+          <Heading mb="5">1 Bedroom</Heading>
+          <Text>
+            Available from{' '}
+            <Text as="span" fontWeight="semibold">
+              20.03.2022
+            </Text>{' '}
+            to{' '}
+            <Text as="span" fontWeight="semibold">
+              12.04.2022
+            </Text>
+          </Text>
+          <Text>
+            Located in{' '}
+            <Text as="span" fontWeight="semibold">
+              Hamburg
+            </Text>
+          </Text>
+          <Container my="10">
+            <Heading size="sm">How many people want to stay at this place?</Heading>
+            <Box maxWidth="400">
+              <Flex py="5">
+                <Text flex="1" fontSize="lg">
+                  Adults: 1
+                </Text>
+              </Flex>
+            </Box>
+            <Box maxWidth="400">
+              <Flex py="5">
+                <Text flex="1" fontSize="lg">
+                  Children: 0
+                </Text>
+              </Flex>
+            </Box>
+          </Container>
+          <Container my="10">
+            <Heading size="sm">Tell the host about yourself</Heading>
+            Here is a sample placeholder
+          </Container>
+          <Button
+            rounded="10"
+            w="full"
+            mt={8}
+            size="lg"
+            py="7"
+            bg="red.500"
+            color="white"
+            textTransform="uppercase"
+            _hover={{
+              transform: 'translateY(2px)',
+              boxShadow: 'lg',
+            }}
+          >
+            Decline
+          </Button>
+          <Button
+            rounded="10"
+            w="full"
+            mt={8}
+            size="lg"
+            py="7"
+            bg="green.500"
+            color="white"
+            textTransform="uppercase"
+            _hover={{
+              transform: 'translateY(2px)',
+              boxShadow: 'lg',
+            }}
+          >
+            Accept
+          </Button>
         </Container>
         <Spacer />
         <Footer />
