@@ -1,13 +1,12 @@
-import { Box, Container, Heading, Text } from '@chakra-ui/react'
-import Host from 'components/dashboard/host'
+import { Box, Container, Heading } from '@chakra-ui/react'
 import Layout from 'components/layout'
 import Spacer from 'components/spacer'
 import Head from 'next/head'
 import React from 'react'
-import { User } from 'utils/model'
+import { User, UserRole } from 'utils/model'
 import { withSessionSsr } from 'utils/session'
-import Footer from '../components/footer'
-import Navigation from '../components/navigation'
+import Footer from '../../../components/footer'
+import Navigation from '../../../components/navigation'
 
 type Props = {
   user?: User
@@ -24,13 +23,9 @@ const DashboardPage = (props: Props) => {
         <Container maxW="7xl">
           <Box align="center">
             <Heading as="h2" size="xl">
-              Welcome{' '}
-              <Text as="span" color="blue.400">
-                {props.user?.firstname}
-              </Text>
+              Place Detail Update
             </Heading>
           </Box>
-          <Host />
         </Container>
         <Spacer />
         <Footer />
@@ -40,7 +35,7 @@ const DashboardPage = (props: Props) => {
 }
 
 export const getServerSideProps = withSessionSsr(async function getServerSideProps(context) {
-  if (context.req.session.user === undefined) {
+  if (context.req.session.user === undefined || context.req.session.user?.role === UserRole.Guest) {
     return {
       redirect: {
         destination: '/',

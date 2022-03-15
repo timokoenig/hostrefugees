@@ -2,7 +2,11 @@ import { Badge, Box, ListItem } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React from 'react'
 
-const PlaceItem = () => {
+type Props = {
+  onClick?: () => void
+}
+
+const PlaceItem = (props: Props) => {
   const router = useRouter()
   const property = {
     beds: 3,
@@ -11,7 +15,7 @@ const PlaceItem = () => {
   }
 
   return (
-    <ListItem onClick={() => router.push(`/place/${'1'}`)}>
+    <ListItem onClick={props.onClick ?? (() => router.push(`/place/${'1'}`))}>
       <Box
         borderWidth="1px"
         borderRadius="lg"
