@@ -3,18 +3,23 @@ import Layout from 'components/layout'
 import Spacer from 'components/spacer'
 import Head from 'next/head'
 import React from 'react'
-import { withoutSessionSsr } from 'utils/session'
+import { User } from 'utils/model'
+import { withSessionSsr } from 'utils/session'
 import Footer from '../components/footer'
 import Navigation from '../components/navigation'
 
-const DashboardPage = () => {
+type Props = {
+  user?: User
+}
+
+const DashboardPage = (props: Props) => {
   return (
     <>
       <Head>
         <title>HostRefugees</title>
       </Head>
       <Layout>
-        <Navigation />
+        <Navigation user={props.user} />
         <Text>Dashboard</Text>
         <Spacer />
         <Footer />
@@ -23,8 +28,20 @@ const DashboardPage = () => {
   )
 }
 
-export const getServerSideProps = withoutSessionSsr(async function getServerSideProps() {
-  return { props: {} }
+export const getServerSideProps = withSessionSsr(async function getServerSideProps(context) {
+  if (context.req.session.user === undefined) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
+  }
+  return {
+    props: {
+      user: context.req.session.user ?? null,
+    },
+  }
 })
 
 export default DashboardPage

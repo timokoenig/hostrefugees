@@ -1,16 +1,22 @@
 import { Box, Container, Heading, Text } from '@chakra-ui/react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+import { User } from 'utils/model'
+import { withSessionSsr } from 'utils/session'
 import Footer from '../components/footer'
 import Layout from '../components/layout'
 import Navigation from '../components/navigation'
 import Spacer from '../components/spacer'
 
-const ImprintPage = () => {
+type Props = {
+  user?: User
+}
+
+const ImprintPage = (props: Props) => {
   const { t } = useTranslation('common')
   return (
     <Layout>
-      <Navigation />
+      <Navigation user={props.user} />
       <Container maxW="7xl">
         <Box align="center">
           <Heading>{t('imprint')}</Heading>
@@ -38,5 +44,13 @@ const ImprintPage = () => {
     </Layout>
   )
 }
+
+export const getServerSideProps = withSessionSsr(async function getServerSideProps(context) {
+  return {
+    props: {
+      user: context.req.session.user ?? null,
+    },
+  }
+})
 
 export default ImprintPage

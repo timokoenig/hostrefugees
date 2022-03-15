@@ -1,9 +1,11 @@
 import { Box, Container, Heading, Link, List, ListItem, Text } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
+import { User } from 'utils/model'
+import { withSessionSsr } from 'utils/session'
 import Footer from '../components/footer'
 import Navigation from '../components/navigation'
 
-type Props = {
+type PrivacyProps = {
   contactName: string
   contactAddress: string
   contactAddressCity: string
@@ -12,7 +14,7 @@ type Props = {
   contactWebsite: string
 }
 
-const PrivacyEN = (props: Props) => (
+const PrivacyEN = (props: PrivacyProps) => (
   <>
     <Text mb="5">
       We are very delighted that you have shown interest in our enterprise. Data protection is of a
@@ -634,7 +636,7 @@ const PrivacyEN = (props: Props) => (
   </>
 )
 
-const PrivacyDE = (props: Props) => (
+const PrivacyDE = (props: PrivacyProps) => (
   <>
     <Text mb="5">
       Wir freuen uns sehr über Ihr Interesse an unserem Unternehmen. Datenschutz hat einen besonders
@@ -1315,7 +1317,11 @@ const PrivacyDE = (props: Props) => (
   </>
 )
 
-const PrivacyPage = () => {
+type Props = {
+  user?: User
+}
+
+const PrivacyPage = (props: Props) => {
   const [lang, setLang] = useState<string>('')
 
   useEffect(() => {
@@ -1323,7 +1329,7 @@ const PrivacyPage = () => {
     setLang(preferredLanguage)
   }, [])
 
-  const props = {
+  const privacyProps = {
     contactName: process.env.NEXT_PUBLIC_CONTACT_NAME as string,
     contactAddress: process.env.NEXT_PUBLIC_CONTACT_ADDRESS as string,
     contactAddressCity: process.env.NEXT_PUBLIC_CONTACT_ADDRESS_CITY as string,
@@ -1334,16 +1340,24 @@ const PrivacyPage = () => {
 
   return (
     <>
-      <Navigation />
+      <Navigation user={props.user} />
       <Container maxW="7xl">
         <Box textAlign="left">
           <Heading mb="5">Privacy Policy</Heading>
-          {lang == 'de' ? <PrivacyDE {...props} /> : <PrivacyEN {...props} />}
+          {lang == 'de' ? <PrivacyDE {...privacyProps} /> : <PrivacyEN {...privacyProps} />}
         </Box>
       </Container>
       <Footer />
     </>
   )
 }
+
+export const getServerSideProps = withSessionSsr(async function getServerSideProps(context) {
+  return {
+    props: {
+      user: context.req.session.user ?? null,
+    },
+  }
+})
 
 export default PrivacyPage

@@ -23,7 +23,15 @@ const LoginPage = () => {
   )
 }
 
-export const getServerSideProps = withSessionSsr(async function getServerSideProps() {
+export const getServerSideProps = withSessionSsr(async function getServerSideProps(context) {
+  if (context.req.session.user !== undefined) {
+    return {
+      redirect: {
+        destination: '/dashboard',
+        permanent: false,
+      },
+    }
+  }
   return { props: {} }
 })
 
