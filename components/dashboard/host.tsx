@@ -13,7 +13,7 @@ const Host = () => {
         <Box>
           <Flex mb="5" textAlign="center">
             <Heading size="md" flex="1" textAlign="left">
-              Your Homes
+              Your Places
             </Heading>
             <Button colorScheme="blue" onClick={() => router.push('/dashboard/place/new')}>
               NEW
@@ -29,7 +29,12 @@ const Host = () => {
         </Box>
         <Box>
           <Flex mb="5" textAlign="center">
-            <Heading size="md">Stay Requests</Heading>
+            <Heading size="md" flex="1" textAlign="left">
+              Stay Requests
+            </Heading>
+            <Button colorScheme="blue" onClick={() => router.push('/dashboard/place/archive')}>
+              ARCHIVE
+            </Button>
           </Flex>
           <Stack spacing={6}>
             <List spacing="2">
