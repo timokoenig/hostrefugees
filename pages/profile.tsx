@@ -1,4 +1,14 @@
-import { Container, FormControl, FormLabel, Heading, Input } from '@chakra-ui/react'
+import {
+  Button,
+  Container,
+  FormControl,
+  FormLabel,
+  GridItem,
+  Heading,
+  Input,
+  SimpleGrid,
+  Text,
+} from '@chakra-ui/react'
 import Layout from 'components/layout'
 import Spacer from 'components/spacer'
 import Head from 'next/head'
@@ -26,30 +36,45 @@ const ProfilePage = (props: Props) => {
           <Heading as="h2" size="xl" mb="5">
             Profile
           </Heading>
-          <FormControl mb="5">
-            <FormLabel htmlFor="firstname">First Name</FormLabel>
-            <Input
-              id="firstname"
-              type="firstname"
-              value={firstname}
-              isDisabled={true}
-              onChange={e => setFirstname(e.target.value)}
-            />
-          </FormControl>
-          <FormControl mb="5">
-            <FormLabel htmlFor="lastname">Last Name</FormLabel>
-            <Input
-              id="lastname"
-              type="lastname"
-              value={lastname}
-              isDisabled={true}
-              onChange={e => setLastname(e.target.value)}
-            />
-          </FormControl>
-          <FormControl>
-            <FormLabel htmlFor="email">Email address</FormLabel>
-            <Input id="email" type="email" value={props.user?.email ?? ''} isDisabled={true} />
-          </FormControl>
+          <SimpleGrid columns={4} spacing="10">
+            <GridItem colSpan={3}>
+              <FormControl mb="5">
+                <FormLabel htmlFor="firstname">First Name</FormLabel>
+                <Input
+                  id="firstname"
+                  type="firstname"
+                  value={firstname}
+                  isDisabled={true}
+                  onChange={e => setFirstname(e.target.value)}
+                />
+              </FormControl>
+              <FormControl mb="5">
+                <FormLabel htmlFor="lastname">Last Name</FormLabel>
+                <Input
+                  id="lastname"
+                  type="lastname"
+                  value={lastname}
+                  isDisabled={true}
+                  onChange={e => setLastname(e.target.value)}
+                />
+              </FormControl>
+              <FormControl>
+                <FormLabel htmlFor="email">Email address</FormLabel>
+                <Input id="email" type="email" value={props.user?.email ?? ''} isDisabled={true} />
+              </FormControl>
+            </GridItem>
+            <GridItem>
+              <Heading size="md" mb="5">
+                Info
+              </Heading>
+              <Text mb="20">
+                You can not update your profile at the moment. We are working on a solution.
+              </Text>
+              <Button colorScheme="red" variant="ghost">
+                Delete Account
+              </Button>
+            </GridItem>
+          </SimpleGrid>
         </Container>
         <Spacer />
         <Footer />
