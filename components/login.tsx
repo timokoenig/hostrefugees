@@ -20,6 +20,8 @@ const Login = () => {
   const [password, setPassword] = useState<string>('')
   const router = useRouter()
 
+  console.log()
+
   const onLogin = async () => {
     try {
       const res = await fetch('/api/login', {
@@ -30,7 +32,11 @@ const Login = () => {
         body: JSON.stringify({ email, password }),
       })
       if (res.ok) {
-        await router.push('/dashboard')
+        if (router.query.place === undefined) {
+          await router.replace('/dashboard')
+        } else {
+          await router.replace(`/place/${router.query.place}/request`)
+        }
       }
     } catch (err: unknown) {
       console.log(err)
