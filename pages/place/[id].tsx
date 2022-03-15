@@ -1,4 +1,7 @@
-import { Box, Container, Text } from '@chakra-ui/react'
+import { ArrowBackIcon } from '@chakra-ui/icons'
+import { Box, Button, Center } from '@chakra-ui/react'
+import Detail from 'components/place/detail'
+import { useRouter } from 'next/router'
 import React from 'react'
 import { User } from 'utils/model'
 import { withSessionSsr } from 'utils/session'
@@ -12,14 +15,24 @@ type Props = {
 }
 
 const PlaceDetailPage = (props: Props) => {
+  const router = useRouter()
   return (
     <Layout>
       <Navigation user={props.user} />
-      <Container maxW="7xl">
-        <Box align="center">
-          <Text>Place Detail</Text>
+      <Center>
+        <Box maxW="7xl">
+          <Box mb="5">
+            <Button
+              variant="ghost"
+              leftIcon={<ArrowBackIcon />}
+              onClick={() => router.push('/place')}
+            >
+              Available Places
+            </Button>
+          </Box>
+          <Detail />
         </Box>
-      </Container>
+      </Center>
       <Spacer />
       <Footer />
     </Layout>
