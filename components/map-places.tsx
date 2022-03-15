@@ -114,8 +114,9 @@ function PlaceItem() {
 }
 
 function MoreItem() {
+  const router = useRouter()
   return (
-    <ListItem>
+    <ListItem onClick={() => router.push('/place')}>
       <Box
         // borderWidth="1px"
         borderRadius="lg"
