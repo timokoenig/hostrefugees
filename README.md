@@ -60,6 +60,10 @@ The app uses [i18next](https://www.i18next.com/) for internationalization. We wa
 
 Note: If you do not add a translation in any given language, the app will default to English.
 
+## Contributors
+
+Special thanks to [Katerina Limpitsouni](https://twitter.com/ninaLimpi) and [undraw.co](https://undraw.co) providing the illustrations for this project.
+
 ---
 
 <p align="center">Made with <span style="color: red">♥</span> for the people</p>
