@@ -17,7 +17,7 @@ const Summary = () => {
         fit="cover"
         align="center"
         w="100%"
-        h={{ base: '100%', sm: '400px', lg: '500px' }}
+        h="300px"
       />
       <Box p="6">
         <Box display="flex" alignItems="baseline">
@@ -27,13 +27,12 @@ const Summary = () => {
             letterSpacing="wide"
             fontSize="xs"
             textTransform="uppercase"
-            ml="2"
           >
             {property.beds} beds &bull; {property.baths} baths
           </Box>
         </Box>
         <Box mt="1" fontWeight="semibold" as="h4" lineHeight="tight" isTruncated>
-          {property.title}
+          Hamburg: {property.title}
         </Box>
         <Box>Available Now</Box>
       </Box>

@@ -1,7 +1,18 @@
-import { Box, Button, Container, Flex, Heading, Text } from '@chakra-ui/react'
+import { ArrowBackIcon } from '@chakra-ui/icons'
+import {
+  Box,
+  Button,
+  Container,
+  GridItem,
+  SimpleGrid,
+  Text,
+  useColorModeValue,
+} from '@chakra-ui/react'
 import Layout from 'components/layout'
+import Summary from 'components/place/summary'
 import Spacer from 'components/spacer'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import React from 'react'
 import { User, UserRole } from 'utils/model'
 import { withSessionSsr } from 'utils/session'
@@ -13,6 +24,7 @@ type Props = {
 }
 
 const RequestPage = (props: Props) => {
+  const router = useRouter()
   return (
     <>
       <Head>
@@ -21,77 +33,93 @@ const RequestPage = (props: Props) => {
       <Layout>
         <Navigation user={props.user} />
         <Container maxW="7xl">
-          <Heading>Request to stay at</Heading>
-          <Heading mb="5">1 Bedroom</Heading>
-          <Text>
-            Available from{' '}
-            <Text as="span" fontWeight="semibold">
-              20.03.2022
-            </Text>{' '}
-            to{' '}
-            <Text as="span" fontWeight="semibold">
-              12.04.2022
-            </Text>
-          </Text>
-          <Text>
-            Located in{' '}
-            <Text as="span" fontWeight="semibold">
-              Hamburg
-            </Text>
-          </Text>
-          <Container my="10">
-            <Heading size="sm">How many people want to stay at this place?</Heading>
-            <Box maxWidth="400">
-              <Flex py="5">
-                <Text flex="1" fontSize="lg">
-                  Adults: 1
-                </Text>
-              </Flex>
+          <Box mb="5">
+            <Button variant="ghost" leftIcon={<ArrowBackIcon />} onClick={router.back}>
+              Place Title
+            </Button>
+          </Box>
+          <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={5}>
+            <Box>
+              <Summary />
             </Box>
-            <Box maxWidth="400">
-              <Flex py="5">
-                <Text flex="1" fontSize="lg">
-                  Children: 0
+            <Box>
+              <Box mb="5">
+                <Text
+                  fontSize={{ base: '16px', lg: '18px' }}
+                  color={useColorModeValue('blue.500', 'blue.300')}
+                  fontWeight="500"
+                  textTransform="uppercase"
+                  mb="4"
+                >
+                  Stay Request Details
                 </Text>
-              </Flex>
+                <Text>
+                  Adults:{' '}
+                  <Text as="span" fontWeight="semibold">
+                    1
+                  </Text>
+                </Text>
+                <Text>
+                  Children:{' '}
+                  <Text as="span" fontWeight="semibold">
+                    1
+                  </Text>
+                </Text>
+              </Box>
+
+              <Box mb="5">
+                <Text
+                  fontSize={{ base: '16px', lg: '18px' }}
+                  color={useColorModeValue('blue.500', 'blue.300')}
+                  fontWeight="500"
+                  textTransform="uppercase"
+                  mb="4"
+                >
+                  About
+                </Text>
+                <Text>Here is a sample placeholder</Text>
+              </Box>
+
+              <SimpleGrid columns={3} spacing={5}>
+                <GridItem>
+                  <Button
+                    rounded="10"
+                    w="full"
+                    mt={8}
+                    size="lg"
+                    py="7"
+                    bg="red.500"
+                    color="white"
+                    textTransform="uppercase"
+                    _hover={{
+                      transform: 'translateY(2px)',
+                      boxShadow: 'lg',
+                    }}
+                  >
+                    Decline
+                  </Button>
+                </GridItem>
+                <GridItem colSpan={2}>
+                  <Button
+                    rounded="10"
+                    w="full"
+                    mt={8}
+                    size="lg"
+                    py="7"
+                    bg="green.500"
+                    color="white"
+                    textTransform="uppercase"
+                    _hover={{
+                      transform: 'translateY(2px)',
+                      boxShadow: 'lg',
+                    }}
+                  >
+                    Accept
+                  </Button>
+                </GridItem>
+              </SimpleGrid>
             </Box>
-          </Container>
-          <Container my="10">
-            <Heading size="sm">Tell the host about yourself</Heading>
-            Here is a sample placeholder
-          </Container>
-          <Button
-            rounded="10"
-            w="full"
-            mt={8}
-            size="lg"
-            py="7"
-            bg="red.500"
-            color="white"
-            textTransform="uppercase"
-            _hover={{
-              transform: 'translateY(2px)',
-              boxShadow: 'lg',
-            }}
-          >
-            Decline
-          </Button>
-          <Button
-            rounded="10"
-            w="full"
-            mt={8}
-            size="lg"
-            py="7"
-            bg="green.500"
-            color="white"
-            textTransform="uppercase"
-            _hover={{
-              transform: 'translateY(2px)',
-              boxShadow: 'lg',
-            }}
-          >
-            Accept
-          </Button>
+          </SimpleGrid>
         </Container>
         <Spacer />
         <Footer />
