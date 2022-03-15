@@ -13,7 +13,7 @@ type Props = {
   user?: User
 }
 
-const PlacePage = (props: Props) => {
+const NewPage = (props: Props) => {
   return (
     <>
       <Head>
@@ -24,7 +24,7 @@ const PlacePage = (props: Props) => {
         <Container maxW="7xl">
           <Box align="center">
             <Heading as="h2" size="xl">
-              Place Detail Update
+              New Place
             </Heading>
             <Create />
           </Box>
@@ -52,4 +52,4 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
   }
 })
 
-export default PlacePage
+export default NewPage

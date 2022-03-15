@@ -15,7 +15,9 @@ const Host = () => {
             <Heading size="md" flex="1" textAlign="left">
               Your Homes
             </Heading>
-            <Button colorScheme="blue">NEW</Button>
+            <Button colorScheme="blue" onClick={() => router.push('/dashboard/place/new')}>
+              NEW
+            </Button>
           </Flex>
           <Stack spacing={6}>
             <List spacing="2">
