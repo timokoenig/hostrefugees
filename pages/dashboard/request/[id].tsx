@@ -12,7 +12,7 @@ type Props = {
   user?: User
 }
 
-const PlacePage = (props: Props) => {
+const RequestPage = (props: Props) => {
   return (
     <>
       <Head>
@@ -23,7 +23,7 @@ const PlacePage = (props: Props) => {
         <Container maxW="7xl">
           <Box align="center">
             <Heading as="h2" size="xl">
-              Place Detail Update
+              Request Detail Update
             </Heading>
           </Box>
         </Container>
@@ -50,4 +50,4 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
   }
 })
 
-export default PlacePage
+export default RequestPage
