@@ -34,6 +34,12 @@ const RequestItem = () => {
               <Badge colorScheme="green" borderRadius="full" px="2" ml="2">
                 Accepted
               </Badge>
+              <Badge colorScheme="red" borderRadius="full" px="2" ml="2">
+                Declined
+              </Badge>
+              <Badge colorScheme="yellow" borderRadius="full" px="2" ml="2">
+                Waiting
+              </Badge>
             </Box>
           </Box>
           <Box mt="1" fontWeight="semibold" as="h4" lineHeight="tight" isTruncated>

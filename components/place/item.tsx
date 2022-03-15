@@ -1,4 +1,4 @@
-import { Badge, Box, ListItem } from '@chakra-ui/react'
+import { Box, ListItem } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React from 'react'
 
@@ -25,22 +25,22 @@ const PlaceItem = (props: Props) => {
       >
         <Box p="6">
           <Box display="flex" alignItems="baseline">
-            <Badge borderRadius="full" px="2" colorScheme="teal">
+            {/* <Badge borderRadius="full" px="2" colorScheme="teal">
               New
-            </Badge>
+            </Badge> */}
             <Box
               color="gray.500"
               fontWeight="semibold"
               letterSpacing="wide"
               fontSize="xs"
               textTransform="uppercase"
-              ml="2"
+              // ml="2"
             >
               {property.beds} beds &bull; {property.baths} baths
             </Box>
           </Box>
           <Box mt="1" fontWeight="semibold" as="h4" lineHeight="tight" isTruncated>
-            {property.title}
+            Hamburg: {property.title}
           </Box>
           <Box>Available Now</Box>
         </Box>

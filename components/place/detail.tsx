@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Container,
   GridItem,
   Heading,
   Image,
@@ -18,7 +19,7 @@ import React from 'react'
 export default function Detail() {
   const router = useRouter()
   return (
-    <Box maxW="7xl">
+    <Container maxW="7xl">
       <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={{ base: 8, md: 10 }}>
         <SimpleGrid columns={2} spacing="5">
           <GridItem colSpan={2}>
@@ -185,6 +186,6 @@ export default function Detail() {
           </Button>
         </Stack>
       </SimpleGrid>
-    </Box>
+    </Container>
   )
 }
