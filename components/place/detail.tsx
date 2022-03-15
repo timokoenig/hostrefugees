@@ -12,9 +12,11 @@ import {
   Text,
   useColorModeValue,
 } from '@chakra-ui/react'
+import { useRouter } from 'next/router'
 import React from 'react'
 
 export default function Detail() {
+  const router = useRouter()
   return (
     <Box maxW="7xl">
       <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={{ base: 8, md: 10 }}>
@@ -84,29 +86,6 @@ export default function Detail() {
               doloribus dolorum expedita hic, ipsum maxime modi nam officiis porro, quae, quisquam
               quos reprehenderit velit? Natus, totam.
             </Text>
-            {/* <Box>
-              <Text
-                fontSize={{ base: '16px', lg: '18px' }}
-                color={useColorModeValue('blue.500', 'blue.300')}
-                fontWeight="500"
-                textTransform="uppercase"
-                mb="4"
-              >
-                Features
-              </Text>
-
-              <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
-                <List spacing={2}>
-                  <ListItem>Chronograph</ListItem>
-                  <ListItem>Master Chronometer Certified</ListItem> <ListItem>Tachymeter</ListItem>
-                </List>
-                <List spacing={2}>
-                  <ListItem>Anti‑magnetic</ListItem>
-                  <ListItem>Chronometer</ListItem>
-                  <ListItem>Small seconds</ListItem>
-                </List>
-              </SimpleGrid>
-            </Box> */}
             <Box>
               <Text
                 fontSize={{ base: '16px', lg: '18px' }}
@@ -200,6 +179,7 @@ export default function Detail() {
               transform: 'translateY(2px)',
               boxShadow: 'lg',
             }}
+            onClick={() => router.push('/place/1/request')}
           >
             Request to stay
           </Button>
