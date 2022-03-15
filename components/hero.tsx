@@ -1,5 +1,6 @@
 // import { PlayIcon } from '@chakra-ui/icons'
 import { Button, Container, createIcon, Flex, Heading, Image, Stack, Text } from '@chakra-ui/react'
+import { useRouter } from 'next/router'
 import React from 'react'
 
 const PlayIcon = createIcon({
@@ -9,6 +10,7 @@ const PlayIcon = createIcon({
 })
 
 export default function Hero() {
+  const router = useRouter()
   return (
     <Container maxW="7xl">
       <Stack
@@ -58,8 +60,9 @@ export default function Hero() {
               colorScheme="blue"
               bg="blue.500"
               _hover={{ bg: 'blue.600' }}
+              onClick={() => router.push('/place')}
             >
-              Get started
+              Available Places
             </Button>
             <Button
               rounded="full"
