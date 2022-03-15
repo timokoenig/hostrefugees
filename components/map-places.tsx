@@ -10,6 +10,7 @@ import {
   Text,
 } from '@chakra-ui/react'
 import GoogleMapReact from 'google-map-react'
+import { useRouter } from 'next/router'
 import React from 'react'
 
 const AnyReactComponent = ({ lat, lng }: { lat: number; lng: number }) => (
@@ -70,6 +71,7 @@ export default function MapPlaces() {
 }
 
 function PlaceItem() {
+  const router = useRouter()
   const property = {
     beds: 3,
     baths: 2,
@@ -77,7 +79,7 @@ function PlaceItem() {
   }
 
   return (
-    <ListItem>
+    <ListItem onClick={() => router.push(`/place/${'1'}`)}>
       <Box
         borderWidth="1px"
         borderRadius="lg"
