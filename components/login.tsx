@@ -16,7 +16,7 @@ import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 
 const Login = () => {
-  const [username, setUsername] = useState<string>('')
+  const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const router = useRouter()
 
@@ -27,7 +27,7 @@ const Login = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ email, password }),
       })
       if (res.ok) {
         await router.push('/dashboard')
@@ -47,11 +47,11 @@ const Login = () => {
           <Stack spacing={4}>
             <FormControl id="email">
               <FormLabel>Email address</FormLabel>
-              <Input type="email" onChange={e => setUsername(e.target.value)} />
+              <Input type="email" value={email} onChange={e => setEmail(e.target.value)} />
             </FormControl>
             <FormControl id="password">
               <FormLabel>Password</FormLabel>
-              <Input type="password" onChange={e => setPassword(e.target.value)} />
+              <Input type="password" value={password} onChange={e => setPassword(e.target.value)} />
             </FormControl>
             <Stack spacing={10}>
               <Stack

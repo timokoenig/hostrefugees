@@ -1,10 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { User } from 'utils/model'
+import { User, UserRole } from 'utils/model'
 import { withSessionRoute } from 'utils/session'
 
 interface Request extends NextApiRequest {
   body: {
-    username: string
+    email: string
     password: string
   }
 }
@@ -15,8 +15,30 @@ type Response = {
 }
 
 const Users: User[] = [
-  { id: '1', username: 'admin', password: 'admin', admin: true },
-  { id: '2', username: 'test', password: 'test', admin: false },
+  {
+    id: '1',
+    firstname: 'admin',
+    lastname: 'ADMIN',
+    email: 'admin@hostrefugees.eu',
+    password: 'admin',
+    role: UserRole.Admin,
+  },
+  {
+    id: '2',
+    firstname: 'guest',
+    lastname: 'GUEST',
+    email: 'guest@hostrefugees.eu',
+    password: 'guest',
+    role: UserRole.Guest,
+  },
+  {
+    id: '3',
+    firstname: 'host',
+    lastname: 'HOST',
+    email: 'host@hostrefugees.eu',
+    password: 'host',
+    role: UserRole.Host,
+  },
 ]
 
 async function handler(req: Request, res: NextApiResponse<Response>) {
@@ -25,7 +47,7 @@ async function handler(req: Request, res: NextApiResponse<Response>) {
     return
   }
 
-  const user = Users.find(u => u.username === req.body.username && u.password === req.body.password)
+  const user = Users.find(u => u.email === req.body.email && u.password === req.body.password)
   if (user === undefined) {
     res.status(400).send({ ok: false, message: 'Wrong username or password' })
     return

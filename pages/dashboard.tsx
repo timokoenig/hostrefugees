@@ -1,4 +1,4 @@
-import { Text } from '@chakra-ui/react'
+import { Box, Container, Heading, Text } from '@chakra-ui/react'
 import Layout from 'components/layout'
 import Spacer from 'components/spacer'
 import Head from 'next/head'
@@ -20,7 +20,16 @@ const DashboardPage = (props: Props) => {
       </Head>
       <Layout>
         <Navigation user={props.user} />
-        <Text>Dashboard</Text>
+        <Container maxW="7xl">
+          <Box align="center">
+            <Heading as="h2" size="xl">
+              Welcome{' '}
+              <Text as="span" color="blue.400">
+                {props.user?.firstname}
+              </Text>
+            </Heading>
+          </Box>
+        </Container>
         <Spacer />
         <Footer />
       </Layout>

@@ -1,6 +1,14 @@
+export enum UserRole {
+  Admin = 'admin',
+  Guest = 'guest',
+  Host = 'host',
+}
+
 export type User = {
   id: string
-  username: string
+  firstname: string
+  lastname?: string
   password: string
-  admin: boolean
+  email: string
+  role: UserRole
 }
