@@ -1,4 +1,5 @@
 import { Box, Container, Heading, Text } from '@chakra-ui/react'
+import Host from 'components/dashboard/host'
 import Layout from 'components/layout'
 import Spacer from 'components/spacer'
 import Head from 'next/head'
@@ -29,6 +30,7 @@ const DashboardPage = (props: Props) => {
               </Text>
             </Heading>
           </Box>
+          <Host />
         </Container>
         <Spacer />
         <Footer />
