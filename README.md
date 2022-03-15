@@ -62,7 +62,7 @@ Note: If you do not add a translation in any given language, the app will defaul
 
 ## Contributors
 
-Special thanks to [Katerina Limpitsouni](https://twitter.com/ninaLimpi) and [undraw.co](https://undraw.co) providing the illustrations for this project.
+Special thanks to [Katerina Limpitsouni](https://twitter.com/ninaLimpi) and [undraw.co](https://undraw.co) for providing the illustrations for this project.
 
 ---
 
