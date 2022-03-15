@@ -1343,7 +1343,9 @@ const PrivacyPage = (props: Props) => {
       <Navigation user={props.user} />
       <Container maxW="7xl">
         <Box textAlign="left">
-          <Heading mb="5">Privacy Policy</Heading>
+          <Heading as="h1" size="lg" mb="5">
+            Privacy
+          </Heading>
           {lang == 'de' ? <PrivacyDE {...privacyProps} /> : <PrivacyEN {...privacyProps} />}
         </Box>
       </Container>
