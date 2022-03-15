@@ -10,6 +10,7 @@ import {
   Input,
   Link,
   Stack,
+  Text,
   useColorModeValue,
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
@@ -21,6 +22,11 @@ const Register = () => {
       <Stack spacing={8} mx="auto" maxW="lg" py={12} px={6}>
         <Stack align="center">
           <Heading fontSize="4xl">Become a Host</Heading>
+          <Text fontSize="lg" textAlign="center">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquid amet at delectus
+            doloribus dolorum expedita hic, ipsum maxime modi nam officiis porro, quae, quisquam
+            quos reprehenderit velit? Natus, totam.
+          </Text>
         </Stack>
         <Box rounded="lg" bg={useColorModeValue('white', 'gray.700')} boxShadow="lg" p={8}>
           <Stack spacing={4}>
