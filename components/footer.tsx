@@ -30,9 +30,7 @@ export default function Footer() {
           <Stack spacing={6}>
             <Box>
               <Heading size="md" fontWeight="extrabold" color="blue.500">
-                <Link href="https://hostrefugees.eu" target="blank">
-                  HostRefugees.eu
-                </Link>
+                <Link href="/">HostRefugees.eu</Link>
               </Heading>
             </Box>
             <Text fontSize="sm">© 2022 Timo Koenig. All rights reserved</Text>
