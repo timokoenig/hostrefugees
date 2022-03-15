@@ -4,6 +4,7 @@ import {
   Button,
   Container,
   GridItem,
+  Heading,
   SimpleGrid,
   Text,
   useColorModeValue,
@@ -11,6 +12,7 @@ import {
 import Layout from 'components/layout'
 import Summary from 'components/place/summary'
 import Spacer from 'components/spacer'
+import moment from 'moment'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React from 'react'
@@ -54,6 +56,12 @@ const RequestPage = (props: Props) => {
                   Stay Request Details
                 </Text>
                 <Text>
+                  Requested on:{' '}
+                  <Text as="span" fontWeight="semibold">
+                    {moment().format('DD.MM.YYYY HH:mm')}
+                  </Text>
+                </Text>
+                <Text>
                   Adults:{' '}
                   <Text as="span" fontWeight="semibold">
                     1
@@ -63,6 +71,12 @@ const RequestPage = (props: Props) => {
                   Children:{' '}
                   <Text as="span" fontWeight="semibold">
                     1
+                  </Text>
+                </Text>
+                <Text>
+                  Languages:{' '}
+                  <Text as="span" fontWeight="semibold">
+                    English
                   </Text>
                 </Text>
               </Box>
@@ -78,6 +92,24 @@ const RequestPage = (props: Props) => {
                   About
                 </Text>
                 <Text>Here is a sample placeholder</Text>
+              </Box>
+
+              <Box backgroundColor="green.500" rounded="xl" textAlign="center" p="5" color="white">
+                <Heading size="md" mb="2">
+                  ACCEPTED
+                </Heading>
+                <Text>
+                  Thanks for accepting this application.
+                  <br />
+                  You will receive an email with further details.
+                </Text>
+              </Box>
+
+              <Box backgroundColor="red.500" rounded="xl" textAlign="center" p="5" color="white">
+                <Heading size="md" mb="2">
+                  DECLINED
+                </Heading>
+                <Text>The application has been declined</Text>
               </Box>
 
               <SimpleGrid columns={3} spacing={5}>
