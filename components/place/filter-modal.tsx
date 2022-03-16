@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Flex,
+  Input,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -17,6 +18,7 @@ import NumberInput from './number-input'
 export type Filter = {
   adults: number | null
   children: number | null
+  city: string | null
 }
 
 type Props = {
@@ -55,9 +57,21 @@ const FilterModal = (props: Props) => {
               onChange={newVal => props.onChange({ ...props.filter, children: newVal })}
             />
           </Flex>
+          <Flex py="5">
+            <Text flex="1" fontSize="lg">
+              City
+            </Text>
+            <Input
+              value={props.filter.city ?? ''}
+              onChange={e => props.onChange({ ...props.filter, city: e.target.value })}
+            />
+          </Flex>
         </ModalBody>
         <ModalFooter>
-          <Button variant="ghost" onClick={() => props.onChange({ adults: null, children: null })}>
+          <Button
+            variant="ghost"
+            onClick={() => props.onChange({ adults: null, children: null, city: null })}
+          >
             Clear All
           </Button>
           <Box flex="1" />

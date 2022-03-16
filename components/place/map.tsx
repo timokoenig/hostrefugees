@@ -2,7 +2,15 @@ import { Box, Stack, Text } from '@chakra-ui/react'
 import GoogleMapReact from 'google-map-react'
 import React from 'react'
 
-const AnyReactComponent = ({ lat, lng }: { lat: number; lng: number }) => (
+const AnyReactComponent = ({
+  lat,
+  lng,
+  onClick,
+}: {
+  lat: number
+  lng: number
+  onClick: () => void
+}) => (
   <Box lat={lat} lng={lng} textAlign="center">
     <Box
       backgroundColor="blue.500"
@@ -20,6 +28,7 @@ const AnyReactComponent = ({ lat, lng }: { lat: number; lng: number }) => (
       _active={{
         background: 'blue.600',
       }}
+      onClick={onClick}
     >
       <Text color="white" fontSize="lg" fontWeight="bold" height="100%" lineHeight="8">
         1
@@ -29,7 +38,11 @@ const AnyReactComponent = ({ lat, lng }: { lat: number; lng: number }) => (
   </Box>
 )
 
-export default function Map() {
+type Props = {
+  onClick: () => void
+}
+
+export default function Map(props: Props) {
   return (
     <Stack height="80vh">
       <GoogleMapReact
@@ -37,7 +50,7 @@ export default function Map() {
         defaultCenter={{ lat: 53.551086, lng: 9.993682 }}
         defaultZoom={11}
       >
-        <AnyReactComponent lat={53.551086} lng={9.993682} />
+        <AnyReactComponent lat={53.551086} lng={9.993682} onClick={props.onClick} />
       </GoogleMapReact>
     </Stack>
   )

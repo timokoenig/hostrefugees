@@ -16,13 +16,27 @@ type Props = {
 
 const PlacePage = (props: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const [filter, setFilter] = useState<Filter>({ adults: null, children: null })
+  const [filter, setFilter] = useState<Filter>({ adults: null, children: null, city: null })
   const filterCount = (() => {
     let count = 0
     if (filter.adults !== null) count += 1
     if (filter.children !== null) count += 1
+    if (filter.city !== null) count += 1
     return count
   })()
+
+  const filterPlace = (place: Place): boolean => {
+    if (filter.adults !== null && place.adults < filter.adults) {
+      return false
+    }
+    if (filter.children !== null && place.children < filter.children) {
+      return false
+    }
+    if (filter.city !== null && !place.addressCity.includes(filter.city)) {
+      return false
+    }
+    return true
+  }
 
   const places: Place[] = [
     {
@@ -56,7 +70,7 @@ const PlacePage = (props: Props) => {
       houseRules: '',
       availabilityStart: new Date(),
     },
-  ]
+  ].filter(filterPlace)
 
   return (
     <Layout>
@@ -75,7 +89,7 @@ const PlacePage = (props: Props) => {
             ))}
           </List>
           <Box>
-            <Map />
+            <Map onClick={() => setFilter({ ...filter, city: 'Berlin' })} />
           </Box>
         </SimpleGrid>
       </Container>
