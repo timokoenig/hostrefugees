@@ -1,16 +1,16 @@
 import { GridItem, SimpleGrid, Text } from '@chakra-ui/react'
+import { RequestStatus } from '@prisma/client'
 import React from 'react'
-import { RequestStatus } from 'utils/model'
 import Button from '../../common/button'
 import Status from './status'
 
 type Props = {
-  status: RequestStatus | undefined
+  status: RequestStatus | null
 }
 
 const StatusHost = (props: Props): JSX.Element => {
   switch (props.status) {
-    case RequestStatus.Accepted:
+    case RequestStatus.ACCEPTED:
       return (
         <Status color="green.500" title="ACCEPTED">
           <Text>
@@ -20,13 +20,13 @@ const StatusHost = (props: Props): JSX.Element => {
           </Text>
         </Status>
       )
-    case RequestStatus.Declined:
+    case RequestStatus.DECLINED:
       return (
         <Status color="red.500" title="DECLINED">
           <Text>The application has been declined</Text>
         </Status>
       )
-    case RequestStatus.Canceled:
+    case RequestStatus.CANCELED:
       return (
         <Status color="gray.500" title="CANCELED">
           <Text>The application has been canceled by the user</Text>

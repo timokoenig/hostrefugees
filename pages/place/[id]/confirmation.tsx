@@ -1,12 +1,12 @@
 import { Button, Center, Container, Heading, Image, Text } from '@chakra-ui/react'
-import { User } from '@prisma/client'
 import { useRouter } from 'next/router'
 import React from 'react'
+import { MappedUser } from 'utils/models'
 import { withSessionSsr } from 'utils/session'
 import Layout from '../../../components/layout'
 
 type Props = {
-  user?: User
+  user?: MappedUser
 }
 
 const RequestPage = (props: Props) => {
@@ -25,6 +25,11 @@ const RequestPage = (props: Props) => {
         </Text>
         <Button my="10" onClick={() => router.replace('/')}>
           Check out the StarterKit for Germany
+        </Button>
+        <Text>or</Text>
+
+        <Button my="10" onClick={() => router.replace('/dashboard')}>
+          Check out your pending requests
         </Button>
       </Container>
     </Layout>

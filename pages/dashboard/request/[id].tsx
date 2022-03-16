@@ -1,18 +1,24 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { ArrowBackIcon } from '@chakra-ui/icons'
 import { Box, Button, Container, SimpleGrid, Text, useColorModeValue } from '@chakra-ui/react'
-import { Request, User, UserRole } from '@prisma/client'
+import { Request, UserRole } from '@prisma/client'
 import Layout from 'components/layout'
 import Summary from 'components/place/summary'
 import moment from 'moment'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
+import prisma from 'prisma/client'
 import React from 'react'
+import { MappedUser } from 'utils/models'
 import { withSessionSsr } from 'utils/session'
 import StatusGuest from '../../../components/dashboard/request/status-guest'
 import StatusHost from '../../../components/dashboard/request/status-host'
 
 type Props = {
-  user: User
+  user: MappedUser
   request: Request
 }
 
@@ -32,7 +38,7 @@ const RequestPage = (props: Props) => {
         </Box>
         <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={5}>
           <Box>
-            <Summary place={props.request.placeId} />
+            <Summary place={(props.request as any).place} />
           </Box>
           <Box>
             <Box mb="5">
@@ -66,12 +72,12 @@ const RequestPage = (props: Props) => {
               <Text>
                 Guest Languages:{' '}
                 <Text as="span" fontWeight="semibold">
-                  {/* {props.request.author.languages.join(', ')} */}
+                  {(props.request as any).author.languages.join(', ')}
                 </Text>
               </Text>
             </Box>
 
-            <Box mb="5">
+            <Box mb="20">
               <Text
                 fontSize={{ base: '16px', lg: '18px' }}
                 color={useColorModeValue('blue.500', 'blue.300')}
@@ -102,44 +108,27 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
       },
     }
   }
+
+  const request = await prisma.request.findUnique({
+    where: {
+      id: context.query.id as string,
+    },
+    include: {
+      author: {
+        select: {
+          id: true,
+          firstname: true,
+          languages: true,
+        },
+      },
+      place: true,
+    },
+  })
+
   return {
     props: {
       user: context.req.session.user,
-      request: {
-        id: '1',
-        createdAt: new Date().toISOString(),
-        author: {
-          id: '1',
-          firstname: '',
-          lastname: '',
-          email: '',
-          password: '',
-          role: UserRole.GUEST,
-          languages: [],
-        },
-        place: {
-          id: '1',
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-          author: {
-            id: '1',
-            firstname: '',
-            lastname: '',
-            email: '',
-            password: '',
-            role: UserRole.GUEST,
-            languages: [],
-          },
-          title: '1 Bedroom Apartment',
-          addressCity: 'Hamburg',
-          rooms: 1,
-          beds: 1,
-          availabilityStart: new Date().toISOString(),
-        },
-        adults: 1,
-        children: 0,
-        about: '',
-      },
+      request,
     },
   }
 })

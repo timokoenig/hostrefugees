@@ -1,17 +1,17 @@
 import { Box, Button, Container, Heading, List, SimpleGrid, useDisclosure } from '@chakra-ui/react'
-import { User } from '@prisma/client'
 import PlaceItem from 'components/place/item'
 import Map from 'components/place/map'
 import prisma from 'prisma/client'
 import React from 'react'
-import { MappedPlace, mapPlace } from 'utils/mapper'
+import { mapPlace } from 'utils/mapper'
+import { MappedPlace, MappedUser } from 'utils/models'
 import { withSessionSsr } from 'utils/session'
 import Layout from '../../components/layout'
 import FilterModal from '../../components/place/filter-modal'
 import { app, setFilter } from '../../state/app'
 
 type Props = {
-  user?: User
+  user?: MappedUser
   places: MappedPlace[]
 }
 
@@ -78,6 +78,15 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
     where: {
       approved: true,
       active: true,
+    },
+    include: {
+      author: {
+        select: {
+          id: true,
+          firstname: true,
+          languages: true,
+        },
+      },
     },
   })
   return {

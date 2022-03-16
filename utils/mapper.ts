@@ -1,49 +1,28 @@
-import { BathroomType, Place, PlaceType, User } from '@prisma/client'
-
-export type MappedUser = {
-  id: string
-  firstname: string
-  languages: string[]
-}
-
-export type MappedPlace = {
-  id: string
-  createdAt: Date
-  author: MappedUser
-  approved: boolean
-  active: boolean
-  title: string
-  description: string
-  type: PlaceType
-  rooms: number
-  beds: number
-  bathroom: BathroomType
-  adults: number
-  children: number
-  addressCity: string
-  addressCityLat?: string
-  addressCityLng?: string
-  houseRules: string
-  availabilityStart: Date
-  availabilityEnd?: Date
-}
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import { User } from '@prisma/client'
+import { MappedPlace, MappedUser } from './models'
 
 export const mapUser = (prismaUser: User): MappedUser => {
   return {
     id: prismaUser.id,
     firstname: prismaUser.firstname,
+    role: prismaUser.role,
     languages: prismaUser.languages,
   }
 }
 
-export const mapPlace = (prismaPlace: Place) => {
+export const mapPlace = (prismaPlace: any): MappedPlace => {
   return {
     id: prismaPlace.id,
-    createdAt: prismaPlace.createdAt.toISOString(),
+    createdAt: prismaPlace.createdAt,
     author: {
-      id: '1',
-      firstname: 'foo',
-      languages: ['en'],
+      id: prismaPlace.author.id,
+      firstname: prismaPlace.author.firstname,
+      role: prismaPlace.author.role,
+      languages: prismaPlace.author.languages,
     },
     approved: prismaPlace.approved,
     active: prismaPlace.active,
@@ -59,7 +38,7 @@ export const mapPlace = (prismaPlace: Place) => {
     addressCityLat: prismaPlace.addressCityLat,
     addressCityLng: prismaPlace.addressCityLng,
     houseRules: prismaPlace.houseRules,
-    availabilityStart: prismaPlace.availabilityStart.toISOString(),
-    availabilityEnd: prismaPlace.availabilityEnd?.toISOString() ?? null,
+    availabilityStart: prismaPlace.availabilityStart,
+    availabilityEnd: prismaPlace.availabilityEnd,
   }
 }

@@ -12,6 +12,7 @@ import {
 import { User } from '@prisma/client'
 import Layout from 'components/layout'
 import Head from 'next/head'
+import prisma from 'prisma/client'
 import React, { useState } from 'react'
 import { withSessionSsr } from 'utils/session'
 
@@ -84,9 +85,16 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
       },
     }
   }
+
+  const user = await prisma.user.findUnique({
+    where: {
+      id: context.req.session.user?.id,
+    },
+  })
+
   return {
     props: {
-      user: context.req.session.user ?? null,
+      user,
     },
   }
 })

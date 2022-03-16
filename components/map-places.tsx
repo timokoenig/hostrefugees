@@ -1,23 +1,27 @@
 import { Box, Container, Heading, List, SimpleGrid, Stack } from '@chakra-ui/react'
 import GoogleMapReact from 'google-map-react'
+import _ from 'lodash'
 import React from 'react'
-import { Place } from '../utils/model'
+import { MappedPlace } from '../utils/models'
 import Marker from './map/marker'
 import MoreItem from './map/more-item'
 import PlaceItem from './place/item'
+import { MarkerItem } from './place/map'
 
 type Props = {
-  places: Place[]
+  places: MappedPlace[]
 }
 
 export default function MapPlaces(props: Props) {
-  const markerItems: { title: string; lat: number; lng: number }[] = props.places.map(place => {
+  const markerItems: MarkerItem[] = props.places.map(place => {
     return {
-      title: place.addressCity,
-      lat: place.addressCityLat ?? 0.0,
-      lng: place.addressCityLng ?? 0.0,
+      city: place.addressCity,
+      lat: place.addressCityLat ?? '0.0',
+      lng: place.addressCityLng ?? '0.0',
     }
   })
+  const groupedItems = _.groupBy(markerItems, 'city')
+
   return (
     <Container maxW="7xl" py={10}>
       <Box mb="5" textAlign="center">
@@ -35,12 +39,20 @@ export default function MapPlaces(props: Props) {
         <Stack height="50vh">
           <GoogleMapReact
             bootstrapURLKeys={{ key: '' }}
-            defaultCenter={{ lat: 53.551086, lng: 9.993682 }}
-            defaultZoom={11}
+            defaultCenter={{ lat: 51.1657, lng: 10.4515 }} // center of Germany
+            defaultZoom={6}
           >
-            {markerItems.map((marker, i) => (
-              <Marker key={i} lat={marker.lat} lng={marker.lng} />
-            ))}
+            {Object.keys(groupedItems).map(key => {
+              const items = groupedItems[key] as MarkerItem[]
+              return (
+                <Marker
+                  key={key}
+                  title={items.length.toString()}
+                  lat={items[0].lat}
+                  lng={items[0].lng}
+                />
+              )
+            })}
           </GoogleMapReact>
         </Stack>
       </SimpleGrid>

@@ -1,14 +1,17 @@
 import { Box, Container, Heading, Text } from '@chakra-ui/react'
-import { BathroomType, Place, PlaceType, Request, User, UserRole } from '@prisma/client'
+import { Place, Request, UserRole } from '@prisma/client'
 import Guest from 'components/dashboard/guest'
 import Host from 'components/dashboard/host'
 import Layout from 'components/layout'
 import Head from 'next/head'
+import prisma from 'prisma/client'
 import React from 'react'
+import { mapPlace } from 'utils/mapper'
+import { MappedUser } from 'utils/models'
 import { withSessionSsr } from 'utils/session'
 
 type Props = {
-  user: User
+  user: MappedUser
   places: Place[]
   requests: Request[]
 }
@@ -46,93 +49,57 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
       },
     }
   }
+
+  const places = await prisma.place.findMany({
+    where: {
+      author: {
+        id: context.req.session.user?.id,
+      },
+    },
+    include: {
+      author: {
+        select: {
+          id: true,
+          firstname: true,
+          languages: true,
+        },
+      },
+    },
+  })
+
+  const requestsWhere =
+    context.req.session.user?.role === UserRole.HOST
+      ? {
+          place: {
+            author: {
+              id: context.req.session.user.id,
+            },
+          },
+        }
+      : {
+          author: {
+            id: context.req.session.user?.id,
+          },
+        }
+  const requests = await prisma.request.findMany({
+    where: requestsWhere,
+    include: {
+      author: {
+        select: {
+          id: true,
+          firstname: true,
+          languages: true,
+        },
+      },
+      place: true,
+    },
+  })
+
   return {
     props: {
       user: context.req.session.user,
-      places: [
-        {
-          id: '1',
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-          author: {
-            id: '1',
-            firstname: '',
-            lastname: '',
-            email: '',
-            password: '',
-            role: UserRole.GUEST,
-            languages: [],
-          },
-          title: '1 Bedroom Apartment',
-          addressCity: 'Hamburg',
-          rooms: 1,
-          beds: 1,
-          approved: true,
-          active: true,
-          description: '',
-          type: PlaceType.PRIVATE,
-          bathroom: BathroomType.SHARED,
-          adults: 1,
-          children: 0,
-          addressStreet: '',
-          addressHouseNumber: '',
-          addressCountry: '',
-          addressZip: '',
-          houseRules: '',
-          availabilityStart: new Date().toISOString(),
-        },
-      ],
-      requests: [
-        {
-          id: '1',
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-          author: {
-            id: '1',
-            firstname: '',
-            lastname: '',
-            email: '',
-            password: '',
-            role: UserRole.GUEST,
-            languages: [],
-          },
-          place: {
-            id: '1',
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-            author: {
-              id: '1',
-              firstname: '',
-              lastname: '',
-              email: '',
-              password: '',
-              role: UserRole.GUEST,
-              languages: [],
-            },
-            title: '1 Bedroom Apartment',
-            addressCity: 'Hamburg',
-            rooms: 1,
-            beds: 1,
-            approved: true,
-            active: true,
-            description: '',
-            type: PlaceType.PRIVATE,
-            bathroom: BathroomType.SHARED,
-            adults: 1,
-            children: 0,
-            addressStreet: '',
-            addressHouseNumber: '',
-            addressCountry: '',
-            addressZip: '',
-            houseRules: '',
-            availabilityStart: new Date().toISOString(),
-          },
-          adults: 1,
-          children: 0,
-          about: '',
-          startDate: new Date().toISOString(),
-        },
-      ],
+      places: places.map(mapPlace),
+      requests,
     },
   }
 })

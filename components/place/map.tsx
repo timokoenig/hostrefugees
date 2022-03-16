@@ -3,14 +3,14 @@ import Marker from 'components/map/marker'
 import GoogleMapReact from 'google-map-react'
 import _ from 'lodash'
 import React from 'react'
-import { MappedPlace } from 'utils/mapper'
+import { MappedPlace } from 'utils/models'
 
 type Props = {
   places: MappedPlace[]
   onClick: (city: string) => void
 }
 
-type MarkerItem = {
+export type MarkerItem = {
   city: string
   lat: string
   lng: string
@@ -30,7 +30,7 @@ export default function Map(props: Props) {
     <Stack height="80vh">
       <GoogleMapReact
         bootstrapURLKeys={{ key: '' }}
-        defaultCenter={{ lat: 51.1657, lng: 10.4515 }}
+        defaultCenter={{ lat: 51.1657, lng: 10.4515 }} // center of Germany
         defaultZoom={6}
       >
         {Object.keys(groupedItems).map(key => {

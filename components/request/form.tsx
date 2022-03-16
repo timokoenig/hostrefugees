@@ -10,12 +10,12 @@ import {
 import { useFormik } from 'formik'
 import { useRouter } from 'next/router'
 import React from 'react'
-import { Place } from 'utils/model'
+import { MappedPlace } from 'utils/models'
 import CustomButton from '../common/button'
 import NumberInput from '../place/number-input'
 
 type Props = {
-  place: Place
+  place: MappedPlace
 }
 
 const Form = (props: Props) => {

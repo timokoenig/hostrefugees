@@ -1,12 +1,12 @@
 import { Container, Heading } from '@chakra-ui/react'
-import { User } from '@prisma/client'
 import Item from 'components/help/item'
 import React from 'react'
+import { MappedUser } from 'utils/models'
 import { withSessionSsr } from 'utils/session'
 import Layout from '../components/layout'
 
 type Props = {
-  user?: User
+  user?: MappedUser
 }
 
 const HelpPage = (props: Props) => {

@@ -1,6 +1,6 @@
 import { withIronSessionApiRoute, withIronSessionSsr } from 'iron-session/next'
 import { GetServerSidePropsContext, GetServerSidePropsResult, NextApiHandler } from 'next'
-import { User } from './model'
+import { MappedUser } from './models'
 import { sessionConfig } from './session-config'
 
 export function withSessionRoute(handler: NextApiHandler) {
@@ -18,6 +18,6 @@ export function withSessionSsr<P extends { [key: string]: unknown } = { [key: st
 
 declare module 'iron-session' {
   interface IronSessionData {
-    user?: User | null
+    user?: MappedUser | null
   }
 }

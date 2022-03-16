@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from 'prisma/client'
+import { mapUser } from 'utils/mapper'
 import { withSessionRoute } from 'utils/session'
 
 interface Request extends NextApiRequest {
@@ -31,7 +32,7 @@ async function handler(req: Request, res: NextApiResponse<Response>) {
     return
   }
 
-  req.session.user = user
+  req.session.user = mapUser(user)
   await req.session.save()
 
   res.send({ ok: true })

@@ -2,10 +2,10 @@ import { Box, ListItem } from '@chakra-ui/react'
 import moment from 'moment'
 import { useRouter } from 'next/router'
 import React from 'react'
-import { Place } from 'utils/model'
+import { MappedPlace } from 'utils/models'
 
 type Props = {
-  place: Place
+  place: MappedPlace
   onClick?: () => void
 }
 

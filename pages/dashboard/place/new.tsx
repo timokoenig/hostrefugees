@@ -1,15 +1,16 @@
 import { ArrowBackIcon } from '@chakra-ui/icons'
 import { Box, Button, Container, GridItem, Heading, SimpleGrid, Text } from '@chakra-ui/react'
-import { User, UserRole } from '@prisma/client'
+import { UserRole } from '@prisma/client'
 import Layout from 'components/layout'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React from 'react'
+import { MappedUser } from 'utils/models'
 import { withSessionSsr } from 'utils/session'
 import Form from '../../../components/dashboard/place/form'
 
 type Props = {
-  user: User
+  user: MappedUser
 }
 
 const NewPage = (props: Props) => {

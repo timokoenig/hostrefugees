@@ -10,11 +10,11 @@ import {
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react'
+import { BathroomType, Place, PlaceType } from '@prisma/client'
 import NumberInput from 'components/place/number-input'
 import { useFormik } from 'formik'
 import moment from 'moment'
 import React from 'react'
-import { BathroomType, Place, PlaceType } from '../../../utils/model'
 import Button from '../../common/button'
 
 type Props = {
@@ -26,10 +26,10 @@ const Form = (props: Props) => {
     initialValues: props.place ?? {
       title: '',
       description: '',
-      type: PlaceType.Private,
+      type: PlaceType.PRIVATE,
       rooms: 1,
       beds: 1,
-      bathroom: BathroomType.Shared,
+      bathroom: BathroomType.SHARED,
       adults: 1,
       children: 0,
       addressStreet: '',

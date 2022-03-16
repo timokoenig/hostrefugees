@@ -1,6 +1,6 @@
 import { Box, Container, Heading, Link, List, ListItem, Text } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
-import { User } from 'utils/model'
+import { MappedUser } from 'utils/models'
 import { withSessionSsr } from 'utils/session'
 import Layout from '../components/layout'
 
@@ -1317,7 +1317,7 @@ const PrivacyDE = (props: PrivacyProps) => (
 )
 
 type Props = {
-  user?: User
+  user?: MappedUser
 }
 
 const PrivacyPage = (props: Props) => {

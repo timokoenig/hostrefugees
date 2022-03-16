@@ -1,16 +1,19 @@
 import { ArrowBackIcon } from '@chakra-ui/icons'
 import { Box, Button, Container, SimpleGrid } from '@chakra-ui/react'
-import { BathroomType, Place, PlaceType, User, UserRole } from '@prisma/client'
+import { UserRole } from '@prisma/client'
 import Form from 'components/request/form'
 import { useRouter } from 'next/router'
+import prisma from 'prisma/client'
 import React from 'react'
+import { mapPlace } from 'utils/mapper'
+import { MappedPlace, MappedUser } from 'utils/models'
 import { withSessionSsr } from 'utils/session'
 import Layout from '../../../components/layout'
 import Summary from '../../../components/place/summary'
 
 type Props = {
-  user: User
-  place: Place
+  user: MappedUser
+  place: MappedPlace
 }
 
 const RequestPage = (props: Props) => {
@@ -53,40 +56,26 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
       },
     }
   }
+
+  const place = await prisma.place.findUnique({
+    where: {
+      id: context.query.id as string,
+    },
+    include: {
+      author: {
+        select: {
+          id: true,
+          firstname: true,
+          languages: true,
+        },
+      },
+    },
+  })
+
   return {
     props: {
       user: context.req.session.user,
-      place: {
-        id: '1',
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-        author: {
-          id: '1',
-          firstname: '',
-          lastname: '',
-          email: '',
-          password: '',
-          role: UserRole.GUEST,
-          languages: [],
-        },
-        title: '1 Bedroom Apartment',
-        addressCity: 'Hamburg',
-        rooms: 1,
-        beds: 1,
-        approved: true,
-        active: true,
-        description: '',
-        type: PlaceType.PRIVATE,
-        bathroom: BathroomType.SHARED,
-        adults: 1,
-        children: 0,
-        addressStreet: '',
-        addressHouseNumber: '',
-        addressCountry: '',
-        addressZip: '',
-        houseRules: '',
-        availabilityStart: new Date().toISOString(),
-      },
+      place: mapPlace(place),
     },
   }
 })

@@ -1,12 +1,12 @@
 import { Flex } from '@chakra-ui/react'
 import React from 'react'
-import { User } from '../utils/model'
+import { MappedUser } from '../utils/models'
 import Footer from './footer'
 import Navigation from './navigation'
 import Spacer from './spacer'
 
 type Props = {
-  user?: User
+  user?: MappedUser
   children: JSX.Element | JSX.Element[]
 }
 

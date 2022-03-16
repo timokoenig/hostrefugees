@@ -1,6 +1,6 @@
 import { Box, Container, Flex, Heading, List, Stack } from '@chakra-ui/react'
+import { Request } from '@prisma/client'
 import React from 'react'
-import { Request } from '../../utils/model'
 import RequestItem from './request-item'
 
 type Props = {

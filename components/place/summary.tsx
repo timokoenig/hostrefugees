@@ -1,10 +1,10 @@
 import { Box, Image } from '@chakra-ui/react'
 import moment from 'moment-timezone'
 import React from 'react'
-import { Place } from 'utils/model'
+import { MappedPlace } from 'utils/models'
 
 type Props = {
-  place: Place
+  place: MappedPlace
 }
 
 const Summary = (props: Props) => {

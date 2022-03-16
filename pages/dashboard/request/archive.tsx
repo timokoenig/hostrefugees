@@ -1,12 +1,12 @@
 import { Box, Container, Heading } from '@chakra-ui/react'
-import { User } from '@prisma/client'
 import Layout from 'components/layout'
 import Head from 'next/head'
 import React from 'react'
+import { MappedUser } from 'utils/models'
 import { withSessionSsr } from 'utils/session'
 
 type Props = {
-  user: User
+  user: MappedUser
 }
 
 const ArchivePage = (props: Props) => {

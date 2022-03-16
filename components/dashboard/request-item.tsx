@@ -1,29 +1,31 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { Badge, Box, ListItem } from '@chakra-ui/react'
+import { Request, RequestStatus } from '@prisma/client'
 import moment from 'moment'
 import { useRouter } from 'next/router'
 import React from 'react'
-import { Request, RequestStatus } from 'utils/model'
 
 type Props = {
   request: Request
 }
 
-const StatusBadge = (props: { status: RequestStatus | undefined }): JSX.Element => {
-  if (props.status === RequestStatus.Accepted) {
+const StatusBadge = (props: { status: RequestStatus | null }): JSX.Element => {
+  if (props.status === RequestStatus.ACCEPTED) {
     return (
       <Badge colorScheme="green" borderRadius="full" px="2" ml="2">
         Accepted
       </Badge>
     )
   }
-  if (props.status === RequestStatus.Declined) {
+  if (props.status === RequestStatus.DECLINED) {
     return (
       <Badge colorScheme="red" borderRadius="full" px="2" ml="2">
         Declined
       </Badge>
     )
   }
-  if (props.status === RequestStatus.Canceled) {
+  if (props.status === RequestStatus.CANCELED) {
     return (
       <Badge colorScheme="gray" borderRadius="full" px="2" ml="2">
         Canceled
@@ -62,7 +64,7 @@ const RequestItem = (props: Props) => {
             </Box>
           </Box>
           <Box mt="1" fontWeight="semibold" as="h4" lineHeight="tight" isTruncated>
-            {props.request.place.title}
+            {(props.request as any).place.title}
           </Box>
           <Box>
             {props.request.adults} adults &bull; {props.request.children} children

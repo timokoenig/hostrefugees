@@ -1,11 +1,11 @@
 import { Box, Button, Center, Flex, Heading, HStack, Link } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React from 'react'
-import { User } from 'utils/model'
+import { MappedUser } from 'utils/models'
 import Menu from './menu'
 
 type Props = {
-  user?: User
+  user?: MappedUser
 }
 
 export default function Navigation(props: Props) {

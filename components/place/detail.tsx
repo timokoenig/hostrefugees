@@ -15,11 +15,11 @@ import {
 import moment from 'moment'
 import { useRouter } from 'next/router'
 import React from 'react'
-import { Place } from 'utils/model'
+import { MappedPlace } from 'utils/models'
 import Button from '../common/button'
 
 type Props = {
-  place: Place
+  place: MappedPlace
   enableRequest: boolean
 }
 

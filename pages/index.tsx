@@ -1,14 +1,17 @@
 import Layout from 'components/layout'
 import Head from 'next/head'
+import prisma from 'prisma/client'
 import React from 'react'
-import { User } from 'utils/model'
+import { mapPlace } from 'utils/mapper'
+import { MappedPlace, MappedUser } from 'utils/models'
 import { withSessionSsr } from 'utils/session'
 import Hero from '../components/hero'
 import Introduction from '../components/introduction'
 import MapPlaces from '../components/map-places'
 
 type Props = {
-  user?: User
+  user?: MappedUser
+  places: MappedPlace[]
 }
 
 const IndexPage = (props: Props) => {
@@ -19,15 +22,31 @@ const IndexPage = (props: Props) => {
       </Head>
       <Hero />
       <Introduction />
-      <MapPlaces places={[]} />
+      <MapPlaces places={props.places} />
     </Layout>
   )
 }
 
 export const getServerSideProps = withSessionSsr(async function getServerSideProps(context) {
+  const places = await prisma.place.findMany({
+    where: {
+      approved: true,
+      active: true,
+    },
+    include: {
+      author: {
+        select: {
+          id: true,
+          firstname: true,
+          languages: true,
+        },
+      },
+    },
+  })
   return {
     props: {
       user: context.req.session.user ?? null,
+      places: places.map(mapPlace),
     },
   }
 })

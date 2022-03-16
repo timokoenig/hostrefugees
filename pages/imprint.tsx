@@ -1,12 +1,12 @@
 import { Box, Container, Heading, Text } from '@chakra-ui/react'
-import { User } from '@prisma/client'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+import { MappedUser } from 'utils/models'
 import { withSessionSsr } from 'utils/session'
 import Layout from '../components/layout'
 
 type Props = {
-  user?: User
+  user?: MappedUser
 }
 
 const ImprintPage = (props: Props) => {
