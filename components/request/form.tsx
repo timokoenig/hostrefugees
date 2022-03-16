@@ -51,7 +51,10 @@ const Form = (props: Props) => {
           <Box py="2">
             <Flex>
               <Text flex="1" fontSize="lg">
-                Adults (max {props.place.adults})
+                Adults{' '}
+                <Text as="span" fontSize="xs" fontWeight="bold">
+                  (max {props.place.adults})
+                </Text>
               </Text>
               <NumberInput
                 active={true}
@@ -65,7 +68,10 @@ const Form = (props: Props) => {
           <Box>
             <Flex>
               <Text flex="1" fontSize="lg">
-                Children (max {props.place.children})
+                Children{' '}
+                <Text as="span" fontSize="xs" fontWeight="bold">
+                  (max {props.place.children})
+                </Text>
               </Text>
               <NumberInput
                 active={true}

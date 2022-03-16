@@ -12,6 +12,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import prisma from 'prisma/client'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { MappedUser } from 'utils/models'
 import { withSessionSsr } from 'utils/session'
 import StatusGuest from '../../../components/dashboard/request/status-guest'
@@ -23,6 +24,7 @@ type Props = {
 }
 
 const RequestPage = (props: Props) => {
+  const { t } = useTranslation('common')
   const router = useRouter()
   return (
     <Layout user={props.user}>
@@ -72,7 +74,9 @@ const RequestPage = (props: Props) => {
               <Text>
                 Guest Languages:{' '}
                 <Text as="span" fontWeight="semibold">
-                  {(props.request as any).author.languages.join(', ')}
+                  {(props.request as any).author.languages
+                    .map(lang => t(`lang.${lang}`))
+                    .join(', ')}
                 </Text>
               </Text>
             </Box>
