@@ -53,7 +53,7 @@ const FilterModal = (props: Props) => {
             />
           </Flex>
           <Flex py="5">
-            <Text flex="1" fontSize="lg">
+            <Text flex="1" fontSize="lg" pr="10">
               City
             </Text>
             <Input
