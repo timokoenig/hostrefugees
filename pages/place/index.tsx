@@ -1,8 +1,10 @@
 import { Box, Button, Container, Heading, List, SimpleGrid, useDisclosure } from '@chakra-ui/react'
+import { User } from '@prisma/client'
 import PlaceItem from 'components/place/item'
 import Map from 'components/place/map'
+import prisma from 'prisma/client'
 import React from 'react'
-import { BathroomType, Place, PlaceType, User, UserRole } from 'utils/model'
+import { MappedPlace, mapPlace } from 'utils/mapper'
 import { withSessionSsr } from 'utils/session'
 import Layout from '../../components/layout'
 import FilterModal from '../../components/place/filter-modal'
@@ -10,6 +12,7 @@ import { app, setFilter } from '../../state/app'
 
 type Props = {
   user?: User
+  places: MappedPlace[]
 }
 
 const PlacePage = (props: Props) => {
@@ -23,53 +26,22 @@ const PlacePage = (props: Props) => {
     return count
   })()
 
-  const places: Place[] = [
-    {
-      id: '1',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      author: {
-        id: '1',
-        firstname: '',
-        lastname: '',
-        email: '',
-        password: '',
-        role: UserRole.Guest,
-        languages: [],
-      },
-      title: '1 Bedroom Apartment',
-      addressCity: 'Hamburg',
-      rooms: 1,
-      beds: 1,
-      approved: true,
-      active: true,
-      description: '',
-      type: PlaceType.Private,
-      bathroom: BathroomType.Shared,
-      adults: 1,
-      children: 0,
-      addressStreet: '',
-      addressHouseNumber: '',
-      addressCountry: '',
-      addressZip: '',
-      houseRules: '',
-      availabilityStart: new Date(),
-    },
-  ]
-
-  const filterPlace = (place: Place): boolean => {
+  const filterPlace = (place: MappedPlace): boolean => {
     if (appState.filter.adults !== null && place.adults < appState.filter.adults) {
       return false
     }
     if (appState.filter.children !== null && place.children < appState.filter.children) {
       return false
     }
-    if (appState.filter.city !== null && !place.addressCity.includes(appState.filter.city)) {
+    if (
+      appState.filter.city !== null &&
+      !place.addressCity.toLowerCase().includes(appState.filter.city.toLowerCase())
+    ) {
       return false
     }
     return true
   }
-  const filteredPlaces = places.filter(filterPlace)
+  const filteredPlaces = props.places.filter(filterPlace)
 
   return (
     <Layout user={props.user}>
@@ -87,10 +59,7 @@ const PlacePage = (props: Props) => {
             ))}
           </List>
           <Box>
-            <Map
-              places={places}
-              onClick={() => setFilter({ ...appState.filter, city: 'Berlin' })}
-            />
+            <Map places={props.places} onClick={city => setFilter({ ...appState.filter, city })} />
           </Box>
         </SimpleGrid>
       </Container>
@@ -105,9 +74,16 @@ const PlacePage = (props: Props) => {
 }
 
 export const getServerSideProps = withSessionSsr(async function getServerSideProps(context) {
+  const places = await prisma.place.findMany({
+    where: {
+      approved: true,
+      active: true,
+    },
+  })
   return {
     props: {
       user: context.req.session.user ?? null,
+      places: places.map(mapPlace),
     },
   }
 })

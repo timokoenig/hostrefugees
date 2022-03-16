@@ -1,10 +1,10 @@
 import { ArrowBackIcon } from '@chakra-ui/icons'
 import { Box, Button, Container, GridItem, Heading, SimpleGrid, Text } from '@chakra-ui/react'
+import { User, UserRole } from '@prisma/client'
 import Layout from 'components/layout'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React from 'react'
-import { User, UserRole } from 'utils/model'
 import { withSessionSsr } from 'utils/session'
 import Form from '../../../components/dashboard/place/form'
 
@@ -42,7 +42,7 @@ const NewPage = (props: Props) => {
 }
 
 export const getServerSideProps = withSessionSsr(async function getServerSideProps(context) {
-  if (context.req.session.user === undefined || context.req.session.user?.role === UserRole.Guest) {
+  if (context.req.session.user === undefined || context.req.session.user?.role === UserRole.GUEST) {
     return {
       redirect: {
         destination: '/',

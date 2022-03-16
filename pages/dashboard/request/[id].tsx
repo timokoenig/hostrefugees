@@ -1,12 +1,12 @@
 import { ArrowBackIcon } from '@chakra-ui/icons'
 import { Box, Button, Container, SimpleGrid, Text, useColorModeValue } from '@chakra-ui/react'
+import { Request, User, UserRole } from '@prisma/client'
 import Layout from 'components/layout'
 import Summary from 'components/place/summary'
 import moment from 'moment'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React from 'react'
-import { Request, User, UserRole } from 'utils/model'
 import { withSessionSsr } from 'utils/session'
 import StatusGuest from '../../../components/dashboard/request/status-guest'
 import StatusHost from '../../../components/dashboard/request/status-host'
@@ -32,7 +32,7 @@ const RequestPage = (props: Props) => {
         </Box>
         <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={5}>
           <Box>
-            <Summary place={props.request.place} />
+            <Summary place={props.request.placeId} />
           </Box>
           <Box>
             <Box mb="5">
@@ -66,7 +66,7 @@ const RequestPage = (props: Props) => {
               <Text>
                 Guest Languages:{' '}
                 <Text as="span" fontWeight="semibold">
-                  {props.request.author.languages.join(', ')}
+                  {/* {props.request.author.languages.join(', ')} */}
                 </Text>
               </Text>
             </Box>
@@ -84,8 +84,8 @@ const RequestPage = (props: Props) => {
               <Text>{props.request.about.length == 0 ? 'N/A' : props.request.about}</Text>
             </Box>
 
-            {props.user.role === UserRole.Host && <StatusHost status={props.request.status} />}
-            {props.user.role === UserRole.Guest && <StatusGuest status={props.request.status} />}
+            {props.user.role === UserRole.HOST && <StatusHost status={props.request.status} />}
+            {props.user.role === UserRole.GUEST && <StatusGuest status={props.request.status} />}
           </Box>
         </SimpleGrid>
       </Container>
@@ -114,7 +114,7 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
           lastname: '',
           email: '',
           password: '',
-          role: UserRole.Guest,
+          role: UserRole.GUEST,
           languages: [],
         },
         place: {
@@ -127,7 +127,7 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
             lastname: '',
             email: '',
             password: '',
-            role: UserRole.Guest,
+            role: UserRole.GUEST,
             languages: [],
           },
           title: '1 Bedroom Apartment',

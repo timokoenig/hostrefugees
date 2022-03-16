@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { User, UserRole } from 'utils/model'
+import prisma from 'prisma/client'
 import { withSessionRoute } from 'utils/session'
 
 interface Request extends NextApiRequest {
@@ -14,41 +14,19 @@ type Response = {
   message?: string
 }
 
-const Users: User[] = [
-  {
-    id: '1',
-    firstname: 'admin',
-    lastname: 'ADMIN',
-    email: 'admin@hostrefugees.eu',
-    password: 'admin',
-    role: UserRole.Admin,
-  },
-  {
-    id: '2',
-    firstname: 'guest',
-    lastname: 'GUEST',
-    email: 'guest@hostrefugees.eu',
-    password: 'guest',
-    role: UserRole.Guest,
-  },
-  {
-    id: '3',
-    firstname: 'host',
-    lastname: 'HOST',
-    email: 'host@hostrefugees.eu',
-    password: 'host',
-    role: UserRole.Host,
-  },
-]
-
 async function handler(req: Request, res: NextApiResponse<Response>) {
   if (req.method !== 'POST') {
     res.status(400).send({ ok: false, message: 'Only POST requests allowed' })
     return
   }
 
-  const user = Users.find(u => u.email === req.body.email && u.password === req.body.password)
-  if (user === undefined) {
+  const user = await prisma.user.findFirst({
+    where: {
+      email: req.body.email,
+      password: req.body.password,
+    },
+  })
+  if (user === null) {
     res.status(400).send({ ok: false, message: 'Wrong username or password' })
     return
   }

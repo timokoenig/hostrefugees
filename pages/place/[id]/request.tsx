@@ -1,9 +1,9 @@
 import { ArrowBackIcon } from '@chakra-ui/icons'
 import { Box, Button, Container, SimpleGrid } from '@chakra-ui/react'
+import { BathroomType, Place, PlaceType, User, UserRole } from '@prisma/client'
 import Form from 'components/request/form'
 import { useRouter } from 'next/router'
 import React from 'react'
-import { BathroomType, Place, PlaceType, User, UserRole } from 'utils/model'
 import { withSessionSsr } from 'utils/session'
 import Layout from '../../../components/layout'
 import Summary from '../../../components/place/summary'
@@ -44,7 +44,7 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
       },
     }
   }
-  if (context.req.session.user?.role !== UserRole.Guest) {
+  if (context.req.session.user?.role !== UserRole.GUEST) {
     // Allow only guests to request a stay
     return {
       redirect: {
@@ -66,7 +66,7 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
           lastname: '',
           email: '',
           password: '',
-          role: UserRole.Guest,
+          role: UserRole.GUEST,
           languages: [],
         },
         title: '1 Bedroom Apartment',
@@ -76,8 +76,8 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
         approved: true,
         active: true,
         description: '',
-        type: PlaceType.Private,
-        bathroom: BathroomType.Shared,
+        type: PlaceType.PRIVATE,
+        bathroom: BathroomType.SHARED,
         adults: 1,
         children: 0,
         addressStreet: '',

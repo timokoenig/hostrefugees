@@ -47,7 +47,7 @@ https://github.com/vvo/iron-session
 ## Prisma
 
 // To migrate the schema file and generate the client
-npx prisma migrate dev
+npx prisma migrate dev --skip-seed
 
 // To generate the client
 npx prisma generate

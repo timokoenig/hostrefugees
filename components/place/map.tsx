@@ -1,32 +1,50 @@
 import { Stack } from '@chakra-ui/react'
 import Marker from 'components/map/marker'
 import GoogleMapReact from 'google-map-react'
+import _ from 'lodash'
 import React from 'react'
-import { Place } from 'utils/model'
+import { MappedPlace } from 'utils/mapper'
 
 type Props = {
-  places: Place[]
-  onClick: () => void
+  places: MappedPlace[]
+  onClick: (city: string) => void
+}
+
+type MarkerItem = {
+  city: string
+  lat: string
+  lng: string
 }
 
 export default function Map(props: Props) {
-  const markerItems: { title: string; lat: number; lng: number }[] = props.places.map(place => {
+  const markerItems: MarkerItem[] = props.places.map(place => {
     return {
-      title: place.addressCity,
-      lat: place.addressCityLat ?? 0.0,
-      lng: place.addressCityLng ?? 0.0,
+      city: place.addressCity,
+      lat: place.addressCityLat ?? '0.0',
+      lng: place.addressCityLng ?? '0.0',
     }
   })
+  const groupedItems = _.groupBy(markerItems, 'city')
+
   return (
     <Stack height="80vh">
       <GoogleMapReact
         bootstrapURLKeys={{ key: '' }}
-        defaultCenter={{ lat: 53.551086, lng: 9.993682 }}
-        defaultZoom={11}
+        defaultCenter={{ lat: 51.1657, lng: 10.4515 }}
+        defaultZoom={6}
       >
-        {markerItems.map((marker, i) => (
-          <Marker key={i} lat={marker.lat} lng={marker.lng} onClick={props.onClick} />
-        ))}
+        {Object.keys(groupedItems).map(key => {
+          const items = groupedItems[key] as MarkerItem[]
+          return (
+            <Marker
+              key={key}
+              title={items.length.toString()}
+              lat={items[0].lat}
+              lng={items[0].lng}
+              onClick={() => props.onClick(key)}
+            />
+          )
+        })}
       </GoogleMapReact>
     </Stack>
   )

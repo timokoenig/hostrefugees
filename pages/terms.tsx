@@ -1,6 +1,6 @@
 import { Container, Heading } from '@chakra-ui/react'
+import { User } from '@prisma/client'
 import React from 'react'
-import { User } from 'utils/model'
 import { withSessionSsr } from 'utils/session'
 import Layout from '../components/layout'
 

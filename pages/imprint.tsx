@@ -1,7 +1,7 @@
 import { Box, Container, Heading, Text } from '@chakra-ui/react'
+import { User } from '@prisma/client'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { User } from 'utils/model'
 import { withSessionSsr } from 'utils/session'
 import Layout from '../components/layout'
 

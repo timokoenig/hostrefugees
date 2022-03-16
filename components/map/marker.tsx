@@ -2,8 +2,9 @@ import { Box, Text } from '@chakra-ui/react'
 import React from 'react'
 
 type Props = {
-  lat: number
-  lng: number
+  title: string
+  lat: string
+  lng: string
   onClick?: () => void
 }
 
@@ -28,7 +29,7 @@ const Marker = (props: Props) => (
       onClick={props.onClick}
     >
       <Text color="white" fontSize="lg" fontWeight="bold" height="100%" lineHeight="8">
-        1
+        {props.title}
       </Text>
     </Box>
     <Box backgroundColor="blue.500" width="10" height="10" borderRadius="20" opacity="0.5" />

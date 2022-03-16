@@ -1,10 +1,10 @@
 import { Box, Container, Heading, Text } from '@chakra-ui/react'
+import { BathroomType, Place, PlaceType, Request, User, UserRole } from '@prisma/client'
 import Guest from 'components/dashboard/guest'
 import Host from 'components/dashboard/host'
 import Layout from 'components/layout'
 import Head from 'next/head'
 import React from 'react'
-import { BathroomType, Place, PlaceType, Request, User, UserRole } from 'utils/model'
 import { withSessionSsr } from 'utils/session'
 
 type Props = {
@@ -28,8 +28,8 @@ const DashboardPage = (props: Props) => {
             </Text>
           </Heading>
         </Box>
-        {props.user.role === UserRole.Guest && <Guest requests={props.requests} />}
-        {props.user.role === UserRole.Host && (
+        {props.user.role === UserRole.GUEST && <Guest requests={props.requests} />}
+        {props.user.role === UserRole.HOST && (
           <Host places={props.places} requests={props.requests} />
         )}
       </Container>
@@ -60,7 +60,7 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
             lastname: '',
             email: '',
             password: '',
-            role: UserRole.Guest,
+            role: UserRole.GUEST,
             languages: [],
           },
           title: '1 Bedroom Apartment',
@@ -70,8 +70,8 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
           approved: true,
           active: true,
           description: '',
-          type: PlaceType.Private,
-          bathroom: BathroomType.Shared,
+          type: PlaceType.PRIVATE,
+          bathroom: BathroomType.SHARED,
           adults: 1,
           children: 0,
           addressStreet: '',
@@ -93,7 +93,7 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
             lastname: '',
             email: '',
             password: '',
-            role: UserRole.Guest,
+            role: UserRole.GUEST,
             languages: [],
           },
           place: {
@@ -106,7 +106,7 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
               lastname: '',
               email: '',
               password: '',
-              role: UserRole.Guest,
+              role: UserRole.GUEST,
               languages: [],
             },
             title: '1 Bedroom Apartment',
@@ -116,8 +116,8 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
             approved: true,
             active: true,
             description: '',
-            type: PlaceType.Private,
-            bathroom: BathroomType.Shared,
+            type: PlaceType.PRIVATE,
+            bathroom: BathroomType.SHARED,
             adults: 1,
             children: 0,
             addressStreet: '',

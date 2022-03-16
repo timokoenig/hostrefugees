@@ -1,5 +1,5 @@
+import { RequestStatus } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { RequestStatus } from 'utils/model'
 import { withSessionRoute } from 'utils/session'
 
 interface Request extends NextApiRequest {

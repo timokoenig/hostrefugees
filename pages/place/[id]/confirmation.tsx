@@ -1,7 +1,7 @@
 import { Button, Center, Container, Heading, Image, Text } from '@chakra-ui/react'
+import { User } from '@prisma/client'
 import { useRouter } from 'next/router'
 import React from 'react'
-import { User } from 'utils/model'
 import { withSessionSsr } from 'utils/session'
 import Layout from '../../../components/layout'
 

@@ -1,9 +1,9 @@
 import { ArrowBackIcon } from '@chakra-ui/icons'
 import { Box, Button, Center } from '@chakra-ui/react'
+import { BathroomType, Place, PlaceType, User, UserRole } from '@prisma/client'
 import Detail from 'components/place/detail'
 import { useRouter } from 'next/router'
 import React from 'react'
-import { BathroomType, Place, PlaceType, User, UserRole } from 'utils/model'
 import { withSessionSsr } from 'utils/session'
 import Layout from '../../components/layout'
 
@@ -29,7 +29,7 @@ const PlaceDetailPage = (props: Props) => {
           </Box>
           <Detail
             place={props.place}
-            enableRequest={!props.user || props.user.role !== UserRole.Host}
+            enableRequest={!props.user || props.user.role !== UserRole.HOST}
           />
         </Box>
       </Center>
@@ -51,7 +51,7 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
           lastname: '',
           email: '',
           password: '',
-          role: UserRole.Guest,
+          role: UserRole.GUEST,
           languages: [],
         },
         title: '1 Bedroom Apartment',
@@ -61,8 +61,8 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
         approved: true,
         active: true,
         description: '',
-        type: PlaceType.Private,
-        bathroom: BathroomType.Shared,
+        type: PlaceType.PRIVATE,
+        bathroom: BathroomType.SHARED,
         adults: 1,
         children: 0,
         addressStreet: '',
