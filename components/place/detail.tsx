@@ -14,6 +14,7 @@ import {
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { formatAvailability, formatPlaceType } from 'utils/formatter'
 import { MappedPlace } from 'utils/models'
 import Button from '../common/button'
@@ -36,6 +37,7 @@ const PlaceholderImage = () => (
 )
 
 export default function Detail(props: Props) {
+  const { t } = useTranslation('common')
   const router = useRouter()
   return (
     <Container maxW="7xl">
@@ -130,7 +132,7 @@ export default function Detail(props: Props) {
                   <Text as="span" fontWeight="bold">
                     Host Language:
                   </Text>{' '}
-                  {props.place.author.languages.join(', ')}
+                  {props.place.author.languages.map(lang => t(`lang.${lang}`)).join(', ')}
                 </ListItem>
               </List>
             </Box>
