@@ -75,7 +75,7 @@ const RequestPage = (props: Props) => {
                 Guest Languages:{' '}
                 <Text as="span" fontWeight="semibold">
                   {(props.request as any).author.languages
-                    .map(lang => t(`lang.${lang}`))
+                    .map((lang: string) => t(`lang.${lang}`))
                     .join(', ')}
                 </Text>
               </Text>
