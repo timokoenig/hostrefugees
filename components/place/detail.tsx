@@ -12,7 +12,6 @@ import {
   Text,
   useColorModeValue,
 } from '@chakra-ui/react'
-import moment from 'moment'
 import { useRouter } from 'next/router'
 import React from 'react'
 import { MappedPlace } from 'utils/models'
@@ -61,14 +60,7 @@ export default function Detail(props: Props) {
               {props.place.title}
             </Heading>
             <Text color={useColorModeValue('gray.900', 'gray.400')} fontWeight={300} fontSize="2xl">
-              Available from{' '}
-              <Text as="span" fontWeight="semibold">
-                {moment(props.place.availabilityStart).format('DD.MM.YYYY')}
-              </Text>{' '}
-              to{' '}
-              <Text as="span" fontWeight="semibold">
-                {moment(props.place.availabilityEnd).format('DD.MM.YYYY')}
-              </Text>
+              {props.place.availabilityFormatted}
             </Text>
           </Box>
 
@@ -94,7 +86,7 @@ export default function Detail(props: Props) {
                   <Text as="span" fontWeight="bold">
                     Type of place
                   </Text>{' '}
-                  {props.place.type}
+                  {props.place.typeFormatted}
                 </ListItem>
                 <ListItem>
                   <Text as="span" fontWeight="bold">

@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { User } from '@prisma/client'
+import { Place, User } from '@prisma/client'
+import { formatAvailability, formatPlaceType } from './formatter'
 import { MappedPlace, MappedUser } from './models'
 
 export const mapUser = (prismaUser: User): MappedUser => {
@@ -29,6 +31,7 @@ export const mapPlace = (prismaPlace: any): MappedPlace => {
     title: prismaPlace.title,
     description: prismaPlace.description,
     type: prismaPlace.type,
+    typeFormatted: formatPlaceType(prismaPlace as Place),
     rooms: prismaPlace.rooms,
     beds: prismaPlace.beds,
     bathroom: prismaPlace.bathroom,
@@ -40,5 +43,6 @@ export const mapPlace = (prismaPlace: any): MappedPlace => {
     houseRules: prismaPlace.houseRules,
     availabilityStart: prismaPlace.availabilityStart,
     availabilityEnd: prismaPlace.availabilityEnd,
+    availabilityFormatted: formatAvailability(prismaPlace as Place),
   }
 }
