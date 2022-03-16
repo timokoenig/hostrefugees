@@ -36,7 +36,7 @@ const RequestPage = (props: Props) => {
       <Container maxW="7xl">
         <Box mb="5">
           <Button variant="ghost" leftIcon={<ArrowBackIcon />} onClick={router.back}>
-            Place Title
+            {props.place.title}
           </Button>
         </Box>
         <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={5}>
