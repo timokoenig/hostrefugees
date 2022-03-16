@@ -4,11 +4,8 @@ import Map from 'components/place/map'
 import React from 'react'
 import { BathroomType, Place, PlaceType, User, UserRole } from 'utils/model'
 import { withSessionSsr } from 'utils/session'
-import Footer from '../../components/footer'
 import Layout from '../../components/layout'
-import Navigation from '../../components/navigation'
 import FilterModal from '../../components/place/filter-modal'
-import Spacer from '../../components/spacer'
 import { app, setFilter } from '../../state/app'
 
 type Props = {
@@ -75,8 +72,7 @@ const PlacePage = (props: Props) => {
   const filteredPlaces = places.filter(filterPlace)
 
   return (
-    <Layout>
-      <Navigation user={props.user} />
+    <Layout user={props.user}>
       <Container maxW="7xl">
         <Heading mb="10">
           {filteredPlaces.length} Places Available{' '}
@@ -98,8 +94,6 @@ const PlacePage = (props: Props) => {
           </Box>
         </SimpleGrid>
       </Container>
-      <Spacer />
-      <Footer />
       <FilterModal
         filter={appState.filter}
         onChange={setFilter}

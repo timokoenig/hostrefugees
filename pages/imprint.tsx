@@ -3,10 +3,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { User } from 'utils/model'
 import { withSessionSsr } from 'utils/session'
-import Footer from '../components/footer'
 import Layout from '../components/layout'
-import Navigation from '../components/navigation'
-import Spacer from '../components/spacer'
 
 type Props = {
   user?: User
@@ -15,8 +12,7 @@ type Props = {
 const ImprintPage = (props: Props) => {
   const { t } = useTranslation('common')
   return (
-    <Layout>
-      <Navigation user={props.user} />
+    <Layout user={props.user}>
       <Container maxW="7xl">
         <Box align="center">
           <Heading>{t('imprint')}</Heading>
@@ -39,8 +35,6 @@ const ImprintPage = (props: Props) => {
           </Text>
         </Box>
       </Container>
-      <Spacer />
-      <Footer />
     </Layout>
   )
 }

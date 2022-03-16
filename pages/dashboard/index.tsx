@@ -2,13 +2,10 @@ import { Box, Container, Heading, Text } from '@chakra-ui/react'
 import Guest from 'components/dashboard/guest'
 import Host from 'components/dashboard/host'
 import Layout from 'components/layout'
-import Spacer from 'components/spacer'
 import Head from 'next/head'
 import React from 'react'
 import { BathroomType, Place, PlaceType, Request, User, UserRole } from 'utils/model'
 import { withSessionSsr } from 'utils/session'
-import Footer from '../../components/footer'
-import Navigation from '../../components/navigation'
 
 type Props = {
   user: User
@@ -18,30 +15,25 @@ type Props = {
 
 const DashboardPage = (props: Props) => {
   return (
-    <>
+    <Layout user={props.user}>
       <Head>
         <title>HostRefugees</title>
       </Head>
-      <Layout>
-        <Navigation user={props.user} />
-        <Container maxW="7xl">
-          <Box align="center">
-            <Heading as="h2" size="xl">
-              Welcome{' '}
-              <Text as="span" color="blue.400">
-                {props.user.firstname}
-              </Text>
-            </Heading>
-          </Box>
-          {props.user.role === UserRole.Guest && <Guest requests={props.requests} />}
-          {props.user.role === UserRole.Host && (
-            <Host places={props.places} requests={props.requests} />
-          )}
-        </Container>
-        <Spacer />
-        <Footer />
-      </Layout>
-    </>
+      <Container maxW="7xl">
+        <Box align="center">
+          <Heading as="h2" size="xl">
+            Welcome{' '}
+            <Text as="span" color="blue.400">
+              {props.user.firstname}
+            </Text>
+          </Heading>
+        </Box>
+        {props.user.role === UserRole.Guest && <Guest requests={props.requests} />}
+        {props.user.role === UserRole.Host && (
+          <Host places={props.places} requests={props.requests} />
+        )}
+      </Container>
+    </Layout>
   )
 }
 

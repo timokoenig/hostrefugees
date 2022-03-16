@@ -2,8 +2,7 @@ import { Box, Container, Heading, Link, List, ListItem, Text } from '@chakra-ui/
 import React, { useEffect, useState } from 'react'
 import { User } from 'utils/model'
 import { withSessionSsr } from 'utils/session'
-import Footer from '../components/footer'
-import Navigation from '../components/navigation'
+import Layout from '../components/layout'
 
 type PrivacyProps = {
   contactName: string
@@ -1339,8 +1338,7 @@ const PrivacyPage = (props: Props) => {
   }
 
   return (
-    <>
-      <Navigation user={props.user} />
+    <Layout user={props.user}>
       <Container maxW="7xl">
         <Box textAlign="left">
           <Heading as="h1" size="lg" mb="5">
@@ -1349,8 +1347,7 @@ const PrivacyPage = (props: Props) => {
           {lang == 'de' ? <PrivacyDE {...privacyProps} /> : <PrivacyEN {...privacyProps} />}
         </Box>
       </Container>
-      <Footer />
-    </>
+    </Layout>
   )
 }
 

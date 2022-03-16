@@ -3,10 +3,7 @@ import { useRouter } from 'next/router'
 import React from 'react'
 import { User } from 'utils/model'
 import { withSessionSsr } from 'utils/session'
-import Footer from '../../../components/footer'
 import Layout from '../../../components/layout'
-import Navigation from '../../../components/navigation'
-import Spacer from '../../../components/spacer'
 
 type Props = {
   user?: User
@@ -15,8 +12,7 @@ type Props = {
 const RequestPage = (props: Props) => {
   const router = useRouter()
   return (
-    <Layout>
-      <Navigation user={props.user} />
+    <Layout user={props.user}>
       <Container maxW="7xl" textAlign="center" maxWidth="700">
         <Center>
           <Image src="/svg/undraw_completing_re_i7ap.svg" maxWidth="250" />
@@ -31,8 +27,6 @@ const RequestPage = (props: Props) => {
           Check out the StarterKit for Germany
         </Button>
       </Container>
-      <Spacer />
-      <Footer />
     </Layout>
   )
 }

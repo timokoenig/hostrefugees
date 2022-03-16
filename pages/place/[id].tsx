@@ -5,10 +5,7 @@ import { useRouter } from 'next/router'
 import React from 'react'
 import { BathroomType, Place, PlaceType, User, UserRole } from 'utils/model'
 import { withSessionSsr } from 'utils/session'
-import Footer from '../../components/footer'
 import Layout from '../../components/layout'
-import Navigation from '../../components/navigation'
-import Spacer from '../../components/spacer'
 
 type Props = {
   user?: User
@@ -18,8 +15,7 @@ type Props = {
 const PlaceDetailPage = (props: Props) => {
   const router = useRouter()
   return (
-    <Layout>
-      <Navigation user={props.user} />
+    <Layout user={props.user}>
       <Center>
         <Box maxW="7xl">
           <Box mb="5">
@@ -37,8 +33,6 @@ const PlaceDetailPage = (props: Props) => {
           />
         </Box>
       </Center>
-      <Spacer />
-      <Footer />
     </Layout>
   )
 }
