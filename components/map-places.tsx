@@ -2,6 +2,7 @@ import { Box, Container, Heading, List, ListItem, SimpleGrid, Stack, Text } from
 import GoogleMapReact from 'google-map-react'
 import { useRouter } from 'next/router'
 import React from 'react'
+import { BathroomType, Place, PlaceType, UserRole } from '../utils/model'
 import PlaceItem from './place/item'
 
 const AnyReactComponent = ({ lat, lng }: { lat: number; lng: number }) => (
@@ -32,7 +33,39 @@ const AnyReactComponent = ({ lat, lng }: { lat: number; lng: number }) => (
 )
 
 export default function MapPlaces() {
-  const places = [1, 2, 3, 4]
+  const places: Place[] = [
+    {
+      id: '1',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      author: {
+        id: '1',
+        firstname: '',
+        lastname: '',
+        email: '',
+        password: '',
+        role: UserRole.Guest,
+        languages: [],
+      },
+      title: '1 Bedroom Apartment',
+      addressCity: 'Hamburg',
+      rooms: 1,
+      beds: 1,
+      approved: true,
+      active: true,
+      description: '',
+      type: PlaceType.Private,
+      bathroom: BathroomType.Shared,
+      adults: 1,
+      children: 0,
+      addressStreet: '',
+      addressHouseNumber: '',
+      addressCountry: '',
+      addressZip: '',
+      houseRules: '',
+      availabilityStart: new Date(),
+    },
+  ]
   return (
     <Container maxW="7xl" py={10}>
       <Box mb="5" textAlign="center">
@@ -41,8 +74,8 @@ export default function MapPlaces() {
       <SimpleGrid templateColumns={{ sm: '1fr', md: '1fr 1fr' }} spacing={8}>
         <Stack spacing={6}>
           <List spacing="2">
-            {places.map((_, i) => (
-              <PlaceItem key={i} />
+            {places.map((place, i) => (
+              <PlaceItem key={i} place={place} />
             ))}
             <MoreItem />
           </List>

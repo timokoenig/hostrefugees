@@ -63,7 +63,10 @@ export type Request = {
   updatedAt: Date
   author: User
   place: Place
+  adults: number
+  children: number
   startDate: Date
   endDate?: Date
-  Status?: RequestStatus
+  about: string
+  status?: RequestStatus
 }

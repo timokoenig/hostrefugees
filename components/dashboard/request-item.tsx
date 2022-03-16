@@ -2,18 +2,45 @@ import { Badge, Box, ListItem } from '@chakra-ui/react'
 import moment from 'moment'
 import { useRouter } from 'next/router'
 import React from 'react'
+import { Request, RequestStatus } from 'utils/model'
 
-const RequestItem = () => {
-  const router = useRouter()
-  const property = {
-    adults: 3,
-    children: 2,
-    title: 'Modern home in city center in the heart of historic Los Angeles',
-    date: new Date(),
+type Props = {
+  request: Request
+}
+
+const StatusBadge = (props: { status: RequestStatus | undefined }): JSX.Element => {
+  if (props.status === RequestStatus.Accepted) {
+    return (
+      <Badge colorScheme="green" borderRadius="full" px="2" ml="2">
+        Accepted
+      </Badge>
+    )
   }
-
+  if (props.status === RequestStatus.Declined) {
+    return (
+      <Badge colorScheme="red" borderRadius="full" px="2" ml="2">
+        Declined
+      </Badge>
+    )
+  }
+  if (props.status === RequestStatus.Canceled) {
+    return (
+      <Badge colorScheme="gray" borderRadius="full" px="2" ml="2">
+        Canceled
+      </Badge>
+    )
+  }
   return (
-    <ListItem onClick={() => router.push(`/dashboard/request/${'1'}`)}>
+    <Badge colorScheme="yellow" borderRadius="full" px="2" ml="2">
+      Waiting
+    </Badge>
+  )
+}
+
+const RequestItem = (props: Props) => {
+  const router = useRouter()
+  return (
+    <ListItem onClick={() => router.push(`/dashboard/request/${props.request.id}`)}>
       <Box
         borderWidth="1px"
         borderRadius="lg"
@@ -30,23 +57,15 @@ const RequestItem = () => {
               fontSize="xs"
               textTransform="uppercase"
             >
-              {moment(property.date).format('DD.MM.YYYY HH:mm')}{' '}
-              <Badge colorScheme="green" borderRadius="full" px="2" ml="2">
-                Accepted
-              </Badge>
-              <Badge colorScheme="red" borderRadius="full" px="2" ml="2">
-                Declined
-              </Badge>
-              <Badge colorScheme="yellow" borderRadius="full" px="2" ml="2">
-                Waiting
-              </Badge>
+              {moment(props.request.createdAt).format('DD.MM.YYYY HH:mm')}{' '}
+              <StatusBadge status={props.request.status} />
             </Box>
           </Box>
           <Box mt="1" fontWeight="semibold" as="h4" lineHeight="tight" isTruncated>
-            {property.title}
+            {props.request.place.title}
           </Box>
           <Box>
-            {property.adults} adults &bull; {property.children} children
+            {props.request.adults} adults &bull; {props.request.children} children
           </Box>
         </Box>
       </Box>

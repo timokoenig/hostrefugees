@@ -2,7 +2,7 @@ import { Box, Button, Container, Heading, List, SimpleGrid, useDisclosure } from
 import PlaceItem from 'components/place/item'
 import Map from 'components/place/map'
 import React, { useState } from 'react'
-import { User } from 'utils/model'
+import { BathroomType, Place, PlaceType, User, UserRole } from 'utils/model'
 import { withSessionSsr } from 'utils/session'
 import Footer from '../../components/footer'
 import Layout from '../../components/layout'
@@ -24,7 +24,39 @@ const PlacePage = (props: Props) => {
     return count
   })()
 
-  const places = [1, 2, 3, 4]
+  const places: Place[] = [
+    {
+      id: '1',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      author: {
+        id: '1',
+        firstname: '',
+        lastname: '',
+        email: '',
+        password: '',
+        role: UserRole.Guest,
+        languages: [],
+      },
+      title: '1 Bedroom Apartment',
+      addressCity: 'Hamburg',
+      rooms: 1,
+      beds: 1,
+      approved: true,
+      active: true,
+      description: '',
+      type: PlaceType.Private,
+      bathroom: BathroomType.Shared,
+      adults: 1,
+      children: 0,
+      addressStreet: '',
+      addressHouseNumber: '',
+      addressCountry: '',
+      addressZip: '',
+      houseRules: '',
+      availabilityStart: new Date(),
+    },
+  ]
 
   return (
     <Layout>
@@ -38,8 +70,8 @@ const PlacePage = (props: Props) => {
         </Heading>
         <SimpleGrid columns={2} spacing="10">
           <List spacing="5">
-            {places.map(place => (
-              <PlaceItem key={place} />
+            {places.map((place, i) => (
+              <PlaceItem key={i} place={place} />
             ))}
           </List>
           <Box>

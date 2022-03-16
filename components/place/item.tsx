@@ -1,19 +1,16 @@
 import { Box, ListItem } from '@chakra-ui/react'
+import moment from 'moment'
 import { useRouter } from 'next/router'
 import React from 'react'
+import { Place } from 'utils/model'
 
 type Props = {
+  place: Place
   onClick?: () => void
 }
 
 const PlaceItem = (props: Props) => {
   const router = useRouter()
-  const property = {
-    beds: 3,
-    baths: 2,
-    title: 'Modern home in city center in the heart of historic Los Angeles',
-  }
-
   return (
     <ListItem onClick={props.onClick ?? (() => router.push(`/place/${'1'}`))}>
       <Box
@@ -25,24 +22,24 @@ const PlaceItem = (props: Props) => {
       >
         <Box p="6">
           <Box display="flex" alignItems="baseline">
-            {/* <Badge borderRadius="full" px="2" colorScheme="teal">
-              New
-            </Badge> */}
             <Box
               color="gray.500"
               fontWeight="semibold"
               letterSpacing="wide"
               fontSize="xs"
               textTransform="uppercase"
-              // ml="2"
             >
-              {property.beds} beds &bull; {property.baths} baths
+              {props.place.rooms} rooms &bull; {props.place.beds} beds
             </Box>
           </Box>
           <Box mt="1" fontWeight="semibold" as="h4" lineHeight="tight" isTruncated>
-            Hamburg: {property.title}
+            {props.place.addressCity}: {props.place.title}
           </Box>
-          <Box>Available Now</Box>
+          <Box>
+            {moment(props.place.availabilityStart).isBefore(moment())
+              ? 'Available Now'
+              : moment(props.place.availabilityStart).format('DD.MM.YYYY')}
+          </Box>
         </Box>
       </Box>
     </ListItem>

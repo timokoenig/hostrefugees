@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
-import { User } from 'utils/model'
+import { BathroomType, Place, PlaceType, User, UserRole } from 'utils/model'
 import { withSessionSsr } from 'utils/session'
 import Footer from '../../../components/footer'
 import Layout from '../../../components/layout'
@@ -22,7 +22,8 @@ import Summary from '../../../components/place/summary'
 import Spacer from '../../../components/spacer'
 
 type Props = {
-  user?: User
+  user: User
+  place: Place
 }
 
 const RequestPage = (props: Props) => {
@@ -40,7 +41,7 @@ const RequestPage = (props: Props) => {
         </Box>
         <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={5}>
           <Box>
-            <Summary />
+            <Summary place={props.place} />
           </Box>
           <Box>
             <Box mb="5">
@@ -60,17 +61,28 @@ const RequestPage = (props: Props) => {
               <Box py="2">
                 <Flex>
                   <Text flex="1" fontSize="lg">
-                    Adults (max 2)
+                    Adults (max {props.place.adults})
                   </Text>
-                  <NumberInput active={true} value={adults} min={1} onChange={setAdults} />
+                  <NumberInput
+                    active={true}
+                    value={adults}
+                    min={1}
+                    max={props.place.adults}
+                    onChange={setAdults}
+                  />
                 </Flex>
               </Box>
               <Box>
                 <Flex>
                   <Text flex="1" fontSize="lg">
-                    Children (max 1)
+                    Children (max {props.place.children})
                   </Text>
-                  <NumberInput active={true} value={children} onChange={setChildren} />
+                  <NumberInput
+                    active={true}
+                    value={children}
+                    max={props.place.children}
+                    onChange={setChildren}
+                  />
                 </Flex>
               </Box>
             </Box>
@@ -118,14 +130,45 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
   if (context.req.session.user === undefined) {
     return {
       redirect: {
-        destination: `/login?place=1`,
+        destination: `/login?place=${context.query.id}`,
         permanent: false,
       },
     }
   }
   return {
     props: {
-      user: context.req.session.user ?? null,
+      user: context.req.session.user,
+      place: {
+        id: '1',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        author: {
+          id: '1',
+          firstname: '',
+          lastname: '',
+          email: '',
+          password: '',
+          role: UserRole.Guest,
+          languages: [],
+        },
+        title: '1 Bedroom Apartment',
+        addressCity: 'Hamburg',
+        rooms: 1,
+        beds: 1,
+        approved: true,
+        active: true,
+        description: '',
+        type: PlaceType.Private,
+        bathroom: BathroomType.Shared,
+        adults: 1,
+        children: 0,
+        addressStreet: '',
+        addressHouseNumber: '',
+        addressCountry: '',
+        addressZip: '',
+        houseRules: '',
+        availabilityStart: new Date().toISOString(),
+      },
     },
   }
 })

@@ -1,12 +1,96 @@
 import { Box, Button, Container, Flex, Heading, List, SimpleGrid, Stack } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React from 'react'
+import { BathroomType, Place, PlaceType, Request, UserRole } from 'utils/model'
 import PlaceItem from '../place/item'
 import RequestItem from './request-item'
 
 const Host = () => {
   const router = useRouter()
-  const places = [1, 2, 3, 4]
+  const places: Place[] = [
+    {
+      id: '1',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      author: {
+        id: '1',
+        firstname: '',
+        lastname: '',
+        email: '',
+        password: '',
+        role: UserRole.Guest,
+        languages: [],
+      },
+      title: '1 Bedroom Apartment',
+      addressCity: 'Hamburg',
+      rooms: 1,
+      beds: 1,
+      approved: true,
+      active: true,
+      description: '',
+      type: PlaceType.Private,
+      bathroom: BathroomType.Shared,
+      adults: 1,
+      children: 0,
+      addressStreet: '',
+      addressHouseNumber: '',
+      addressCountry: '',
+      addressZip: '',
+      houseRules: '',
+      availabilityStart: new Date(),
+    },
+  ]
+  const requests: Request[] = [
+    {
+      id: '1',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      author: {
+        id: '1',
+        firstname: '',
+        lastname: '',
+        email: '',
+        password: '',
+        role: UserRole.Guest,
+        languages: [],
+      },
+      place: {
+        id: '1',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        author: {
+          id: '1',
+          firstname: '',
+          lastname: '',
+          email: '',
+          password: '',
+          role: UserRole.Guest,
+          languages: [],
+        },
+        title: '1 Bedroom Apartment',
+        addressCity: 'Hamburg',
+        rooms: 1,
+        beds: 1,
+        approved: true,
+        active: true,
+        description: '',
+        type: PlaceType.Private,
+        bathroom: BathroomType.Shared,
+        adults: 1,
+        children: 0,
+        addressStreet: '',
+        addressHouseNumber: '',
+        addressCountry: '',
+        addressZip: '',
+        houseRules: '',
+        availabilityStart: new Date(),
+      },
+      adults: 1,
+      children: 0,
+      about: '',
+      startDate: new Date(),
+    },
+  ]
   return (
     <Container maxW="7xl" py={10}>
       <SimpleGrid templateColumns={{ sm: '1fr', md: '1fr 1fr' }} spacing={8}>
@@ -21,8 +105,12 @@ const Host = () => {
           </Flex>
           <Stack spacing={6}>
             <List spacing="2">
-              {places.map((_, i) => (
-                <PlaceItem key={i} onClick={() => router.push(`/dashboard/place/1`)} />
+              {places.map((place, i) => (
+                <PlaceItem
+                  key={i}
+                  place={place}
+                  onClick={() => router.push(`/dashboard/place/${place.id}`)}
+                />
               ))}
             </List>
           </Stack>
@@ -38,8 +126,8 @@ const Host = () => {
           </Flex>
           <Stack spacing={6}>
             <List spacing="2">
-              {places.map((_, i) => (
-                <RequestItem key={i} />
+              {requests.map((req, i) => (
+                <RequestItem key={i} request={req} />
               ))}
             </List>
           </Stack>

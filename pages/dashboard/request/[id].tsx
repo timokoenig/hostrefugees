@@ -16,13 +16,91 @@ import moment from 'moment'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React from 'react'
-import { User, UserRole } from 'utils/model'
+import { Request, RequestStatus, User, UserRole } from 'utils/model'
 import { withSessionSsr } from 'utils/session'
 import Footer from '../../../components/footer'
 import Navigation from '../../../components/navigation'
 
 type Props = {
-  user?: User
+  user: User
+  request: Request
+}
+
+const RequestStatusButton = (props: { status: RequestStatus | undefined }): JSX.Element => {
+  switch (props.status) {
+    case RequestStatus.Accepted:
+      return (
+        <Box backgroundColor="green.500" rounded="xl" textAlign="center" p="5" color="white">
+          <Heading size="md" mb="2">
+            ACCEPTED
+          </Heading>
+          <Text>
+            Thanks for accepting this application.
+            <br />
+            You will receive an email with further details.
+          </Text>
+        </Box>
+      )
+    case RequestStatus.Declined:
+      return (
+        <Box backgroundColor="red.500" rounded="xl" textAlign="center" p="5" color="white">
+          <Heading size="md" mb="2">
+            DECLINED
+          </Heading>
+          <Text>The application has been declined</Text>
+        </Box>
+      )
+    case RequestStatus.Canceled:
+      return (
+        <Box backgroundColor="gray.500" rounded="xl" textAlign="center" p="5" color="white">
+          <Heading size="md" mb="2">
+            CANCELED
+          </Heading>
+          <Text>The application has been canceled by the user</Text>
+        </Box>
+      )
+    default:
+      return (
+        <SimpleGrid columns={3} spacing={5}>
+          <GridItem>
+            <Button
+              rounded="10"
+              w="full"
+              mt={8}
+              size="lg"
+              py="7"
+              bg="red.500"
+              color="white"
+              textTransform="uppercase"
+              _hover={{
+                transform: 'translateY(2px)',
+                boxShadow: 'lg',
+              }}
+            >
+              Decline
+            </Button>
+          </GridItem>
+          <GridItem colSpan={2}>
+            <Button
+              rounded="10"
+              w="full"
+              mt={8}
+              size="lg"
+              py="7"
+              bg="green.500"
+              color="white"
+              textTransform="uppercase"
+              _hover={{
+                transform: 'translateY(2px)',
+                boxShadow: 'lg',
+              }}
+            >
+              Accept
+            </Button>
+          </GridItem>
+        </SimpleGrid>
+      )
+  }
 }
 
 const RequestPage = (props: Props) => {
@@ -37,12 +115,12 @@ const RequestPage = (props: Props) => {
         <Container maxW="7xl">
           <Box mb="5">
             <Button variant="ghost" leftIcon={<ArrowBackIcon />} onClick={router.back}>
-              Place Title
+              Dashboard
             </Button>
           </Box>
           <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={5}>
             <Box>
-              <Summary />
+              <Summary place={props.request.place} />
             </Box>
             <Box>
               <Box mb="5">
@@ -58,25 +136,25 @@ const RequestPage = (props: Props) => {
                 <Text>
                   Requested on:{' '}
                   <Text as="span" fontWeight="semibold">
-                    {moment().format('DD.MM.YYYY HH:mm')}
+                    {moment(props.request.createdAt).format('DD.MM.YYYY HH:mm')}
                   </Text>
                 </Text>
                 <Text>
                   Adults:{' '}
                   <Text as="span" fontWeight="semibold">
-                    1
+                    {props.request.adults}
                   </Text>
                 </Text>
                 <Text>
                   Children:{' '}
                   <Text as="span" fontWeight="semibold">
-                    1
+                    {props.request.children}
                   </Text>
                 </Text>
                 <Text>
                   Languages:{' '}
                   <Text as="span" fontWeight="semibold">
-                    English
+                    {props.request.author.languages.join(', ')}
                   </Text>
                 </Text>
               </Box>
@@ -91,65 +169,10 @@ const RequestPage = (props: Props) => {
                 >
                   About
                 </Text>
-                <Text>Here is a sample placeholder</Text>
+                <Text>{props.request.about.length == 0 ? 'N/A' : props.request.about}</Text>
               </Box>
 
-              <Box backgroundColor="green.500" rounded="xl" textAlign="center" p="5" color="white">
-                <Heading size="md" mb="2">
-                  ACCEPTED
-                </Heading>
-                <Text>
-                  Thanks for accepting this application.
-                  <br />
-                  You will receive an email with further details.
-                </Text>
-              </Box>
-
-              <Box backgroundColor="red.500" rounded="xl" textAlign="center" p="5" color="white">
-                <Heading size="md" mb="2">
-                  DECLINED
-                </Heading>
-                <Text>The application has been declined</Text>
-              </Box>
-
-              <SimpleGrid columns={3} spacing={5}>
-                <GridItem>
-                  <Button
-                    rounded="10"
-                    w="full"
-                    mt={8}
-                    size="lg"
-                    py="7"
-                    bg="red.500"
-                    color="white"
-                    textTransform="uppercase"
-                    _hover={{
-                      transform: 'translateY(2px)',
-                      boxShadow: 'lg',
-                    }}
-                  >
-                    Decline
-                  </Button>
-                </GridItem>
-                <GridItem colSpan={2}>
-                  <Button
-                    rounded="10"
-                    w="full"
-                    mt={8}
-                    size="lg"
-                    py="7"
-                    bg="green.500"
-                    color="white"
-                    textTransform="uppercase"
-                    _hover={{
-                      transform: 'translateY(2px)',
-                      boxShadow: 'lg',
-                    }}
-                  >
-                    Accept
-                  </Button>
-                </GridItem>
-              </SimpleGrid>
+              <RequestStatusButton status={props.request.status} />
             </Box>
           </SimpleGrid>
         </Container>
@@ -171,7 +194,42 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
   }
   return {
     props: {
-      user: context.req.session.user ?? null,
+      user: context.req.session.user,
+      request: {
+        id: '1',
+        createdAt: new Date().toISOString(),
+        author: {
+          id: '1',
+          firstname: '',
+          lastname: '',
+          email: '',
+          password: '',
+          role: UserRole.Guest,
+          languages: [],
+        },
+        place: {
+          id: '1',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+          author: {
+            id: '1',
+            firstname: '',
+            lastname: '',
+            email: '',
+            password: '',
+            role: UserRole.Guest,
+            languages: [],
+          },
+          title: '1 Bedroom Apartment',
+          addressCity: 'Hamburg',
+          rooms: 1,
+          beds: 1,
+          availabilityStart: new Date().toISOString(),
+        },
+        adults: 1,
+        children: 0,
+        about: '',
+      },
     },
   }
 })

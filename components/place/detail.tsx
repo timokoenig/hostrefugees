@@ -13,10 +13,16 @@ import {
   Text,
   useColorModeValue,
 } from '@chakra-ui/react'
+import moment from 'moment'
 import { useRouter } from 'next/router'
 import React from 'react'
+import { Place } from 'utils/model'
 
-export default function Detail() {
+type Props = {
+  place: Place
+}
+
+export default function Detail(props: Props) {
   const router = useRouter()
   return (
     <Container maxW="7xl">
@@ -63,16 +69,16 @@ export default function Detail() {
               fontWeight={600}
               fontSize={{ base: '2xl', sm: '4xl', lg: '5xl' }}
             >
-              1 Bedroom
+              {props.place.title}
             </Heading>
             <Text color={useColorModeValue('gray.900', 'gray.400')} fontWeight={300} fontSize="2xl">
               Available from{' '}
               <Text as="span" fontWeight="semibold">
-                20.03.2022
+                {moment(props.place.availabilityStart).format('DD.MM.YYYY')}
               </Text>{' '}
               to{' '}
               <Text as="span" fontWeight="semibold">
-                12.04.2022
+                {moment(props.place.availabilityEnd).format('DD.MM.YYYY')}
               </Text>
             </Text>
           </Box>
@@ -82,11 +88,7 @@ export default function Detail() {
             direction="column"
             divider={<StackDivider borderColor={useColorModeValue('gray.200', 'gray.600')} />}
           >
-            <Text fontSize="lg">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquid amet at delectus
-              doloribus dolorum expedita hic, ipsum maxime modi nam officiis porro, quae, quisquam
-              quos reprehenderit velit? Natus, totam.
-            </Text>
+            <Text fontSize="lg">{props.place.description}</Text>
             <Box>
               <Text
                 fontSize={{ base: '16px', lg: '18px' }}
@@ -103,49 +105,50 @@ export default function Detail() {
                   <Text as="span" fontWeight="bold">
                     Type of place
                   </Text>{' '}
-                  Private Room
+                  {props.place.type}
                 </ListItem>
                 <ListItem>
                   <Text as="span" fontWeight="bold">
                     Rooms:
                   </Text>{' '}
-                  1
+                  {props.place.rooms}
                 </ListItem>
                 <ListItem>
                   <Text as="span" fontWeight="bold">
                     Beds:
                   </Text>{' '}
-                  1
+                  {props.place.beds}
                 </ListItem>
                 <ListItem>
                   <Text as="span" fontWeight="bold">
                     Bathroom:
                   </Text>{' '}
-                  Shared
+                  {props.place.bathroom}
                 </ListItem>
                 <ListItem>
                   <Text as="span" fontWeight="bold">
                     Adults:
                   </Text>{' '}
-                  1
+                  {props.place.adults}
                 </ListItem>
                 <ListItem>
                   <Text as="span" fontWeight="bold">
                     Children:
                   </Text>{' '}
-                  0
+                  {props.place.children}
                 </ListItem>
                 <ListItem>
                   <Text as="span" fontWeight="bold">
                     Address:
                   </Text>{' '}
-                  Hamburg (exact location will be shared when stay gets accepted)
+                  {props.place.addressCity} (exact location will be shared when the stay gets
+                  accepted)
                 </ListItem>
                 <ListItem>
                   <Text as="span" fontWeight="bold">
                     Host Language:
                   </Text>{' '}
-                  English, German
+                  {props.place.author.languages.join(', ')}
                 </ListItem>
               </List>
             </Box>
@@ -159,11 +162,7 @@ export default function Detail() {
               >
                 House Rules
               </Text>
-              <Text fontSize="lg">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquid amet at
-                delectus doloribus dolorum expedita hic, ipsum maxime modi nam officiis porro, quae,
-                quisquam quos reprehenderit velit? Natus, totam.
-              </Text>
+              <Text fontSize="lg">{props.place.houseRules}</Text>
             </Box>
           </Stack>
 
@@ -180,7 +179,7 @@ export default function Detail() {
               transform: 'translateY(2px)',
               boxShadow: 'lg',
             }}
-            onClick={() => router.push('/place/1/request')}
+            onClick={() => router.push(`/place/${props.place.id}/request`)}
           >
             Request to stay
           </Button>

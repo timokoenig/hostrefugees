@@ -1,13 +1,13 @@
 import { Box, Image } from '@chakra-ui/react'
+import moment from 'moment-timezone'
 import React from 'react'
+import { Place } from 'utils/model'
 
-const Summary = () => {
-  const property = {
-    beds: 3,
-    baths: 2,
-    title: 'Modern home in city center in the heart of historic Los Angeles',
-  }
+type Props = {
+  place: Place
+}
 
+const Summary = (props: Props) => {
   return (
     <Box borderWidth="1px" borderRadius="lg" overflow="hidden">
       <Image
@@ -28,13 +28,17 @@ const Summary = () => {
             fontSize="xs"
             textTransform="uppercase"
           >
-            {property.beds} beds &bull; {property.baths} baths
+            {props.place.rooms} rooms &bull; {props.place.beds} beds
           </Box>
         </Box>
         <Box mt="1" fontWeight="semibold" as="h4" lineHeight="tight" isTruncated>
-          Hamburg: {property.title}
+          {props.place.addressCity}: {props.place.title}
         </Box>
-        <Box>Available Now</Box>
+        <Box>
+          {moment(props.place.availabilityStart).isBefore(moment())
+            ? 'Available Now'
+            : moment(props.place.availabilityStart).format('DD.MM.YYYY')}
+        </Box>
       </Box>
     </Box>
   )

@@ -18,7 +18,6 @@ const RequestPage = (props: Props) => {
     <Layout>
       <Navigation user={props.user} />
       <Container maxW="7xl" textAlign="center" maxWidth="700">
-        {/* <CheckCircleIcon boxSize={'50px'} color={'green.500'} /> */}
         <Center>
           <Image src="/svg/undraw_completing_re_i7ap.svg" maxWidth="250" />
         </Center>
