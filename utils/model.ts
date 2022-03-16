@@ -45,6 +45,8 @@ export type Place = {
   addressHouseNumber: string
   addressZip: string
   addressCity: string
+  addressCityLat?: number
+  addressCityLng?: number
   addressCountry: string
   houseRules: string
   availabilityStart: Date

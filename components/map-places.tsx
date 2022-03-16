@@ -1,71 +1,23 @@
-import { Box, Container, Heading, List, ListItem, SimpleGrid, Stack, Text } from '@chakra-ui/react'
+import { Box, Container, Heading, List, SimpleGrid, Stack } from '@chakra-ui/react'
 import GoogleMapReact from 'google-map-react'
-import { useRouter } from 'next/router'
 import React from 'react'
-import { BathroomType, Place, PlaceType, UserRole } from '../utils/model'
+import { Place } from '../utils/model'
+import Marker from './map/marker'
+import MoreItem from './map/more-item'
 import PlaceItem from './place/item'
 
-const AnyReactComponent = ({ lat, lng }: { lat: number; lng: number }) => (
-  <Box lat={lat} lng={lng} textAlign="center">
-    <Box
-      backgroundColor="blue.500"
-      width="8"
-      height="8"
-      borderRadius="20"
-      position="absolute"
-      zIndex="1"
-      mt="1"
-      ml="1"
-      cursor="pointer"
-      _hover={{
-        background: 'blue.400',
-      }}
-      _active={{
-        background: 'blue.600',
-      }}
-    >
-      <Text color="white" fontSize="lg" fontWeight="bold" height="100%" lineHeight="8">
-        1
-      </Text>
-    </Box>
-    <Box backgroundColor="blue.500" width="10" height="10" borderRadius="20" opacity="0.5" />
-  </Box>
-)
+type Props = {
+  places: Place[]
+}
 
-export default function MapPlaces() {
-  const places: Place[] = [
-    {
-      id: '1',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      author: {
-        id: '1',
-        firstname: '',
-        lastname: '',
-        email: '',
-        password: '',
-        role: UserRole.Guest,
-        languages: [],
-      },
-      title: '1 Bedroom Apartment',
-      addressCity: 'Hamburg',
-      rooms: 1,
-      beds: 1,
-      approved: true,
-      active: true,
-      description: '',
-      type: PlaceType.Private,
-      bathroom: BathroomType.Shared,
-      adults: 1,
-      children: 0,
-      addressStreet: '',
-      addressHouseNumber: '',
-      addressCountry: '',
-      addressZip: '',
-      houseRules: '',
-      availabilityStart: new Date(),
-    },
-  ]
+export default function MapPlaces(props: Props) {
+  const markerItems: { title: string; lat: number; lng: number }[] = props.places.map(place => {
+    return {
+      title: place.addressCity,
+      lat: place.addressCityLat ?? 0.0,
+      lng: place.addressCityLng ?? 0.0,
+    }
+  })
   return (
     <Container maxW="7xl" py={10}>
       <Box mb="5" textAlign="center">
@@ -74,7 +26,7 @@ export default function MapPlaces() {
       <SimpleGrid templateColumns={{ sm: '1fr', md: '1fr 1fr' }} spacing={8}>
         <Stack spacing={6}>
           <List spacing="2">
-            {places.map((place, i) => (
+            {props.places.map((place, i) => (
               <PlaceItem key={i} place={place} />
             ))}
             <MoreItem />
@@ -86,31 +38,12 @@ export default function MapPlaces() {
             defaultCenter={{ lat: 53.551086, lng: 9.993682 }}
             defaultZoom={11}
           >
-            <AnyReactComponent lat={53.551086} lng={9.993682} />
+            {markerItems.map((marker, i) => (
+              <Marker key={i} lat={marker.lat} lng={marker.lng} />
+            ))}
           </GoogleMapReact>
         </Stack>
       </SimpleGrid>
     </Container>
-  )
-}
-
-function MoreItem() {
-  const router = useRouter()
-  return (
-    <ListItem onClick={() => router.push('/place')}>
-      <Box
-        borderRadius="lg"
-        overflow="hidden"
-        cursor="pointer"
-        _hover={{ background: 'gray.100' }}
-        textAlign="center"
-      >
-        <Box p="6">
-          <Text fontSize="lg" fontWeight="bold" color="blue.500">
-            See More Places
-          </Text>
-        </Box>
-      </Box>
-    </ListItem>
   )
 }

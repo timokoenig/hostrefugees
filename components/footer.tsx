@@ -37,11 +37,11 @@ export default function Footer() {
           </Stack>
           <Stack align="flex-start">
             <ListHeader>Be a Guest</ListHeader>
-            <Link href="/comingsoon">Coming Soon</Link>
+            <Link href="/">Coming Soon</Link>
           </Stack>
           <Stack align="flex-start">
             <ListHeader>Be a Host</ListHeader>
-            <Link href="/comingsoon">Coming Soon</Link>
+            <Link href="/">Coming Soon</Link>
           </Stack>
           <Stack align="flex-start">
             <ListHeader>Support</ListHeader>

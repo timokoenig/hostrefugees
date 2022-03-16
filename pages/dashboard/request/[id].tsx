@@ -1,14 +1,5 @@
 import { ArrowBackIcon } from '@chakra-ui/icons'
-import {
-  Box,
-  Button,
-  Container,
-  GridItem,
-  Heading,
-  SimpleGrid,
-  Text,
-  useColorModeValue,
-} from '@chakra-ui/react'
+import { Box, Button, Container, SimpleGrid, Text, useColorModeValue } from '@chakra-ui/react'
 import Layout from 'components/layout'
 import Summary from 'components/place/summary'
 import Spacer from 'components/spacer'
@@ -16,132 +7,16 @@ import moment from 'moment'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React from 'react'
-import { Request, RequestStatus, User, UserRole } from 'utils/model'
+import { Request, User, UserRole } from 'utils/model'
 import { withSessionSsr } from 'utils/session'
+import StatusGuest from '../../../components/dashboard/request/status-guest'
+import StatusHost from '../../../components/dashboard/request/status-host'
 import Footer from '../../../components/footer'
 import Navigation from '../../../components/navigation'
 
 type Props = {
   user: User
   request: Request
-}
-
-const RequestStatusHost = (props: { status: RequestStatus | undefined }): JSX.Element => {
-  switch (props.status) {
-    case RequestStatus.Accepted:
-      return (
-        <Box backgroundColor="green.500" rounded="xl" textAlign="center" p="5" color="white">
-          <Heading size="md" mb="2">
-            ACCEPTED
-          </Heading>
-          <Text>
-            Thanks for accepting this application.
-            <br />
-            You will receive an email with further details.
-          </Text>
-        </Box>
-      )
-    case RequestStatus.Declined:
-      return (
-        <Box backgroundColor="red.500" rounded="xl" textAlign="center" p="5" color="white">
-          <Heading size="md" mb="2">
-            DECLINED
-          </Heading>
-          <Text>The application has been declined</Text>
-        </Box>
-      )
-    case RequestStatus.Canceled:
-      return (
-        <Box backgroundColor="gray.500" rounded="xl" textAlign="center" p="5" color="white">
-          <Heading size="md" mb="2">
-            CANCELED
-          </Heading>
-          <Text>The application has been canceled by the user</Text>
-        </Box>
-      )
-    default:
-      return (
-        <SimpleGrid columns={3} spacing={5}>
-          <GridItem>
-            <Button
-              rounded="10"
-              w="full"
-              mt={8}
-              size="lg"
-              py="7"
-              bg="red.500"
-              color="white"
-              textTransform="uppercase"
-              _hover={{
-                transform: 'translateY(2px)',
-                boxShadow: 'lg',
-              }}
-            >
-              Decline
-            </Button>
-          </GridItem>
-          <GridItem colSpan={2}>
-            <Button
-              rounded="10"
-              w="full"
-              mt={8}
-              size="lg"
-              py="7"
-              bg="green.500"
-              color="white"
-              textTransform="uppercase"
-              _hover={{
-                transform: 'translateY(2px)',
-                boxShadow: 'lg',
-              }}
-            >
-              Accept
-            </Button>
-          </GridItem>
-        </SimpleGrid>
-      )
-  }
-}
-
-const RequestStatusGuest = (props: { status: RequestStatus | undefined }): JSX.Element => {
-  switch (props.status) {
-    case RequestStatus.Accepted:
-      return (
-        <Box backgroundColor="green.500" rounded="xl" textAlign="center" p="5" color="white">
-          <Heading size="md" mb="2">
-            ACCEPTED
-          </Heading>
-          <Text>You will receive an email with further details.</Text>
-        </Box>
-      )
-    case RequestStatus.Declined:
-      return (
-        <Box backgroundColor="red.500" rounded="xl" textAlign="center" p="5" color="white">
-          <Heading size="md" mb="2">
-            DECLINED
-          </Heading>
-          <Text>The application has been declined</Text>
-        </Box>
-      )
-    case RequestStatus.Canceled:
-      return (
-        <Box backgroundColor="gray.500" rounded="xl" textAlign="center" p="5" color="white">
-          <Heading size="md" mb="2">
-            CANCELED
-          </Heading>
-          <Text>The application has been canceled</Text>
-        </Box>
-      )
-    default:
-      return (
-        <Box backgroundColor="yellow.500" rounded="xl" textAlign="center" p="5" color="white">
-          <Heading size="md" mb="2">
-            WAITING
-          </Heading>
-          <Text>Waiting for the host to accept the application</Text>
-        </Box>
-      )
-  }
 }
 
 const RequestPage = (props: Props) => {
@@ -213,12 +88,8 @@ const RequestPage = (props: Props) => {
                 <Text>{props.request.about.length == 0 ? 'N/A' : props.request.about}</Text>
               </Box>
 
-              {props.user.role === UserRole.Host && (
-                <RequestStatusHost status={props.request.status} />
-              )}
-              {props.user.role === UserRole.Guest && (
-                <RequestStatusGuest status={props.request.status} />
-              )}
+              {props.user.role === UserRole.Host && <StatusHost status={props.request.status} />}
+              {props.user.role === UserRole.Guest && <StatusGuest status={props.request.status} />}
             </Box>
           </SimpleGrid>
         </Container>

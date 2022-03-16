@@ -24,7 +24,7 @@ const IndexPage = (props: Props) => {
         <Navigation user={props.user} />
         <Hero />
         <Introduction />
-        <MapPlaces />
+        <MapPlaces places={[]} />
         <Spacer />
         <Footer />
       </Layout>

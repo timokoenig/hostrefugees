@@ -12,7 +12,6 @@ import {
 } from '@chakra-ui/react'
 import React from 'react'
 
-// Replace test data with your own
 const features = [0, 1, 2, 3, 4, 6, 7, 8].map((_, i) => {
   return {
     id: i,

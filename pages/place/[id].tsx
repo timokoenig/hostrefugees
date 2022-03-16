@@ -31,7 +31,10 @@ const PlaceDetailPage = (props: Props) => {
               Available Places
             </Button>
           </Box>
-          <Detail place={props.place} />
+          <Detail
+            place={props.place}
+            enableRequest={!props.user || props.user.role !== UserRole.Host}
+          />
         </Box>
       </Center>
       <Spacer />

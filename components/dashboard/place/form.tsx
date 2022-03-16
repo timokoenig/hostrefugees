@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   FormControl,
   FormLabel,
   Input,
@@ -16,6 +15,7 @@ import { useFormik } from 'formik'
 import moment from 'moment'
 import React from 'react'
 import { BathroomType, Place, PlaceType } from '../../../utils/model'
+import Button from '../../common/button'
 
 type Props = {
   place?: Place | undefined
@@ -67,7 +67,7 @@ const Form = (props: Props) => {
               <FormLabel htmlFor="title">Title</FormLabel>
               <Input
                 id="title"
-                type="title"
+                type="text"
                 value={formik.values.title}
                 onChange={formik.handleChange}
               />
@@ -77,7 +77,7 @@ const Form = (props: Props) => {
               <FormLabel htmlFor="description">Description</FormLabel>
               <Textarea
                 id="description"
-                type="description"
+                type="text"
                 value={formik.values.description}
                 onChange={formik.handleChange}
               />
@@ -87,7 +87,7 @@ const Form = (props: Props) => {
               <FormLabel htmlFor="houseRules">House Rules</FormLabel>
               <Textarea
                 id="houseRules"
-                type="houseRules"
+                type="text"
                 value={formik.values.houseRules}
                 onChange={formik.handleChange}
               />
@@ -188,7 +188,7 @@ const Form = (props: Props) => {
               <FormLabel htmlFor="addressStreet">Street</FormLabel>
               <Input
                 id="addressStreet"
-                type="addressStreet"
+                type="text"
                 value={formik.values.addressStreet}
                 onChange={formik.handleChange}
               />
@@ -198,7 +198,7 @@ const Form = (props: Props) => {
               <FormLabel htmlFor="addressHouseNumber">House Number</FormLabel>
               <Input
                 id="addressHouseNumber"
-                type="addressHouseNumber"
+                type="text"
                 value={formik.values.addressHouseNumber}
                 onChange={formik.handleChange}
               />
@@ -208,7 +208,7 @@ const Form = (props: Props) => {
               <FormLabel htmlFor="addressZip">Zipcode</FormLabel>
               <Input
                 id="addressZip"
-                type="addressZip"
+                type="text"
                 value={formik.values.addressZip}
                 onChange={formik.handleChange}
               />
@@ -218,7 +218,7 @@ const Form = (props: Props) => {
               <FormLabel htmlFor="addressCity">City</FormLabel>
               <Input
                 id="addressCity"
-                type="addressCity"
+                type="text"
                 value={formik.values.addressCity}
                 onChange={formik.handleChange}
               />
@@ -240,7 +240,7 @@ const Form = (props: Props) => {
               <FormLabel htmlFor="availabilityStart">Availability Start</FormLabel>
               <Input
                 id="availabilityStart"
-                type="availabilityStart"
+                type="text"
                 value={moment(formik.values.availabilityStart).format('DD.MM.YYYY')}
                 onChange={formik.handleChange}
               />
@@ -250,7 +250,7 @@ const Form = (props: Props) => {
               <FormLabel htmlFor="availabilityEnd">Availability End (optional)</FormLabel>
               <Input
                 id="availabilityEnd"
-                type="availabilityEnd"
+                type="text"
                 value={
                   formik.values.availabilityEnd === undefined
                     ? ''
@@ -262,23 +262,7 @@ const Form = (props: Props) => {
           </VStack>
 
           <FormControl>
-            <Button
-              type="submit"
-              rounded="10"
-              w="full"
-              mt={8}
-              size="lg"
-              py="7"
-              bg="blue.500"
-              color="white"
-              textTransform="uppercase"
-              _hover={{
-                transform: 'translateY(2px)',
-                boxShadow: 'lg',
-              }}
-            >
-              Save
-            </Button>
+            <Button title="Save" fullWidth />
           </FormControl>
         </VStack>
       </form>

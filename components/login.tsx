@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Flex,
   FormControl,
   FormLabel,
@@ -11,36 +10,39 @@ import {
   Text,
   useColorModeValue,
 } from '@chakra-ui/react'
+import { useFormik } from 'formik'
 import { useRouter } from 'next/router'
-import React, { useState } from 'react'
+import React from 'react'
+import Button from './common/button'
 
 const Login = () => {
-  const [email, setEmail] = useState<string>('')
-  const [password, setPassword] = useState<string>('')
   const router = useRouter()
-
-  console.log()
-
-  const onLogin = async () => {
-    try {
-      const res = await fetch('/api/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      })
-      if (res.ok) {
-        if (router.query.place === undefined) {
-          await router.replace('/dashboard')
-        } else {
-          await router.replace(`/place/${router.query.place}/request`)
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+    },
+    onSubmit: async values => {
+      try {
+        const res = await fetch('/api/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(values),
+        })
+        if (res.ok) {
+          if (router.query.place === undefined) {
+            await router.replace('/dashboard')
+          } else {
+            await router.replace(`/place/${router.query.place}/request`)
+          }
         }
+      } catch (err: unknown) {
+        console.log(err)
       }
-    } catch (err: unknown) {
-      console.log(err)
-    }
-  }
+    },
+  })
 
   return (
     <Flex align="center">
@@ -49,28 +51,31 @@ const Login = () => {
           <Heading fontSize="4xl">Sign in to your account</Heading>
         </Stack>
         <Box rounded="lg" bg={useColorModeValue('white', 'gray.700')} boxShadow="lg" p={8}>
-          <Stack spacing={4}>
-            <FormControl id="email">
-              <FormLabel>Email address</FormLabel>
-              <Input type="email" value={email} onChange={e => setEmail(e.target.value)} />
-            </FormControl>
-            <FormControl id="password">
-              <FormLabel>Password</FormLabel>
-              <Input type="password" value={password} onChange={e => setPassword(e.target.value)} />
-            </FormControl>
-            <Stack spacing={10}>
-              <Button
-                bg="blue.400"
-                color="white"
-                _hover={{
-                  bg: 'blue.500',
-                }}
-                onClick={onLogin}
-              >
-                Sign in
-              </Button>
+          <form onSubmit={formik.handleSubmit}>
+            <Stack spacing={4}>
+              <FormControl isRequired>
+                <FormLabel htmlFor="email">Email address</FormLabel>
+                <Input
+                  id="email"
+                  type="email"
+                  value={formik.values.email}
+                  onChange={formik.handleChange}
+                />
+              </FormControl>
+              <FormControl isRequired>
+                <FormLabel htmlFor="password">Password</FormLabel>
+                <Input
+                  id="password"
+                  type="password"
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
+                />
+              </FormControl>
+              <Stack spacing={10}>
+                <Button title="Sign in" fullWidth />
+              </Stack>
             </Stack>
-          </Stack>
+          </form>
         </Box>
         <Text fontSize="lg" color="gray.600" textAlign="center">
           Don&apos;t have an account?{' '}

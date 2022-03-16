@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Container,
   GridItem,
   Heading,
@@ -17,10 +16,24 @@ import moment from 'moment'
 import { useRouter } from 'next/router'
 import React from 'react'
 import { Place } from 'utils/model'
+import Button from '../common/button'
 
 type Props = {
   place: Place
+  enableRequest: boolean
 }
+
+const PlaceholderImage = () => (
+  <Image
+    rounded="md"
+    alt="product image"
+    src="https://picsum.photos/900/600"
+    fit="cover"
+    align="center"
+    w="100%"
+    h={{ base: '100%', sm: '400px', lg: '500px' }}
+  />
+)
 
 export default function Detail(props: Props) {
   const router = useRouter()
@@ -29,37 +42,13 @@ export default function Detail(props: Props) {
       <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={{ base: 8, md: 10 }}>
         <SimpleGrid columns={2} spacing="5">
           <GridItem colSpan={2}>
-            <Image
-              rounded="md"
-              alt="product image"
-              src="https://picsum.photos/900/600"
-              fit="cover"
-              align="center"
-              w="100%"
-              h={{ base: '100%', sm: '400px', lg: '500px' }}
-            />
+            <PlaceholderImage />
           </GridItem>
           <GridItem>
-            <Image
-              rounded="md"
-              alt="product image"
-              src="https://picsum.photos/900/600"
-              fit="cover"
-              align="center"
-              w="100%"
-              h={{ base: '100%', sm: '400px', lg: '500px' }}
-            />
+            <PlaceholderImage />
           </GridItem>
           <GridItem>
-            <Image
-              rounded="md"
-              alt="product image"
-              src="https://picsum.photos/900/600"
-              fit="cover"
-              align="center"
-              w="100%"
-              h={{ base: '100%', sm: '400px', lg: '500px' }}
-            />
+            <PlaceholderImage />
           </GridItem>
         </SimpleGrid>
         <Stack spacing={{ base: 6, md: 10 }}>
@@ -166,23 +155,13 @@ export default function Detail(props: Props) {
             </Box>
           </Stack>
 
-          <Button
-            rounded="10"
-            w="full"
-            mt={8}
-            size="lg"
-            py="7"
-            bg="blue.500"
-            color="white"
-            textTransform="uppercase"
-            _hover={{
-              transform: 'translateY(2px)',
-              boxShadow: 'lg',
-            }}
-            onClick={() => router.push(`/place/${props.place.id}/request`)}
-          >
-            Request to stay
-          </Button>
+          {props.enableRequest && (
+            <Button
+              fullWidth
+              title="Request to stay"
+              onClick={() => router.push(`/place/${props.place.id}/request`)}
+            />
+          )}
         </Stack>
       </SimpleGrid>
     </Container>

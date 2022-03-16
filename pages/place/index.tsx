@@ -26,19 +26,6 @@ const PlacePage = (props: Props) => {
     return count
   })()
 
-  const filterPlace = (place: Place): boolean => {
-    if (appState.filter.adults !== null && place.adults < appState.filter.adults) {
-      return false
-    }
-    if (appState.filter.children !== null && place.children < appState.filter.children) {
-      return false
-    }
-    if (appState.filter.city !== null && !place.addressCity.includes(appState.filter.city)) {
-      return false
-    }
-    return true
-  }
-
   const places: Place[] = [
     {
       id: '1',
@@ -71,26 +58,43 @@ const PlacePage = (props: Props) => {
       houseRules: '',
       availabilityStart: new Date(),
     },
-  ].filter(filterPlace)
+  ]
+
+  const filterPlace = (place: Place): boolean => {
+    if (appState.filter.adults !== null && place.adults < appState.filter.adults) {
+      return false
+    }
+    if (appState.filter.children !== null && place.children < appState.filter.children) {
+      return false
+    }
+    if (appState.filter.city !== null && !place.addressCity.includes(appState.filter.city)) {
+      return false
+    }
+    return true
+  }
+  const filteredPlaces = places.filter(filterPlace)
 
   return (
     <Layout>
       <Navigation user={props.user} />
       <Container maxW="7xl">
         <Heading mb="10">
-          {places.length} Places Available{' '}
+          {filteredPlaces.length} Places Available{' '}
           <Button size="sm" ml="5" colorScheme={filterCount > 0 ? 'blue' : 'gray'} onClick={onOpen}>
             Filter{filterCount > 0 ? ` (${filterCount})` : ''}
           </Button>
         </Heading>
         <SimpleGrid columns={2} spacing="10">
           <List spacing="5">
-            {places.map((place, i) => (
+            {filteredPlaces.map((place, i) => (
               <PlaceItem key={i} place={place} />
             ))}
           </List>
           <Box>
-            <Map onClick={() => setFilter({ ...appState.filter, city: 'Berlin' })} />
+            <Map
+              places={places}
+              onClick={() => setFilter({ ...appState.filter, city: 'Berlin' })}
+            />
           </Box>
         </SimpleGrid>
       </Container>

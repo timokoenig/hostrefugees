@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Checkbox,
   Flex,
   FormControl,
@@ -14,6 +13,7 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
+import Button from './common/button'
 
 const Register = () => {
   const [termsAccepted, setTermsAccepted] = useState<boolean>(false)
@@ -39,7 +39,7 @@ const Register = () => {
               </Box>
               <Box>
                 <FormControl id="lastName">
-                  <FormLabel>Last Name</FormLabel>
+                  <FormLabel isRequired>Last Name</FormLabel>
                   <Input type="text" />
                 </FormControl>
               </Box>
@@ -66,16 +66,7 @@ const Register = () => {
                   Data Privacy
                 </Link>
               </Checkbox>
-              <Button
-                bg="blue.400"
-                color="white"
-                _hover={{
-                  bg: 'blue.500',
-                }}
-                isDisabled={!termsAccepted}
-              >
-                Sign up
-              </Button>
+              <Button title="Sign up" isDisabled={!termsAccepted} />
             </Stack>
           </Stack>
         </Box>
