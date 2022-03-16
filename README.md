@@ -23,6 +23,8 @@ NEXT_PUBLIC_CONTACT_EMAIL=xxx
 NEXT_PUBLIC_CONTACT_WEBSITE=hostrefugees.eu
 NEXT_PUBLIC_VERSION=0.0.1
 
+DATABASE_URL=postgresql://postgres:@127.0.0.1:5432/hostrefugees?sslmode=disable
+
 SECRET_COOKIE_PASSWORD=complex_password_at_least_32_characters_long
 NODE_ENV=development
 ```
@@ -41,6 +43,14 @@ Make sure to set the **NODE_ENV** to `production` to secure the iron session.
 ## Iron Session
 
 https://github.com/vvo/iron-session
+
+# Prisma
+
+// To migrate the schema file and generate the client
+npx prisma migrate dev
+
+// To generate the client
+npx prisma generate
 
 ## Snapshot Tests
 

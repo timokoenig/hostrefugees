@@ -1,0 +1,91 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum UserRole {
+  ADMIN
+  GUEST
+  HOST
+}
+
+model User {
+  id        String    @id @default(uuid())
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @default(now()) @map("updated_at")
+  firstname String
+  lastname  String
+  email     String
+  password  String
+  role      UserRole  @default(GUEST)
+  languages String[]
+  place     Place[]
+  request   Request[]
+}
+
+enum PlaceType {
+  PLACE
+  PRIVATE
+  SHARED
+}
+
+enum BathroomType {
+  YES
+  NO
+  SHARED
+}
+
+model Place {
+  id                 String       @id @default(uuid())
+  createdAt          DateTime     @default(now()) @map("created_at")
+  updatedAt          DateTime     @default(now()) @map("updated_at")
+  author             User         @relation(fields: [userId], references: [id])
+  approved           Boolean
+  active             Boolean
+  title              String
+  description        String
+  type               PlaceType
+  rooms              Int
+  beds               Int
+  bathroom           BathroomType
+  adults             Int
+  children           Int
+  addressStreet      String       @map("address_street")
+  addressHouseNumber String       @map("address_house_number")
+  addressZip         String       @map("address_zip")
+  addressCity        String       @map("address_city")
+  addressCityLat     String?      @map("address_city_lat")
+  addressCityLng     String?      @map("address_city_lng")
+  addressCountry     String       @map("address_country")
+  houseRules         String       @map("house_rules")
+  availabilityStart  DateTime     @map("availability_start")
+  availabilityEnd    DateTime?    @map("availability_end")
+  userId             String       @map("user_id")
+  request            Request[]
+}
+
+enum RequestStatus {
+  ACCEPTED
+  DECLINED
+  CANCELED
+}
+
+model Request {
+  id        String         @id @default(uuid())
+  createdAt DateTime       @default(now()) @map("created_at")
+  updatedAt DateTime       @default(now()) @map("updated_at")
+  author    User           @relation(fields: [userId], references: [id])
+  place     Place          @relation(fields: [placeId], references: [id])
+  adults    Int
+  children  Int
+  startDate DateTime       @map("start_date")
+  endDate   DateTime?      @map("end_date")
+  about     String
+  status    RequestStatus?
+  userId    String         @map("user_id")
+  placeId   String         @map("place_id")
+}
