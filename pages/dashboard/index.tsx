@@ -1,16 +1,17 @@
 import { Box, Container, Heading, Text } from '@chakra-ui/react'
+import Guest from 'components/dashboard/guest'
 import Host from 'components/dashboard/host'
 import Layout from 'components/layout'
 import Spacer from 'components/spacer'
 import Head from 'next/head'
 import React from 'react'
-import { User } from 'utils/model'
+import { User, UserRole } from 'utils/model'
 import { withSessionSsr } from 'utils/session'
 import Footer from '../../components/footer'
 import Navigation from '../../components/navigation'
 
 type Props = {
-  user?: User
+  user: User
 }
 
 const DashboardPage = (props: Props) => {
@@ -26,11 +27,12 @@ const DashboardPage = (props: Props) => {
             <Heading as="h2" size="xl">
               Welcome{' '}
               <Text as="span" color="blue.400">
-                {props.user?.firstname}
+                {props.user.firstname}
               </Text>
             </Heading>
           </Box>
-          <Host />
+          {props.user.role === UserRole.Guest && <Guest />}
+          {props.user.role === UserRole.Host && <Host />}
         </Container>
         <Spacer />
         <Footer />
@@ -50,7 +52,7 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
   }
   return {
     props: {
-      user: context.req.session.user ?? null,
+      user: context.req.session.user,
     },
   }
 })

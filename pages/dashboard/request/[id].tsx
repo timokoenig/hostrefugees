@@ -26,7 +26,7 @@ type Props = {
   request: Request
 }
 
-const RequestStatusButton = (props: { status: RequestStatus | undefined }): JSX.Element => {
+const RequestStatusHost = (props: { status: RequestStatus | undefined }): JSX.Element => {
   switch (props.status) {
     case RequestStatus.Accepted:
       return (
@@ -103,6 +103,47 @@ const RequestStatusButton = (props: { status: RequestStatus | undefined }): JSX.
   }
 }
 
+const RequestStatusGuest = (props: { status: RequestStatus | undefined }): JSX.Element => {
+  switch (props.status) {
+    case RequestStatus.Accepted:
+      return (
+        <Box backgroundColor="green.500" rounded="xl" textAlign="center" p="5" color="white">
+          <Heading size="md" mb="2">
+            ACCEPTED
+          </Heading>
+          <Text>You will receive an email with further details.</Text>
+        </Box>
+      )
+    case RequestStatus.Declined:
+      return (
+        <Box backgroundColor="red.500" rounded="xl" textAlign="center" p="5" color="white">
+          <Heading size="md" mb="2">
+            DECLINED
+          </Heading>
+          <Text>The application has been declined</Text>
+        </Box>
+      )
+    case RequestStatus.Canceled:
+      return (
+        <Box backgroundColor="gray.500" rounded="xl" textAlign="center" p="5" color="white">
+          <Heading size="md" mb="2">
+            CANCELED
+          </Heading>
+          <Text>The application has been canceled</Text>
+        </Box>
+      )
+    default:
+      return (
+        <Box backgroundColor="yellow.500" rounded="xl" textAlign="center" p="5" color="white">
+          <Heading size="md" mb="2">
+            WAITING
+          </Heading>
+          <Text>Waiting for the host to accept the application</Text>
+        </Box>
+      )
+  }
+}
+
 const RequestPage = (props: Props) => {
   const router = useRouter()
   return (
@@ -152,7 +193,7 @@ const RequestPage = (props: Props) => {
                   </Text>
                 </Text>
                 <Text>
-                  Languages:{' '}
+                  Guest Languages:{' '}
                   <Text as="span" fontWeight="semibold">
                     {props.request.author.languages.join(', ')}
                   </Text>
@@ -172,7 +213,12 @@ const RequestPage = (props: Props) => {
                 <Text>{props.request.about.length == 0 ? 'N/A' : props.request.about}</Text>
               </Box>
 
-              <RequestStatusButton status={props.request.status} />
+              {props.user.role === UserRole.Host && (
+                <RequestStatusHost status={props.request.status} />
+              )}
+              {props.user.role === UserRole.Guest && (
+                <RequestStatusGuest status={props.request.status} />
+              )}
             </Box>
           </SimpleGrid>
         </Container>
@@ -184,7 +230,7 @@ const RequestPage = (props: Props) => {
 }
 
 export const getServerSideProps = withSessionSsr(async function getServerSideProps(context) {
-  if (context.req.session.user === undefined || context.req.session.user?.role === UserRole.Guest) {
+  if (context.req.session.user === undefined) {
     return {
       redirect: {
         destination: '/',

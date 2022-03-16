@@ -9,7 +9,7 @@ import Footer from '../../../components/footer'
 import Navigation from '../../../components/navigation'
 
 type Props = {
-  user?: User
+  user: User
 }
 
 const ArchivePage = (props: Props) => {
@@ -45,7 +45,7 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
   }
   return {
     props: {
-      user: context.req.session.user ?? null,
+      user: context.req.session.user,
     },
   }
 })

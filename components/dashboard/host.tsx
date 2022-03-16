@@ -120,7 +120,7 @@ const Host = () => {
             <Heading size="md" flex="1" textAlign="left">
               Stay Requests
             </Heading>
-            <Button colorScheme="blue" onClick={() => router.push('/dashboard/place/archive')}>
+            <Button colorScheme="blue" onClick={() => router.push('/dashboard/request/archive')}>
               ARCHIVE
             </Button>
           </Flex>

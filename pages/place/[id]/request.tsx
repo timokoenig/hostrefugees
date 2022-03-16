@@ -113,7 +113,7 @@ const RequestPage = (props: Props) => {
                 transform: 'translateY(2px)',
                 boxShadow: 'lg',
               }}
-              onClick={() => router.replace('/place/1/confirmation')}
+              onClick={() => router.replace(`/place/${props.place.id}/confirmation`)}
             >
               Confirm Request
             </Button>
@@ -128,9 +128,19 @@ const RequestPage = (props: Props) => {
 
 export const getServerSideProps = withSessionSsr(async function getServerSideProps(context) {
   if (context.req.session.user === undefined) {
+    // Redirect user to login
     return {
       redirect: {
         destination: `/login?place=${context.query.id}`,
+        permanent: false,
+      },
+    }
+  }
+  if (context.req.session.user?.role !== UserRole.Guest) {
+    // Allow only guests to request a stay
+    return {
+      redirect: {
+        destination: '/',
         permanent: false,
       },
     }

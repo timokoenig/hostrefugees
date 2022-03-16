@@ -12,7 +12,7 @@ type Props = {
 const PlaceItem = (props: Props) => {
   const router = useRouter()
   return (
-    <ListItem onClick={props.onClick ?? (() => router.push(`/place/${'1'}`))}>
+    <ListItem onClick={props.onClick ?? (() => router.push(`/place/${props.place.id}`))}>
       <Box
         borderWidth="1px"
         borderRadius="lg"

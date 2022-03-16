@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  Checkbox,
   Flex,
   FormControl,
   FormLabel,
@@ -60,14 +59,6 @@ const Login = () => {
               <Input type="password" value={password} onChange={e => setPassword(e.target.value)} />
             </FormControl>
             <Stack spacing={10}>
-              <Stack
-                direction={{ base: 'column', sm: 'row' }}
-                align="start"
-                justify="space-between"
-              >
-                <Checkbox>Remember me</Checkbox>
-                <Link color="blue.400">Forgot password?</Link>
-              </Stack>
               <Button
                 bg="blue.400"
                 color="white"
