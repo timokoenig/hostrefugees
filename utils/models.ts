@@ -16,7 +16,6 @@ export type MappedPlace = {
   title: string
   description: string
   type: PlaceType
-  typeFormatted: string
   rooms: number
   beds: number
   bathroom: BathroomType
@@ -28,5 +27,4 @@ export type MappedPlace = {
   houseRules: string
   availabilityStart: Date
   availabilityEnd: Date | null
-  availabilityFormatted: string
 }

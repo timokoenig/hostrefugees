@@ -1,7 +1,8 @@
-import { Place, PlaceType } from '@prisma/client'
+import { PlaceType } from '@prisma/client'
 import moment from 'moment'
+import { MappedPlace } from './models'
 
-export const formatPlaceType = (place: Place): string => {
+export const formatPlaceType = (place: MappedPlace): string => {
   switch (place.type) {
     case PlaceType.PLACE:
       return 'Entire Place'
@@ -14,7 +15,7 @@ export const formatPlaceType = (place: Place): string => {
   }
 }
 
-export const formatAvailability = (place: Place): string => {
+export const formatAvailability = (place: MappedPlace): string => {
   const startFormatted = moment(place.availabilityStart).format('DD.MM.YYYY')
   if (place.availabilityEnd) {
     const endFormatted = moment(place.availabilityEnd).format('DD.MM.YYYY')

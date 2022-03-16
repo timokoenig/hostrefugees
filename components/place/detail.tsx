@@ -14,6 +14,7 @@ import {
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React from 'react'
+import { formatAvailability, formatPlaceType } from 'utils/formatter'
 import { MappedPlace } from 'utils/models'
 import Button from '../common/button'
 
@@ -60,7 +61,7 @@ export default function Detail(props: Props) {
               {props.place.title}
             </Heading>
             <Text color={useColorModeValue('gray.900', 'gray.400')} fontWeight={300} fontSize="2xl">
-              {props.place.availabilityFormatted}
+              {formatAvailability(props.place)}
             </Text>
           </Box>
 
@@ -86,7 +87,7 @@ export default function Detail(props: Props) {
                   <Text as="span" fontWeight="bold">
                     Type of place
                   </Text>{' '}
-                  {props.place.typeFormatted}
+                  {formatPlaceType(props.place)}
                 </ListItem>
                 <ListItem>
                   <Text as="span" fontWeight="bold">
