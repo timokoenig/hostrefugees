@@ -13,13 +13,8 @@ import {
   Text,
 } from '@chakra-ui/react'
 import React from 'react'
+import { Filter } from '../../state/app'
 import NumberInput from './number-input'
-
-export type Filter = {
-  adults: number | null
-  children: number | null
-  city: string | null
-}
 
 type Props = {
   filter: Filter

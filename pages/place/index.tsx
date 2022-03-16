@@ -1,14 +1,15 @@
 import { Box, Button, Container, Heading, List, SimpleGrid, useDisclosure } from '@chakra-ui/react'
 import PlaceItem from 'components/place/item'
 import Map from 'components/place/map'
-import React, { useState } from 'react'
+import React from 'react'
 import { BathroomType, Place, PlaceType, User, UserRole } from 'utils/model'
 import { withSessionSsr } from 'utils/session'
 import Footer from '../../components/footer'
 import Layout from '../../components/layout'
 import Navigation from '../../components/navigation'
-import FilterModal, { Filter } from '../../components/place/filter-modal'
+import FilterModal from '../../components/place/filter-modal'
 import Spacer from '../../components/spacer'
+import { app, setFilter } from '../../state/app'
 
 type Props = {
   user?: User
@@ -16,23 +17,23 @@ type Props = {
 
 const PlacePage = (props: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const [filter, setFilter] = useState<Filter>({ adults: null, children: null, city: null })
+  const appState = app.use()
   const filterCount = (() => {
     let count = 0
-    if (filter.adults !== null) count += 1
-    if (filter.children !== null) count += 1
-    if (filter.city !== null) count += 1
+    if (appState.filter.adults !== null) count += 1
+    if (appState.filter.children !== null) count += 1
+    if (appState.filter.city !== null) count += 1
     return count
   })()
 
   const filterPlace = (place: Place): boolean => {
-    if (filter.adults !== null && place.adults < filter.adults) {
+    if (appState.filter.adults !== null && place.adults < appState.filter.adults) {
       return false
     }
-    if (filter.children !== null && place.children < filter.children) {
+    if (appState.filter.children !== null && place.children < appState.filter.children) {
       return false
     }
-    if (filter.city !== null && !place.addressCity.includes(filter.city)) {
+    if (appState.filter.city !== null && !place.addressCity.includes(appState.filter.city)) {
       return false
     }
     return true
@@ -78,7 +79,7 @@ const PlacePage = (props: Props) => {
       <Container maxW="7xl">
         <Heading mb="10">
           {places.length} Places Available{' '}
-          <Button size="sm" ml="5" colorScheme="blue" onClick={onOpen}>
+          <Button size="sm" ml="5" colorScheme={filterCount > 0 ? 'blue' : 'gray'} onClick={onOpen}>
             Filter{filterCount > 0 ? ` (${filterCount})` : ''}
           </Button>
         </Heading>
@@ -89,13 +90,18 @@ const PlacePage = (props: Props) => {
             ))}
           </List>
           <Box>
-            <Map onClick={() => setFilter({ ...filter, city: 'Berlin' })} />
+            <Map onClick={() => setFilter({ ...appState.filter, city: 'Berlin' })} />
           </Box>
         </SimpleGrid>
       </Container>
       <Spacer />
       <Footer />
-      <FilterModal filter={filter} onChange={setFilter} isOpen={isOpen} onClose={onClose} />
+      <FilterModal
+        filter={appState.filter}
+        onChange={setFilter}
+        isOpen={isOpen}
+        onClose={onClose}
+      />
     </Layout>
   )
 }
