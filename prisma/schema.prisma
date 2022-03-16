@@ -19,12 +19,12 @@ model User {
   updatedAt DateTime  @default(now()) @map("updated_at")
   firstname String
   lastname  String
-  email     String
+  email     String    @unique
   password  String
   role      UserRole  @default(GUEST)
   languages String[]
-  place     Place[]
-  request   Request[]
+  places    Place[]
+  requests  Request[]
 }
 
 enum PlaceType {
@@ -65,7 +65,7 @@ model Place {
   availabilityStart  DateTime     @map("availability_start")
   availabilityEnd    DateTime?    @map("availability_end")
   userId             String       @map("user_id")
-  request            Request[]
+  requests           Request[]
 }
 
 enum RequestStatus {

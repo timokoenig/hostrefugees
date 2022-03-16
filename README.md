@@ -44,13 +44,21 @@ Make sure to set the **NODE_ENV** to `production` to secure the iron session.
 
 https://github.com/vvo/iron-session
 
-# Prisma
+## Prisma
 
 // To migrate the schema file and generate the client
 npx prisma migrate dev
 
 // To generate the client
 npx prisma generate
+
+### Seeding Development Database
+
+After applying all migration, run the following command to seed the database once:
+
+```sh
+npx prisma db seed
+```
 
 ## Snapshot Tests
 
