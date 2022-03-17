@@ -36,7 +36,7 @@ export default function MapPlaces(props: Props) {
             <MoreItem />
           </List>
         </Stack>
-        <Stack height="50vh">
+        <Stack height="50vh" borderRadius="lg" overflow="hidden">
           <GoogleMapReact
             bootstrapURLKeys={{ key: '' }}
             defaultCenter={{ lat: 51.1657, lng: 10.4515 }} // center of Germany
