@@ -3,6 +3,7 @@ import { Place, Request, UserRole } from '@prisma/client'
 import Guest from 'components/dashboard/guest'
 import Host from 'components/dashboard/host'
 import Layout from 'components/layout'
+import moment from 'moment'
 import Head from 'next/head'
 import prisma from 'prisma/client'
 import React from 'react'
@@ -74,6 +75,9 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
             author: {
               id: context.req.session.user.id,
             },
+          },
+          createdAt: {
+            gte: moment().subtract(14, 'days').toDate(),
           },
         }
       : {
