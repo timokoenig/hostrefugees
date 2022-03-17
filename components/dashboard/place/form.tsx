@@ -19,11 +19,21 @@ import Button from '../../common/button'
 
 type Props = {
   place?: Place | undefined
+  onChange: (place: Place) => void
 }
 
 const Form = (props: Props) => {
   const formik = useFormik({
     initialValues: props.place ?? {
+      id: '',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      approved: false,
+      active: true,
+      addressCityLat: '',
+      addressCityLng: '',
+      addressCountry: '',
+      userId: '',
       title: '',
       description: '',
       type: PlaceType.PRIVATE,
@@ -38,10 +48,11 @@ const Form = (props: Props) => {
       addressCity: '',
       houseRules: '',
       availabilityStart: new Date(),
-      availabilityEnd: undefined,
+      availabilityEnd: null,
     },
     onSubmit: values => {
-      console.log(values)
+      // TODO validate fields
+      props.onChange(values)
     },
   })
   return (
@@ -252,7 +263,7 @@ const Form = (props: Props) => {
                 id="availabilityEnd"
                 type="text"
                 value={
-                  formik.values.availabilityEnd === undefined
+                  formik.values.availabilityEnd == null
                     ? ''
                     : moment(formik.values.availabilityEnd).format('DD.MM.YYYY')
                 }

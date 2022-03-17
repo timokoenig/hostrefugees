@@ -17,6 +17,24 @@ type Props = {
 
 const PlacePage = (props: Props) => {
   const router = useRouter()
+
+  const onUpdate = async (place: Place) => {
+    try {
+      const res = await fetch('/api/place', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(place),
+      })
+      if (res.ok) {
+        router.back()
+      }
+    } catch (err: unknown) {
+      console.log(err)
+    }
+  }
+
   return (
     <Layout user={props.user}>
       <Head>
@@ -33,7 +51,7 @@ const PlacePage = (props: Props) => {
         </Heading>
         <SimpleGrid columns={3} spacing={5}>
           <GridItem colSpan={2}>
-            <Form place={props.place} />
+            <Form place={props.place} onChange={onUpdate} />
           </GridItem>
           <Box>
             <Text>Info</Text>

@@ -1,6 +1,6 @@
 import { ArrowBackIcon } from '@chakra-ui/icons'
 import { Box, Button, Container, GridItem, Heading, SimpleGrid, Text } from '@chakra-ui/react'
-import { UserRole } from '@prisma/client'
+import { Place, UserRole } from '@prisma/client'
 import Layout from 'components/layout'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
@@ -15,6 +15,24 @@ type Props = {
 
 const NewPage = (props: Props) => {
   const router = useRouter()
+
+  const onCreate = async (place: Place) => {
+    try {
+      const res = await fetch('/api/place', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(place),
+      })
+      if (res.ok) {
+        router.back()
+      }
+    } catch (err: unknown) {
+      console.log(err)
+    }
+  }
+
   return (
     <Layout user={props.user}>
       <Head>
@@ -31,7 +49,7 @@ const NewPage = (props: Props) => {
         </Heading>
         <SimpleGrid columns={3} spacing={5}>
           <GridItem colSpan={2}>
-            <Form />
+            <Form onChange={onCreate} />
           </GridItem>
           <Box>
             <Text>Info</Text>
