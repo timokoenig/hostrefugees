@@ -8,10 +8,13 @@ import {
   Input,
   SimpleGrid,
   Text,
+  useDisclosure,
 } from '@chakra-ui/react'
 import { User } from '@prisma/client'
 import Layout from 'components/layout'
+import ConfirmModal from 'components/modal/confirm'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import prisma from 'prisma/client'
 import React, { useState } from 'react'
 import { withSessionSsr } from 'utils/session'
@@ -21,8 +24,23 @@ type Props = {
 }
 
 const ProfilePage = (props: Props) => {
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const router = useRouter()
   const [firstname, setFirstname] = useState<string>(props.user?.firstname ?? '')
   const [lastname, setLastname] = useState<string>(props.user?.lastname ?? '')
+
+  const onDelete = async (confirm: boolean) => {
+    try {
+      onClose()
+      if (!confirm) return
+      // TODO delete user profile
+      await fetch('/api/logout')
+      await router.replace('/')
+    } catch (err: unknown) {
+      console.log(err)
+    }
+  }
+
   return (
     <Layout user={props.user}>
       <Head>
@@ -66,12 +84,18 @@ const ProfilePage = (props: Props) => {
             <Text mb="20">
               You can not update your profile at the moment. We are working on a solution.
             </Text>
-            <Button colorScheme="red" variant="ghost">
+            <Button colorScheme="red" variant="ghost" onClick={onOpen}>
               Delete Account
             </Button>
           </GridItem>
         </SimpleGrid>
       </Container>
+      <ConfirmModal
+        isOpen={isOpen}
+        onClose={onDelete}
+        title="Delete Profile"
+        subtitle="All your data will be deleted and can not be recovered."
+      />
     </Layout>
   )
 }
