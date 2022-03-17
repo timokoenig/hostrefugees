@@ -2,6 +2,7 @@ import {
   Box,
   Container,
   Heading,
+  HStack,
   Link,
   SimpleGrid,
   Stack,
@@ -9,6 +10,8 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react'
 import React, { ReactNode } from 'react'
+import Github from './common/github'
+import Kofi from './common/kofi'
 
 const ListHeader = ({ children }: { children: ReactNode }) => {
   return (
@@ -34,6 +37,10 @@ export default function Footer() {
               </Heading>
             </Box>
             <Text fontSize="sm">© 2022 Timo Koenig. All rights reserved</Text>
+            <HStack spacing={5}>
+              <Github />
+              <Kofi />
+            </HStack>
           </Stack>
           <Stack align="flex-start">
             <ListHeader>Be a Guest</ListHeader>
