@@ -1,7 +1,10 @@
 import { Place, UserRole } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from 'prisma/client'
+import geocode from 'utils/geocode'
 import { withSessionRoute } from 'utils/session'
+
+const DEFAULT_COUNTRY = 'Germany'
 
 interface Request extends NextApiRequest {
   body: {
@@ -10,8 +13,7 @@ interface Request extends NextApiRequest {
 }
 
 async function handleNewPlace(req: Request, res: NextApiResponse) {
-  const lat = '1'
-  const lng = '2'
+  const latLng = await geocode(req.body.place.addressCity, DEFAULT_COUNTRY)
 
   await prisma.place.create({
     data: {
@@ -36,9 +38,9 @@ async function handleNewPlace(req: Request, res: NextApiResponse) {
       addressHouseNumber: req.body.place.addressHouseNumber,
       addressZip: req.body.place.addressZip,
       addressCity: req.body.place.addressCity,
-      addressCityLat: lat,
-      addressCityLng: lng,
-      addressCountry: 'Germany',
+      addressCityLat: latLng.lat,
+      addressCityLng: latLng.lng,
+      addressCountry: DEFAULT_COUNTRY,
       houseRules: req.body.place.houseRules,
       availabilityStart: req.body.place.availabilityStart,
       availabilityEnd: req.body.place.availabilityEnd,
@@ -70,8 +72,9 @@ async function handleUpdatePlace(req: Request, res: NextApiResponse) {
   let lng = place.addressCityLng
   if (req.body.place.addressCity != place.addressCity) {
     // City changed, therefore we need to refresh the coordinates as well
-    lat = '1'
-    lng = '2'
+    const latLng = await geocode(req.body.place.addressCity, DEFAULT_COUNTRY)
+    lat = latLng.lat
+    lng = latLng.lng
   }
 
   await prisma.place.update({
@@ -95,7 +98,7 @@ async function handleUpdatePlace(req: Request, res: NextApiResponse) {
       addressCity: req.body.place.addressCity,
       addressCityLat: lat,
       addressCityLng: lng,
-      addressCountry: 'Germany',
+      addressCountry: DEFAULT_COUNTRY,
       houseRules: req.body.place.houseRules,
       availabilityStart: req.body.place.availabilityStart,
       availabilityEnd: req.body.place.availabilityEnd,
