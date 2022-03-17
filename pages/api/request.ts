@@ -24,6 +24,10 @@ async function handleUpdateRequest(req: NextApiRequest, res: NextApiResponse<Res
 }
 
 async function handler(req: Request, res: NextApiResponse<Response>) {
+  if (req.session.user == undefined) {
+    res.status(401).send({ ok: false, message: 'Not allowed' })
+    return
+  }
   if (req.method === 'POST') {
     await handleNewRequest(req, res)
     return

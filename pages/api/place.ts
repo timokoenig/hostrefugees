@@ -1,4 +1,4 @@
-import { Place } from '@prisma/client'
+import { Place, UserRole } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { withSessionRoute } from 'utils/session'
 
@@ -24,6 +24,10 @@ async function handleUpdatePlace(req: NextApiRequest, res: NextApiResponse<Respo
 }
 
 async function handler(req: Request, res: NextApiResponse<Response>) {
+  if (req.session.user == undefined || req.session.user.role != UserRole.HOST) {
+    res.status(401).send({ ok: false, message: 'Not allowed' })
+    return
+  }
   if (req.method === 'POST') {
     await handleNewPlace(req, res)
     return
