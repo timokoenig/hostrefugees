@@ -10,14 +10,9 @@ interface Request extends NextApiRequest {
   }
 }
 
-type Response = {
-  ok: boolean
-  message?: string
-}
-
-async function handler(req: Request, res: NextApiResponse<Response>) {
+async function handler(req: Request, res: NextApiResponse) {
   if (req.method !== 'POST') {
-    res.status(400).send({ ok: false, message: 'Only POST requests allowed' })
+    res.status(400)
     return
   }
 
@@ -28,14 +23,14 @@ async function handler(req: Request, res: NextApiResponse<Response>) {
     },
   })
   if (user === null) {
-    res.status(400).send({ ok: false, message: 'Wrong username or password' })
+    res.status(400)
     return
   }
 
   req.session.user = mapUser(user)
   await req.session.save()
 
-  res.send({ ok: true })
+  res.status(200)
 }
 
 export default withSessionRoute(handler)

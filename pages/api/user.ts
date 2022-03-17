@@ -19,12 +19,14 @@ async function handleRegistration(req: Request, res: NextApiResponse) {
       email: req.body.email,
     },
   })
-  if (user != null) {
+  if (user !== null) {
     res.status(400)
     return
   }
   await prisma.user.create({
     data: {
+      createdAt: new Date(),
+      updatedAt: new Date(),
       firstname: req.body.firstname,
       lastname: req.body.lastname,
       email: req.body.lastname,
@@ -32,7 +34,7 @@ async function handleRegistration(req: Request, res: NextApiResponse) {
       role: req.body.role === UserRole.HOST ? UserRole.HOST : UserRole.GUEST,
     },
   })
-  res.status(400)
+  res.status(201)
 }
 
 async function handler(req: Request, res: NextApiResponse<Response>) {

@@ -1,13 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { withSessionRoute } from 'utils/session'
 
-type Response = {
-  ok: boolean
-}
-
-function handler(req: NextApiRequest, res: NextApiResponse<Response>) {
+function handler(req: NextApiRequest, res: NextApiResponse) {
   req.session.destroy()
-  res.send({ ok: true })
+  res.status(200)
 }
 
 export default withSessionRoute(handler)
