@@ -11,9 +11,9 @@ import {
   VStack,
 } from '@chakra-ui/react'
 import { BathroomType, Place, PlaceType } from '@prisma/client'
+import DatePicker from 'components/common/datepicker'
 import NumberInput from 'components/place/number-input'
 import { useFormik } from 'formik'
-import moment from 'moment'
 import React from 'react'
 import Button from '../../common/button'
 
@@ -249,25 +249,18 @@ const Form = (props: Props) => {
 
             <FormControl>
               <FormLabel htmlFor="availabilityStart">Availability Start</FormLabel>
-              <Input
-                id="availabilityStart"
-                type="text"
-                value={moment(formik.values.availabilityStart).format('DD.MM.YYYY')}
-                onChange={formik.handleChange}
+              <DatePicker
+                value={formik.values.availabilityStart}
+                onChange={newVal => formik.setFieldValue('availabilityStart', newVal)}
               />
             </FormControl>
 
             <FormControl>
               <FormLabel htmlFor="availabilityEnd">Availability End (optional)</FormLabel>
-              <Input
-                id="availabilityEnd"
-                type="text"
-                value={
-                  formik.values.availabilityEnd == null
-                    ? ''
-                    : moment(formik.values.availabilityEnd).format('DD.MM.YYYY')
-                }
-                onChange={formik.handleChange}
+              <DatePicker
+                value={formik.values.availabilityEnd}
+                onChange={newVal => formik.setFieldValue('availabilityEnd', newVal)}
+                onReset={() => formik.setFieldValue('availabilityEnd', null)}
               />
             </FormControl>
           </VStack>
