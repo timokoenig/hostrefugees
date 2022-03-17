@@ -23,6 +23,8 @@ NEXT_PUBLIC_CONTACT_EMAIL=xxx
 NEXT_PUBLIC_CONTACT_WEBSITE=hostrefugees.eu
 NEXT_PUBLIC_VERSION=0.0.1
 
+NEXT_PUBLIC_GOOGLE_MAP_KEY=xxx
+
 DATABASE_URL=postgresql://postgres:@127.0.0.1:5432/hostrefugees?sslmode=disable
 
 SECRET_COOKIE_PASSWORD=complex_password_at_least_32_characters_long
@@ -59,6 +61,10 @@ After applying all migration, run the following command to seed the database onc
 ```sh
 npx prisma db seed
 ```
+
+## Google Maps
+
+Sign up at Google to get an API Key for Maps.
 
 ## Snapshot Tests
 

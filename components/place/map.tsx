@@ -29,7 +29,7 @@ export default function Map(props: Props) {
   return (
     <Stack height="80vh" borderRadius="lg" overflow="hidden">
       <GoogleMapReact
-        bootstrapURLKeys={{ key: '' }}
+        bootstrapURLKeys={{ key: process.env.NEXT_PUBLIC_GOOGLE_MAP_KEY as string }}
         defaultCenter={{ lat: 51.1657, lng: 10.4515 }} // center of Germany
         defaultZoom={6}
       >
