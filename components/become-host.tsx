@@ -38,8 +38,8 @@ const Register = () => {
                 </FormControl>
               </Box>
               <Box>
-                <FormControl id="lastName">
-                  <FormLabel isRequired>Last Name</FormLabel>
+                <FormControl id="lastName" isRequired>
+                  <FormLabel>Last Name</FormLabel>
                   <Input type="text" />
                 </FormControl>
               </Box>

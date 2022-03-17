@@ -27,7 +27,7 @@ export default function Map(props: Props) {
   const groupedItems = _.groupBy(markerItems, 'city')
 
   return (
-    <Stack height="80vh">
+    <Stack height="80vh" borderRadius="lg" overflow="hidden">
       <GoogleMapReact
         bootstrapURLKeys={{ key: '' }}
         defaultCenter={{ lat: 51.1657, lng: 10.4515 }} // center of Germany
