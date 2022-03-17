@@ -18,10 +18,6 @@ const DatePicker = (props: Props) => {
       props.onChange(null)
       return
     }
-    if (moment(date) < moment()) {
-      props.onChange(new Date())
-      return
-    }
     props.onChange(date)
     setOpen(false)
   }
