@@ -1,9 +1,10 @@
 import { ArrowBackIcon } from '@chakra-ui/icons'
 import { Box, Button, Container, GridItem, Heading, SimpleGrid, Text } from '@chakra-ui/react'
-import { UserRole } from '@prisma/client'
+import { Place, UserRole } from '@prisma/client'
 import Layout from 'components/layout'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
+import prisma from 'prisma/client'
 import React from 'react'
 import { MappedUser } from 'utils/models'
 import { withSessionSsr } from 'utils/session'
@@ -11,6 +12,7 @@ import Form from '../../../components/dashboard/place/form'
 
 type Props = {
   user: MappedUser
+  place: Place
 }
 
 const PlacePage = (props: Props) => {
@@ -31,7 +33,7 @@ const PlacePage = (props: Props) => {
         </Heading>
         <SimpleGrid columns={3} spacing={5}>
           <GridItem colSpan={2}>
-            <Form />
+            <Form place={props.place} />
           </GridItem>
           <Box>
             <Text>Info</Text>
@@ -51,9 +53,34 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
       },
     }
   }
+
+  const place = await prisma.place.findUnique({
+    where: {
+      id: context.query.id as string,
+    },
+    include: {
+      author: {
+        select: {
+          id: true,
+          firstname: true,
+          languages: true,
+        },
+      },
+    },
+  })
+  if (place === null || place.author.id !== context.req.session.user?.id) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
+  }
+
   return {
     props: {
       user: context.req.session.user,
+      place,
     },
   }
 })
