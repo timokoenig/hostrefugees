@@ -1,6 +1,6 @@
 import { ArrowBackIcon } from '@chakra-ui/icons'
 import { Box, Button, Container, Heading, List, Stack } from '@chakra-ui/react'
-import { Request } from '@prisma/client'
+import { Request, UserRole } from '@prisma/client'
 import RequestItem from 'components/dashboard/request-item'
 import Layout from 'components/layout'
 import moment from 'moment'
@@ -47,7 +47,7 @@ const ArchivePage = (props: Props) => {
 }
 
 export const getServerSideProps = withSessionSsr(async function getServerSideProps(context) {
-  if (context.req.session.user == undefined) {
+  if (context.req.session.user == undefined || context.req.session.user.role != UserRole.HOST) {
     return {
       redirect: {
         destination: '/',

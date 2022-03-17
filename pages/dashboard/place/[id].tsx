@@ -68,7 +68,11 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
       },
     },
   })
-  if (place === null || place.author.id !== context.req.session.user?.id) {
+  if (
+    place === null ||
+    (context.req.session.user?.role !== UserRole.ADMIN &&
+      place.author.id !== context.req.session.user?.id)
+  ) {
     return {
       redirect: {
         destination: '/',

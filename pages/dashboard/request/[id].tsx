@@ -125,9 +125,30 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
           languages: true,
         },
       },
-      place: true,
+      place: {
+        include: {
+          author: {
+            select: {
+              id: true,
+            },
+          },
+        },
+      },
     },
   })
+  if (
+    request === null ||
+    (context.req.session.user?.role !== UserRole.ADMIN &&
+      request.author.id !== context.req.session.user?.id &&
+      request.place.author.id !== context.req.session.user?.id)
+  ) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
+  }
 
   return {
     props: {
