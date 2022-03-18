@@ -6,6 +6,8 @@ import Status from './status'
 
 type Props = {
   status: RequestStatus | null
+  onAccept: () => void
+  onDecline: () => void
 }
 
 const StatusHost = (props: Props): JSX.Element => {
@@ -36,10 +38,10 @@ const StatusHost = (props: Props): JSX.Element => {
       return (
         <SimpleGrid columns={3} spacing={5}>
           <GridItem>
-            <Button title="Decline" color="red.500" fullWidth />
+            <Button title="Decline" color="red.500" fullWidth onClick={props.onDecline} />
           </GridItem>
           <GridItem colSpan={2}>
-            <Button title="Accept" color="green.500" fullWidth />
+            <Button title="Accept" color="green.500" fullWidth onClick={props.onAccept} />
           </GridItem>
         </SimpleGrid>
       )

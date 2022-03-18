@@ -4,7 +4,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { ArrowBackIcon } from '@chakra-ui/icons'
 import { Box, Button, Container, SimpleGrid, Text, useColorModeValue } from '@chakra-ui/react'
-import { Request, UserRole } from '@prisma/client'
+import { Request, RequestStatus, UserRole } from '@prisma/client'
 import Layout from 'components/layout'
 import Summary from 'components/place/summary'
 import moment from 'moment'
@@ -26,6 +26,27 @@ type Props = {
 const RequestPage = (props: Props) => {
   const { t } = useTranslation('common')
   const router = useRouter()
+
+  const updateRequestStatus = async (status: RequestStatus) => {
+    try {
+      const res = await fetch('/api/request', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id: props.request.id,
+          status,
+        }),
+      })
+      if (res.ok) {
+        router.reload()
+      }
+    } catch (err: unknown) {
+      console.log(err)
+    }
+  }
+
   return (
     <Layout user={props.user}>
       <Head>
@@ -94,13 +115,17 @@ const RequestPage = (props: Props) => {
               <Text>{props.request.about.length == 0 ? 'N/A' : props.request.about}</Text>
             </Box>
 
-            {props.user.role === UserRole.HOST && <StatusHost status={props.request.status} />}
+            {props.user.role === UserRole.HOST && (
+              <StatusHost
+                status={props.request.status}
+                onAccept={() => updateRequestStatus(RequestStatus.ACCEPTED)}
+                onDecline={() => updateRequestStatus(RequestStatus.DECLINED)}
+              />
+            )}
             {props.user.role === UserRole.GUEST && (
               <StatusGuest
                 status={props.request.status}
-                onCancelRequest={() => {
-                  // TODO implement cancel functionality
-                }}
+                onCancelRequest={() => updateRequestStatus(RequestStatus.CANCELED)}
               />
             )}
           </Box>
