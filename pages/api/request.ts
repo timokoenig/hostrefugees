@@ -77,6 +77,20 @@ async function handleUpdateRequest(req: UpdateRequest, res: NextApiResponse) {
     return
   }
 
+  if (request.author.id === req.session.user.id && req.body.status !== RequestStatus.CANCELED) {
+    // guest can only cancel the request
+    res.status(400)
+    return
+  }
+  if (
+    request.place.author.id === req.session.user.id &&
+    req.body.status === RequestStatus.CANCELED
+  ) {
+    // host can only accept and decline requests
+    res.status(400)
+    return
+  }
+
   await prisma.request.update({
     where: {
       id: req.body.id,
