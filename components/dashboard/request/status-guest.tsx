@@ -1,10 +1,11 @@
-import { Text } from '@chakra-ui/react'
+import { Link, Text } from '@chakra-ui/react'
 import { RequestStatus } from '@prisma/client'
 import React from 'react'
 import Status from './status'
 
 type Props = {
   status: RequestStatus | null
+  onCancelRequest: () => void
 }
 
 const StatusGuest = (props: Props): JSX.Element => {
@@ -30,7 +31,10 @@ const StatusGuest = (props: Props): JSX.Element => {
     default:
       return (
         <Status color="yellow.500" title="WAITING">
-          <Text>Waiting for the host to accept the application</Text>
+          <Text mb="2">Waiting for the host to accept the application</Text>
+          <Link fontWeight="semibold" onClick={props.onCancelRequest}>
+            Cancel Request
+          </Link>
         </Status>
       )
   }

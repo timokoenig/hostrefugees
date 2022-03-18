@@ -95,7 +95,14 @@ const RequestPage = (props: Props) => {
             </Box>
 
             {props.user.role === UserRole.HOST && <StatusHost status={props.request.status} />}
-            {props.user.role === UserRole.GUEST && <StatusGuest status={props.request.status} />}
+            {props.user.role === UserRole.GUEST && (
+              <StatusGuest
+                status={props.request.status}
+                onCancelRequest={() => {
+                  // TODO implement cancel functionality
+                }}
+              />
+            )}
           </Box>
         </SimpleGrid>
       </Container>
