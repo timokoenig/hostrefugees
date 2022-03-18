@@ -23,6 +23,7 @@ model User {
   password  String
   role      UserRole  @default(GUEST)
   languages String[]
+  approved  Boolean   @default(false)
   places    Place[]
   requests  Request[]
 }
