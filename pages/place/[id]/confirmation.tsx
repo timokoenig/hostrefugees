@@ -6,7 +6,7 @@ import { withSessionSsr } from 'utils/session'
 import Layout from '../../../components/layout'
 
 type Props = {
-  user?: MappedUser
+  user: MappedUser
 }
 
 const RequestPage = (props: Props) => {
@@ -47,7 +47,7 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
   }
   return {
     props: {
-      user: context.req.session.user ?? null,
+      user: context.req.session.user,
     },
   }
 })
