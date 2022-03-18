@@ -32,6 +32,7 @@
     "babel-plugin-superjson-next": "^0.4.3",
     "cookie-cutter": "^0.2.0",
     "cookies": "^0.8.0",
+    "emailjs": "^3.8.0",
     "emotion-theming": "^11.0.0",
     "formik": "^2.2.9",
     "framer-motion": "^4",

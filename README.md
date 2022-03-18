@@ -27,6 +27,10 @@ NEXT_PUBLIC_GOOGLE_MAP_KEY=xxx
 
 DATABASE_URL=postgresql://postgres:@127.0.0.1:5432/hostrefugees?sslmode=disable
 
+SMTP_USERNAME=user
+SMTP_PASSWORD=password
+SMTP_HOST=smtp.your-email.com
+
 SECRET_COOKIE_PASSWORD=complex_password_at_least_32_characters_long
 NODE_ENV=development
 ```
