@@ -13,6 +13,7 @@ import Layout from 'components/layout'
 import Head from 'next/head'
 import prisma from 'prisma/client'
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { withSessionSsr } from 'utils/session'
 
 type Props = {
@@ -20,6 +21,7 @@ type Props = {
 }
 
 const ProfilePage = (props: Props) => {
+  const { t } = useTranslation('common')
   const [firstname, setFirstname] = useState<string>(props.user?.firstname ?? '')
   const [lastname, setLastname] = useState<string>(props.user?.lastname ?? '')
 
@@ -57,6 +59,15 @@ const ProfilePage = (props: Props) => {
             <FormControl>
               <FormLabel htmlFor="email">Email address</FormLabel>
               <Input id="email" type="email" value={props.user?.email ?? ''} isDisabled={true} />
+            </FormControl>
+            <FormControl>
+              <FormLabel htmlFor="languages">Languages</FormLabel>
+              <Input
+                id="languages"
+                type="languages"
+                value={(props.user?.languages ?? []).map(lang => t(`lang.${lang}`)).join(', ')}
+                isDisabled={true}
+              />
             </FormControl>
           </GridItem>
           <GridItem>
