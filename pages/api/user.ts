@@ -21,7 +21,7 @@ async function handleRegistration(req: Request, res: NextApiResponse) {
     },
   })
   if (user !== null) {
-    res.status(400)
+    res.status(400).end()
     return
   }
 
@@ -38,7 +38,7 @@ async function handleRegistration(req: Request, res: NextApiResponse) {
       role: req.body.role === UserRole.HOST ? UserRole.HOST : UserRole.GUEST,
     },
   })
-  res.status(201)
+  res.status(201).end()
 }
 
 async function handler(req: Request, res: NextApiResponse<Response>) {
@@ -46,7 +46,7 @@ async function handler(req: Request, res: NextApiResponse<Response>) {
     await handleRegistration(req, res)
     return
   }
-  res.status(400)
+  res.status(400).end()
 }
 
 export default withSessionRoute(handler)

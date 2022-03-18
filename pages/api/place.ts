@@ -46,7 +46,7 @@ async function handleNewPlace(req: Request, res: NextApiResponse) {
       availabilityEnd: req.body.place.availabilityEnd,
     },
   })
-  res.status(201)
+  res.status(201).end()
 }
 
 async function handleUpdatePlace(req: Request, res: NextApiResponse) {
@@ -59,12 +59,12 @@ async function handleUpdatePlace(req: Request, res: NextApiResponse) {
     },
   })
   if (place === null) {
-    res.status(400)
+    res.status(400).end()
     return
   }
   if (place.author.id !== req.session.user?.id) {
     // user can only update own places
-    res.status(400)
+    res.status(400).end()
     return
   }
 
@@ -104,12 +104,12 @@ async function handleUpdatePlace(req: Request, res: NextApiResponse) {
       availabilityEnd: req.body.place.availabilityEnd,
     },
   })
-  res.status(200)
+  res.status(200).end()
 }
 
 async function handler(req: Request, res: NextApiResponse) {
   if (req.session.user == undefined || req.session.user.role === UserRole.GUEST) {
-    res.status(401)
+    res.status(401).end()
     return
   }
   if (req.method === 'POST') {
@@ -120,7 +120,7 @@ async function handler(req: Request, res: NextApiResponse) {
     await handleUpdatePlace(req, res)
     return
   }
-  res.status(400)
+  res.status(400).end()
 }
 
 export default withSessionRoute(handler)

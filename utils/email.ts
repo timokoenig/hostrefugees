@@ -8,7 +8,7 @@ const client = new SMTPClient({
   ssl: true,
 })
 
-export const EmailNewRequest = (
+export const emailNewRequest = (
   request: Request & { place: Place & { author: User }; author: User }
 ): MessageHeaders => {
   return {

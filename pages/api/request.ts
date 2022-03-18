@@ -19,7 +19,7 @@ interface UpdateRequest extends NextApiRequest {
 async function handleNewRequest(req: CreateRequest, res: NextApiResponse) {
   if (req.session.user?.role !== UserRole.GUEST) {
     // Only guests can create requests
-    res.status(400)
+    res.status(400).end()
     return
   }
 
@@ -47,7 +47,7 @@ async function handleNewRequest(req: CreateRequest, res: NextApiResponse) {
 
   // send email to host
 
-  res.status(200)
+  res.status(200).end()
 }
 
 async function handleUpdateRequest(req: UpdateRequest, res: NextApiResponse) {
@@ -65,7 +65,7 @@ async function handleUpdateRequest(req: UpdateRequest, res: NextApiResponse) {
     },
   })
   if (request === null) {
-    res.status(400)
+    res.status(400).end()
     return
   }
   if (
@@ -73,13 +73,13 @@ async function handleUpdateRequest(req: UpdateRequest, res: NextApiResponse) {
     request.place.author.id !== req.session.user?.id
   ) {
     // user must be author of request (GUEST) or author of place (HOST) to update the status
-    res.status(400)
+    res.status(400).end()
     return
   }
 
   if (request.author.id === req.session.user.id && req.body.status !== RequestStatus.CANCELED) {
     // guest can only cancel the request
-    res.status(400)
+    res.status(400).end()
     return
   }
   if (
@@ -87,7 +87,7 @@ async function handleUpdateRequest(req: UpdateRequest, res: NextApiResponse) {
     req.body.status === RequestStatus.CANCELED
   ) {
     // host can only accept and decline requests
-    res.status(400)
+    res.status(400).end()
     return
   }
 
@@ -103,12 +103,12 @@ async function handleUpdateRequest(req: UpdateRequest, res: NextApiResponse) {
 
   // TODO send emails to both parties
 
-  res.status(200)
+  res.status(200).end()
 }
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.session.user == undefined) {
-    res.status(401)
+    res.status(401).end()
     return
   }
   if (req.method === 'POST') {
@@ -119,7 +119,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     await handleUpdateRequest(req, res)
     return
   }
-  res.status(400)
+  res.status(400).end()
 }
 
 export default withSessionRoute(handler)

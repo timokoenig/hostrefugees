@@ -13,7 +13,7 @@ interface Request extends NextApiRequest {
 
 async function handler(req: Request, res: NextApiResponse) {
   if (req.method !== 'POST') {
-    res.status(400)
+    res.status(400).end()
     return
   }
 
@@ -23,20 +23,20 @@ async function handler(req: Request, res: NextApiResponse) {
     },
   })
   if (user === null) {
-    res.status(400)
+    res.status(400).end()
     return
   }
 
   const valid = await compare(req.body.password, user.password)
   if (!valid) {
-    res.status(400)
+    res.status(400).end()
     return
   }
 
   req.session.user = mapUser(user)
   await req.session.save()
 
-  res.status(200)
+  res.status(200).end()
 }
 
 export default withSessionRoute(handler)
