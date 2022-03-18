@@ -1,4 +1,5 @@
 import { UserRole } from '@prisma/client'
+import { hash } from 'bcrypt'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from 'prisma/client'
 import { withSessionRoute } from 'utils/session'
@@ -23,6 +24,9 @@ async function handleRegistration(req: Request, res: NextApiResponse) {
     res.status(400)
     return
   }
+
+  const hashedPassword = await hash(req.body.password, 10)
+
   await prisma.user.create({
     data: {
       createdAt: new Date(),
@@ -30,7 +34,7 @@ async function handleRegistration(req: Request, res: NextApiResponse) {
       firstname: req.body.firstname,
       lastname: req.body.lastname,
       email: req.body.lastname,
-      password: req.body.password,
+      password: hashedPassword,
       role: req.body.role === UserRole.HOST ? UserRole.HOST : UserRole.GUEST,
     },
   })

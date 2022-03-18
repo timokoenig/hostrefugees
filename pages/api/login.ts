@@ -1,3 +1,4 @@
+import { compare } from 'bcrypt'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from 'prisma/client'
 import { mapUser } from 'utils/mapper'
@@ -19,10 +20,15 @@ async function handler(req: Request, res: NextApiResponse) {
   const user = await prisma.user.findFirst({
     where: {
       email: req.body.email,
-      password: req.body.password,
     },
   })
   if (user === null) {
+    res.status(400)
+    return
+  }
+
+  const valid = await compare(req.body.password, user.password)
+  if (!valid) {
     res.status(400)
     return
   }

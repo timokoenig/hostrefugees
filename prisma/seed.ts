@@ -1,24 +1,27 @@
 import { BathroomType, PlaceType, PrismaClient, UserRole } from '@prisma/client'
+import { hash } from 'bcrypt'
 const prisma = new PrismaClient()
 
 async function main() {
+  const adminPwd = await hash('admin', 10)
   await prisma.user.create({
     data: {
       firstname: 'Admin',
       lastname: 'Foo',
       email: 'admin@hostrefugees.eu',
-      password: 'admin',
+      password: adminPwd,
       role: UserRole.ADMIN,
       languages: ['en'],
     },
   })
 
+  const hostPwd = await hash('host', 10)
   const host = await prisma.user.create({
     data: {
       firstname: 'Host',
       lastname: 'Foo',
       email: 'host@hostrefugees.eu',
-      password: 'host',
+      password: hostPwd,
       role: UserRole.HOST,
       languages: ['en', 'de'],
     },
@@ -101,12 +104,13 @@ async function main() {
     },
   })
 
+  const guestPwd = await hash('guest', 10)
   const guest = await prisma.user.create({
     data: {
       firstname: 'Guest',
       lastname: 'Foo',
       email: 'guest@hostrefugees.eu',
-      password: 'guest',
+      password: guestPwd,
       role: UserRole.GUEST,
       languages: ['en', 'de'],
     },
