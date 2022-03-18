@@ -26,9 +26,28 @@ const Form = (props: Props) => {
       children: 0,
       about: '',
     },
-    onSubmit: values => {
-      console.log(values)
-      router.replace(`/place/${props.place.id}/confirmation`).catch(console.log)
+    onSubmit: async values => {
+      try {
+        const res = await fetch('/api/request', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            request: {
+              ...values,
+              placeId: props.place.id,
+              startDate: new Date(),
+              endDate: new Date(),
+            },
+          }),
+        })
+        if (res.ok) {
+          await router.replace(`/place/${props.place.id}/confirmation`)
+        }
+      } catch (err: unknown) {
+        console.log(err)
+      }
     },
   })
   return (

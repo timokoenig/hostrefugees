@@ -2,6 +2,9 @@
 import { Place, Request, User } from '@prisma/client'
 import { MessageHeaders, SMTPClient } from 'emailjs'
 import fs from 'fs'
+import path from 'path'
+
+const emailPath = path.resolve('utils/email-template.html')
 
 const client = new SMTPClient({
   user: process.env.SMTP_USERNAME,
@@ -47,7 +50,7 @@ export const emailApprovedUser = (user: User): MessageHeaders => {
     button('Add new Place', 'https://hostrefugees.eu/dashboard/place/new'),
   ].join('')
 
-  let content = fs.readFileSync('./email-template.html', 'utf-8')
+  let content = fs.readFileSync(emailPath, 'utf-8')
   content = content.replace('{{TITLE}}', subject)
   content = content.replace('{{PREHEADER}}', preheader)
   content = content.replace('{{BODY}}', textHtml)
@@ -73,7 +76,7 @@ export const emailNewRequest = (
     button('Show Request', 'https://hostrefugees.eu/dashboard'),
   ].join('')
 
-  let content = fs.readFileSync('./email-template.html', 'utf-8')
+  let content = fs.readFileSync(emailPath, 'utf-8')
   content = content.replace('{{TITLE}}', subject)
   content = content.replace('{{PREHEADER}}', preheader)
   content = content.replace('{{BODY}}', textHtml)
@@ -103,7 +106,7 @@ export const emailAcceptRequestGuest = (
     paragraph(`Phone: xxx`),
   ].join('')
 
-  let content = fs.readFileSync('./email-template.html', 'utf-8')
+  let content = fs.readFileSync(emailPath, 'utf-8')
   content = content.replace('{{TITLE}}', subject)
   content = content.replace('{{PREHEADER}}', preheader)
   content = content.replace('{{BODY}}', textHtml)
@@ -133,7 +136,7 @@ export const emailAcceptRequestHost = (
     paragraph(`Phone: xxx`),
   ].join('')
 
-  let content = fs.readFileSync('./email-template.html', 'utf-8')
+  let content = fs.readFileSync(emailPath, 'utf-8')
   content = content.replace('{{TITLE}}', subject)
   content = content.replace('{{PREHEADER}}', preheader)
   content = content.replace('{{BODY}}', textHtml)
@@ -159,7 +162,7 @@ export const emailDeclineRequest = (
     button('Show Other Places', 'https://hostrefugees.eu/place'),
   ].join('')
 
-  let content = fs.readFileSync('./email-template.html', 'utf-8')
+  let content = fs.readFileSync(emailPath, 'utf-8')
   content = content.replace('{{TITLE}}', subject)
   content = content.replace('{{PREHEADER}}', preheader)
   content = content.replace('{{BODY}}', textHtml)
@@ -182,7 +185,7 @@ export const emailCancelRequest = (
   const text = ''
   const textHtml = [paragraph('The guest canceld a stay request at your place.')].join('')
 
-  let content = fs.readFileSync('./email-template.html', 'utf-8')
+  let content = fs.readFileSync(emailPath, 'utf-8')
   content = content.replace('{{TITLE}}', subject)
   content = content.replace('{{PREHEADER}}', preheader)
   content = content.replace('{{BODY}}', textHtml)
