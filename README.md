@@ -82,6 +82,10 @@ To add a new snapshot test, follow [the instructions](https://jestjs.io/docs/sna
 
 To update an existing snapshot, adjust the test case and run `npm run snapshot-update`.
 
+## Email Template
+
+Every email uses a base [responsive template](https://github.com/leemunroe/responsive-html-email-template) that is located in `material/email-template.html`. Before we send an email, we need to inline the css styles with a tool like [htmlemail.io/inline](https://htmlemail.io/inline/).
+
 ## i18n
 
 The app uses [i18next](https://www.i18next.com/) for internationalization. We want to offer this website to as many people as possible therefore native translations are important. We welcome anyone to help us translate this app. To do so, follow these steps:
