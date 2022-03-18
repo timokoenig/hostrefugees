@@ -66,6 +66,10 @@ After applying all migration, run the following command to seed the database onc
 npx prisma db seed
 ```
 
+## Securing Passwords
+
+https://auth0.com/blog/hashing-in-action-understanding-bcrypt/
+
 ## Google Maps
 
 Sign up at Google to get an API Key for Maps.
