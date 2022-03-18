@@ -27,7 +27,9 @@ NEXT_PUBLIC_GOOGLE_MAP_KEY=xxx
 
 DATABASE_URL=postgresql://postgres:@127.0.0.1:5432/hostrefugees?sslmode=disable
 
-ENABLE_EMAILS=true
+EMAIL_ENABLE=true
+EMAIL_NAME=xxx
+EMAIL_EMAIL=xxx
 SMTP_USERNAME=user
 SMTP_PASSWORD=password
 SMTP_HOST=smtp.your-email.com
@@ -87,7 +89,7 @@ To update an existing snapshot, adjust the test case and run `npm run snapshot-u
 
 Every email uses a base [responsive template](https://github.com/leemunroe/responsive-html-email-template) that is located in `material/email-template.html`. Before we send an email, we need to inline the css styles with a tool like [htmlemail.io/inline](https://htmlemail.io/inline/).
 
-Set environment variable `ENABLE_EMAILS=true` to enable the emailing.
+Set environment variable `EMAIL_ENABLE=true` to enable the emailing.
 
 ## i18n
 

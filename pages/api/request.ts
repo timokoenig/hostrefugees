@@ -1,6 +1,14 @@
 import { Request, RequestStatus, UserRole } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from 'prisma/client'
+import {
+  emailAcceptRequestGuest,
+  emailAcceptRequestHost,
+  emailCancelRequest,
+  emailDeclineRequest,
+  emailNewRequest,
+  sendEmail,
+} from 'utils/email'
 import { withSessionRoute } from 'utils/session'
 
 interface CreateRequest extends NextApiRequest {
@@ -23,7 +31,7 @@ async function handleNewRequest(req: CreateRequest, res: NextApiResponse) {
     return
   }
 
-  await prisma.request.create({
+  const request = await prisma.request.create({
     data: {
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -43,9 +51,18 @@ async function handleNewRequest(req: CreateRequest, res: NextApiResponse) {
       endDate: req.body.request.endDate,
       about: req.body.request.about,
     },
+    include: {
+      author: true,
+      place: {
+        include: {
+          author: true,
+        },
+      },
+    },
   })
 
   // send email to host
+  await sendEmail(emailNewRequest(request))
 
   res.status(200).end()
 }
@@ -91,7 +108,7 @@ async function handleUpdateRequest(req: UpdateRequest, res: NextApiResponse) {
     return
   }
 
-  await prisma.request.update({
+  const updatedRequest = await prisma.request.update({
     where: {
       id: req.body.id,
     },
@@ -99,9 +116,33 @@ async function handleUpdateRequest(req: UpdateRequest, res: NextApiResponse) {
       updatedAt: new Date(),
       status: req.body.status,
     },
+    include: {
+      author: true,
+      place: {
+        include: {
+          author: true,
+        },
+      },
+    },
   })
 
-  // TODO send emails to both parties
+  // Send email to guest and host based on the request status, only if the status has changed
+  if (request.status !== updatedRequest.status) {
+    switch (updatedRequest.status) {
+      case RequestStatus.ACCEPTED:
+        await sendEmail(emailAcceptRequestGuest(updatedRequest))
+        await sendEmail(emailAcceptRequestHost(updatedRequest))
+        break
+      case RequestStatus.DECLINED:
+        await sendEmail(emailDeclineRequest(updatedRequest))
+        break
+      case RequestStatus.CANCELED:
+        await sendEmail(emailCancelRequest(updatedRequest))
+        break
+      default:
+        break
+    }
+  }
 
   res.status(200).end()
 }
