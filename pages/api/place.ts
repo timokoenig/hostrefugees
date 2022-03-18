@@ -46,7 +46,7 @@ async function handleNewPlace(req: Request, res: NextApiResponse) {
       availabilityEnd: req.body.place.availabilityEnd,
     },
   })
-  res.status(200)
+  res.status(201)
 }
 
 async function handleUpdatePlace(req: Request, res: NextApiResponse) {
