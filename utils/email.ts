@@ -65,6 +65,7 @@ export const emailNewRequest = (
 }
 
 export const sendEmail = async (msg: MessageHeaders) => {
+  if (process.env.ENABLE_EMAILS !== 'true') return
   try {
     await client.sendAsync(msg)
   } catch (err: unknown) {
