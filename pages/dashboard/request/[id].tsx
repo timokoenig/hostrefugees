@@ -92,14 +92,16 @@ const RequestPage = (props: Props) => {
                   {props.request.children}
                 </Text>
               </Text>
-              <Text>
-                Guest Languages:{' '}
-                <Text as="span" fontWeight="semibold">
-                  {(props.request as any).author.languages
-                    .map((lang: string) => t(`lang.${lang}`))
-                    .join(', ')}
+              {props.user.role === UserRole.HOST && (
+                <Text>
+                  Guest Languages:{' '}
+                  <Text as="span" fontWeight="semibold">
+                    {(props.request as any).author.languages
+                      .map((lang: string) => t(`lang.${lang}`))
+                      .join(', ')}
+                  </Text>
                 </Text>
-              </Text>
+              )}
             </Box>
 
             <Box mb="20">
