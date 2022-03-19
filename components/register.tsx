@@ -12,11 +12,14 @@ import {
   Text,
   useColorModeValue,
 } from '@chakra-ui/react'
+import { UserRole } from '@prisma/client'
 import { useFormik } from 'formik'
+import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import Button from './common/button'
 
 const Register = () => {
+  const router = useRouter()
   const [termsAccepted, setTermsAccepted] = useState<boolean>(false)
   const formik = useFormik({
     initialValues: {
@@ -25,8 +28,24 @@ const Register = () => {
       firstname: '',
       lastname: '',
     },
-    onSubmit: values => {
-      console.log(values)
+    onSubmit: async values => {
+      try {
+        const res = await fetch('/api/user', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            ...values,
+            role: UserRole.GUEST,
+          }),
+        })
+        if (res.ok) {
+          await router.replace('/onboarding')
+        }
+      } catch (err: unknown) {
+        console.log(err)
+      }
     },
   })
   return (

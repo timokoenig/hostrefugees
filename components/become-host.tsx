@@ -12,11 +12,42 @@ import {
   Text,
   useColorModeValue,
 } from '@chakra-ui/react'
+import { UserRole } from '@prisma/client'
+import { useFormik } from 'formik'
+import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import Button from './common/button'
 
 const Register = () => {
+  const router = useRouter()
   const [termsAccepted, setTermsAccepted] = useState<boolean>(false)
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+      firstname: '',
+      lastname: '',
+    },
+    onSubmit: async values => {
+      try {
+        const res = await fetch('/api/user', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            ...values,
+            role: UserRole.HOST,
+          }),
+        })
+        if (res.ok) {
+          await router.replace('/onboarding')
+        }
+      } catch (err: unknown) {
+        console.log(err)
+      }
+    },
+  })
   return (
     <Flex align="center">
       <Stack spacing={8} mx="auto" maxW="lg" py={12} px={6}>
@@ -29,46 +60,68 @@ const Register = () => {
           </Text>
         </Stack>
         <Box rounded="lg" bg={useColorModeValue('white', 'gray.700')} boxShadow="lg" p={8}>
-          <Stack spacing={4}>
-            <HStack>
-              <Box>
-                <FormControl id="firstName" isRequired>
-                  <FormLabel>First Name</FormLabel>
-                  <Input type="text" />
-                </FormControl>
-              </Box>
-              <Box>
-                <FormControl id="lastName" isRequired>
-                  <FormLabel>Last Name</FormLabel>
-                  <Input type="text" />
-                </FormControl>
-              </Box>
-            </HStack>
-            <FormControl id="email" isRequired>
-              <FormLabel>Email address</FormLabel>
-              <Input type="email" />
-            </FormControl>
-            <FormControl id="password" isRequired>
-              <FormLabel>Password</FormLabel>
-              <Input type="password" />
-            </FormControl>
-            <Stack spacing={10}>
-              <Checkbox
-                onChange={() => setTermsAccepted(!termsAccepted)}
-                value={termsAccepted ? 1 : 0}
-              >
-                I accept the{' '}
-                <Link href="/terms" target="_blank" color="blue.400">
-                  Terms
-                </Link>{' '}
-                and{' '}
-                <Link href="/privacy" target="_blank" color="blue.400">
-                  Data Privacy
-                </Link>
-              </Checkbox>
-              <Button title="Sign up" isDisabled={!termsAccepted} />
+          <form onSubmit={formik.handleSubmit}>
+            <Stack spacing={4}>
+              <HStack>
+                <Box>
+                  <FormControl isRequired>
+                    <FormLabel htmlFor="firstname">First Name</FormLabel>
+                    <Input
+                      id="firstname"
+                      type="text"
+                      value={formik.values.firstname}
+                      onChange={formik.handleChange}
+                    />
+                  </FormControl>
+                </Box>
+                <Box>
+                  <FormControl isRequired>
+                    <FormLabel htmlFor="lastname">Last Name</FormLabel>
+                    <Input
+                      id="lastname"
+                      type="text"
+                      value={formik.values.lastname}
+                      onChange={formik.handleChange}
+                    />
+                  </FormControl>
+                </Box>
+              </HStack>
+              <FormControl isRequired>
+                <FormLabel htmlFor="email">Email address</FormLabel>
+                <Input
+                  id="email"
+                  type="email"
+                  value={formik.values.email}
+                  onChange={formik.handleChange}
+                />
+              </FormControl>
+              <FormControl isRequired>
+                <FormLabel htmlFor="password">Password</FormLabel>
+                <Input
+                  id="password"
+                  type="password"
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
+                />
+              </FormControl>
+              <Stack spacing={10}>
+                <Checkbox
+                  onChange={() => setTermsAccepted(!termsAccepted)}
+                  value={termsAccepted ? 1 : 0}
+                >
+                  I accept the{' '}
+                  <Link href="/terms" target="_blank" color="blue.400">
+                    Terms
+                  </Link>{' '}
+                  and{' '}
+                  <Link href="/privacy" target="_blank" color="blue.400">
+                    Data Privacy
+                  </Link>
+                </Checkbox>
+                <Button title="Sign up" fullWidth isDisabled={!termsAccepted} />
+              </Stack>
             </Stack>
-          </Stack>
+          </form>
         </Box>
       </Stack>
     </Flex>
