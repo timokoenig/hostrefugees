@@ -2,6 +2,7 @@ import { OptionBase, Select } from 'chakra-react-select'
 import React from 'react'
 
 type Props = {
+  isDisabled?: boolean
   onChange: (languages: string[]) => void
 }
 
@@ -22,6 +23,7 @@ const LanguagePicker = (props: Props) => {
       placeholder="Select at least one language"
       closeMenuOnSelect={false}
       size="lg"
+      isDisabled={props.isDisabled}
       onChange={values => props.onChange(values.map(lang => lang.value))}
     />
   )

@@ -1,40 +1,38 @@
-import { Button, Center, Container, Heading, Image, Text } from '@chakra-ui/react'
-import LanguagePicker from 'components/common/languagepicker'
+import { Container } from '@chakra-ui/react'
+import LanguageOnboarding from 'components/onboarding/language'
+import VerificationOnboarding from 'components/onboarding/verification'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import { MappedUser } from 'utils/models'
 import { withSessionSsr } from 'utils/session'
 import Layout from '../components/layout'
 
+const ONBOARDING_LANGUAGE = 'LANGUAGE'
+const ONBOARDING_VERIFICATION = 'VERIFICATION'
+
 type Props = {
   user: MappedUser
+  steps: string[]
 }
 
 const OnboardingPage = (props: Props) => {
   const router = useRouter()
-  const [languages, setLanguages] = useState<string[]>([])
+  const [steps, setSteps] = useState<string[]>(props.steps)
 
-  console.log(languages)
+  const onNext = async () => {
+    if (steps.length === 1) {
+      // TODO redirect user to request page if needed
+      await router.replace('/dashboard')
+      return
+    }
+    setSteps(steps.filter(step => step !== steps[0]))
+  }
 
   return (
     <Layout user={props.user}>
       <Container maxW="7xl" textAlign="center" maxWidth="700">
-        <Heading as="h2" size="xl" mt={6} mb={10}>
-          We are happy to welcome you at{' '}
-          <Text as="span" color="blue.400">
-            HostRefugees
-          </Text>
-        </Heading>
-        <Center mb={10}>
-          <Image src="/svg/undraw_audio_conversation_re_ptsl.svg" maxWidth="250" />
-        </Center>
-        <Text color="gray.500" mb="5">
-          To improve the communication for hosts and guests, please select all languages you speak
-        </Text>
-        <LanguagePicker onChange={setLanguages} />
-        <Button colorScheme="blue" my="10" onClick={() => router.push('/')}>
-          Continue
-        </Button>
+        {steps[0] === ONBOARDING_LANGUAGE && <LanguageOnboarding onNext={onNext} />}
+        {steps[0] === ONBOARDING_VERIFICATION && <VerificationOnboarding onNext={onNext} />}
       </Container>
     </Layout>
   )
@@ -49,9 +47,25 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
       },
     }
   }
+
+  const steps: string[] = [ONBOARDING_LANGUAGE, ONBOARDING_VERIFICATION]
+
+  // TODO check onboarding steps
+
+  if (steps.length === 0) {
+    // TODO redirect user to request page if needed
+    return {
+      redirect: {
+        destination: `/dashboard`,
+        permanent: false,
+      },
+    }
+  }
+
   return {
     props: {
       user: context.req.session.user,
+      steps,
     },
   }
 })
