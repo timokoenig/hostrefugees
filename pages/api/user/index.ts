@@ -18,7 +18,7 @@ interface RegistrationRequest extends NextApiRequest {
 interface UpdateRequest extends NextApiRequest {
   body: {
     id: string
-    approved: boolean
+    verified: boolean
   }
 }
 
@@ -71,11 +71,11 @@ async function handleUpdateUser(req: UpdateRequest, res: NextApiResponse) {
     },
     data: {
       updatedAt: new Date(),
-      approved: req.body.approved,
+      verified: req.body.verified,
     },
   })
 
-  if (user.approved !== req.body.approved && req.body.approved) {
+  if (user.verified !== req.body.verified && req.body.verified) {
     await sendEmail(emailApprovedUser(user))
   }
 

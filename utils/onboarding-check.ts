@@ -1,3 +1,4 @@
+import { UserRole } from '@prisma/client'
 import prisma from 'prisma/client'
 
 export const ONBOARDING_LANGUAGE = 'LANGUAGE'
@@ -20,9 +21,10 @@ export const onboardingCheck = async (userId: string): Promise<string[]> => {
     steps.push(ONBOARDING_LANGUAGE)
   }
 
-  // TODO implement the verification logic only for HOSTS
-  // ONBOARDING_VERIFICATION
-  // steps.push(ONBOARDING_VERIFICATION)
+  // Check if host needs to submit documents for the verification
+  if (user.role == UserRole.HOST && user.verificationSubmittedAt == null) {
+    steps.push(ONBOARDING_VERIFICATION)
+  }
 
   // TODO implement logic
   // steps.push(ONBOARDING_PROFILE_PHOTO)

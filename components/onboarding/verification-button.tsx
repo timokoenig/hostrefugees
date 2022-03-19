@@ -2,31 +2,27 @@ import { Box, Button, Image, Text } from '@chakra-ui/react'
 import React, { useState } from 'react'
 
 type Props = {
+  image: string | null
   title: string
   subtitle?: string
   isDisabled: boolean
-  onUpload: () => void
-  onRemove: () => void
+  onUpload: () => Promise<void>
+  onRemove: () => Promise<void>
 }
 
 const VerificationButton = (props: Props) => {
   const [isLoading, setLoading] = useState<boolean>(false)
-  const [image, setImage] = useState<string | null>(null)
 
-  const onUpload = () => {
+  const onUpload = async () => {
     setLoading(true)
-    setTimeout(() => {
-      setImage('https://picsum.photos/900/600')
-      setLoading(false)
-    }, 3000)
+    await props.onUpload()
+    setLoading(false)
   }
 
-  const onRemove = () => {
+  const onRemove = async () => {
     setLoading(true)
-    setTimeout(() => {
-      setImage(null)
-      setLoading(false)
-    }, 3000)
+    await props.onRemove()
+    setLoading(false)
   }
 
   if (isLoading) {
@@ -45,7 +41,7 @@ const VerificationButton = (props: Props) => {
     )
   }
 
-  if (image === null) {
+  if (props.image === null) {
     return (
       <Button
         borderWidth="1px"
@@ -76,7 +72,14 @@ const VerificationButton = (props: Props) => {
       flexDirection="column"
       maxWidth="300"
     >
-      <Image rounded="md" alt="product image" src={image} fit="cover" align="center" w="100%" />
+      <Image
+        rounded="md"
+        alt="product image"
+        src={props.image}
+        fit="cover"
+        align="center"
+        w="100%"
+      />
       <Text fontWeight="semibold" mt="2">
         {props.title}
       </Text>

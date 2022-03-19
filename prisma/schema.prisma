@@ -14,18 +14,19 @@ enum UserRole {
 }
 
 model User {
-  id        String    @id @default(uuid())
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime  @default(now()) @map("updated_at")
-  firstname String
-  lastname  String
-  email     String    @unique
-  password  String
-  role      UserRole  @default(GUEST)
-  languages String[]
-  approved  Boolean   @default(false)
-  places    Place[]
-  requests  Request[]
+  id                      String    @id @default(uuid())
+  createdAt               DateTime  @default(now()) @map("created_at")
+  updatedAt               DateTime  @default(now()) @map("updated_at")
+  firstname               String
+  lastname                String
+  email                   String    @unique
+  password                String
+  role                    UserRole  @default(GUEST)
+  languages               String[]
+  verified                Boolean   @default(false)
+  verificationSubmittedAt DateTime? @map("verification_submitted_at")
+  places                  Place[]
+  requests                Request[]
 }
 
 enum PlaceType {
