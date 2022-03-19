@@ -21,8 +21,11 @@ const OnboardingPage = (props: Props) => {
 
   const onNext = async () => {
     if (steps.length === 1) {
-      // TODO redirect user to request page if needed
-      await router.replace('/dashboard')
+      if (router.query.place === undefined) {
+        await router.replace('/dashboard')
+      } else {
+        await router.replace(`/place/${router.query.place}/request`)
+      }
       return
     }
     setSteps(steps.filter(step => step !== steps[0]))
@@ -53,10 +56,12 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
   // TODO check onboarding steps
 
   if (steps.length === 0) {
-    // TODO redirect user to request page if needed
     return {
       redirect: {
-        destination: `/dashboard`,
+        destination:
+          context.query.place === undefined
+            ? `/dashboard`
+            : `/place/${context.query.place}/request`,
         permanent: false,
       },
     }
