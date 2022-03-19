@@ -3,7 +3,7 @@ import { hash } from 'bcrypt'
 const prisma = new PrismaClient()
 
 async function main() {
-  const adminPwd = await hash('admin', 10)
+  const adminPwd = await hash('admin', 14)
   await prisma.user.create({
     data: {
       firstname: 'Admin',
@@ -15,7 +15,7 @@ async function main() {
     },
   })
 
-  const hostPwd = await hash('host', 10)
+  const hostPwd = await hash('host', 14)
   const host = await prisma.user.create({
     data: {
       firstname: 'Host',
@@ -104,7 +104,7 @@ async function main() {
     },
   })
 
-  const guestPwd = await hash('guest', 10)
+  const guestPwd = await hash('guest', 14)
   const guest = await prisma.user.create({
     data: {
       firstname: 'Guest',

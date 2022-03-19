@@ -33,7 +33,7 @@ async function handleRegistration(req: RegistrationRequest, res: NextApiResponse
     return
   }
 
-  const hashedPassword = await hash(req.body.password, 10)
+  const hashedPassword = await hash(req.body.password, 14)
 
   await prisma.user.create({
     data: {
