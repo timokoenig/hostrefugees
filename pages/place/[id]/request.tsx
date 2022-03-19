@@ -7,6 +7,7 @@ import prisma from 'prisma/client'
 import React from 'react'
 import { mapPlace } from 'utils/mapper'
 import { MappedPlace, MappedUser } from 'utils/models'
+import { onboardingCheck } from 'utils/onboarding-check'
 import { withSessionSsr } from 'utils/session'
 import Layout from '../../../components/layout'
 import Summary from '../../../components/place/summary'
@@ -38,7 +39,7 @@ const RequestPage = (props: Props) => {
 }
 
 export const getServerSideProps = withSessionSsr(async function getServerSideProps(context) {
-  if (context.req.session.user === undefined) {
+  if (context.req.session.user == undefined) {
     // Redirect user to login
     return {
       redirect: {
@@ -47,11 +48,22 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
       },
     }
   }
-  if (context.req.session.user?.role !== UserRole.GUEST) {
+  if (context.req.session.user.role !== UserRole.GUEST) {
     // Allow only guests to request a stay
     return {
       redirect: {
         destination: '/',
+        permanent: false,
+      },
+    }
+  }
+
+  const onboardingSteps = await onboardingCheck(context.req.session.user.id)
+  if (onboardingSteps.length > 0) {
+    // User needs to do the onboarding first
+    return {
+      redirect: {
+        destination: `/onboarding?place=${context.query.id}`,
         permanent: false,
       },
     }

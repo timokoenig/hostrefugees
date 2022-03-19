@@ -32,11 +32,9 @@ const Login = () => {
           body: JSON.stringify(values),
         })
         if (res.ok) {
-          if (router.query.place === undefined) {
-            await router.replace('/dashboard')
-          } else {
-            await router.replace(`/place/${router.query.place}/request`)
-          }
+          await router.replace(
+            router.query.place === undefined ? '/dashboard' : `/place/${router.query.place}/request`
+          )
         }
       } catch (err: unknown) {
         console.log(err)

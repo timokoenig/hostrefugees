@@ -4,11 +4,13 @@ import VerificationOnboarding from 'components/onboarding/verification'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import { MappedUser } from 'utils/models'
+import {
+  onboardingCheck,
+  ONBOARDING_LANGUAGE,
+  ONBOARDING_VERIFICATION,
+} from 'utils/onboarding-check'
 import { withSessionSsr } from 'utils/session'
 import Layout from '../components/layout'
-
-const ONBOARDING_LANGUAGE = 'LANGUAGE'
-const ONBOARDING_VERIFICATION = 'VERIFICATION'
 
 type Props = {
   user: MappedUser
@@ -42,7 +44,7 @@ const OnboardingPage = (props: Props) => {
 }
 
 export const getServerSideProps = withSessionSsr(async function getServerSideProps(context) {
-  if (context.req.session.user === undefined) {
+  if (context.req.session.user == undefined) {
     return {
       redirect: {
         destination: `/`,
@@ -51,10 +53,8 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
     }
   }
 
-  const steps: string[] = [ONBOARDING_LANGUAGE, ONBOARDING_VERIFICATION]
-
-  // TODO check onboarding steps
-
+  // Check if user really needs to do the onboarding
+  const steps = await onboardingCheck(context.req.session.user.id)
   if (steps.length === 0) {
     return {
       redirect: {

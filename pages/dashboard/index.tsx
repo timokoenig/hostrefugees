@@ -9,6 +9,7 @@ import prisma from 'prisma/client'
 import React from 'react'
 import { mapPlace } from 'utils/mapper'
 import { MappedUser } from 'utils/models'
+import { onboardingCheck } from 'utils/onboarding-check'
 import { withSessionSsr } from 'utils/session'
 
 type Props = {
@@ -42,7 +43,7 @@ const DashboardPage = (props: Props) => {
 }
 
 export const getServerSideProps = withSessionSsr(async function getServerSideProps(context) {
-  if (context.req.session.user === undefined) {
+  if (context.req.session.user == undefined) {
     return {
       redirect: {
         destination: '/',
@@ -51,10 +52,21 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
     }
   }
 
+  const onboardingSteps = await onboardingCheck(context.req.session.user.id)
+  if (onboardingSteps.length > 0) {
+    // User needs to do the onboarding first
+    return {
+      redirect: {
+        destination: '/onboarding',
+        permanent: false,
+      },
+    }
+  }
+
   const places = await prisma.place.findMany({
     where: {
       author: {
-        id: context.req.session.user?.id,
+        id: context.req.session.user.id,
       },
     },
     include: {
@@ -69,7 +81,7 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
   })
 
   const requestsWhere =
-    context.req.session.user?.role === UserRole.HOST
+    context.req.session.user.role === UserRole.HOST
       ? {
           place: {
             author: {
@@ -82,7 +94,7 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
         }
       : {
           author: {
-            id: context.req.session.user?.id,
+            id: context.req.session.user.id,
           },
         }
   const requests = await prisma.request.findMany({
