@@ -17,7 +17,8 @@
     "now-build": "cross-env BUILD_TARGET=serverless next build",
     "test": "jest --silent",
     "type-check": "tsc --noEmit",
-    "snapshot-update": "jest --updateSnapshot --silent"
+    "snapshot-update": "jest --updateSnapshot --silent",
+    "prisma-generate": "prisma generate"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"

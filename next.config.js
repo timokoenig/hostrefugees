@@ -7,4 +7,7 @@ module.exports = withPWA({
     dest: 'public',
   },
   trailingSlash: true,
+  experimental: {
+    outputStandalone: true,
+  },
 })

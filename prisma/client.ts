@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/prefer-ts-expect-error */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 /* eslint-disable import/no-mutable-exports */
 /* eslint-disable @typescript-eslint/no-namespace */
@@ -25,4 +27,5 @@ if (typeof window === 'undefined') {
   }
 }
 
+// @ts-ignore
 export default prisma

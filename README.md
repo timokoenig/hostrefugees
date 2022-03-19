@@ -91,6 +91,13 @@ Every email uses a base [responsive template](https://github.com/leemunroe/respo
 
 Set environment variable `EMAIL_ENABLE=true` to enable the emailing.
 
+## Docker Build
+
+```sh
+docker build -t hostrefugees .
+docker run -p 3000:3000 hostrefugees
+```
+
 ## i18n
 
 The app uses [i18next](https://www.i18next.com/) for internationalization. We want to offer this website to as many people as possible therefore native translations are important. We welcome anyone to help us translate this app. To do so, follow these steps:
