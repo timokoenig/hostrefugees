@@ -12,17 +12,19 @@ import {
 } from '@chakra-ui/react'
 import { useFormik } from 'formik'
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, { useState } from 'react'
 import Button from './common/button'
 
 const Login = () => {
   const router = useRouter()
+  const [isLoading, setLoading] = useState<boolean>(false)
   const formik = useFormik({
     initialValues: {
       email: '',
       password: '',
     },
     onSubmit: async values => {
+      setLoading(true)
       try {
         const res = await fetch('/api/login', {
           method: 'POST',
@@ -39,6 +41,7 @@ const Login = () => {
       } catch (err: unknown) {
         console.log(err)
       }
+      setLoading(false)
     },
   })
 
@@ -70,7 +73,7 @@ const Login = () => {
                 />
               </FormControl>
               <Stack spacing={10}>
-                <Button title="Sign in" fullWidth />
+                <Button title="Sign in" fullWidth isDisabled={isLoading} />
               </Stack>
             </Stack>
           </form>

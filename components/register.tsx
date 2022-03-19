@@ -20,6 +20,7 @@ import Button from './common/button'
 
 const Register = () => {
   const router = useRouter()
+  const [isLoading, setLoading] = useState<boolean>(false)
   const [termsAccepted, setTermsAccepted] = useState<boolean>(false)
   const formik = useFormik({
     initialValues: {
@@ -29,6 +30,7 @@ const Register = () => {
       lastname: '',
     },
     onSubmit: async values => {
+      setLoading(true)
       try {
         const res = await fetch('/api/user', {
           method: 'POST',
@@ -46,6 +48,7 @@ const Register = () => {
       } catch (err: unknown) {
         console.log(err)
       }
+      setLoading(false)
     },
   })
   return (
@@ -113,7 +116,7 @@ const Register = () => {
                     Data Privacy
                   </Link>
                 </Checkbox>
-                <Button title="Sign up" fullWidth isDisabled={!termsAccepted} />
+                <Button title="Sign up" fullWidth isDisabled={!termsAccepted || isLoading} />
               </Stack>
             </Stack>
           </form>
