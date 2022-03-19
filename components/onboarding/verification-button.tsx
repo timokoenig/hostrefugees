@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 
 type Props = {
   title: string
-  subtitle: string
+  subtitle?: string
   isDisabled: boolean
   onUpload: () => void
   onRemove: () => void
@@ -37,10 +37,10 @@ const VerificationButton = (props: Props) => {
         borderRadius="lg"
         fontSize="sm"
         flexDirection="column"
+        p="10"
+        maxWidth="300"
       >
-        <Text fontWeight="semibold" mt="2">
-          Loading...
-        </Text>
+        <Text fontWeight="semibold">Loading...</Text>
       </Box>
     )
   }
@@ -55,11 +55,14 @@ const VerificationButton = (props: Props) => {
         flexDirection="column"
         onClick={onUpload}
         isDisabled={props.isDisabled}
+        maxWidth="300"
       >
         {props.title}
-        <Text fontWeight="normal" fontSize="xs" mt="2">
-          {props.subtitle}
-        </Text>
+        {props.subtitle && (
+          <Text fontWeight="normal" fontSize="xs" mt="2">
+            {props.subtitle}
+          </Text>
+        )}
       </Button>
     )
   }
@@ -71,14 +74,17 @@ const VerificationButton = (props: Props) => {
       borderRadius="lg"
       fontSize="sm"
       flexDirection="column"
+      maxWidth="300"
     >
       <Image rounded="md" alt="product image" src={image} fit="cover" align="center" w="100%" />
       <Text fontWeight="semibold" mt="2">
         {props.title}
       </Text>
-      <Text fontWeight="normal" fontSize="xs" mt="2">
-        {props.subtitle}
-      </Text>
+      {props.subtitle && (
+        <Text fontWeight="normal" fontSize="xs" mt="2">
+          {props.subtitle}
+        </Text>
+      )}
       <Button
         m="2"
         variant="ghost"
