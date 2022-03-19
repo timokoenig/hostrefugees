@@ -26,8 +26,10 @@ export const onboardingCheck = async (userId: string): Promise<string[]> => {
     steps.push(ONBOARDING_VERIFICATION)
   }
 
-  // TODO implement logic
-  // steps.push(ONBOARDING_PROFILE_PHOTO)
+  // Check if user should to submit a photo
+  if (user.photoUpdatedAt == null) {
+    steps.push(ONBOARDING_PROFILE_PHOTO)
+  }
 
   return steps
 }

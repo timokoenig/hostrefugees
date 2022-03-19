@@ -25,6 +25,7 @@ model User {
   languages               String[]
   verified                Boolean   @default(false)
   verificationSubmittedAt DateTime? @map("verification_submitted_at")
+  photoUpdatedAt          DateTime? @map("photo_updated_at")
   places                  Place[]
   requests                Request[]
 }

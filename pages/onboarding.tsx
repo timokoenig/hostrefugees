@@ -42,7 +42,9 @@ const OnboardingPage = (props: Props) => {
         {steps[0] === ONBOARDING_VERIFICATION && (
           <VerificationOnboarding user={props.user} onNext={onNext} />
         )}
-        {steps[0] === ONBOARDING_PROFILE_PHOTO && <ProfilePhotoOnboarding onNext={onNext} />}
+        {steps[0] === ONBOARDING_PROFILE_PHOTO && (
+          <ProfilePhotoOnboarding user={props.user} onNext={onNext} />
+        )}
       </Container>
     </Layout>
   )
