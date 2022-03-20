@@ -1,8 +1,10 @@
 import { Button, Center, Heading, Image, Text } from '@chakra-ui/react'
 import LanguagePicker from 'components/common/languagepicker'
 import React, { useState } from 'react'
+import { MappedUser } from 'utils/models'
 
 type Props = {
+  user: MappedUser
   onNext: () => void
 }
 
@@ -10,12 +12,23 @@ const LanguageOnboarding = (props: Props) => {
   const [isLoading, setLoading] = useState<boolean>(false)
   const [languages, setLanguages] = useState<string[]>([])
 
-  const updateLanguage = () => {
+  const updateLanguage = async () => {
     setLoading(true)
-    setTimeout(() => {
-      setLoading(false)
+    try {
+      await fetch(`/api/user/${props.user.id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          languages,
+        }),
+      })
       props.onNext()
-    }, 3000)
+    } catch (err: unknown) {
+      console.log(err)
+    }
+    setLoading(false)
   }
 
   return (
