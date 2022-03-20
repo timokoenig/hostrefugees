@@ -1,4 +1,4 @@
-import { Box, Container, Heading, Text } from '@chakra-ui/react'
+import { Alert, AlertIcon, Box, Container, Heading, Text } from '@chakra-ui/react'
 import { Place, Request, UserRole } from '@prisma/client'
 import Guest from 'components/dashboard/guest'
 import Host from 'components/dashboard/host'
@@ -13,7 +13,7 @@ import { onboardingCheck } from 'utils/onboarding-check'
 import { withSessionSsr } from 'utils/session'
 
 type Props = {
-  user: MappedUser
+  user: MappedUser & { verified?: boolean }
   places: Place[]
   requests: Request[]
 }
@@ -35,7 +35,18 @@ const DashboardPage = (props: Props) => {
         </Box>
         {props.user.role === UserRole.GUEST && <Guest requests={props.requests} />}
         {props.user.role === UserRole.HOST && (
-          <Host places={props.places} requests={props.requests} />
+          <>
+            {props.user.verified !== true && (
+              <Alert status="warning" variant="solid" rounded="lg" my="5">
+                <AlertIcon />
+                <Text as="span" fontWeight="semibold" mr="1">
+                  Waiting for Approval
+                </Text>
+                - You will receive an email as soon as your profile has been approved.
+              </Alert>
+            )}
+            <Host places={props.places} requests={props.requests} />
+          </>
         )}
       </Container>
     </Layout>
