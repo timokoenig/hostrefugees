@@ -12,7 +12,7 @@ export default function Navigation(props: Props) {
   const router = useRouter()
 
   return (
-    <Box px={4}>
+    <Box>
       <Center>
         <Flex maxW="7xl" px="4" flex="1" h={16} justifyContent="space-between">
           <HStack spacing={8} alignItems="center">

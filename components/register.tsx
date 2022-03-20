@@ -51,7 +51,7 @@ const Register = () => {
             },
             body: JSON.stringify(values),
           })
-          await router.replace('/onboarding')
+          await router.push('/onboarding')
         }
       } catch (err: unknown) {
         console.log(err)

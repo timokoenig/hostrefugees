@@ -1,4 +1,12 @@
-import { Button, Center, Container, Heading, Image, Text } from '@chakra-ui/react'
+import {
+  Button,
+  Center,
+  Container,
+  Heading,
+  Image,
+  Text,
+  useColorModeValue,
+} from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React from 'react'
 import { MappedUser } from 'utils/models'
@@ -20,15 +28,15 @@ const RequestPage = (props: Props) => {
         <Heading as="h2" size="xl" mt={6} mb={2}>
           Your Request has been sent
         </Heading>
-        <Text color="gray.500">
+        <Text color={useColorModeValue('gray.600', 'gray.400')}>
           You will receive a confirmation email when the host accepts your request to stay
         </Text>
-        <Button my="10" onClick={() => router.replace('/')}>
+        <Button my="10" onClick={() => router.push('/')}>
           Check out the StarterKit for Germany
         </Button>
-        <Text>or</Text>
+        <Text color={useColorModeValue('gray.600', 'gray.400')}>or</Text>
 
-        <Button my="10" onClick={() => router.replace('/dashboard')}>
+        <Button my="10" onClick={() => router.push('/dashboard')}>
           Check out your pending requests
         </Button>
       </Container>

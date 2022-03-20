@@ -15,7 +15,7 @@ type Props = {
 const Host = (props: Props) => {
   const router = useRouter()
   return (
-    <Container maxW="7xl" py={10}>
+    <Container px={0} maxW="7xl" py={10}>
       <SimpleGrid templateColumns={{ sm: '1fr', md: '1fr 1fr' }} spacing={8}>
         <Box>
           <Flex mb="5" textAlign="center">

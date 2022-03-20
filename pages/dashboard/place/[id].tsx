@@ -42,15 +42,15 @@ const PlacePage = (props: Props) => {
       </Head>
       <Container maxW="7xl">
         <Box mb="5">
-          <Button variant="ghost" leftIcon={<ArrowBackIcon />} onClick={router.back}>
+          <Button variant="ghost" pl={0} leftIcon={<ArrowBackIcon />} onClick={router.back}>
             Dashboard
           </Button>
         </Box>
         <Heading as="h2" size="lg" mb="10">
           Update Place
         </Heading>
-        <SimpleGrid columns={3} spacing={5}>
-          <GridItem colSpan={2}>
+        <SimpleGrid templateColumns={{ sm: '1fr', md: '3fr 1fr' }} spacing={5}>
+          <GridItem>
             <Form place={props.place} onChange={onUpdate} />
           </GridItem>
           <Box>

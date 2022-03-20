@@ -38,8 +38,8 @@ const ProfilePage = (props: Props) => {
         <Heading as="h2" size="xl" mb="5">
           Profile
         </Heading>
-        <SimpleGrid columns={4} spacing="10">
-          <GridItem colSpan={3}>
+        <SimpleGrid templateColumns={{ sm: '1fr', md: '3fr 1fr' }} spacing="10">
+          <GridItem>
             <FormControl mb="5">
               <FormLabel htmlFor="firstname">First Name</FormLabel>
               <Input
@@ -60,11 +60,11 @@ const ProfilePage = (props: Props) => {
                 onChange={e => setLastname(e.target.value)}
               />
             </FormControl>
-            <FormControl>
+            <FormControl mb="5">
               <FormLabel htmlFor="email">Email address</FormLabel>
               <Input id="email" type="email" value={props.user?.email ?? ''} isDisabled={true} />
             </FormControl>
-            <FormControl>
+            <FormControl mb="5">
               <FormLabel htmlFor="languages">Languages</FormLabel>
               <Input
                 id="languages"

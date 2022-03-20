@@ -26,9 +26,9 @@ const OnboardingPage = (props: Props) => {
   const onNext = async () => {
     if (steps.length === 1) {
       if (router.query.place === undefined) {
-        await router.replace('/dashboard')
+        await router.push('/dashboard')
       } else {
-        await router.replace(`/place/${router.query.place}/request`)
+        await router.push(`/place/${router.query.place}/request`)
       }
       return
     }

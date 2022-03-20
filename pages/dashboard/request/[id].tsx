@@ -55,7 +55,7 @@ const RequestPage = (props: Props) => {
 
       <Container maxW="7xl">
         <Box mb="5">
-          <Button variant="ghost" leftIcon={<ArrowBackIcon />} onClick={router.back}>
+          <Button variant="ghost" pl={0} leftIcon={<ArrowBackIcon />} onClick={router.back}>
             Dashboard
           </Button>
         </Box>

@@ -8,7 +8,7 @@ const CustomMenu = () => {
   const onLogout = async () => {
     try {
       await fetch('/api/logout')
-      await router.push('/')
+      router.reload()
     } catch (err: unknown) {
       console.log(err)
     }
@@ -17,7 +17,7 @@ const CustomMenu = () => {
   return (
     <Menu>
       <MenuButton as={Button} rounded="full" variant="link" cursor="pointer" minW={0}>
-        <Avatar size="md" src="/svg/undraw_profile_pic_ic-5-t.svg" />
+        <Avatar size="sm" src="/svg/undraw_profile_pic_ic-5-t.svg" />
       </MenuButton>
       <MenuList>
         <MenuItem onClick={() => router.push('/dashboard')}>Dashboard</MenuItem>

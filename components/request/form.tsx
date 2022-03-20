@@ -43,7 +43,7 @@ const Form = (props: Props) => {
           }),
         })
         if (res.ok) {
-          await router.replace(`/place/${props.place.id}/confirmation`)
+          await router.push(`/place/${props.place.id}/confirmation`)
         }
       } catch (err: unknown) {
         console.log(err)
@@ -69,7 +69,7 @@ const Form = (props: Props) => {
           </Heading>
           <Box py="2">
             <Flex>
-              <Text flex="1" fontSize="lg">
+              <Text flex="1" fontSize="lg" pt="1">
                 Adults{' '}
                 <Text as="span" fontSize="xs" fontWeight="bold">
                   (max {props.place.adults})
@@ -86,7 +86,7 @@ const Form = (props: Props) => {
           </Box>
           <Box>
             <Flex>
-              <Text flex="1" fontSize="lg">
+              <Text flex="1" fontSize="lg" pt="1">
                 Children{' '}
                 <Text as="span" fontSize="xs" fontWeight="bold">
                   (max {props.place.children})

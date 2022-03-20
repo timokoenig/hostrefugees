@@ -9,7 +9,7 @@ type Props = {
 
 const Guest = (props: Props) => {
   return (
-    <Container maxW="7xl" py={10}>
+    <Container px={0} maxW="7xl" py={10}>
       <Box>
         <Flex mb="5" textAlign="center">
           <Heading size="md">Your Requests</Heading>

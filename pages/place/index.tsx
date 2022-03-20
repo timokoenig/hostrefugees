@@ -52,7 +52,7 @@ const PlacePage = (props: Props) => {
             Filter{filterCount > 0 ? ` (${filterCount})` : ''}
           </Button>
         </Heading>
-        <SimpleGrid columns={2} spacing="10">
+        <SimpleGrid templateColumns={{ sm: '1fr', md: '1fr 1fr' }} spacing="10">
           <List spacing="5">
             {filteredPlaces.map((place, i) => (
               <PlaceItem key={i} place={place} />

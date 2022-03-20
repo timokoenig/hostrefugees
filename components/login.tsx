@@ -34,7 +34,7 @@ const Login = () => {
           body: JSON.stringify(values),
         })
         if (res.ok) {
-          await router.replace(
+          await router.push(
             router.query.place === undefined ? '/dashboard' : `/place/${router.query.place}/request`
           )
         }
