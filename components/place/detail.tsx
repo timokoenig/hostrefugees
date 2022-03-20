@@ -4,6 +4,7 @@ import {
   GridItem,
   Heading,
   Image,
+  Link,
   List,
   ListItem,
   SimpleGrid,
@@ -12,15 +13,18 @@ import {
   Text,
   useColorModeValue,
 } from '@chakra-ui/react'
+import { Request } from '@prisma/client'
 import { useRouter } from 'next/router'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { formatAvailability, formatPlaceType } from 'utils/formatter'
 import { MappedPlace } from 'utils/models'
 import Button from '../common/button'
+import Status from '../dashboard/request/status'
 
 type Props = {
   place: MappedPlace
+  request: Request | null
   enableRequest: boolean
 }
 
@@ -39,6 +43,30 @@ const PlaceholderImage = () => (
 export default function Detail(props: Props) {
   const { t } = useTranslation('common')
   const router = useRouter()
+
+  const RequestButton = (): JSX.Element | null => {
+    if (props.request !== null) {
+      return (
+        <Status color="yellow.500" title="WAITING">
+          <Text mb="2">You already have sent a request to stay to this place</Text>
+          <Link fontWeight="semibold" href={`/dashboard/request/${props.request.id}`}>
+            Show Request
+          </Link>
+        </Status>
+      )
+    }
+    if (props.enableRequest) {
+      return (
+        <Button
+          fullWidth
+          title="Request to stay"
+          onClick={() => router.push(`/place/${props.place.id}/request`)}
+        />
+      )
+    }
+    return null
+  }
+
   return (
     <Container maxW="7xl">
       <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={{ base: 8, md: 10 }}>
@@ -150,13 +178,7 @@ export default function Detail(props: Props) {
             </Box>
           </Stack>
 
-          {props.enableRequest && (
-            <Button
-              fullWidth
-              title="Request to stay"
-              onClick={() => router.push(`/place/${props.place.id}/request`)}
-            />
-          )}
+          <RequestButton />
         </Stack>
       </SimpleGrid>
     </Container>

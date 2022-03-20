@@ -1,6 +1,6 @@
 import { ArrowBackIcon } from '@chakra-ui/icons'
 import { Box, Button, Center } from '@chakra-ui/react'
-import { UserRole } from '@prisma/client'
+import { Request, UserRole } from '@prisma/client'
 import Detail from 'components/place/detail'
 import { useRouter } from 'next/router'
 import prisma from 'prisma/client'
@@ -13,6 +13,7 @@ import Layout from '../../components/layout'
 type Props = {
   user?: MappedUser
   place: MappedPlace
+  request: Request | null
 }
 
 const PlaceDetailPage = (props: Props) => {
@@ -32,6 +33,7 @@ const PlaceDetailPage = (props: Props) => {
           </Box>
           <Detail
             place={props.place}
+            request={props.request}
             enableRequest={!props.user || props.user.role !== UserRole.HOST}
           />
         </Box>
@@ -55,11 +57,33 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
       },
     },
   })
+  if (place == null) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
+  }
+
+  // Check if user has already a request with the status WAITING
+  const request = await prisma.request.findFirst({
+    where: {
+      author: {
+        id: context.req.session.user?.id ?? '',
+      },
+      place: {
+        id: place.id,
+      },
+      status: null,
+    },
+  })
 
   return {
     props: {
       user: context.req.session.user ?? null,
       place: mapPlace(place),
+      request,
     },
   }
 })

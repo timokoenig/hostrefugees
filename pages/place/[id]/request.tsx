@@ -83,6 +83,14 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
       },
     },
   })
+  if (place == null) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
+  }
 
   return {
     props: {
