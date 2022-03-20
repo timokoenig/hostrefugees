@@ -14,14 +14,19 @@ const VerificationOnboarding = (props: Props) => {
   const [photoBack, setPhotoBack] = useState<string | null>(null)
   const [photoSelfie, setPhotoSelfie] = useState<string | null>(null)
 
-  const updateVerification = async () => {
+  const uploadDocument = async (type: string, file: File | null) => {
+    setLoading(true)
     try {
-      setLoading(true)
-      await fetch(`/api/user/${props.user.id}/verify`)
-      props.onNext()
+      const body = new FormData()
+      body.set('type', type)
+      if (file !== null) {
+        body.append('file', file)
+      }
+      await fetch(`/api/user/${props.user.id}/document`, { method: 'POST', body })
     } catch (err: unknown) {
       console.log(err)
     }
+    setLoading(false)
   }
 
   return (
@@ -45,21 +50,13 @@ const VerificationOnboarding = (props: Props) => {
           title="ID Card"
           subtitle="Front"
           isDisabled={isLoading}
-          onUpload={() => {
-            return new Promise((resolve, _) => {
-              setTimeout(() => {
-                setPhotoFront('https://picsum.photos/900/600')
-                resolve()
-              }, 3000)
-            })
+          onUpload={async file => {
+            await uploadDocument('front', file)
+            setPhotoFront(URL.createObjectURL(file))
           }}
-          onRemove={() => {
-            return new Promise((resolve, _) => {
-              setTimeout(() => {
-                setPhotoFront(null)
-                resolve()
-              }, 3000)
-            })
+          onRemove={async () => {
+            await uploadDocument('front', null)
+            setPhotoFront(null)
           }}
         />
         <VerificationButton
@@ -67,21 +64,13 @@ const VerificationOnboarding = (props: Props) => {
           title="ID Card"
           subtitle="Back"
           isDisabled={isLoading}
-          onUpload={() => {
-            return new Promise((resolve, _) => {
-              setTimeout(() => {
-                setPhotoBack('https://picsum.photos/900/600')
-                resolve()
-              }, 3000)
-            })
+          onUpload={async file => {
+            await uploadDocument('back', file)
+            setPhotoBack(URL.createObjectURL(file))
           }}
-          onRemove={() => {
-            return new Promise((resolve, _) => {
-              setTimeout(() => {
-                setPhotoBack(null)
-                resolve()
-              }, 3000)
-            })
+          onRemove={async () => {
+            await uploadDocument('back', null)
+            setPhotoBack(null)
           }}
         />
         <VerificationButton
@@ -89,28 +78,20 @@ const VerificationOnboarding = (props: Props) => {
           title="Selfie"
           subtitle="Hold ID Card next to your face"
           isDisabled={isLoading}
-          onUpload={() => {
-            return new Promise((resolve, _) => {
-              setTimeout(() => {
-                setPhotoSelfie('https://picsum.photos/900/600')
-                resolve()
-              }, 3000)
-            })
+          onUpload={async file => {
+            await uploadDocument('selfie', file)
+            setPhotoSelfie(URL.createObjectURL(file))
           }}
-          onRemove={() => {
-            return new Promise((resolve, _) => {
-              setTimeout(() => {
-                setPhotoSelfie(null)
-                resolve()
-              }, 3000)
-            })
+          onRemove={async () => {
+            await uploadDocument('selfie', null)
+            setPhotoSelfie(null)
           }}
         />
       </SimpleGrid>
       <Button
         colorScheme="blue"
         my="10"
-        onClick={updateVerification}
+        onClick={props.onNext}
         isDisabled={isLoading || photoFront == null || photoBack == null || photoSelfie == null}
       >
         {isLoading ? 'Loading...' : 'Continue'}
