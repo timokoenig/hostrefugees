@@ -1,22 +1,29 @@
 import { Box, Button, Image, Text } from '@chakra-ui/react'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 
 type Props = {
   image: string | null
   title: string
   subtitle?: string
   isDisabled: boolean
-  onUpload: () => Promise<void>
+  onUpload: (file: File) => Promise<void>
   onRemove: () => Promise<void>
 }
 
 const VerificationButton = (props: Props) => {
   const [isLoading, setLoading] = useState<boolean>(false)
+  const inputFileRef = useRef<HTMLInputElement>(null)
 
-  const onUpload = async () => {
+  const onFileChange = async (e: React.FormEvent<HTMLInputElement>) => {
+    const inputTarget = e.target as HTMLInputElement
+    if (!inputTarget.files || inputTarget.files.length == 0) return
     setLoading(true)
-    await props.onUpload()
+    await props.onUpload(inputTarget.files[0])
     setLoading(false)
+  }
+
+  const onClickUpload = async () => {
+    inputFileRef.current?.click()
   }
 
   const onRemove = async () => {
@@ -43,23 +50,26 @@ const VerificationButton = (props: Props) => {
 
   if (props.image === null) {
     return (
-      <Button
-        borderWidth="1px"
-        borderColor="gray.300"
-        p="10"
-        fontSize="sm"
-        flexDirection="column"
-        onClick={onUpload}
-        isDisabled={props.isDisabled}
-        maxWidth="300"
-      >
-        {props.title}
-        {props.subtitle && (
-          <Text fontWeight="normal" fontSize="xs" mt="2">
-            {props.subtitle}
-          </Text>
-        )}
-      </Button>
+      <>
+        <input type="file" ref={inputFileRef} onChange={onFileChange} hidden={true} />
+        <Button
+          borderWidth="1px"
+          borderColor="gray.300"
+          p="10"
+          fontSize="sm"
+          flexDirection="column"
+          onClick={onClickUpload}
+          isDisabled={props.isDisabled}
+          maxWidth="300"
+        >
+          {props.title}
+          {props.subtitle && (
+            <Text fontWeight="normal" fontSize="xs" mt="2">
+              {props.subtitle}
+            </Text>
+          )}
+        </Button>
+      </>
     )
   }
 

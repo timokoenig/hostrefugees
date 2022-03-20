@@ -13,14 +13,19 @@ const ProfilePhotoOnboarding = (props: Props) => {
   const [isLoading, setLoading] = useState<boolean>(false)
   const [photo, setPhoto] = useState<string | null>(null)
 
-  const updateVerification = async () => {
+  const uploadProfilePhoto = async (file: File | null) => {
     try {
       setLoading(true)
-      await fetch(`/api/user/${props.user.id}/photo`)
-      props.onNext()
+      const body = new FormData()
+      if (file !== null) {
+        body.append('file', file)
+      }
+      await fetch(`/api/user/${props.user.id}/photo`, { method: 'POST', body })
+      setPhoto(file === null ? null : URL.createObjectURL(file))
     } catch (err: unknown) {
       console.log(err)
     }
+    setLoading(false)
   }
 
   return (
@@ -43,25 +48,21 @@ const ProfilePhotoOnboarding = (props: Props) => {
           title={photo == null ? 'Selfie' : ''}
           subtitle={photo == null ? 'Click to upload' : ''}
           isDisabled={isLoading}
-          onUpload={() => {
-            return new Promise((resolve, _) => {
-              setTimeout(() => {
-                setPhoto('https://picsum.photos/900/600')
-                resolve()
-              }, 3000)
-            })
-          }}
-          onRemove={() => {
-            return new Promise((resolve, _) => {
-              setTimeout(() => {
-                setPhoto(null)
-                resolve()
-              }, 3000)
-            })
+          onUpload={uploadProfilePhoto}
+          onRemove={async () => {
+            await uploadProfilePhoto(null)
           }}
         />
       </Center>
-      <Button colorScheme="blue" my="10" onClick={updateVerification} isDisabled={isLoading}>
+      <Button
+        colorScheme="blue"
+        my="10"
+        onClick={async () => {
+          await uploadProfilePhoto(null)
+          props.onNext()
+        }}
+        isDisabled={isLoading}
+      >
         {isLoading ? 'Loading...' : photo == null ? 'Continue wihout photo' : 'Continue'}
       </Button>
     </>

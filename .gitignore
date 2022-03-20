@@ -10,6 +10,7 @@
 
 # Static export path
 out/
+storage/
 
 # Logs
 logs
