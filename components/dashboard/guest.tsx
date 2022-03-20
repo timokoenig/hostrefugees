@@ -1,4 +1,4 @@
-import { Box, Container, Flex, Heading, List, Stack } from '@chakra-ui/react'
+import { Box, Container, Flex, Heading, List, Stack, Text } from '@chakra-ui/react'
 import { Request } from '@prisma/client'
 import React from 'react'
 import RequestItem from './request-item'
@@ -16,6 +16,7 @@ const Guest = (props: Props) => {
         </Flex>
         <Stack spacing={6}>
           <List spacing="2">
+            {props.requests.length == 0 && <Text>No Requests</Text>}
             {props.requests.map((request, i) => (
               <RequestItem key={i} request={request} />
             ))}

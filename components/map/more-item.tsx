@@ -1,4 +1,4 @@
-import { Box, ListItem, Text } from '@chakra-ui/react'
+import { Box, ListItem, Text, useColorModeValue } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React from 'react'
 
@@ -10,7 +10,7 @@ const MoreItem = () => {
         borderRadius="lg"
         overflow="hidden"
         cursor="pointer"
-        _hover={{ background: 'gray.100' }}
+        _hover={{ background: useColorModeValue('gray.100', 'gray.900') }}
         textAlign="center"
       >
         <Box p="6">

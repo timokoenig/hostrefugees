@@ -41,6 +41,10 @@ export default function MapPlaces(props: Props) {
             bootstrapURLKeys={{ key: process.env.NEXT_PUBLIC_GOOGLE_MAP_KEY as string }}
             defaultCenter={{ lat: 51.1657, lng: 10.4515 }} // center of Germany
             defaultZoom={6}
+            options={{
+              zoomControl: false,
+              fullscreenControl: false,
+            }}
           >
             {Object.keys(groupedItems).map(key => {
               const items = groupedItems[key] as MarkerItem[]

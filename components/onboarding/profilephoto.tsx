@@ -11,7 +11,7 @@ type Props = {
 
 const ProfilePhotoOnboarding = (props: Props) => {
   const [isLoading, setLoading] = useState<boolean>(false)
-  const [photo, setPhoto] = useState<string | null>(null)
+  const [photo, setPhoto] = useState<File | null>(null)
 
   const uploadProfilePhoto = async (file: File | null) => {
     try {
@@ -20,8 +20,10 @@ const ProfilePhotoOnboarding = (props: Props) => {
       if (file !== null) {
         body.append('file', file)
       }
-      await fetch(`/api/user/${props.user.id}/photo`, { method: 'POST', body })
-      setPhoto(file === null ? null : URL.createObjectURL(file))
+      const res = await fetch(`/api/user/${props.user.id}/photo`, { method: 'POST', body })
+      if (res.ok) {
+        props.onNext()
+      }
     } catch (err: unknown) {
       console.log(err)
     }
@@ -36,7 +38,7 @@ const ProfilePhotoOnboarding = (props: Props) => {
       <Center mb={10}>
         <Image src="/svg/undraw_selfie_re_h9um.svg" maxWidth="250" />
       </Center>
-      <Text color="gray.500" mb="10">
+      <Text mb="10">
         <b>It's selfie time</b>
         <br />
         You can upload an optional profile photo to increase the chance of getting accepted from the
@@ -44,11 +46,13 @@ const ProfilePhotoOnboarding = (props: Props) => {
       </Text>
       <Center>
         <VerificationButton
-          image={photo}
+          image={photo ? URL.createObjectURL(photo) : null}
           title={photo == null ? 'Selfie' : ''}
           subtitle={photo == null ? 'Click to upload' : ''}
           isDisabled={isLoading}
-          onUpload={uploadProfilePhoto}
+          onUpload={async file => {
+            setPhoto(file)
+          }}
           onRemove={async () => {
             await uploadProfilePhoto(null)
           }}
@@ -58,7 +62,7 @@ const ProfilePhotoOnboarding = (props: Props) => {
         colorScheme="blue"
         my="10"
         onClick={async () => {
-          await uploadProfilePhoto(null)
+          await uploadProfilePhoto(photo)
           props.onNext()
         }}
         isDisabled={isLoading}

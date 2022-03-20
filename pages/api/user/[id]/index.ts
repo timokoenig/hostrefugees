@@ -17,11 +17,8 @@ async function handleUpdateUser(req: UpdateRequest, res: NextApiResponse) {
     return
   }
 
-  if (
-    req.query.id !== req.session.user.id ||
-    (req.query.id === req.session.user.id && req.session.user.role !== UserRole.ADMIN)
-  ) {
-    // Users can only edit their own profile, expect admins
+  if (req.query.id !== req.session.user.id) {
+    // Users can only edit their own profile
     res.status(400).end()
     return
   }

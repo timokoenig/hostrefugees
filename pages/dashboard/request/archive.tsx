@@ -1,5 +1,5 @@
 import { ArrowBackIcon } from '@chakra-ui/icons'
-import { Box, Button, Container, Heading, List, Stack } from '@chakra-ui/react'
+import { Box, Button, Container, Heading, List, Stack, Text } from '@chakra-ui/react'
 import { Request, UserRole } from '@prisma/client'
 import RequestItem from 'components/dashboard/request-item'
 import Layout from 'components/layout'
@@ -35,6 +35,7 @@ const ArchivePage = (props: Props) => {
           </Heading>
         </Box>
         <Stack spacing={6}>
+          {props.requests.length === 0 && <Text>No requests older than 14 days</Text>}
           <List spacing="2">
             {props.requests.map((request, i) => (
               <RequestItem key={i} request={request} />

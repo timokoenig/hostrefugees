@@ -16,16 +16,12 @@ const VerificationOnboarding = (props: Props) => {
 
   const uploadDocument = async (type: string, file: File | null) => {
     setLoading(true)
-    try {
-      const body = new FormData()
-      body.set('type', type)
-      if (file !== null) {
-        body.append('file', file)
-      }
-      await fetch(`/api/user/${props.user.id}/document`, { method: 'POST', body })
-    } catch (err: unknown) {
-      console.log(err)
+    const body = new FormData()
+    body.set('type', type)
+    if (file !== null) {
+      body.append('file', file)
     }
+    await fetch(`/api/user/${props.user.id}/document`, { method: 'POST', body })
     setLoading(false)
   }
 
@@ -37,7 +33,7 @@ const VerificationOnboarding = (props: Props) => {
       <Center mb={10}>
         <Image src="/svg/undraw_personal_information_re_vw8a.svg" maxWidth="250" />
       </Center>
-      <Text color="gray.500" mb="10">
+      <Text mb="10">
         <b>The safety of our guests is important to us.</b>
         <br />
         Please upload the following three documents so we can verify your identity. We will manually

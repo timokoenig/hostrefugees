@@ -1,4 +1,4 @@
-import { Button, HStack, Text } from '@chakra-ui/react'
+import { Button, HStack, Text, useColorModeValue } from '@chakra-ui/react'
 import React from 'react'
 
 type Props = {
@@ -10,6 +10,7 @@ type Props = {
 }
 
 const NumberInput = (props: Props) => {
+  const defaultTextColor = useColorModeValue('black', 'white')
   const min = props.min ?? 0
   const max = props.max ?? 10
 
@@ -28,7 +29,7 @@ const NumberInput = (props: Props) => {
       <Button onClick={onDec} isDisabled={props.value == min}>
         -
       </Button>
-      <Text fontWeight="semibold" px="5" color={props.active ? 'blue.500' : 'black'}>
+      <Text fontWeight="semibold" px="5" color={props.active ? 'blue.500' : defaultTextColor}>
         {props.value}
       </Text>
       <Button onClick={onInc} isDisabled={props.value == max}>

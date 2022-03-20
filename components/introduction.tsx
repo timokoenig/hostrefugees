@@ -8,6 +8,7 @@ import {
   SimpleGrid,
   Stack,
   Text,
+  useColorModeValue,
   VStack,
 } from '@chakra-ui/react'
 import React from 'react'
@@ -20,12 +21,13 @@ const features = [0, 1, 2, 3, 4, 6, 7, 8].map((_, i) => {
   }
 })
 
-export default function Introduction() {
+const Introduction = () => {
+  const textColor = useColorModeValue('gray.600', 'gray.400')
   return (
     <Box p={4} mb="20">
       <Stack spacing={4} as={Container} maxW="3xl" textAlign="center">
         <Heading fontSize="3xl">This is the headline</Heading>
-        <Text color="gray.600" fontSize="xl">
+        <Text color={textColor} fontSize="xl">
           Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
           invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
         </Text>
@@ -40,7 +42,7 @@ export default function Introduction() {
               </Box>
               <VStack align="start">
                 <Text fontWeight={600}>{feature.title}</Text>
-                <Text color="gray.600">{feature.text}</Text>
+                <Text color={textColor}>{feature.text}</Text>
               </VStack>
             </HStack>
           ))}
@@ -49,3 +51,5 @@ export default function Introduction() {
     </Box>
   )
 }
+
+export default Introduction

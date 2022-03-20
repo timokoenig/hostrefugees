@@ -41,7 +41,7 @@ const VerificationButton = (props: Props) => {
         fontSize="sm"
         flexDirection="column"
         p="10"
-        maxWidth="300"
+        maxWidth="200"
       >
         <Text fontWeight="semibold">Loading...</Text>
       </Box>
@@ -60,7 +60,7 @@ const VerificationButton = (props: Props) => {
           flexDirection="column"
           onClick={onClickUpload}
           isDisabled={props.isDisabled}
-          maxWidth="300"
+          maxWidth="200"
         >
           {props.title}
           {props.subtitle && (
@@ -80,7 +80,7 @@ const VerificationButton = (props: Props) => {
       borderRadius="lg"
       fontSize="sm"
       flexDirection="column"
-      maxWidth="300"
+      maxWidth="200"
     >
       <Image
         rounded="md"

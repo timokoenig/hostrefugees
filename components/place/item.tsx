@@ -1,4 +1,4 @@
-import { Box, GridItem, Image, ListItem, SimpleGrid } from '@chakra-ui/react'
+import { Box, GridItem, Image, ListItem, SimpleGrid, useColorModeValue } from '@chakra-ui/react'
 import moment from 'moment'
 import { useRouter } from 'next/router'
 import React from 'react'
@@ -18,7 +18,7 @@ const PlaceItem = (props: Props) => {
         borderRadius="lg"
         overflow="hidden"
         cursor="pointer"
-        _hover={{ background: 'gray.100' }}
+        _hover={{ background: useColorModeValue('gray.100', 'gray.900') }}
       >
         <SimpleGrid columns={4}>
           <GridItem>

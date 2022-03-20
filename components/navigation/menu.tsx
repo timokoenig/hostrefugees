@@ -8,7 +8,7 @@ const CustomMenu = () => {
   const onLogout = async () => {
     try {
       await fetch('/api/logout')
-      await router.replace('/')
+      await router.push('/')
     } catch (err: unknown) {
       console.log(err)
     }

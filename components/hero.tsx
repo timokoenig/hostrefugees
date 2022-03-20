@@ -1,4 +1,13 @@
-import { Button, Container, Flex, Heading, Image, Stack, Text } from '@chakra-ui/react'
+import {
+  Button,
+  Container,
+  Flex,
+  Heading,
+  Image,
+  Stack,
+  Text,
+  useColorModeValue,
+} from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React from 'react'
 
@@ -39,7 +48,7 @@ export default function Hero() {
               at your place!
             </Text>
           </Heading>
-          <Text color="gray.500">
+          <Text color={useColorModeValue('gray.600', 'gray.400')}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
             incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
             exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.

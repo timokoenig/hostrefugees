@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { Badge, Box, ListItem } from '@chakra-ui/react'
+import { Badge, Box, ListItem, useColorModeValue } from '@chakra-ui/react'
 import { Request, RequestStatus } from '@prisma/client'
 import moment from 'moment'
 import { useRouter } from 'next/router'
@@ -48,7 +48,7 @@ const RequestItem = (props: Props) => {
         borderRadius="lg"
         overflow="hidden"
         cursor="pointer"
-        _hover={{ background: 'gray.100' }}
+        _hover={{ background: useColorModeValue('gray.100', 'gray.900') }}
       >
         <Box p="6">
           <Box display="flex" alignItems="baseline">

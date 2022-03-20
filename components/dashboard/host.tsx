@@ -1,4 +1,4 @@
-import { Box, Container, Flex, Heading, List, SimpleGrid, Stack } from '@chakra-ui/react'
+import { Box, Container, Flex, Heading, List, SimpleGrid, Stack, Text } from '@chakra-ui/react'
 import { Place, Request } from '@prisma/client'
 import { useRouter } from 'next/router'
 import React from 'react'
@@ -25,6 +25,7 @@ const Host = (props: Props) => {
             <Button title="NEW" size="sm" onClick={() => router.push('/dashboard/place/new')} />
           </Flex>
           <Stack spacing={6}>
+            {props.places.length == 0 && <Text>No Places</Text>}
             <List spacing="2">
               {props.places.map((place, i) => (
                 <PlaceItem
@@ -48,6 +49,7 @@ const Host = (props: Props) => {
             />
           </Flex>
           <Stack spacing={6}>
+            {props.requests.length == 0 && <Text>No Requests</Text>}
             <List spacing="2">
               {props.requests.map((req, i) => (
                 <RequestItem key={i} request={req} />

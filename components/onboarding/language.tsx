@@ -15,8 +15,8 @@ const LanguageOnboarding = (props: Props) => {
   const updateLanguage = async () => {
     setLoading(true)
     try {
-      await fetch(`/api/user/${props.user.id}`, {
-        method: 'POST',
+      const res = await fetch(`/api/user/${props.user.id}`, {
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -24,7 +24,9 @@ const LanguageOnboarding = (props: Props) => {
           languages,
         }),
       })
-      props.onNext()
+      if (res.ok) {
+        props.onNext()
+      }
     } catch (err: unknown) {
       console.log(err)
     }
@@ -42,7 +44,7 @@ const LanguageOnboarding = (props: Props) => {
       <Center mb={10}>
         <Image src="/svg/undraw_audio_conversation_re_ptsl.svg" maxWidth="250" />
       </Center>
-      <Text color="gray.500" mb="5">
+      <Text mb="5">
         To improve the communication for hosts and guests, please select all languages you speak
       </Text>
       <LanguagePicker onChange={setLanguages} isDisabled={isLoading} />

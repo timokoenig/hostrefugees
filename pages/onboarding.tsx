@@ -38,7 +38,9 @@ const OnboardingPage = (props: Props) => {
   return (
     <Layout user={props.user}>
       <Container maxW="7xl" textAlign="center" maxWidth="700">
-        {steps[0] === ONBOARDING_LANGUAGE && <LanguageOnboarding onNext={onNext} />}
+        {steps[0] === ONBOARDING_LANGUAGE && (
+          <LanguageOnboarding user={props.user} onNext={onNext} />
+        )}
         {steps[0] === ONBOARDING_VERIFICATION && (
           <VerificationOnboarding user={props.user} onNext={onNext} />
         )}

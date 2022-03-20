@@ -78,7 +78,7 @@ const Login = () => {
             </Stack>
           </form>
         </Box>
-        <Text fontSize="lg" color="gray.600" textAlign="center">
+        <Text fontSize="lg" color={useColorModeValue('gray.600', 'gray.400')} textAlign="center">
           Don&apos;t have an account?{' '}
           <Link color="blue.400" href="/register">
             Register now
