@@ -1,4 +1,5 @@
 import {
+  Box,
   Container,
   FormControl,
   FormLabel,
@@ -6,6 +7,7 @@ import {
   Heading,
   Input,
   SimpleGrid,
+  Switch,
   Text,
 } from '@chakra-ui/react'
 import { User } from '@prisma/client'
@@ -14,6 +16,7 @@ import Head from 'next/head'
 import prisma from 'prisma/client'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import useColorMode from 'utils/color-mode'
 import { withSessionSsr } from 'utils/session'
 
 type Props = {
@@ -22,6 +25,7 @@ type Props = {
 
 const ProfilePage = (props: Props) => {
   const { t } = useTranslation('common')
+  const { toggleColorMode, newColorMode } = useColorMode()
   const [firstname, setFirstname] = useState<string>(props.user?.firstname ?? '')
   const [lastname, setLastname] = useState<string>(props.user?.lastname ?? '')
 
@@ -71,12 +75,21 @@ const ProfilePage = (props: Props) => {
             </FormControl>
           </GridItem>
           <GridItem>
-            <Heading size="md" mb="5">
-              Info
-            </Heading>
-            <Text mb="20">
-              You can not update your profile at the moment. We are working on a solution.
-            </Text>
+            <Box>
+              <Heading size="md" mb="5">
+                Info
+              </Heading>
+              <Text mb="20">
+                You can not update your profile at the moment. We are working on a solution.
+              </Text>
+            </Box>
+            <Box>
+              <Heading size="md" mb="5">
+                Appearance
+              </Heading>
+              <Text mb="5">Switch between Dark and Light Mode</Text>
+              <Switch size="lg" isChecked={newColorMode == 'light'} onChange={toggleColorMode} />
+            </Box>
           </GridItem>
         </SimpleGrid>
       </Container>
