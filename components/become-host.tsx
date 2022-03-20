@@ -43,6 +43,14 @@ const Register = () => {
           }),
         })
         if (res.ok) {
+          // registration successful, now log in
+          await fetch('/api/login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(values),
+          })
           await router.replace('/onboarding')
         }
       } catch (err: unknown) {

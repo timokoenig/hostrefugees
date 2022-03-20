@@ -41,7 +41,7 @@ async function handleRegistration(req: RegistrationRequest, res: NextApiResponse
       updatedAt: new Date(),
       firstname: req.body.firstname,
       lastname: req.body.lastname,
-      email: req.body.lastname,
+      email: req.body.email,
       password: hashedPassword,
       role: req.body.role === UserRole.HOST ? UserRole.HOST : UserRole.GUEST,
     },
