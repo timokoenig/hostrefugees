@@ -32,6 +32,9 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
     where: {
       approved: true,
       active: true,
+      author: {
+        verified: true,
+      },
     },
     include: {
       author: {
