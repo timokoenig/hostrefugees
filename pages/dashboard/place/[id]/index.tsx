@@ -17,7 +17,7 @@ import Layout from 'components/layout'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import prisma from 'prisma/client'
-import React from 'react'
+import React, { useState } from 'react'
 import { MappedUser } from 'utils/models'
 import { withSessionSsr } from 'utils/session'
 import Form from '../../../../components/dashboard/place/form'
@@ -29,8 +29,10 @@ type Props = {
 
 const PlacePage = (props: Props) => {
   const router = useRouter()
+  const [isLoading, setLoading] = useState<boolean>(false)
 
   const onUpdate = async (place: Place) => {
+    setLoading(true)
     try {
       const res = await fetch(`/api/place/${place.id}`, {
         method: 'PUT',
@@ -45,9 +47,11 @@ const PlacePage = (props: Props) => {
     } catch (err: unknown) {
       console.log(err)
     }
+    setLoading(false)
   }
 
   const togglePlaceActive = async () => {
+    setLoading(true)
     try {
       const res = await fetch(`/api/place/${props.place.id}`, {
         method: 'PUT',
@@ -64,6 +68,7 @@ const PlacePage = (props: Props) => {
     } catch (err: unknown) {
       console.log(err)
     }
+    setLoading(false)
   }
 
   return (
@@ -91,7 +96,7 @@ const PlacePage = (props: Props) => {
                 - You need to upload at least one photo to make this place available for guests.
               </Alert>
             )}
-            <Form place={props.place} onChange={onUpdate} />
+            <Form place={props.place} onChange={onUpdate} isLoading={isLoading} />
           </GridItem>
           <Box>
             <Box mb="20">
@@ -101,7 +106,12 @@ const PlacePage = (props: Props) => {
               <Text mb="5">
                 {props.place.active ? 'Your place is active' : 'Click to activate your place'}
               </Text>
-              <Switch size="lg" isChecked={props.place.active} onChange={togglePlaceActive} />
+              <Switch
+                size="lg"
+                isChecked={props.place.active}
+                onChange={togglePlaceActive}
+                isDisabled={isLoading}
+              />
             </Box>
             <Box>
               <Heading size="md" mb="5">
@@ -121,6 +131,7 @@ const PlacePage = (props: Props) => {
               <Button
                 onClick={() => router.push(`/dashboard/place/${props.place.id}/photo`)}
                 isFullWidth
+                isDisabled={isLoading}
               >
                 Change Photos
               </Button>

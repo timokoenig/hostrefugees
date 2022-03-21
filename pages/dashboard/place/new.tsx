@@ -4,7 +4,7 @@ import { Place, UserRole } from '@prisma/client'
 import Layout from 'components/layout'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, { useState } from 'react'
 import { MappedUser } from 'utils/models'
 import { withSessionSsr } from 'utils/session'
 import Form from '../../../components/dashboard/place/form'
@@ -15,8 +15,10 @@ type Props = {
 
 const NewPage = (props: Props) => {
   const router = useRouter()
+  const [isLoading, setLoading] = useState<boolean>(false)
 
   const onCreate = async (place: Place) => {
+    setLoading(true)
     try {
       const res = await fetch('/api/place', {
         method: 'POST',
@@ -32,6 +34,7 @@ const NewPage = (props: Props) => {
     } catch (err: unknown) {
       console.log(err)
     }
+    setLoading(false)
   }
 
   return (
@@ -50,7 +53,7 @@ const NewPage = (props: Props) => {
         </Heading>
         <SimpleGrid templateColumns={{ sm: '1fr', md: '3fr 1fr' }} spacing={5}>
           <GridItem>
-            <Form onChange={onCreate} />
+            <Form onChange={onCreate} isLoading={isLoading} />
           </GridItem>
           <Box>
             <Text>Info</Text>

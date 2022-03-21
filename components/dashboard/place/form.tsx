@@ -19,6 +19,7 @@ import Button from '../../common/button'
 
 type Props = {
   place?: Place | undefined
+  isLoading: boolean
   onChange: (place: Place) => void
 }
 
@@ -267,7 +268,11 @@ const Form = (props: Props) => {
           </VStack>
 
           <FormControl>
-            <Button title="Save" fullWidth />
+            <Button
+              title={props.isLoading ? 'Loading...' : 'Save'}
+              fullWidth
+              isDisabled={props.isLoading}
+            />
           </FormControl>
         </VStack>
       </form>
