@@ -17,15 +17,15 @@ async function handleUpdateUser(req: UpdateRequest, res: NextApiResponse) {
     return
   }
 
-  if (req.query.id !== req.session.user.id) {
-    // Users can only edit their own profile
+  if (req.query.id !== req.session.user.id && req.session.user.role !== UserRole.ADMIN) {
+    // Users can only edit their own profile, except users with role ADMIN
     res.status(400).end()
     return
   }
 
   const user = await prisma.user.findUnique({
     where: {
-      id: req.query.id,
+      id: req.query.id as string,
     },
   })
   if (user === null) {
@@ -52,7 +52,7 @@ async function handleUpdateUser(req: UpdateRequest, res: NextApiResponse) {
 
   await prisma.user.update({
     where: {
-      id: req.query.id,
+      id: req.query.id as string,
     },
     data,
   })

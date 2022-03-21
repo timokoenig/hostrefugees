@@ -1,5 +1,6 @@
 import { Alert, AlertIcon, Box, Container, Heading, Text } from '@chakra-ui/react'
-import { Place, Request, UserRole } from '@prisma/client'
+import { Place, Request, User, UserRole } from '@prisma/client'
+import Admin from 'components/dashboard/admin'
 import Guest from 'components/dashboard/guest'
 import Host from 'components/dashboard/host'
 import Layout from 'components/layout'
@@ -14,6 +15,7 @@ import { withSessionSsr } from 'utils/session'
 
 type Props = {
   user: MappedUser & { verified?: boolean }
+  users: User[]
   places: Place[]
   requests: Request[]
 }
@@ -33,6 +35,7 @@ const DashboardPage = (props: Props) => {
             </Text>
           </Heading>
         </Box>
+        {props.user.role === UserRole.ADMIN && <Admin users={props.users} />}
         {props.user.role === UserRole.GUEST && <Guest requests={props.requests} />}
         {props.user.role === UserRole.HOST && (
           <>
@@ -62,6 +65,12 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
       },
     }
   }
+
+  const user = await prisma.user.findUnique({
+    where: {
+      id: context.req.session.user.id,
+    },
+  })
 
   const onboardingSteps = await onboardingCheck(context.req.session.user.id)
   if (onboardingSteps.length > 0) {
@@ -122,11 +131,17 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
     },
   })
 
+  let users: User[] = []
+  if (context.req.session.user.role == UserRole.ADMIN) {
+    users = await prisma.user.findMany({})
+  }
+
   return {
     props: {
-      user: context.req.session.user,
+      user: { ...context.req.session.user, verified: user?.verified },
       places: places.map(mapPlace),
       requests,
+      users,
     },
   }
 })
