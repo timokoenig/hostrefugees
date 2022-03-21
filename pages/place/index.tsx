@@ -53,7 +53,7 @@ const PlacePage = (props: Props) => {
           </Button>
         </Heading>
         <SimpleGrid templateColumns={{ sm: '1fr', md: '1fr 1fr' }} spacing="10">
-          <List spacing="5">
+          <List spacing="2">
             {filteredPlaces.map((place, i) => (
               <PlaceItem key={i} place={place} />
             ))}
