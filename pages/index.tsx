@@ -45,6 +45,9 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
         },
       },
     },
+    orderBy: {
+      createdAt: 'desc',
+    },
   })
   return {
     props: {
