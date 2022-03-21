@@ -7,6 +7,7 @@ import {
   Heading,
   SimpleGrid,
   Text,
+  useColorModeValue,
 } from '@chakra-ui/react'
 import React from 'react'
 import { MappedUser } from 'utils/models'
@@ -31,7 +32,7 @@ const DocumentsPage = (props: Props) => {
             <Heading as="h2" size="md" mb="2">
               Flyer Template
             </Heading>
-            <Text mb="5">
+            <Text mb="5" color={useColorModeValue('gray.600', 'gray.400')}>
               We provide a free flyer template in busines card size. You can download the PDF file,
               bring it to a copy shop, and share it with the refugees. It inlcudes the url to our
               welcome page and the most important phone numbers (police and ambulance)
