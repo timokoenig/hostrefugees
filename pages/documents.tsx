@@ -1,5 +1,13 @@
-import { Center, Container, Heading } from '@chakra-ui/react'
-import Item from 'components/help/item'
+import {
+  Box,
+  Button,
+  Center,
+  Container,
+  GridItem,
+  Heading,
+  SimpleGrid,
+  Text,
+} from '@chakra-ui/react'
 import React from 'react'
 import { MappedUser } from 'utils/models'
 import { withSessionSsr } from 'utils/session'
@@ -13,15 +21,30 @@ const DocumentsPage = (props: Props) => {
   return (
     <Layout user={props.user}>
       <Container maxW="7xl">
-        <Center>
+        <Center mb="10">
           <Heading as="h1" size="xl">
             Documents
           </Heading>
         </Center>
-        <Item
-          title="Flyer Template"
-          text="We provide a free flyer template in busines card format. You can download the PDF file, bring it to a copy shop, and share it with the refugees. It inlcudes the url to our welcome page and the most important phone numbers (police and ambulance)"
-        />
+        <Center textAlign="center">
+          <Box mb="5" maxWidth="2xl">
+            <Heading as="h2" size="md" mb="2">
+              Flyer Template
+            </Heading>
+            <Text mb="5">
+              We provide a free flyer template in busines card size. You can download the PDF file,
+              bring it to a copy shop, and share it with the refugees. It inlcudes the url to our
+              welcome page and the most important phone numbers (police and ambulance)
+            </Text>
+            <SimpleGrid columns={2} spacing={5}>
+              <GridItem backgroundColor="gray.500" height="100" rounded="xl" />
+              <GridItem backgroundColor="gray.500" height="100" rounded="xl" />
+            </SimpleGrid>
+            <Button my="5" onClick={() => {}}>
+              Download PDF
+            </Button>
+          </Box>
+        </Center>
       </Container>
     </Layout>
   )
