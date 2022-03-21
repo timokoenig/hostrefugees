@@ -34,6 +34,7 @@ const DatePicker = (props: Props) => {
       <Input
         type="text"
         value={props.value ? moment(props.value).format('DD.MM.YYYY') : ''}
+        onChange={() => {}}
         onClick={() => setOpen(!isOpen)}
       />
       {props.onReset && props.value !== null && (
@@ -46,7 +47,7 @@ const DatePicker = (props: Props) => {
           borderRadius="full"
           onClick={onReset}
         >
-          <CloseIcon width="2" height="2" />
+          <CloseIcon width="2" height="2" color="gray.500" />
         </Button>
       )}
       {isOpen && <DayPicker selectedDays={props.value ?? undefined} onDayClick={onChange} />}

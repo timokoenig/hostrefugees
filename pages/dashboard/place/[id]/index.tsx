@@ -9,6 +9,7 @@ import {
   Heading,
   Image,
   SimpleGrid,
+  Switch,
   Text,
 } from '@chakra-ui/react'
 import { Place, UserRole } from '@prisma/client'
@@ -46,6 +47,25 @@ const PlacePage = (props: Props) => {
     }
   }
 
+  const togglePlaceActive = async () => {
+    try {
+      const res = await fetch(`/api/place/${props.place.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          active: !props.place.active,
+        }),
+      })
+      if (res.ok) {
+        router.reload()
+      }
+    } catch (err: unknown) {
+      console.log(err)
+    }
+  }
+
   return (
     <Layout user={props.user}>
       <Head>
@@ -74,6 +94,15 @@ const PlacePage = (props: Props) => {
             <Form place={props.place} onChange={onUpdate} />
           </GridItem>
           <Box>
+            <Box mb="20">
+              <Heading size="md" mb="5">
+                Status
+              </Heading>
+              <Text mb="5">
+                {props.place.active ? 'Your place is active' : 'Click to activate your place'}
+              </Text>
+              <Switch size="lg" isChecked={props.place.active} onChange={togglePlaceActive} />
+            </Box>
             <Box>
               <Heading size="md" mb="5">
                 Photos

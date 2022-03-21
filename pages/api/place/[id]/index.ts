@@ -1,4 +1,4 @@
-import { Place, UserRole } from '@prisma/client'
+import { BathroomType, PlaceType, UserRole } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from 'prisma/client'
 import geocode from 'utils/geocode'
@@ -8,7 +8,23 @@ const DEFAULT_COUNTRY = 'Germany'
 
 interface Request extends NextApiRequest {
   body: {
-    place: Place
+    active?: boolean
+    title?: string
+    description?: string
+    type?: PlaceType
+    rooms?: number
+    beds?: number
+    bathroom?: BathroomType
+    adults?: number
+    children?: number
+    addressStreet?: string
+    addressHouseNumber?: string
+    addressZip?: string
+    addressCity?: string
+    addressCountry?: string
+    houseRules?: string
+    availabilityStart?: Date
+    availabilityEnd?: Date | null
   }
 }
 
@@ -33,9 +49,9 @@ async function handleUpdatePlace(req: Request, res: NextApiResponse) {
 
   let lat = place.addressCityLat
   let lng = place.addressCityLng
-  if (req.body.place.addressCity != place.addressCity) {
+  if (req.body.addressCity && req.body.addressCity != place.addressCity) {
     // City changed, therefore we need to refresh the coordinates as well
-    const latLng = await geocode(req.body.place.addressCity, DEFAULT_COUNTRY)
+    const latLng = await geocode(req.body.addressCity, DEFAULT_COUNTRY)
     lat = latLng.lat
     lng = latLng.lng
   }
@@ -46,25 +62,24 @@ async function handleUpdatePlace(req: Request, res: NextApiResponse) {
     },
     data: {
       updatedAt: new Date(),
-      active: req.body.place.active,
-      title: req.body.place.title,
-      description: req.body.place.description,
-      type: req.body.place.type,
-      rooms: req.body.place.rooms,
-      beds: req.body.place.beds,
-      bathroom: req.body.place.bathroom,
-      adults: req.body.place.adults,
-      children: req.body.place.children,
-      addressStreet: req.body.place.addressStreet,
-      addressHouseNumber: req.body.place.addressHouseNumber,
-      addressZip: req.body.place.addressZip,
-      addressCity: req.body.place.addressCity,
+      active: req.body.active,
+      title: req.body.title,
+      description: req.body.description,
+      type: req.body.type,
+      rooms: req.body.rooms,
+      beds: req.body.beds,
+      bathroom: req.body.bathroom,
+      adults: req.body.adults,
+      children: req.body.children,
+      addressStreet: req.body.addressStreet,
+      addressHouseNumber: req.body.addressHouseNumber,
+      addressZip: req.body.addressZip,
+      addressCity: req.body.addressCity,
       addressCityLat: lat,
       addressCityLng: lng,
-      addressCountry: DEFAULT_COUNTRY,
-      houseRules: req.body.place.houseRules,
-      availabilityStart: req.body.place.availabilityStart,
-      availabilityEnd: req.body.place.availabilityEnd,
+      houseRules: req.body.houseRules,
+      availabilityStart: req.body.availabilityStart,
+      availabilityEnd: req.body.availabilityEnd,
     },
   })
   res.status(200).end()
