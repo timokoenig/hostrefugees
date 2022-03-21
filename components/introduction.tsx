@@ -13,30 +13,44 @@ import {
 } from '@chakra-ui/react'
 import React from 'react'
 
-const features = [0, 1, 2, 3, 4, 6, 7, 8].map((_, i) => {
-  return {
-    id: i,
-    title: 'Lorem ipsum dolor sit amet',
-    text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam.',
-  }
-})
+const features: { title: string; text: string }[] = [
+  {
+    title: 'Private Places',
+    text: 'All available places on this platform are private homes',
+  },
+  {
+    title: 'Verified Hosts',
+    text: 'Every host needs to verify their identify before a place is offered to a guest',
+  },
+  {
+    title: 'Safety Check',
+    text: 'The safety check for hosts and guests makes sure that both parties arrive safely',
+  },
+  {
+    title: 'Open Source',
+    text: 'HostRefugees is an Open Source project on Github to be as transparent as possible',
+  },
+]
 
 const Introduction = () => {
   const textColor = useColorModeValue('gray.600', 'gray.400')
   return (
     <Box p={4} mb="20">
       <Stack spacing={4} as={Container} maxW="3xl" textAlign="center">
-        <Heading fontSize="3xl">This is the headline</Heading>
+        <Heading fontSize="3xl">How Does It Work?</Heading>
         <Text color={textColor} fontSize="xl">
-          Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-          invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+          HostRefugees offers a list of all available private places that you can stay at. If you
+          found a place that matches your requirements, you can request to stay there. The host will
+          get notified about your request and then you will receive an email as soon as the host
+          accepts it. In that email you will find the exact name, address, and other contact
+          information to get in touch with the host.
         </Text>
       </Stack>
 
-      <Container maxW="6xl" mt={10}>
+      <Container maxW="6xl" mt={20}>
         <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={10}>
-          {features.map(feature => (
-            <HStack key={feature.id} align="top">
+          {features.map((feature, key) => (
+            <HStack key={key} align="top">
               <Box color="blue.400" px={2}>
                 <Icon as={CheckIcon} />
               </Box>
