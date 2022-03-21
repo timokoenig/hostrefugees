@@ -82,7 +82,7 @@ async function handlePlacePhotoUpload(req: NextApiRequest, res: NextApiResponse)
           data: {
             updatedAt: new Date(),
             photos: [...place.photos, photoId],
-            active: true,
+            approved: true,
           },
         })
         resolve(photoId)

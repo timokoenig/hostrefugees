@@ -29,7 +29,7 @@ const Form = (props: Props) => {
       createdAt: new Date(),
       updatedAt: new Date(),
       approved: false,
-      active: true,
+      active: false,
       addressCityLat: '',
       addressCityLng: '',
       addressCountry: '',
@@ -49,6 +49,7 @@ const Form = (props: Props) => {
       houseRules: '',
       availabilityStart: new Date(),
       availabilityEnd: null,
+      photos: [],
     },
     onSubmit: values => {
       // TODO validate fields

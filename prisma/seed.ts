@@ -30,7 +30,7 @@ async function main() {
   await prisma.place.create({
     data: {
       userId: host.id,
-      approved: true,
+      approved: false,
       active: true,
       title: '4 Large Room',
       description: 'This room has been empty for a long time',
@@ -56,7 +56,7 @@ async function main() {
   await prisma.place.create({
     data: {
       userId: host.id,
-      approved: true,
+      approved: false,
       active: true,
       title: 'Shared Room',
       description: 'We have a big studio apartment with two empty beds where you can stay with us',
@@ -82,7 +82,7 @@ async function main() {
   const place = await prisma.place.create({
     data: {
       userId: host.id,
-      approved: true,
+      approved: false,
       active: true,
       title: '1BR Apartment',
       description: 'Lovely apartment on the 3rd floor',

@@ -44,6 +44,7 @@ async function handleNewPlace(req: Request, res: NextApiResponse) {
       houseRules: req.body.place.houseRules,
       availabilityStart: req.body.place.availabilityStart,
       availabilityEnd: req.body.place.availabilityEnd,
+      photos: [],
     },
   })
   res.status(201).end()

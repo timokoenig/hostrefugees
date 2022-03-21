@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 import { Request, RequestStatus, UserRole } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from 'prisma/client'
@@ -141,6 +142,49 @@ async function handleUpdateRequest(req: UpdateRequest, res: NextApiResponse) {
         break
       default:
         break
+    }
+  }
+
+  if (updatedRequest.status === RequestStatus.ACCEPTED) {
+    // Set place inactive so it doesn't appear in the search anymore
+    await prisma.place.update({
+      where: {
+        id: request.place.id,
+      },
+      data: {
+        updatedAt: new Date(),
+        active: false,
+      },
+    })
+
+    // Decline all pending requests for this place
+    const pendingRequests = await prisma.request.findMany({
+      where: {
+        status: null,
+        place: {
+          id: request.place.id,
+        },
+      },
+      include: {
+        author: true,
+        place: {
+          include: {
+            author: true,
+          },
+        },
+      },
+    })
+    for (let i = 0; i < pendingRequests.length; i++) {
+      await prisma.request.update({
+        where: {
+          id: pendingRequests[i].id,
+        },
+        data: {
+          updatedAt: new Date(),
+          status: RequestStatus.DECLINED,
+        },
+      })
+      await sendEmail(emailDeclineRequest(updatedRequest))
     }
   }
 

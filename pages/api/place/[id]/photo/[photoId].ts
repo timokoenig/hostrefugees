@@ -64,7 +64,7 @@ async function handlePlacePhotoDelete(req: NextApiRequest, res: NextApiResponse)
     data: {
       updatedAt: new Date(),
       photos: newPhotos,
-      active: newPhotos.length != 0,
+      approved: newPhotos.length != 0,
     },
   })
 
