@@ -66,8 +66,14 @@ export default function Hero() {
             >
               Available Places
             </Button>
-            <Button rounded="full" size="lg" fontWeight="normal" px={6}>
-              How It Works
+            <Button
+              rounded="full"
+              size="lg"
+              fontWeight="normal"
+              px={6}
+              onClick={() => router.push('/welcome')}
+            >
+              Welcome To Germany
             </Button>
           </Stack>
         </Stack>
