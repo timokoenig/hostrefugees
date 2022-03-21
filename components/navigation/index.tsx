@@ -1,13 +1,4 @@
-import {
-  Box,
-  Button,
-  Center,
-  Flex,
-  Heading,
-  HStack,
-  Link,
-  useColorModeValue,
-} from '@chakra-ui/react'
+import { Box, Button, Center, Flex, Heading, HStack, Link } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React from 'react'
 import { MappedUser } from 'utils/models'
@@ -25,7 +16,7 @@ export default function Navigation(props: Props) {
       <Center>
         <Flex maxW="7xl" px="4" flex="1" h={16} justifyContent="space-between">
           <HStack spacing={8} alignItems="center">
-            <Heading size="lg" fontWeight="semibold" color={useColorModeValue('blue.500', 'white')}>
+            <Heading size="lg" fontWeight="semibold" color="blue.500">
               <Link href="/">HostRefugees</Link>
             </Heading>
           </HStack>
