@@ -43,12 +43,14 @@ export default function Footer() {
             </HStack>
           </Stack>
           <Stack align="flex-start">
-            <ListHeader>Be a Guest</ListHeader>
-            <Link href="/">Coming Soon</Link>
+            <ListHeader>Guest</ListHeader>
+            <Link href="/welcome">Welcome To Germany</Link>
+            <Link href="/place">Available Places</Link>
           </Stack>
           <Stack align="flex-start">
-            <ListHeader>Be a Host</ListHeader>
-            <Link href="/">Coming Soon</Link>
+            <ListHeader>Host</ListHeader>
+            <Link href="/become-host">Become a Host</Link>
+            <Link href="/documents">Documents</Link>
           </Stack>
           <Stack align="flex-start">
             <ListHeader>Support</ListHeader>
