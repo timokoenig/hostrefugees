@@ -26,7 +26,8 @@ const NewPage = (props: Props) => {
         body: JSON.stringify(place),
       })
       if (res.ok) {
-        router.back()
+        const json = (await res.json()) as { id: string }
+        await router.replace(`/dashboard/place/${json.id}/photo`)
       }
     } catch (err: unknown) {
       console.log(err)

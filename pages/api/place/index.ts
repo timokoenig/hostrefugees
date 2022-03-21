@@ -1,4 +1,4 @@
-import { Place, UserRole } from '@prisma/client'
+import { BathroomType, PlaceType, UserRole } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from 'prisma/client'
 import geocode from 'utils/geocode'
@@ -8,14 +8,29 @@ const DEFAULT_COUNTRY = 'Germany'
 
 interface Request extends NextApiRequest {
   body: {
-    place: Place
+    title: string
+    description: string
+    type: PlaceType
+    rooms: number
+    beds: number
+    bathroom: BathroomType
+    adults: number
+    children: number
+    addressStreet: string
+    addressHouseNumber: string
+    addressZip: string
+    addressCity: string
+    addressCountry: string
+    houseRules: string
+    availabilityStart: Date
+    availabilityEnd: Date | null
   }
 }
 
 async function handleNewPlace(req: Request, res: NextApiResponse) {
-  const latLng = await geocode(req.body.place.addressCity, DEFAULT_COUNTRY)
+  const latLng = await geocode(req.body.addressCity, DEFAULT_COUNTRY)
 
-  await prisma.place.create({
+  const place = await prisma.place.create({
     data: {
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -26,28 +41,28 @@ async function handleNewPlace(req: Request, res: NextApiResponse) {
       },
       approved: false,
       active: true,
-      title: req.body.place.title,
-      description: req.body.place.description,
-      type: req.body.place.type,
-      rooms: req.body.place.rooms,
-      beds: req.body.place.beds,
-      bathroom: req.body.place.bathroom,
-      adults: req.body.place.adults,
-      children: req.body.place.children,
-      addressStreet: req.body.place.addressStreet,
-      addressHouseNumber: req.body.place.addressHouseNumber,
-      addressZip: req.body.place.addressZip,
-      addressCity: req.body.place.addressCity,
+      title: req.body.title,
+      description: req.body.description,
+      type: req.body.type,
+      rooms: req.body.rooms,
+      beds: req.body.beds,
+      bathroom: req.body.bathroom,
+      adults: req.body.adults,
+      children: req.body.children,
+      addressStreet: req.body.addressStreet,
+      addressHouseNumber: req.body.addressHouseNumber,
+      addressZip: req.body.addressZip,
+      addressCity: req.body.addressCity,
       addressCityLat: latLng.lat,
       addressCityLng: latLng.lng,
       addressCountry: DEFAULT_COUNTRY,
-      houseRules: req.body.place.houseRules,
-      availabilityStart: req.body.place.availabilityStart,
-      availabilityEnd: req.body.place.availabilityEnd,
+      houseRules: req.body.houseRules,
+      availabilityStart: req.body.availabilityStart,
+      availabilityEnd: req.body.availabilityEnd,
       photos: [],
     },
   })
-  res.status(201).end()
+  res.status(201).send({ id: place.id })
 }
 
 async function handler(req: Request, res: NextApiResponse) {
