@@ -41,5 +41,6 @@ export const mapPlace = (prismaPlace: any): MappedPlace => {
     houseRules: prismaPlace.houseRules,
     availabilityStart: prismaPlace.availabilityStart,
     availabilityEnd: prismaPlace.availabilityEnd,
+    photos: prismaPlace.photos,
   }
 }

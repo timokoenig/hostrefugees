@@ -27,4 +27,5 @@ export type MappedPlace = {
   houseRules: string
   availabilityStart: Date
   availabilityEnd: Date | null
+  photos: string[]
 }

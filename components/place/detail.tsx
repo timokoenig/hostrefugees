@@ -28,18 +28,6 @@ type Props = {
   enableRequest: boolean
 }
 
-const PlaceholderImage = () => (
-  <Image
-    rounded="md"
-    alt="product image"
-    src="https://picsum.photos/900/600"
-    fit="cover"
-    align="center"
-    w="100%"
-    h={{ base: '100%', sm: '400px', lg: '500px' }}
-  />
-)
-
 export default function Detail(props: Props) {
   const { t } = useTranslation('common')
   const router = useRouter()
@@ -71,15 +59,23 @@ export default function Detail(props: Props) {
     <Container maxW="7xl">
       <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={{ base: 8, md: 10 }}>
         <SimpleGrid columns={2} spacing="5">
-          <GridItem colSpan={2}>
-            <PlaceholderImage />
-          </GridItem>
-          <GridItem>
-            <PlaceholderImage />
-          </GridItem>
-          <GridItem>
-            <PlaceholderImage />
-          </GridItem>
+          {props.place.photos.length == 0 ? (
+            <Box rounded="md" backgroundColor="gray" w="100%" h="100%" />
+          ) : (
+            props.place.photos.map((photo, i) => (
+              <GridItem key={i} colSpan={i == 0 ? 2 : 1}>
+                <Image
+                  rounded="md"
+                  alt="product image"
+                  src={`/api/place/${props.place.id}/photo/${photo}`}
+                  fit="cover"
+                  align="center"
+                  w="100%"
+                  h={{ base: '100%', sm: '400px', lg: '500px' }}
+                />
+              </GridItem>
+            ))
+          )}
         </SimpleGrid>
         <Stack spacing={{ base: 6, md: 10 }}>
           <Box as="header">

@@ -57,7 +57,7 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
       },
     },
   })
-  if (place == null) {
+  if (place == null || !place.active) {
     return {
       redirect: {
         destination: '/',

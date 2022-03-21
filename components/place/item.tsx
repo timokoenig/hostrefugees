@@ -22,15 +22,19 @@ const PlaceItem = (props: Props) => {
       >
         <SimpleGrid columns={4}>
           <GridItem>
-            <Image
-              rounded="md"
-              alt="product image"
-              src="https://picsum.photos/900/600"
-              fit="cover"
-              align="center"
-              w="100%"
-              h="100%"
-            />
+            {props.place.photos.length == 0 ? (
+              <Box rounded="md" backgroundColor="gray" w="100%" h="100%" />
+            ) : (
+              <Image
+                rounded="md"
+                alt="product image"
+                src={`/api/place/${props.place.id}/photo/${props.place.photos[0]}`}
+                fit="cover"
+                align="center"
+                w="100%"
+                h="100%"
+              />
+            )}
           </GridItem>
           <GridItem colSpan={3} p="6">
             <Box display="flex" alignItems="baseline">

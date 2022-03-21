@@ -1,5 +1,16 @@
 import { ArrowBackIcon } from '@chakra-ui/icons'
-import { Box, Button, Container, GridItem, Heading, SimpleGrid, Text } from '@chakra-ui/react'
+import {
+  Alert,
+  AlertIcon,
+  Box,
+  Button,
+  Container,
+  GridItem,
+  Heading,
+  Image,
+  SimpleGrid,
+  Text,
+} from '@chakra-ui/react'
 import { Place, UserRole } from '@prisma/client'
 import Layout from 'components/layout'
 import Head from 'next/head'
@@ -8,7 +19,7 @@ import prisma from 'prisma/client'
 import React from 'react'
 import { MappedUser } from 'utils/models'
 import { withSessionSsr } from 'utils/session'
-import Form from '../../../components/dashboard/place/form'
+import Form from '../../../../components/dashboard/place/form'
 
 type Props = {
   user: MappedUser
@@ -20,7 +31,7 @@ const PlacePage = (props: Props) => {
 
   const onUpdate = async (place: Place) => {
     try {
-      const res = await fetch('/api/place', {
+      const res = await fetch(`/api/place/${place.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -51,10 +62,40 @@ const PlacePage = (props: Props) => {
         </Heading>
         <SimpleGrid templateColumns={{ sm: '1fr', md: '3fr 1fr' }} spacing={5}>
           <GridItem>
+            {props.place.photos.length == 0 && (
+              <Alert status="warning" variant="solid" rounded="lg" mb="5">
+                <AlertIcon />
+                <Text as="span" fontWeight="semibold" mr="1">
+                  Missing Photo
+                </Text>
+                - You need to upload at least one photo to make this place available for guests.
+              </Alert>
+            )}
             <Form place={props.place} onChange={onUpdate} />
           </GridItem>
           <Box>
-            <Text>Info</Text>
+            <Box>
+              <Heading size="md" mb="5">
+                Photos
+              </Heading>
+              <SimpleGrid columns={2} spacing="5" mb="5">
+                {props.place.photos.map(photo => (
+                  <Image
+                    key={photo}
+                    src={`/api/place/${props.place.id}/photo/${photo}`}
+                    rounded="lg"
+                    backgroundColor="gray"
+                    h="100"
+                  />
+                ))}
+              </SimpleGrid>
+              <Button
+                onClick={() => router.push(`/dashboard/place/${props.place.id}/photo`)}
+                isFullWidth
+              >
+                Change Photos
+              </Button>
+            </Box>
           </Box>
         </SimpleGrid>
       </Container>

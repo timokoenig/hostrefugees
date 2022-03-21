@@ -81,6 +81,7 @@ const VerificationButton = (props: Props) => {
       fontSize="sm"
       flexDirection="column"
       maxWidth="200"
+      textAlign="center"
     >
       <Image
         rounded="md"

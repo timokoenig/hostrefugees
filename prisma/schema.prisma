@@ -67,6 +67,7 @@ model Place {
   houseRules         String       @map("house_rules")
   availabilityStart  DateTime     @map("availability_start")
   availabilityEnd    DateTime?    @map("availability_end")
+  photos             String[]
   userId             String       @map("user_id")
   requests           Request[]
 }
