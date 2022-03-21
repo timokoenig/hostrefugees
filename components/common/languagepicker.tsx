@@ -1,5 +1,6 @@
 import { OptionBase, Select } from 'chakra-react-select'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 type Props = {
   isDisabled?: boolean
@@ -11,15 +12,48 @@ interface LanguageOption extends OptionBase {
   value: string
 }
 
+const availableLanguages = [
+  'de',
+  'en',
+  'nl',
+  'fr',
+  'it',
+  'dk',
+  'gr',
+  'pt',
+  'es',
+  'fi',
+  'se',
+  'cz',
+  'ee',
+  'hu',
+  'lv',
+  'lt',
+  'mt',
+  'pl',
+  'sk',
+  'sl',
+  'bg',
+  'ie',
+  'ro',
+  'hr',
+  'ru',
+]
+
 const LanguagePicker = (props: Props) => {
+  const { t } = useTranslation('languages')
   return (
     <Select<LanguageOption, true>
       isMulti
       name="languages"
-      options={[
-        { label: 'English', value: 'en' },
-        { label: 'German', value: 'de' },
-      ]}
+      options={availableLanguages
+        .map(lang => {
+          return {
+            label: t(lang),
+            value: lang,
+          }
+        })
+        .sort((a, b) => (a.label > b.label ? 1 : -1))}
       placeholder="Select at least one language"
       closeMenuOnSelect={false}
       size="lg"

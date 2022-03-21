@@ -29,7 +29,7 @@ type Props = {
 }
 
 export default function Detail(props: Props) {
-  const { t } = useTranslation('common')
+  const { t: tLang } = useTranslation('languages')
   const router = useRouter()
 
   const RequestButton = (): JSX.Element | null => {
@@ -156,7 +156,7 @@ export default function Detail(props: Props) {
                   <Text as="span" fontWeight="bold">
                     Host Language:
                   </Text>{' '}
-                  {props.place.author.languages.map(lang => t(`lang.${lang}`)).join(', ')}
+                  {props.place.author.languages.map(lang => tLang(lang)).join(', ')}
                 </ListItem>
               </List>
             </Box>

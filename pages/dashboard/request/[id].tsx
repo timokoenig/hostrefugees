@@ -24,7 +24,7 @@ type Props = {
 }
 
 const RequestPage = (props: Props) => {
-  const { t } = useTranslation('common')
+  const { t: tLang } = useTranslation('languages')
   const router = useRouter()
 
   const updateRequestStatus = async (status: RequestStatus) => {
@@ -97,7 +97,7 @@ const RequestPage = (props: Props) => {
                   Guest Languages:{' '}
                   <Text as="span" fontWeight="semibold">
                     {(props.request as any).author.languages
-                      .map((lang: string) => t(`lang.${lang}`))
+                      .map((lang: string) => tLang(lang))
                       .join(', ')}
                   </Text>
                 </Text>

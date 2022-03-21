@@ -32,7 +32,7 @@ type Props = {
 }
 
 const ProfilePage = (props: Props) => {
-  const { t } = useTranslation('common')
+  const { t: tLang } = useTranslation('languages')
   const { toggleColorMode, newColorMode } = useColorMode()
   const [firstname, setFirstname] = useState<string>(props.user.firstname)
   const [lastname, setLastname] = useState<string>(props.user.lastname)
@@ -86,7 +86,7 @@ const ProfilePage = (props: Props) => {
               <Input
                 id="languages"
                 type="languages"
-                value={props.user.languages.map(lang => t(`lang.${lang}`)).join(', ')}
+                value={props.user.languages.map(lang => tLang(lang)).join(', ')}
                 isDisabled={true}
               />
             </FormControl>

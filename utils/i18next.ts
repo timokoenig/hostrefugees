@@ -10,6 +10,7 @@ i18next
     resources: {
       en: {
         common: require('../translations/en/common.json'),
+        languages: require('../translations/en/languages.json'),
       },
     },
   })
