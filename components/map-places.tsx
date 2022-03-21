@@ -1,4 +1,4 @@
-import { Box, Container, Heading, List, SimpleGrid, Stack } from '@chakra-ui/react'
+import { Box, Container, Heading, List, SimpleGrid, Stack, Text } from '@chakra-ui/react'
 import GoogleMapReact from 'google-map-react'
 import _ from 'lodash'
 import React from 'react'
@@ -30,10 +30,15 @@ export default function MapPlaces(props: Props) {
       <SimpleGrid templateColumns={{ sm: '1fr', md: '1fr 1fr' }} spacing={8}>
         <Stack spacing={6}>
           <List spacing="2">
+            {props.places.length == 0 && (
+              <Text textAlign="center" p="10" fontWeight="semibold">
+                No Places Available
+              </Text>
+            )}
             {props.places.map((place, i) => (
               <PlaceItem key={i} place={place} />
             ))}
-            <MoreItem />
+            {props.places.length > 0 && <MoreItem />}
           </List>
         </Stack>
         <Stack height="50vh" borderRadius="lg" overflow="hidden">
