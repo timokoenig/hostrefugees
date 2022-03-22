@@ -2,6 +2,7 @@ import {
   Box,
   Flex,
   FormControl,
+  FormErrorMessage,
   Heading,
   Input,
   Text,
@@ -12,8 +13,16 @@ import { useFormik } from 'formik'
 import { useRouter } from 'next/router'
 import React from 'react'
 import { MappedPlace } from 'utils/models'
+import * as Yup from 'yup'
 import CustomButton from '../common/button'
 import NumberInput from '../place/number-input'
+
+const validationSchema = Yup.object().shape({
+  adults: Yup.number().required('Required'),
+  children: Yup.number().required('Required'),
+  about: Yup.string().required('Required'),
+  phoneNumber: Yup.string().required('Required'),
+})
 
 type Props = {
   place: MappedPlace
@@ -28,6 +37,7 @@ const Form = (props: Props) => {
       about: '',
       phoneNumber: '',
     },
+    validationSchema,
     onSubmit: async values => {
       try {
         const res = await fetch('/api/request', {
@@ -52,6 +62,7 @@ const Form = (props: Props) => {
       }
     },
   })
+
   return (
     <form onSubmit={formik.handleSubmit}>
       <Box>
@@ -77,13 +88,20 @@ const Form = (props: Props) => {
                   (max {props.place.adults})
                 </Text>
               </Text>
-              <NumberInput
-                active={true}
-                value={formik.values.adults}
-                min={1}
-                max={props.place.adults}
-                onChange={newVal => formik.setFieldValue('adults', newVal)}
-              />
+              <FormControl
+                isRequired
+                isDisabled={formik.isSubmitting}
+                isInvalid={formik.errors.adults !== undefined && formik.touched.adults}
+              >
+                <NumberInput
+                  active={true}
+                  value={formik.values.adults}
+                  min={1}
+                  max={props.place.adults}
+                  onChange={newVal => formik.setFieldValue('adults', newVal)}
+                />
+                <FormErrorMessage>{formik.errors.adults}</FormErrorMessage>
+              </FormControl>
             </Flex>
           </Box>
           <Box>
@@ -94,12 +112,19 @@ const Form = (props: Props) => {
                   (max {props.place.children})
                 </Text>
               </Text>
-              <NumberInput
-                active={true}
-                value={formik.values.children}
-                max={props.place.children}
-                onChange={newVal => formik.setFieldValue('children', newVal)}
-              />
+              <FormControl
+                isRequired
+                isDisabled={formik.isSubmitting}
+                isInvalid={formik.errors.children !== undefined && formik.touched.children}
+              >
+                <NumberInput
+                  active={true}
+                  value={formik.values.children}
+                  max={props.place.children}
+                  onChange={newVal => formik.setFieldValue('children', newVal)}
+                />
+                <FormErrorMessage>{formik.errors.children}</FormErrorMessage>
+              </FormControl>
             </Flex>
           </Box>
         </Box>
@@ -114,13 +139,18 @@ const Form = (props: Props) => {
           >
             Tell the host about yourself
           </Text>
-          <FormControl>
+          <FormControl
+            isRequired
+            isDisabled={formik.isSubmitting}
+            isInvalid={formik.errors.about !== undefined && formik.touched.about}
+          >
             <Textarea
               id="about"
               placeholder="Here is a sample placeholder"
               value={formik.values.about}
               onChange={formik.handleChange}
             />
+            <FormErrorMessage>{formik.errors.about}</FormErrorMessage>
           </FormControl>
         </Box>
 
@@ -135,7 +165,11 @@ const Form = (props: Props) => {
             Contact Information
           </Text>
           <Text fontSize="lg">Phone Number</Text>
-          <FormControl>
+          <FormControl
+            isRequired
+            isDisabled={formik.isSubmitting}
+            isInvalid={formik.errors.phoneNumber !== undefined && formik.touched.phoneNumber}
+          >
             <Input
               id="phoneNumber"
               type="text"
@@ -145,10 +179,11 @@ const Form = (props: Props) => {
             <Text color={useColorModeValue('gray.600', 'gray.400')}>
               (will only be shared when the host accepts the stay request)
             </Text>
+            <FormErrorMessage>{formik.errors.phoneNumber}</FormErrorMessage>
           </FormControl>
         </Box>
 
-        <CustomButton title="Confirm Request" fullWidth />
+        <CustomButton title="Confirm Request" fullWidth isDisabled={formik.isSubmitting} />
       </Box>
     </form>
   )

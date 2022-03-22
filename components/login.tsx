@@ -2,6 +2,7 @@ import {
   Box,
   Flex,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Heading,
   Input,
@@ -12,19 +13,25 @@ import {
 } from '@chakra-ui/react'
 import { useFormik } from 'formik'
 import { useRouter } from 'next/router'
-import React, { useState } from 'react'
+import React from 'react'
+import * as Yup from 'yup'
 import Button from './common/button'
+
+const validationSchema = Yup.object().shape({
+  email: Yup.string().email('Invalid email').required('Required'),
+  password: Yup.string().required('Required'),
+})
 
 const Login = () => {
   const router = useRouter()
-  const [isLoading, setLoading] = useState<boolean>(false)
   const formik = useFormik({
     initialValues: {
       email: '',
       password: '',
     },
+    validationSchema,
     onSubmit: async values => {
-      setLoading(true)
+      if (!formik.isValid) return
       try {
         const res = await fetch('/api/login', {
           method: 'POST',
@@ -41,7 +48,6 @@ const Login = () => {
       } catch (err: unknown) {
         console.log(err)
       }
-      setLoading(false)
     },
   })
 
@@ -54,7 +60,11 @@ const Login = () => {
         <Box rounded="lg" bg={useColorModeValue('white', 'gray.700')} boxShadow="lg" p={8}>
           <form onSubmit={formik.handleSubmit}>
             <Stack spacing={4}>
-              <FormControl isRequired>
+              <FormControl
+                isRequired
+                isDisabled={formik.isSubmitting}
+                isInvalid={formik.errors.email !== undefined && formik.touched.email}
+              >
                 <FormLabel htmlFor="email">Email address</FormLabel>
                 <Input
                   id="email"
@@ -62,8 +72,13 @@ const Login = () => {
                   value={formik.values.email}
                   onChange={formik.handleChange}
                 />
+                <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
               </FormControl>
-              <FormControl isRequired>
+              <FormControl
+                isRequired
+                isDisabled={formik.isSubmitting}
+                isInvalid={formik.errors.password !== undefined && formik.touched.password}
+              >
                 <FormLabel htmlFor="password">Password</FormLabel>
                 <Input
                   id="password"
@@ -71,9 +86,10 @@ const Login = () => {
                   value={formik.values.password}
                   onChange={formik.handleChange}
                 />
+                <FormErrorMessage>{formik.errors.password}</FormErrorMessage>
               </FormControl>
               <Stack spacing={10}>
-                <Button title="Sign in" fullWidth isDisabled={isLoading} />
+                <Button title="Sign in" fullWidth isDisabled={formik.isSubmitting} />
               </Stack>
             </Stack>
           </form>
