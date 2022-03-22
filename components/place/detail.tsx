@@ -31,6 +31,7 @@ type Props = {
 export default function Detail(props: Props) {
   const { t: tLang } = useTranslation('languages')
   const router = useRouter()
+  const titleColor = useColorModeValue('blue.500', 'blue.300')
 
   const RequestButton = (): JSX.Element | null => {
     if (props.request !== null) {
@@ -160,18 +161,20 @@ export default function Detail(props: Props) {
                 </ListItem>
               </List>
             </Box>
-            <Box>
-              <Text
-                fontSize={{ base: '16px', lg: '18px' }}
-                color={useColorModeValue('blue.500', 'blue.300')}
-                fontWeight="500"
-                textTransform="uppercase"
-                mb="4"
-              >
-                House Rules
-              </Text>
-              <Text fontSize="lg">{props.place.houseRules}</Text>
-            </Box>
+            {props.place.houseRules !== '' && (
+              <Box>
+                <Text
+                  fontSize={{ base: '16px', lg: '18px' }}
+                  color={titleColor}
+                  fontWeight="500"
+                  textTransform="uppercase"
+                  mb="4"
+                >
+                  House Rules
+                </Text>
+                <Text fontSize="lg">{props.place.houseRules}</Text>
+              </Box>
+            )}
           </Stack>
 
           <RequestButton />
