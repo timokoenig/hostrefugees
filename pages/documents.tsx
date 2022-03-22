@@ -3,8 +3,9 @@ import {
   Button,
   Center,
   Container,
-  GridItem,
   Heading,
+  Image,
+  Link,
   SimpleGrid,
   Text,
   useColorModeValue,
@@ -35,13 +36,13 @@ const DocumentsPage = (props: Props) => {
             <Text mb="5" color={useColorModeValue('gray.600', 'gray.400')}>
               We provide a free flyer template in busines card size. You can download the PDF file,
               bring it to a copy shop, and share it with the refugees. It includes the url to our
-              welcome page and the most important phone numbers (police, ambulance, abuse hotline)
+              welcome page and the most important phone numbers for police and ambulance.
             </Text>
             <SimpleGrid columns={2} spacing={5}>
-              <GridItem backgroundColor="gray.500" height="100" rounded="xl" />
-              <GridItem backgroundColor="gray.500" height="100" rounded="xl" />
+              <Image src="/docs/BusinessCard_HostRefugees_Front.png" rounded="xl" />
+              <Image src="/docs/BusinessCard_HostRefugees_Back.png" rounded="xl" />
             </SimpleGrid>
-            <Button my="5" onClick={() => {}}>
+            <Button as={Link} my="5" href="/docs/BusinessCard_HostRefugees.pdf" target="_blank">
               Download PDF
             </Button>
           </Box>
