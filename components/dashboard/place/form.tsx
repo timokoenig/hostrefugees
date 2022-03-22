@@ -48,6 +48,8 @@ const Form = (props: Props) => {
       addressZip: '',
       addressCity: '',
       houseRules: '',
+      phoneNumber: '',
+      arrivalInstructions: '',
       availabilityStart: new Date(),
       availabilityEnd: null,
       photos: [],
@@ -233,6 +235,41 @@ const Form = (props: Props) => {
                 id="addressCity"
                 type="text"
                 value={formik.values.addressCity}
+                onChange={formik.handleChange}
+              />
+            </FormControl>
+          </VStack>
+
+          <VStack spacing={4} width="100%" align="flex-start">
+            <Text
+              fontSize={{ base: '16px', lg: '18px' }}
+              color={useColorModeValue('blue.500', 'blue.300')}
+              fontWeight="500"
+              textTransform="uppercase"
+              mb="4"
+            >
+              Contact Information
+            </Text>
+
+            <FormControl>
+              <FormLabel htmlFor="phoneNumber">Phone Number</FormLabel>
+              <Input
+                id="phoneNumber"
+                type="text"
+                value={formik.values.phoneNumber}
+                onChange={formik.handleChange}
+              />
+              <Text color={useColorModeValue('gray.600', 'gray.400')}>
+                (will only be shared when you accept a stay request)
+              </Text>
+            </FormControl>
+
+            <FormControl>
+              <FormLabel htmlFor="arrivalInstructions">Arrival Instructions</FormLabel>
+              <Textarea
+                id="arrivalInstructions"
+                placeholder="How can the guest arrive at your place? Will you pick up the guest?"
+                value={formik.values.arrivalInstructions}
                 onChange={formik.handleChange}
               />
             </FormControl>

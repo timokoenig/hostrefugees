@@ -102,8 +102,9 @@ export const emailAcceptRequestGuest = (
     paragraph(
       `Please get in touch with <b>${request.place.author.firstname} ${request.place.author.lastname}</b>`
     ),
-    paragraph(`Email: xxx`),
-    paragraph(`Phone: xxx`),
+    paragraph(`Email: ${request.place.author.email}`),
+    paragraph(`Phone: ${request.place.phoneNumber}`),
+    paragraph(`Arrival Instructions:<br />${request.place.arrivalInstructions}`),
   ].join('')
 
   let content = fs.readFileSync(emailPath, 'utf-8')
@@ -132,8 +133,8 @@ export const emailAcceptRequestHost = (
     paragraph(
       `Please get in touch with <b>${request.author.firstname} ${request.author.lastname}</b>`
     ),
-    paragraph(`Email: xxx`),
-    paragraph(`Phone: xxx`),
+    paragraph(`Email: ${request.author.email}`),
+    paragraph(`Phone: ${request.phoneNumber}`),
   ].join('')
 
   let content = fs.readFileSync(emailPath, 'utf-8')

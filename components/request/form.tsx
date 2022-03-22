@@ -3,6 +3,7 @@ import {
   Flex,
   FormControl,
   Heading,
+  Input,
   Text,
   Textarea,
   useColorModeValue,
@@ -25,6 +26,7 @@ const Form = (props: Props) => {
       adults: 1,
       children: 0,
       about: '',
+      phoneNumber: '',
     },
     onSubmit: async values => {
       try {
@@ -119,6 +121,30 @@ const Form = (props: Props) => {
               value={formik.values.about}
               onChange={formik.handleChange}
             />
+          </FormControl>
+        </Box>
+
+        <Box mb="5">
+          <Text
+            fontSize={{ base: '16px', lg: '18px' }}
+            color={useColorModeValue('blue.500', 'blue.300')}
+            fontWeight="500"
+            textTransform="uppercase"
+            mb="4"
+          >
+            Contact Information
+          </Text>
+          <Text fontSize="lg">Phone Number</Text>
+          <FormControl>
+            <Input
+              id="phoneNumber"
+              type="text"
+              value={formik.values.phoneNumber}
+              onChange={formik.handleChange}
+            />
+            <Text color={useColorModeValue('gray.600', 'gray.400')}>
+              (will only be shared when the host accepts the stay request)
+            </Text>
           </FormControl>
         </Box>
 
