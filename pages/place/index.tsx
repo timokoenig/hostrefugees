@@ -1,6 +1,6 @@
 import { Box, Button, Container, Heading, List, SimpleGrid, useDisclosure } from '@chakra-ui/react'
 import PlaceItem from 'components/place/item'
-import Map from 'components/place/map'
+import dynamic from 'next/dynamic'
 import prisma from 'prisma/client'
 import React from 'react'
 import { mapPlace } from 'utils/mapper'
@@ -9,6 +9,10 @@ import { withSessionSsr } from 'utils/session'
 import Layout from '../../components/layout'
 import FilterModal from '../../components/place/filter-modal'
 import { app, setFilter } from '../../state/app'
+
+const GoogleMaps = dynamic(() => import('components/googlemaps'), {
+  ssr: false,
+})
 
 type Props = {
   user?: MappedUser
@@ -59,7 +63,11 @@ const PlacePage = (props: Props) => {
             ))}
           </List>
           <Box>
-            <Map places={props.places} onClick={city => setFilter({ ...appState.filter, city })} />
+            <GoogleMaps
+              height="80vh"
+              places={props.places}
+              onClick={city => setFilter({ ...appState.filter, city })}
+            />
           </Box>
         </SimpleGrid>
       </Container>
