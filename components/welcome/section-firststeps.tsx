@@ -17,7 +17,7 @@ const SectionFirstSteps = () => {
       <Heading as="h4" size="md">
         Important Websites
       </Heading>
-      <Text color={useColorModeValue('gray.600', 'gray.400')} fontSize="lg">
+      <Text color={useColorModeValue('gray.600', 'gray.400')}>
         <UnorderedList>
           <ListItem>
             <Link href="https://www.germany4ukraine.de">
@@ -57,7 +57,7 @@ const SectionFirstSteps = () => {
       <Heading as="h4" size="md">
         Important Phone Numbers
       </Heading>
-      <Text color={useColorModeValue('gray.600', 'gray.400')} fontSize="lg">
+      <Text color={useColorModeValue('gray.600', 'gray.400')}>
         <b>Police: </b>
         <Link href="tel:110">
           <Icon as={IoCallOutline} w="4" h="4" mx="1" pt="1" />

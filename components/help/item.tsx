@@ -1,9 +1,10 @@
-import { Box, Heading, Text } from '@chakra-ui/react'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Box, Heading, Text, useColorModeValue } from '@chakra-ui/react'
 import React from 'react'
 
 type Props = {
   title: string
-  text: string
+  children: any
 }
 
 const Item = (props: Props) => {
@@ -12,7 +13,7 @@ const Item = (props: Props) => {
       <Heading as="h2" size="md">
         {props.title}
       </Heading>
-      <Text>{props.text}</Text>
+      <Text color={useColorModeValue('gray.600', 'gray.400')}>{props.children}</Text>
     </Box>
   )
 }

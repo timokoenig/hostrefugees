@@ -22,7 +22,7 @@ const SectionNecessities = () => {
       <Heading as="h4" size="md">
         What supermarkets are there in Germany?
       </Heading>
-      <Text color={useColorModeValue('gray.600', 'gray.400')} fontSize="lg">
+      <Text color={useColorModeValue('gray.600', 'gray.400')}>
         <UnorderedList>
           <ListItem>
             <Link href="https://www.aldi.de">

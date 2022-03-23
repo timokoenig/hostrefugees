@@ -6,7 +6,7 @@ import Section from './section'
 const SectionCovid = () => {
   return (
     <Section id="covid" title="Current Covid Restrictions" icon={IoMedicalSharp} color="red">
-      <Text color={useColorModeValue('gray.600', 'gray.400')} fontSize="lg">
+      <Text color={useColorModeValue('gray.600', 'gray.400')}>
         Every state in Germany has their own Covid Regulations so please inform yourself in the
         state you are in. Here is a list of general applicable rules and recommendations.
       </Text>
@@ -14,7 +14,7 @@ const SectionCovid = () => {
       <Heading as="h4" size="md">
         Contacts
       </Heading>
-      <Text color={useColorModeValue('gray.600', 'gray.400')} fontSize="lg">
+      <Text color={useColorModeValue('gray.600', 'gray.400')}>
         Please continue to avoid all personal contacts that are not essential. "Keeping your
         distance" helps to avoid transmission of the coronavirus. Therefore, always keep a distance
         of 1.50 meters from other people.
@@ -26,7 +26,7 @@ const SectionCovid = () => {
       <Heading as="h4" size="md">
         Maskenpflicht
       </Heading>
-      <Text color={useColorModeValue('gray.600', 'gray.400')} fontSize="lg">
+      <Text color={useColorModeValue('gray.600', 'gray.400')}>
         In closed rooms of public facilities are FF2 masks mandatory for everyone older than 14
         years. Children up to 14 years need to wear a medical mask. Children under the age of 6 are
         exempt from the mask requirement.
@@ -35,7 +35,7 @@ const SectionCovid = () => {
       <Heading as="h4" size="md">
         3G Entry Restriction
       </Heading>
-      <Text color={useColorModeValue('gray.600', 'gray.400')} fontSize="lg">
+      <Text color={useColorModeValue('gray.600', 'gray.400')}>
         3G entry resitrctions allow everyone who is fully vaccinated, recovered, or tested to
         participate. The following areas apply to the 3G restrictions if not stated otherwise:
         <UnorderedList>
@@ -48,7 +48,7 @@ const SectionCovid = () => {
       <Heading as="h4" size="md">
         2G+ Entry Restriction
       </Heading>
-      <Text color={useColorModeValue('gray.600', 'gray.400')} fontSize="lg">
+      <Text color={useColorModeValue('gray.600', 'gray.400')}>
         2G+ entry restrictions allow everyone who is fully vaccinated, or recovered to participate
         but those people need to show proof of a negative rapid or PCR test result. Under certain
         conditions you don't need to provide an additional test. Please look up the local
@@ -62,7 +62,7 @@ const SectionCovid = () => {
       <Heading as="h4" size="md">
         Tests
       </Heading>
-      <Text color={useColorModeValue('gray.600', 'gray.400')} fontSize="lg">
+      <Text color={useColorModeValue('gray.600', 'gray.400')}>
         In some cases you need an additional rapid or PCR test result. Please make sure the test
         fulfills the following requirements:
         <UnorderedList>

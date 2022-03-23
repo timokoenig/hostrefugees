@@ -41,7 +41,7 @@ const translationsPhrases: { de: string; ua: string }[] = [
 const SectionTranslations = () => {
   return (
     <Section id="translations" title="How Do I Say This?" icon={IoChatbubblesSharp} color="green">
-      <Text color={useColorModeValue('gray.600', 'gray.400')} fontSize="lg">
+      <Text color={useColorModeValue('gray.600', 'gray.400')}>
         A list of common words and phrases
       </Text>
       <SimpleGrid templateColumns={{ sm: '1fr', md: '1fr 1fr' }} spacing={20}>
