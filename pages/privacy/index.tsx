@@ -2,7 +2,7 @@ import { Box, Container, Heading, Link, List, ListItem, Text } from '@chakra-ui/
 import React, { useEffect, useState } from 'react'
 import { MappedUser } from 'utils/models'
 import { withSessionSsr } from 'utils/session'
-import Layout from '../components/layout'
+import Layout from '../../components/layout'
 
 type PrivacyProps = {
   contactName: string

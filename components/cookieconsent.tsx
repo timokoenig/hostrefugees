@@ -47,10 +47,7 @@ const CookieConsent = () => {
         purpose, analysis and marketing cookies may be used in addition to technically necessary
         cookies. By clicking on &quot;Agree and continue&quot;, you declare your consent to the use
         of the aforementioned cookies.{' '}
-        <Link
-          onClick={() => document.dispatchEvent(new Event('cookie_consent_details_show'))}
-          fontWeight="semibold"
-        >
+        <Link href="/privacy/cookies" fontWeight="semibold">
           Here
         </Link>{' '}
         you can make detailed settings or revoke your consent (in part if necessary) with effect for
