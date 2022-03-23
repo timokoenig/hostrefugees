@@ -55,7 +55,6 @@ export default function Footer() {
           <Stack align="flex-start">
             <ListHeader>Support</ListHeader>
             <Link href="/help">Help Center</Link>
-            <Link href="/terms">Terms of Service</Link>
             <Link href="/imprint">Legal</Link>
             <Link href="/privacy">Privacy Policy</Link>
           </Stack>

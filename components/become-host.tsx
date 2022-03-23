@@ -150,12 +150,8 @@ const Register = () => {
                   value={termsAccepted ? 1 : 0}
                 >
                   I accept the{' '}
-                  <Link href="/terms" target="_blank" color="blue.400">
-                    Terms
-                  </Link>{' '}
-                  and{' '}
                   <Link href="/privacy" target="_blank" color="blue.400">
-                    Data Privacy
+                    Privacy Policy
                   </Link>
                 </Checkbox>
                 <Button
