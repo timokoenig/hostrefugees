@@ -1,13 +1,17 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable import/order */
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 /* eslint-disable @typescript-eslint/prefer-ts-expect-error */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { User } from '@prisma/client'
-import { File, IncomingForm } from 'formidable'
+import formidable, { IncomingForm } from 'formidable'
 import fs from 'fs'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import path from 'path'
 import prisma from 'prisma/client'
+import { deleteFile, listFiles, S3_BUCKET_DOCUMENTS, uploadFile } from 'utils/aws/s3'
 import { withSessionRoute } from 'utils/session'
 
 export const config = {
@@ -18,39 +22,9 @@ export const config = {
 
 const allowedTypes = ['front', 'back', 'selfie']
 
-// temporary workaround, s3 will replace it
-const saveFile = async (user: User, type: string, file: File) => {
-  const data = fs.readFileSync(file.filepath)
-  const splitType = file.mimetype?.split('/')
-  fs.writeFileSync(
-    path.resolve(
-      `storage/${user.id}-${type}.${
-        splitType == undefined ? 'png' : splitType[splitType.length - 1]
-      }`
-    ),
-    data
-  )
-  fs.unlinkSync(file.filepath)
-}
-
-const deleteFile = async (type: string, user: User) => {
-  fs.readdirSync(path.resolve('storage')).forEach(file => {
-    if (file.startsWith(`${user.id}-${type}`)) {
-      fs.unlinkSync(path.resolve(`storage/${file}`))
-    }
-  })
-}
-
-const allDocumentsUploaded = (user: User): boolean => {
-  let count = 0
-  fs.readdirSync(path.resolve('storage')).forEach(file => {
-    allowedTypes.forEach(type => {
-      if (file.startsWith(`${user.id}-${type}`)) {
-        count++
-      }
-    })
-  })
-  return count == allowedTypes.length
+const allDocumentsUploaded = async (user: User): Promise<boolean> => {
+  const files = await listFiles(user.id, S3_BUCKET_DOCUMENTS)
+  return files.length == allowedTypes.length
 }
 
 async function handleDocumentUpload(req: NextApiRequest, res: NextApiResponse) {
@@ -87,10 +61,13 @@ async function handleDocumentUpload(req: NextApiRequest, res: NextApiResponse) {
         // @ts-ignore
         if (files.file === undefined) {
           // Delete existing file
-          await deleteFile(fields.type as string, user)
+          const fileKey = `${user.id}/${fields.type as string}`
+          await deleteFile(fileKey, S3_BUCKET_DOCUMENTS)
         } else {
-          // @ts-ignore
-          await saveFile(user, fields.type, files.file)
+          const formFile = files.file as unknown as formidable.File
+          const file = fs.readFileSync(formFile.filepath)
+          const fileKey = `${user.id}/${fields.type as string}`
+          await uploadFile(fileKey, file, formFile.mimetype, S3_BUCKET_DOCUMENTS)
         }
         resolve()
       } catch (err: unknown) {
@@ -100,7 +77,8 @@ async function handleDocumentUpload(req: NextApiRequest, res: NextApiResponse) {
   })
 
   // If the user uploaded all required files, we will update the verification date so that the onboarding screen will not show again
-  if (allDocumentsUploaded(user)) {
+  const allDocuments = await allDocumentsUploaded(user)
+  if (allDocuments) {
     await prisma.user.update({
       where: {
         id: req.session.user.id,

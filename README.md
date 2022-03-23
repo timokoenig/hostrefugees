@@ -35,6 +35,10 @@ SMTP_USERNAME=user
 SMTP_PASSWORD=password
 SMTP_HOST=smtp.your-email.com
 
+AWS_S3_REGION=eu-central-1
+AWS_S3_ACCESS_KEY=xxx
+AWS_S3_ACCESS_SECRET=xxx
+
 SECRET_COOKIE_PASSWORD=complex_password_at_least_32_characters_long
 NODE_ENV=development
 ```

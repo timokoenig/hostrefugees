@@ -1,40 +1,19 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable import/order */
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 /* eslint-disable @typescript-eslint/prefer-ts-expect-error */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { User } from '@prisma/client'
-import { File, IncomingForm } from 'formidable'
+import formidable, { IncomingForm } from 'formidable'
 import fs from 'fs'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import path from 'path'
 import prisma from 'prisma/client'
+import { deleteFile, S3_BUCKET_USER, uploadFile } from 'utils/aws/s3'
 import { withSessionRoute } from 'utils/session'
 
 export const config = {
   api: {
     bodyParser: false,
   },
-}
-
-// temporary workaround, s3 will replace it
-const saveFile = async (user: User, file: File) => {
-  const data = fs.readFileSync(file.filepath)
-  const splitType = file.mimetype?.split('/')
-  fs.writeFileSync(
-    path.resolve(
-      `storage/${user.id}-photo.${splitType == undefined ? 'png' : splitType[splitType.length - 1]}`
-    ),
-    data
-  )
-  fs.unlinkSync(file.filepath)
-}
-
-const deleteFile = async (user: User) => {
-  fs.readdirSync(path.resolve('storage')).forEach(file => {
-    if (file.startsWith(`${user.id}-photo`)) {
-      fs.unlinkSync(path.resolve(`storage/${file}`))
-    }
-  })
 }
 
 async function handleProfilePhotoUpload(req: NextApiRequest, res: NextApiResponse) {
@@ -67,10 +46,11 @@ async function handleProfilePhotoUpload(req: NextApiRequest, res: NextApiRespons
         // @ts-ignore
         if (files.file === undefined) {
           // Delete existing file
-          await deleteFile(user)
+          await deleteFile(user.id, S3_BUCKET_USER)
         } else {
-          // @ts-ignore
-          await saveFile(user, files.file)
+          const formFile = files.file as unknown as formidable.File
+          const file = fs.readFileSync(formFile.filepath)
+          await uploadFile(user.id, file, formFile.mimetype, S3_BUCKET_USER)
         }
         resolve()
       } catch (err: unknown) {

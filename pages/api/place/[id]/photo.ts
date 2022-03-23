@@ -1,13 +1,13 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable import/order */
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 /* eslint-disable @typescript-eslint/prefer-ts-expect-error */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { Place } from '@prisma/client'
-import { File, IncomingForm } from 'formidable'
+import formidable, { IncomingForm } from 'formidable'
 import fs from 'fs'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import path from 'path'
 import prisma from 'prisma/client'
+import { S3_BUCKET_PLACE, uploadFile } from 'utils/aws/s3'
 import { withSessionRoute } from 'utils/session'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -15,21 +15,6 @@ export const config = {
   api: {
     bodyParser: false,
   },
-}
-
-// temporary workaround, s3 will replace it
-const saveFile = async (place: Place, photoId: string, file: File) => {
-  const data = fs.readFileSync(file.filepath)
-  const splitType = file.mimetype?.split('/')
-  fs.writeFileSync(
-    path.resolve(
-      `storage/${place.id}-${photoId}.${
-        splitType == undefined ? 'png' : splitType[splitType.length - 1]
-      }`
-    ),
-    data
-  )
-  fs.unlinkSync(file.filepath)
 }
 
 async function handlePlacePhotoUpload(req: NextApiRequest, res: NextApiResponse) {
@@ -71,9 +56,10 @@ async function handlePlacePhotoUpload(req: NextApiRequest, res: NextApiResponse)
         if (files.file === undefined) {
           throw new Error('no file')
         }
+        const formFile = files.file as unknown as formidable.File
+        const file = fs.readFileSync(formFile.filepath)
         const photoId = uuidv4()
-        // @ts-ignore
-        await saveFile(place, photoId, files.file)
+        await uploadFile(`${place.id}/${photoId}`, file, formFile.mimetype, S3_BUCKET_PLACE)
 
         await prisma.place.update({
           where: {

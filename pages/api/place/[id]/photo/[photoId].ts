@@ -1,28 +1,8 @@
 /* eslint-disable import/order */
-import { Place } from '@prisma/client'
-import fs from 'fs'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import path from 'path'
 import prisma from 'prisma/client'
+import { deleteFile, readFile, S3_BUCKET_PLACE } from 'utils/aws/s3'
 import { withSessionRoute } from 'utils/session'
-
-const deleteFile = async (place: Place, photoId: string) => {
-  fs.readdirSync(path.resolve('storage')).forEach(file => {
-    if (file.startsWith(`${place.id}-${photoId}`)) {
-      fs.unlinkSync(path.resolve(`storage/${file}`))
-    }
-  })
-}
-
-const getFile = (placeId: string, photoId: string): string | null => {
-  const files = fs.readdirSync(path.resolve('storage'))
-  for (let i = 0; i < files.length; i++) {
-    if (files[i].startsWith(`${placeId}-${photoId}`)) {
-      return files[i]
-    }
-  }
-  return null
-}
 
 async function handlePlacePhotoDelete(req: NextApiRequest, res: NextApiResponse) {
   if (req.session.user == undefined) {
@@ -54,7 +34,7 @@ async function handlePlacePhotoDelete(req: NextApiRequest, res: NextApiResponse)
     return
   }
 
-  await deleteFile(place, photoId)
+  await deleteFile(`${place.id}/${photoId}`, S3_BUCKET_PLACE)
 
   const newPhotos = place.photos.filter(p => p != photoId)
   await prisma.place.update({
@@ -82,17 +62,13 @@ async function handleGetPlacePhoto(req: NextApiRequest, res: NextApiResponse) {
     return
   }
 
-  const file = getFile(place.id, req.query.photoId as string)
-  if (file === null) {
+  try {
+    const image = await readFile(`${place.id}/${req.query.photoId}`, S3_BUCKET_PLACE)
+    res.setHeader('Content-Type', image.contentType)
+    res.send(image.data)
+  } catch (err: unknown) {
     res.status(400).end()
-    return
   }
-
-  const filePath = path.resolve(`storage/${file}`)
-  const imageBuffer = fs.readFileSync(filePath)
-
-  res.setHeader('Content-Type', 'image/jpg')
-  res.send(imageBuffer)
 }
 
 async function handler(req: NextApiRequest, res: NextApiResponse<Response>) {
