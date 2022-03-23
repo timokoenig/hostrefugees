@@ -9,9 +9,13 @@
 
 </div>
 
-Want to join or help out? Send me a message on Twitter [@timokoenig](https://twitter.com/timokoenig)
+<div align="center">
+Want to join or help out? Send me a message on Twitter <a href="https://twitter.com/timokoenig">@timokoenig</a>
+</div>
 
-## Getting Started
+## Development
+
+### Getting Started
 
 Add the following variables to your _.env_ file:
 
@@ -50,15 +54,15 @@ npm install
 npm run dev
 ```
 
-## Production Build
+### Production Build
 
 Make sure to set the **NODE_ENV** to `production` to secure the iron session.
 
-## Iron Session
+### Iron Session
 
 https://github.com/vvo/iron-session
 
-## Prisma
+### Prisma
 
 // To migrate the schema file and generate the client
 npx prisma migrate dev --skip-seed
@@ -66,7 +70,7 @@ npx prisma migrate dev --skip-seed
 // To generate the client
 npx prisma generate
 
-### Seeding Development Database
+#### Seeding Development Database
 
 After applying all migration, run the following command to seed the database once:
 
@@ -74,15 +78,15 @@ After applying all migration, run the following command to seed the database onc
 npx prisma db seed
 ```
 
-## Securing Passwords
+### Securing Passwords
 
 https://auth0.com/blog/hashing-in-action-understanding-bcrypt/
 
-## Google Maps
+### Google Maps
 
 Sign up at Google to get an API Key for Maps.
 
-## Snapshot Tests
+### Snapshot Tests
 
 We use [Jest Snapshot Testing](https://jestjs.io/docs/snapshot-testing) for our components.
 
@@ -90,20 +94,20 @@ To add a new snapshot test, follow [the instructions](https://jestjs.io/docs/sna
 
 To update an existing snapshot, adjust the test case and run `npm run snapshot-update`.
 
-## Email Template
+### Email Template
 
 Every email uses a base [responsive template](https://github.com/leemunroe/responsive-html-email-template) that is located in `material/email-template.html`. Before we send an email, we need to inline the css styles with a tool like [htmlemail.io/inline](https://htmlemail.io/inline/).
 
 Set environment variable `EMAIL_ENABLE=true` to enable the emailing.
 
-## Docker Build
+### Docker Build
 
 ```sh
 docker build -t hostrefugees .
 docker run -p 3000:3000 hostrefugees
 ```
 
-## i18n
+### i18n
 
 The app uses [i18next](https://www.i18next.com/) for internationalization. We want to offer this website to as many people as possible therefore native translations are important. We welcome anyone to help us translate this app. To do so, follow these steps:
 
