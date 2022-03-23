@@ -14,10 +14,6 @@ import Section from './section'
 const SectionFirstSteps = () => {
   return (
     <Section id="first-steps" title="First Steps" icon={IoBulbSharp} color="yellow">
-      <Text color={useColorModeValue('gray.600', 'gray.400')} fontSize="lg">
-        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-        invidunt ut labore
-      </Text>
       <Heading as="h4" size="md">
         Important Websites
       </Heading>
