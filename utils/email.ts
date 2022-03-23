@@ -44,10 +44,11 @@ const footer = (): string => {
 export const emailApprovedUser = (user: User): MessageHeaders => {
   const subject = `You have been approved`
   const preheader = 'You have been approved for hosting on HostRefugees.eu'
-  const text = ''
+  const text =
+    'You have been approved for hosting on HostRefugees.eu\nAdd new place at https://hostrefugees.eu/dashboard/place/new.'
   const textHtml = [
     paragraph('You have been approved for hosting on HostRefugees.eu'),
-    button('Add new Place', 'https://hostrefugees.eu/dashboard/place/new'),
+    button('Add new place', 'https://hostrefugees.eu/dashboard/place/new'),
   ].join('')
 
   let content = fs.readFileSync(emailPath, 'utf-8')
@@ -70,7 +71,7 @@ export const emailNewRequest = (
 ): MessageHeaders => {
   const subject = `New Stay Request - ${request.place.title}`
   const preheader = 'You have a new stay request for one of your places'
-  const text = ''
+  const text = 'You have a new stay request for one of your places'
   const textHtml = [
     paragraph('You have a new stay request for one of your places'),
     button('Show Request', 'https://hostrefugees.eu/dashboard'),
@@ -96,7 +97,7 @@ export const emailAcceptRequestGuest = (
 ): MessageHeaders => {
   const subject = `Stay Request Accepted - ${request.place.title}`
   const preheader = 'Your stay request has been accepted'
-  const text = ''
+  const text = `Your stay request has been accepted.\nPlease get in touch with ${request.place.author.firstname} ${request.place.author.lastname}.\nEmail: ${request.place.author.email}\nPhone: ${request.place.phoneNumber}\nArrival Instructions:\n${request.place.arrivalInstructions}`
   const textHtml = [
     paragraph('Your stay request has been accepted.'),
     paragraph(
@@ -127,7 +128,7 @@ export const emailAcceptRequestHost = (
 ): MessageHeaders => {
   const subject = `Stay Request Accepted - ${request.place.title}`
   const preheader = 'You accepted a stay request'
-  const text = ''
+  const text = `You accepted a stay request.\nPlease get in touch with ${request.author.firstname} ${request.author.lastname}.\nEmail: ${request.author.email}\nPhone: ${request.phoneNumber}`
   const textHtml = [
     paragraph('You accepted a stay request.'),
     paragraph(
@@ -157,10 +158,10 @@ export const emailDeclineRequest = (
 ): MessageHeaders => {
   const subject = `Stay Request Declined - ${request.place.title}`
   const preheader = 'Your stay request has been declined'
-  const text = ''
+  const text = 'We are sorry but your stay request has been declined.'
   const textHtml = [
-    paragraph('Your stay request has been declined.'),
-    button('Show Other Places', 'https://hostrefugees.eu/place'),
+    paragraph('We are sorry but your stay request has been declined.'),
+    button('Look for other places', 'https://hostrefugees.eu/place'),
   ].join('')
 
   let content = fs.readFileSync(emailPath, 'utf-8')
@@ -183,8 +184,8 @@ export const emailCancelRequest = (
 ): MessageHeaders => {
   const subject = `Stay Request Canceled - ${request.place.title}`
   const preheader = 'A stay request has been canceled'
-  const text = ''
-  const textHtml = [paragraph('The guest canceld a stay request at your place.')].join('')
+  const text = 'The guest canceled a stay request at your place.'
+  const textHtml = [paragraph('The guest canceled a stay request at your place.')].join('')
 
   let content = fs.readFileSync(emailPath, 'utf-8')
   content = content.replace('{{TITLE}}', subject)
@@ -202,7 +203,7 @@ export const emailCancelRequest = (
 }
 
 export const sendEmail = async (msg: MessageHeaders) => {
-  if (process.env.EMAIL_ENABLE !== 'true') return
+  if (process.env.EMAIL_ENABLE != 'true') return
   try {
     await client.sendAsync(msg)
   } catch (err: unknown) {
