@@ -73,10 +73,20 @@ const Register = () => {
       <Stack spacing={8} mx="auto" maxW="lg" py={12} px={6}>
         <Stack align="center">
           <Heading fontSize="4xl">Become a Host</Heading>
-          <Text fontSize="lg" textAlign="center">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquid amet at delectus
-            doloribus dolorum expedita hic, ipsum maxime modi nam officiis porro, quae, quisquam
-            quos reprehenderit velit? Natus, totam.
+          <Text fontSize="lg" textAlign="center" color={useColorModeValue('gray.600', 'gray.400')}>
+            You have a free room or apartment?
+            <br />
+            Offer your place to people in need.
+            <br />
+            <br />
+            - Sign Up as a Host -
+            <br />
+            - Validate your Identity -
+            <br />
+            - Upload information of your place -
+            <br />
+            - Then you are all set to receive stay requests -
+            <br />
           </Text>
         </Stack>
         <Box rounded="lg" bg={useColorModeValue('white', 'gray.700')} boxShadow="lg" p={8}>
