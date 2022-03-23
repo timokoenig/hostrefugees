@@ -20,7 +20,10 @@ const Placeholder = ({ height }: { height: string }) => {
   const router = useRouter()
 
   const enableCookies = () => {
-    cookieCutter.set('cookie-consent', 'technically_required,analytics,marketing', { path: '/' })
+    cookieCutter.set('cookie-consent', 'technically_required,analytics,marketing', {
+      path: '/',
+      expires: moment().add(1, 'year').toDate(),
+    })
     router.reload()
   }
 

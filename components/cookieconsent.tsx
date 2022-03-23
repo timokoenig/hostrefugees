@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { Button, Flex, Link, Spacer, Stack, Text, useColorModeValue } from '@chakra-ui/react'
 import cookieCutter from 'cookie-cutter'
+import moment from 'moment'
 import { useRouter } from 'next/router'
 import React from 'react'
 
@@ -10,12 +11,18 @@ const CookieConsent = () => {
   const backgroundColor = useColorModeValue('gray.200', 'gray.500')
 
   const aggreeOnlyEssentialCookies = () => {
-    cookieCutter.set('cookie-consent', 'technically_required', { path: '/' })
+    cookieCutter.set('cookie-consent', 'technically_required', {
+      path: '/',
+      expires: moment().add(1, 'year').toDate(),
+    })
     router.reload()
   }
 
   const aggreeAllCookies = () => {
-    cookieCutter.set('cookie-consent', 'technically_required,analytics,marketing', { path: '/' })
+    cookieCutter.set('cookie-consent', 'technically_required,analytics,marketing', {
+      path: '/',
+      expires: moment().add(1, 'year').toDate(),
+    })
     router.reload()
   }
 
@@ -32,6 +39,7 @@ const CookieConsent = () => {
       rounded="lg"
       margin="2"
       padding="5"
+      maxWidth="100%"
     >
       <Text>
         We use cookies and similar technologies to provide certain features, enhance the user
@@ -55,12 +63,28 @@ const CookieConsent = () => {
         </Link>
         .
       </Text>
-      <Flex align="flex-end">
+      <Flex flexDirection={{ base: 'column', md: 'row' }} align="flex-end">
         <Spacer />
-        <Button size="lg" mr="5" fontWeight="regular" onClick={aggreeOnlyEssentialCookies}>
+        <Button
+          size="lg"
+          width={{ base: '100%', md: 'auto' }}
+          mr={{ base: '0', md: '5' }}
+          fontWeight="regular"
+          mb={{ base: 5, md: 0 }}
+          onClick={aggreeOnlyEssentialCookies}
+          wordBreak="break-word"
+          whiteSpace="normal"
+        >
           Continue with technically required cookies only
         </Button>
-        <Button colorScheme="blue" size="lg" onClick={aggreeAllCookies}>
+        <Button
+          colorScheme="blue"
+          width={{ base: '100%', md: 'auto' }}
+          size="lg"
+          onClick={aggreeAllCookies}
+          wordBreak="break-word"
+          whiteSpace="normal"
+        >
           Aggree and continue
         </Button>
       </Flex>
