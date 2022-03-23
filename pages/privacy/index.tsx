@@ -1,5 +1,5 @@
 import { Box, Container, Heading, Link, List, ListItem, Text } from '@chakra-ui/react'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { MappedUser } from 'utils/models'
 import { withSessionSsr } from 'utils/session'
 import Layout from '../../components/layout'
@@ -12,628 +12,6 @@ type PrivacyProps = {
   contactEmail: string
   contactWebsite: string
 }
-
-const PrivacyEN = (props: PrivacyProps) => (
-  <>
-    <Text mb="5">
-      We are very delighted that you have shown interest in our enterprise. Data protection is of a
-      particularly high priority for the management of the {props.contactName}. The use of the
-      Internet pages of the {props.contactName} is possible without any indication of personal data;
-      however, if a data subject wants to use special enterprise services via our website,
-      processing of personal data could become necessary. If the processing of personal data is
-      necessary and there is no statutory basis for such processing, we generally obtain consent
-      from the data subject.
-    </Text>
-
-    <Text mb="5">
-      The processing of personal data, such as the name of a data subject shall always be in line
-      with the General Data Protection Regulation (GDPR), and in accordance with the
-      country-specific data protection regulations applicable to the {props.contactName}. By means
-      of this data protection declaration, our enterprise would like to inform the general public of
-      the nature, scope, and purpose of the personal data we collect, use and process. Furthermore,
-      data subjects are informed, by means of this data protection declaration, of the rights to
-      which they are entitled.
-    </Text>
-
-    <Text mb="5">
-      As the controller, the {props.contactName} has implemented numerous technical and
-      organizational measures to ensure the most complete protection of personal data processed
-      through this website. However, Internet-based data transmissions may in principle have
-      security gaps, so absolute protection may not be guaranteed. For this reason, every data
-      subject is free to transfer personal data to us via alternative means, e.g. by telephone.
-    </Text>
-
-    <Heading size="md" mb="2">
-      1. Definitions
-    </Heading>
-    <Text mb="5">
-      The data protection declaration of {props.contactName} is based on the terms used by the
-      European legislator for the adoption of the General Data Protection Regulation (GDPR). Our
-      data protection declaration should be legible and understandable for the general public, as
-      well as our customers and business partners. To ensure this, we would like to first explain
-      the terminology used.
-    </Text>
-
-    <Text mb="5">
-      In this data protection declaration, we use, inter alia, the following terms:
-    </Text>
-
-    <List pl="5">
-      <ListItem mb="5">
-        <Heading size="md" mb="2">
-          a) Personal data
-        </Heading>
-        <Text mb="5">
-          Personal data means any information relating to an identified or identifiable natural
-          person (“data subject”). An identifiable natural person is one who can be identified,
-          directly or indirectly, in particular by reference to an identifier such as a name, an
-          identification number, location data, an online identifier or to one or more factors
-          specific to the physical, physiological, genetic, mental, economic, cultural or social
-          identity of that natural person.
-        </Text>
-      </ListItem>
-      <ListItem mb="5">
-        <Heading size="md" mb="2">
-          b) Data subject
-        </Heading>
-        <Text mb="5">
-          Data subject is any identified or identifiable natural person, whose personal data is
-          processed by the controller responsible for the processing.
-        </Text>
-      </ListItem>
-      <ListItem mb="5">
-        <Heading size="md" mb="2">
-          c) Processing
-        </Heading>
-        <Text mb="5">
-          Processing is any operation or set of operations which is performed on personal data or on
-          sets of personal data, whether or not by automated means, such as collection, recording,
-          organisation, structuring, storage, adaptation or alteration, retrieval, consultation,
-          use, disclosure by transmission, dissemination or otherwise making available, alignment or
-          combination, restriction, erasure or destruction.
-        </Text>
-      </ListItem>
-      <ListItem mb="5">
-        <Heading size="md" mb="2">
-          d) Restriction of processing
-        </Heading>
-        <Text mb="5">
-          Restriction of processing is the marking of stored personal data with the aim of limiting
-          their processing in the future.
-        </Text>
-      </ListItem>
-      <ListItem mb="5">
-        <Heading size="md" mb="2">
-          e) Profiling
-        </Heading>
-        <Text mb="5">
-          Profiling means any form of automated processing of personal data consisting of the use of
-          personal data to evaluate certain personal aspects relating to a natural person, in
-          particular to analyse or predict aspects concerning that natural person&apos;s performance
-          at work, economic situation, health, personal preferences, interests, reliability,
-          behaviour, location or movements.
-        </Text>
-      </ListItem>
-      <ListItem mb="5">
-        <Heading size="md" mb="2">
-          f) Pseudonymisation
-        </Heading>
-        <Text mb="5">
-          Pseudonymisation is the processing of personal data in such a manner that the personal
-          data can no longer be attributed to a specific data subject without the use of additional
-          information, provided that such additional information is kept separately and is subject
-          to technical and organisational measures to ensure that the personal data are not
-          attributed to an identified or identifiable natural person.
-        </Text>
-      </ListItem>
-      <ListItem mb="5">
-        <Heading size="md" mb="2">
-          g) Controller or controller responsible for the processing
-        </Heading>
-        <Text mb="5">
-          Controller or controller responsible for the processing is the natural or legal person,
-          public authority, agency or other body which, alone or jointly with others, determines the
-          purposes and means of the processing of personal data; where the purposes and means of
-          such processing are determined by Union or Member State law, the controller or the
-          specific criteria for its nomination may be provided for by Union or Member State law.
-        </Text>
-      </ListItem>
-      <ListItem mb="5">
-        <Heading size="md" mb="2">
-          h) Processor
-        </Heading>
-        <Text mb="5">
-          Processor is a natural or legal person, public authority, agency or other body which
-          processes personal data on behalf of the controller.
-        </Text>
-      </ListItem>
-      <ListItem mb="5">
-        <Heading size="md" mb="2">
-          i) Recipient
-        </Heading>
-        <Text mb="5">
-          Recipient is a natural or legal person, public authority, agency or another body, to which
-          the personal data are disclosed, whether a third party or not. However, public authorities
-          which may receive personal data in the framework of a particular inquiry in accordance
-          with Union or Member State law shall not be regarded as recipients; the processing of
-          those data by those public authorities shall be in compliance with the applicable data
-          protection rules according to the purposes of the processing.
-        </Text>
-      </ListItem>
-      <ListItem mb="5">
-        <Heading size="md" mb="2">
-          j) Third party
-        </Heading>
-        <Text mb="5">
-          Third party is a natural or legal person, public authority, agency or body other than the
-          data subject, controller, processor and persons who, under the direct authority of the
-          controller or processor, are authorised to process personal data.
-        </Text>
-      </ListItem>
-      <ListItem mb="5">
-        <Heading size="md" mb="2">
-          k) Consent
-        </Heading>
-        <Text mb="5">
-          Consent of the data subject is any freely given, specific, informed and unambiguous
-          indication of the data subject&apos;s wishes by which he or she, by a statement or by a
-          clear affirmative action, signifies agreement to the processing of personal data relating
-          to him or her.
-        </Text>
-      </ListItem>
-    </List>
-
-    <Heading size="md" mb="2">
-      2. Name and Address of the controller
-    </Heading>
-    <Text mb="5">
-      Controller for the purposes of the General Data Protection Regulation (GDPR), other data
-      protection laws applicable in Member states of the European Union and other provisions related
-      to data protection is:
-    </Text>
-
-    <Text mb="5">
-      {props.contactName}
-      <br />
-      {props.contactAddress}
-      <br />
-      {props.contactAddressCity}
-      <br />
-      {props.contactAddressCountry}
-      <br />
-      Email: {props.contactEmail}
-      <br />
-      Website: {props.contactWebsite}
-    </Text>
-
-    <Heading size="md" mb="2">
-      3. Collection of general data and information
-    </Heading>
-    <Text mb="5">
-      The website of {props.contactName} collects a series of general data and information when a
-      data subject or automated system calls up the website. This general data and information are
-      stored in the server log files. Collected may be (1) the browser types and versions used, (2)
-      the operating system used by the accessing system, (3) the website from which an accessing
-      system reaches our website (so-called referrers), (4) the sub-websites, (5) the date and time
-      of access to the Internet site, (6) an Internet protocol address (IP address), (7) the
-      Internet service provider of the accessing system, and (8) any other similar data and
-      information that may be used in the event of attacks on our information technology systems.
-    </Text>
-
-    <Text mb="5">
-      When using these general data and information, {props.contactName} does not draw any
-      conclusions about the data subject. Rather, this information is needed to (1) deliver the
-      content of our website correctly, (2) optimize the content of our website as well as its
-      advertisement, (3) ensure the long-term viability of our information technology systems and
-      website technology, and (4) provide law enforcement authorities with the information necessary
-      for criminal prosecution in case of a cyber-attack. Therefore, {props.contactName} analyzes
-      anonymously collected data and information statistically, with the aim of increasing the data
-      protection and data security of our enterprise, and to ensure an optimal level of protection
-      for the personal data we process. The anonymous data of the server log files are stored
-      separately from all personal data provided by a data subject.
-    </Text>
-
-    <Heading size="md" mb="2">
-      4. Routine erasure and blocking of personal data
-    </Heading>
-    <Text mb="5">
-      The data controller shall process and store the personal data of the data subject only for the
-      period necessary to achieve the purpose of storage, or as far as this is granted by the
-      European legislator or other legislators in laws or regulations to which the controller is
-      subject to.
-    </Text>
-
-    <Text mb="5">
-      If the storage purpose is not applicable, or if a storage period prescribed by the European
-      legislator or another competent legislator expires, the personal data are routinely blocked or
-      erased in accordance with legal requirements.
-    </Text>
-
-    <Heading size="md" mb="2">
-      5. Rights of the data subject
-    </Heading>
-    <List pl="5">
-      <ListItem mb="5">
-        <Heading size="md" mb="2">
-          a) Right of confirmation
-        </Heading>
-        <Text mb="5">
-          Each data subject shall have the right granted by the European legislator to obtain from
-          the controller the confirmation as to whether or not personal data concerning him or her
-          are being processed. If a data subject wishes to avail himself of this right of
-          confirmation, he or she may, at any time, contact any employee of the controller.
-        </Text>
-      </ListItem>
-      <ListItem mb="5">
-        <Heading size="md" mb="2">
-          b) Right of access
-        </Heading>
-        <Text mb="5">
-          Each data subject shall have the right granted by the European legislator to obtain from
-          the controller free information about his or her personal data stored at any time and a
-          copy of this information. Furthermore, the European directives and regulations grant the
-          data subject access to the following information:
-        </Text>
-
-        <List pl="5">
-          <ListItem mb="5">the purposes of the processing;</ListItem>
-          <ListItem mb="5">the categories of personal data concerned;</ListItem>
-          <ListItem mb="5">
-            the recipients or categories of recipients to whom the personal data have been or will
-            be disclosed, in particular recipients in third countries or international
-            organisations;
-          </ListItem>
-          <ListItem mb="5">
-            where possible, the envisaged period for which the personal data will be stored, or, if
-            not possible, the criteria used to determine that period;
-          </ListItem>
-          <ListItem mb="5">
-            the existence of the right to request from the controller rectification or erasure of
-            personal data, or restriction of processing of personal data concerning the data
-            subject, or to object to such processing;
-          </ListItem>
-          <ListItem mb="5">
-            the existence of the right to lodge a complaint with a supervisory authority;
-          </ListItem>
-          <ListItem mb="5">
-            where the personal data are not collected from the data subject, any available
-            information as to their source;
-          </ListItem>
-          <ListItem mb="5">
-            the existence of automated decision-making, including profiling, referred to in Article
-            22(1) and (4) of the GDPR and, at least in those cases, meaningful information about the
-            logic involved, as well as the significance and envisaged consequences of such
-            processing for the data subject.
-          </ListItem>
-        </List>
-        <Text mb="5">
-          Furthermore, the data subject shall have a right to obtain information as to whether
-          personal data are transferred to a third country or to an international organisation.
-          Where this is the case, the data subject shall have the right to be informed of the
-          appropriate safeguards relating to the transfer.
-        </Text>
-
-        <Text mb="5">
-          If a data subject wishes to avail himself of this right of access, he or she may, at any
-          time, contact any employee of the controller.
-        </Text>
-      </ListItem>
-      <ListItem mb="5">
-        <Heading size="md" mb="2">
-          c) Right to rectification
-        </Heading>
-        <Text mb="5">
-          Each data subject shall have the right granted by the European legislator to obtain from
-          the controller without undue delay the rectification of inaccurate personal data
-          concerning him or her. Taking into account the purposes of the processing, the data
-          subject shall have the right to have incomplete personal data completed, including by
-          means of providing a supplementary statement.
-        </Text>
-
-        <Text mb="5">
-          If a data subject wishes to exercise this right to rectification, he or she may, at any
-          time, contact any employee of the controller.
-        </Text>
-      </ListItem>
-      <ListItem mb="5">
-        <Heading size="md" mb="2">
-          d) Right to erasure (Right to be forgotten)
-        </Heading>
-        <Text mb="5">
-          Each data subject shall have the right granted by the European legislator to obtain from
-          the controller the erasure of personal data concerning him or her without undue delay, and
-          the controller shall have the obligation to erase personal data without undue delay where
-          one of the following grounds applies, as long as the processing is not necessary:
-        </Text>
-
-        <List pl="5">
-          <ListItem mb="5">
-            The personal data are no longer necessary in relation to the purposes for which they
-            were collected or otherwise processed.
-          </ListItem>
-          <ListItem mb="5">
-            The data subject withdraws consent to which the processing is based according to point
-            (a) of Article 6(1) of the GDPR, or point (a) of Article 9(2) of the GDPR, and where
-            there is no other legal ground for the processing.
-          </ListItem>
-          <ListItem mb="5">
-            The data subject objects to the processing pursuant to Article 21(1) of the GDPR and
-            there are no overriding legitimate grounds for the processing, or the data subject
-            objects to the processing pursuant to Article 21(2) of the GDPR.
-          </ListItem>
-          <ListItem mb="5">The personal data have been unlawfully processed.</ListItem>
-          <ListItem mb="5">
-            The personal data must be erased for compliance with a legal obligation in Union or
-            Member State law to which the controller is subject.
-          </ListItem>
-          <ListItem mb="5">
-            The personal data have been collected in relation to the offer of information society
-            services referred to in Article 8(1) of the GDPR.
-          </ListItem>
-        </List>
-        <Text mb="5">
-          If one of the aforementioned reasons applies, and a data subject wishes to request the
-          erasure of personal data stored by {props.contactName}, he or she may, at any time,
-          contact any employee of the controller. An employee of {props.contactName} shall promptly
-          ensure that the erasure request is complied with immediately.
-        </Text>
-
-        <Text mb="5">
-          Where the controller has made personal data public and is obliged pursuant to Article
-          17(1) to erase the personal data, the controller, taking account of available technology
-          and the cost of implementation, shall take reasonable steps, including technical measures,
-          to inform other controllers processing the personal data that the data subject has
-          requested erasure by such controllers of any links to, or copy or replication of, those
-          personal data, as far as processing is not required. An employees of {props.contactName}{' '}
-          will arrange the necessary measures in individual cases.
-        </Text>
-      </ListItem>
-      <ListItem mb="5">
-        <Heading size="md" mb="2">
-          e) Right of restriction of processing
-        </Heading>
-        <Text mb="5">
-          Each data subject shall have the right granted by the European legislator to obtain from
-          the controller restriction of processing where one of the following applies:
-        </Text>
-
-        <List pl="5">
-          <ListItem mb="5">
-            The accuracy of the personal data is contested by the data subject, for a period
-            enabling the controller to verify the accuracy of the personal data.
-          </ListItem>
-          <ListItem mb="5">
-            The processing is unlawful and the data subject opposes the erasure of the personal data
-            and requests instead the restriction of their use instead.
-          </ListItem>
-          <ListItem mb="5">
-            The controller no longer needs the personal data for the purposes of the processing, but
-            they are required by the data subject for the establishment, exercise or defence of
-            legal claims.
-          </ListItem>
-          <ListItem mb="5">
-            The data subject has objected to processing pursuant to Article 21(1) of the GDPR
-            pending the verification whether the legitimate grounds of the controller override those
-            of the data subject.
-          </ListItem>
-        </List>
-        <Text mb="5">
-          If one of the aforementioned conditions is met, and a data subject wishes to request the
-          restriction of the processing of personal data stored by {props.contactName}, he or she
-          may at any time contact any employee of the controller. The employee of{' '}
-          {props.contactName} will arrange the restriction of the processing.
-        </Text>
-      </ListItem>
-      <ListItem mb="5">
-        <Heading size="md" mb="2">
-          f) Right to data portability
-        </Heading>
-        <Text mb="5">
-          Each data subject shall have the right granted by the European legislator, to receive the
-          personal data concerning him or her, which was provided to a controller, in a structured,
-          commonly used and machine-readable format. He or she shall have the right to transmit
-          those data to another controller without hindrance from the controller to which the
-          personal data have been provided, as long as the processing is based on consent pursuant
-          to point (a) of Article 6(1) of the GDPR or point (a) of Article 9(2) of the GDPR, or on a
-          contract pursuant to point (b) of Article 6(1) of the GDPR, and the processing is carried
-          out by automated means, as long as the processing is not necessary for the performance of
-          a task carried out in the public interest or in the exercise of official authority vested
-          in the controller.
-        </Text>
-
-        <Text mb="5">
-          Furthermore, in exercising his or her right to data portability pursuant to Article 20(1)
-          of the GDPR, the data subject shall have the right to have personal data transmitted
-          directly from one controller to another, where technically feasible and when doing so does
-          not adversely affect the rights and freedoms of others.
-        </Text>
-
-        <Text mb="5">
-          In order to assert the right to data portability, the data subject may at any time contact
-          any employee of {props.contactName}.
-        </Text>
-      </ListItem>
-      <ListItem mb="5">
-        <Heading size="md" mb="2">
-          g) Right to object
-        </Heading>
-        <Text mb="5">
-          Each data subject shall have the right granted by the European legislator to object, on
-          grounds relating to his or her particular situation, at any time, to processing of
-          personal data concerning him or her, which is based on point (e) or (f) of Article 6(1) of
-          the GDPR. This also applies to profiling based on these provisions.
-        </Text>
-
-        <Text mb="5">
-          {props.contactName} shall no longer process the personal data in the event of the
-          objection, unless we can demonstrate compelling legitimate grounds for the processing
-          which override the interests, rights and freedoms of the data subject, or for the
-          establishment, exercise or defence of legal claims.
-        </Text>
-
-        <Text mb="5">
-          If {props.contactName} processes personal data for direct marketing purposes, the data
-          subject shall have the right to object at any time to processing of personal data
-          concerning him or her for such marketing. This applies to profiling to the extent that it
-          is related to such direct marketing. If the data subject objects to {props.contactName} to
-          the processing for direct marketing purposes, {props.contactName} will no longer process
-          the personal data for these purposes.
-        </Text>
-
-        <Text mb="5">
-          In addition, the data subject has the right, on grounds relating to his or her particular
-          situation, to object to processing of personal data concerning him or her by the Timo
-          König for scientific or historical research purposes, or for statistical purposes pursuant
-          to Article 89(1) of the GDPR, unless the processing is necessary for the performance of a
-          task carried out for reasons of public interest.
-        </Text>
-
-        <Text mb="5">
-          In order to exercise the right to object, the data subject may contact any employee of the
-          {props.contactName}. In addition, the data subject is free in the context of the use of
-          information society services, and notwithstanding Directive 2002/58/EC, to use his or her
-          right to object by automated means using technical specifications.
-        </Text>
-      </ListItem>
-      <ListItem mb="5">
-        <Heading size="md" mb="2">
-          h) Automated individual decision-making, including profiling
-        </Heading>
-        <Text mb="5">
-          Each data subject shall have the right granted by the European legislator not to be
-          subject to a decision based solely on automated processing, including profiling, which
-          produces legal effects concerning him or her, or similarly significantly affects him or
-          her, as long as the decision (1) is not is necessary for entering into, or the performance
-          of, a contract between the data subject and a data controller, or (2) is not authorised by
-          Union or Member State law to which the controller is subject and which also lays down
-          suitable measures to safeguard the data subject&apos;s rights and freedoms and legitimate
-          interests, or (3) is not based on the data subject&apos;s explicit consent.
-        </Text>
-
-        <Text mb="5">
-          If the decision (1) is necessary for entering into, or the performance of, a contract
-          between the data subject and a data controller, or (2) it is based on the data
-          subject&apos;s explicit consent, {props.contactName} shall implement suitable measures to
-          safeguard the data subject&apos;s rights and freedoms and legitimate interests, at least
-          the right to obtain human intervention on the part of the controller, to express his or
-          her point of view and contest the decision.
-        </Text>
-
-        <Text mb="5">
-          If the data subject wishes to exercise the rights concerning automated individual
-          decision-making, he or she may, at any time, contact any employee of {props.contactName}.
-        </Text>
-      </ListItem>
-      <ListItem mb="5">
-        <Heading size="md" mb="2">
-          i) Right to withdraw data protection consent
-        </Heading>
-        <Text mb="5">
-          Each data subject shall have the right granted by the European legislator to withdraw his
-          or her consent to processing of his or her personal data at any time.
-        </Text>
-
-        <Text mb="5">
-          If the data subject wishes to exercise the right to withdraw the consent, he or she may,
-          at any time, contact any employee of {props.contactName}.
-        </Text>
-      </ListItem>
-    </List>
-    <Heading size="md" mb="2">
-      6. Legal basis for the processing
-    </Heading>
-    <Text mb="5">
-      Art. 6(1) lit. a GDPR serves as the legal basis for processing operations for which we obtain
-      consent for a specific processing purpose. If the processing of personal data is necessary for
-      the performance of a contract to which the data subject is party, as is the case, for example,
-      when processing operations are necessary for the supply of goods or to provide any other
-      service, the processing is based on Article 6(1) lit. b GDPR. The same applies to such
-      processing operations which are necessary for carrying out pre-contractual measures, for
-      example in the case of inquiries concerning our products or services. Is our company subject
-      to a legal obligation by which processing of personal data is required, such as for the
-      fulfillment of tax obligations, the processing is based on Art. 6(1) lit. c GDPR. In rare
-      cases, the processing of personal data may be necessary to protect the vital interests of the
-      data subject or of another natural person. This would be the case, for example, if a visitor
-      were injured in our company and his name, age, health insurance data or other vital
-      information would have to be passed on to a doctor, hospital or other third party. Then the
-      processing would be based on Art. 6(1) lit. d GDPR. Finally, processing operations could be
-      based on Article 6(1) lit. f GDPR. This legal basis is used for processing operations which
-      are not covered by any of the abovementioned legal grounds, if processing is necessary for the
-      purposes of the legitimate interests pursued by our company or by a third party, except where
-      such interests are overridden by the interests or fundamental rights and freedoms of the data
-      subject which require protection of personal data. Such processing operations are particularly
-      permissible because they have been specifically mentioned by the European legislator. He
-      considered that a legitimate interest could be assumed if the data subject is a client of the
-      controller (Recital 47 Sentence 2 GDPR).
-    </Text>
-
-    <Heading size="md" mb="2">
-      7. The legitimate interests pursued by the controller or by a third party
-    </Heading>
-    <Text mb="5">
-      Where the processing of personal data is based on Article 6(1) lit. f GDPR our legitimate
-      interest is to carry out our business in favor of the well-being of all our employees and the
-      shareholders.
-    </Text>
-
-    <Heading size="md" mb="2">
-      8. Period for which the personal data will be stored
-    </Heading>
-    <Text mb="5">
-      The criteria used to determine the period of storage of personal data is the respective
-      statutory retention period. After expiration of that period, the corresponding data is
-      routinely deleted, as long as it is no longer necessary for the fulfillment of the contract or
-      the initiation of a contract.
-    </Text>
-
-    <Heading size="md" mb="2">
-      9. Provision of personal data as statutory or contractual requirement; Requirement necessary
-      to enter into a contract; Obligation of the data subject to provide the personal data;
-      possible consequences of failure to provide such data
-    </Heading>
-    <Text mb="5">
-      We clarify that the provision of personal data is partly required by law (e.g. tax
-      regulations) or can also result from contractual provisions (e.g. information on the
-      contractual partner). Sometimes it may be necessary to conclude a contract that the data
-      subject provides us with personal data, which must subsequently be processed by us. The data
-      subject is, for example, obliged to provide us with personal data when our company signs a
-      contract with him or her. The non-provision of the personal data would have the consequence
-      that the contract with the data subject could not be concluded. Before personal data is
-      provided by the data subject, the data subject must contact any employee. The employee
-      clarifies to the data subject whether the provision of the personal data is required by law or
-      contract or is necessary for the conclusion of the contract, whether there is an obligation to
-      provide the personal data and the consequences of non-provision of the personal data.
-    </Text>
-
-    <Heading size="md" mb="2">
-      10. Existence of automated decision-making
-    </Heading>
-    <Text mb="5">
-      As a responsible company, we do not use automatic decision-making or profiling.
-    </Text>
-
-    <Text mb="5">
-      Developed by the specialists for
-      <Link href="https://willing-able.com/" px="1" textDecoration="underline">
-        LegalTech
-      </Link>
-      at Willing & Able that also developed the system for
-      <Link href="https://abletorecords.com/" px="1" textDecoration="underline">
-        data privacy impact assessment
-      </Link>
-      . The legal texts contained in our privacy policy generator have been provided and published
-      by
-      <Link href="https://dg-datenschutz.de/" px="1" textDecoration="underline">
-        Prof. Dr. h.c. Heiko Jonny Maniero
-      </Link>
-      from the German Association for Data Protection and
-      <Link href="https://www.wbs-law.de/" rel="nofollow" px="1" textDecoration="underline">
-        Christian Solmecke
-      </Link>
-      from WBS law.
-    </Text>
-  </>
-)
 
 const PrivacyDE = (props: PrivacyProps) => (
   <>
@@ -841,7 +219,60 @@ const PrivacyDE = (props: PrivacyProps) => (
     </Text>
 
     <Heading size="md" mb="2">
-      3. Erfassung von allgemeinen Daten und Informationen
+      3. Cookies
+    </Heading>
+    <Text mb="5">
+      Die Internetseiten der {props.contactName} verwenden Cookies. Cookies sind Textdateien, welche
+      über einen Internetbrowser auf einem Computersystem abgelegt und gespeichert werden.
+    </Text>
+
+    <Text mb="5">
+      Zahlreiche Internetseiten und Server verwenden Cookies. Viele Cookies enthalten eine
+      sogenannte Cookie-ID. Eine Cookie-ID ist eine eindeutige Kennung des Cookies. Sie besteht aus
+      einer Zeichenfolge, durch welche Internetseiten und Server dem konkreten Internetbrowser
+      zugeordnet werden können, in dem das Cookie gespeichert wurde. Dies ermöglicht es den
+      besuchten Internetseiten und Servern, den individuellen Browser der betroffenen Person von
+      anderen Internetbrowsern, die andere Cookies enthalten, zu unterscheiden. Ein bestimmter
+      Internetbrowser kann über die eindeutige Cookie-ID wiedererkannt und identifiziert werden.
+    </Text>
+
+    <Text mb="5">
+      Durch den Einsatz von Cookies kann die {props.contactName} den Nutzern dieser Internetseite
+      nutzerfreundlichere Services bereitstellen, die ohne die Cookie-Setzung nicht möglich wären.
+    </Text>
+
+    <Text mb="5">
+      Mittels eines Cookies können die Informationen und Angebote auf unserer Internetseite im Sinne
+      des Benutzers optimiert werden. Cookies ermöglichen uns, wie bereits erwähnt, die Benutzer
+      unserer Internetseite wiederzuerkennen. Zweck dieser Wiedererkennung ist es, den Nutzern die
+      Verwendung unserer Internetseite zu erleichtern. Der Benutzer einer Internetseite, die Cookies
+      verwendet, muss beispielsweise nicht bei jedem Besuch der Internetseite erneut seine
+      Zugangsdaten eingeben, weil dies von der Internetseite und dem auf dem Computersystem des
+      Benutzers abgelegten Cookie übernommen wird. Ein weiteres Beispiel ist das Cookie eines
+      Warenkorbes im Online-Shop. Der Online-Shop merkt sich die Artikel, die ein Kunde in den
+      virtuellen Warenkorb gelegt hat, über ein Cookie.
+    </Text>
+
+    <Text mb="5">
+      Die betroffene Person kann die Setzung von Cookies durch unsere Internetseite jederzeit
+      mittels einer entsprechenden Einstellung des genutzten Internetbrowsers verhindern und damit
+      der Setzung von Cookies dauerhaft widersprechen. Ferner können bereits gesetzte Cookies
+      jederzeit über einen Internetbrowser oder andere Softwareprogramme gelöscht werden. Dies ist
+      in allen gängigen Internetbrowsern möglich. Deaktiviert die betroffene Person die Setzung von
+      Cookies in dem genutzten Internetbrowser, sind unter Umständen nicht alle Funktionen unserer
+      Internetseite vollumfänglich nutzbar.
+    </Text>
+
+    <Text mb="5">
+      Die betroffene Person kann die Verwendung der Cookies auf der folgenden Seite einzeln
+      deaktivieren:{' '}
+      <Link href="/privacy/cookies" fontWeight="semibold">
+        Cookie Einstellungen
+      </Link>
+    </Text>
+
+    <Heading size="md" mb="2">
+      4. Erfassung von allgemeinen Daten und Informationen
     </Heading>
     <Text mb="5">
       Die Internetseite der {props.contactName} erfasst mit jedem Aufruf der Internetseite durch
@@ -873,7 +304,53 @@ const PrivacyDE = (props: PrivacyProps) => (
     </Text>
 
     <Heading size="md" mb="2">
-      4. Routinemäßige Löschung und Sperrung von personenbezogenen Daten
+      5. Registrierung auf unserer Internetseite
+    </Heading>
+    <Text mb="5">
+      Die betroffene Person hat die Möglichkeit, sich auf der Internetseite des für die Verarbeitung
+      Verantwortlichen unter Angabe von personenbezogenen Daten zu registrieren. Welche
+      personenbezogenen Daten dabei an den für die Verarbeitung Verantwortlichen übermittelt werden,
+      ergibt sich aus der jeweiligen Eingabemaske, die für die Registrierung verwendet wird. Die von
+      der betroffenen Person eingegebenen personenbezogenen Daten werden ausschließlich für die
+      interne Verwendung bei dem für die Verarbeitung Verantwortlichen und für eigene Zwecke erhoben
+      und gespeichert. Der für die Verarbeitung Verantwortliche kann die Weitergabe an einen oder
+      mehrere Auftragsverarbeiter, beispielsweise einen Paketdienstleister, veranlassen, der die
+      personenbezogenen Daten ebenfalls ausschließlich für eine interne Verwendung, die dem für die
+      Verarbeitung Verantwortlichen zuzurechnen ist, nutzt.
+    </Text>
+
+    <Text mb="5">
+      Durch eine Registrierung auf der Internetseite des für die Verarbeitung Verantwortlichen wird
+      ferner die vom Internet-Service-Provider (ISP) der betroffenen Person vergebene IP-Adresse,
+      das Datum sowie die Uhrzeit der Registrierung gespeichert. Die Speicherung dieser Daten
+      erfolgt vor dem Hintergrund, dass nur so der Missbrauch unserer Dienste verhindert werden
+      kann, und diese Daten im Bedarfsfall ermöglichen, begangene Straftaten aufzuklären. Insofern
+      ist die Speicherung dieser Daten zur Absicherung des für die Verarbeitung Verantwortlichen
+      erforderlich. Eine Weitergabe dieser Daten an Dritte erfolgt grundsätzlich nicht, sofern keine
+      gesetzliche Pflicht zur Weitergabe besteht oder die Weitergabe der Strafverfolgung dient.
+    </Text>
+
+    <Text mb="5">
+      Die Registrierung der betroffenen Person unter freiwilliger Angabe personenbezogener Daten
+      dient dem für die Verarbeitung Verantwortlichen dazu, der betroffenen Person Inhalte oder
+      Leistungen anzubieten, die aufgrund der Natur der Sache nur registrierten Benutzern angeboten
+      werden können. Registrierten Personen steht die Möglichkeit frei, die bei der Registrierung
+      angegebenen personenbezogenen Daten jederzeit abzuändern oder vollständig aus dem Datenbestand
+      des für die Verarbeitung Verantwortlichen löschen zu lassen.
+    </Text>
+
+    <Text mb="5">
+      Der für die Verarbeitung Verantwortliche erteilt jeder betroffenen Person jederzeit auf
+      Anfrage Auskunft darüber, welche personenbezogenen Daten über die betroffene Person
+      gespeichert sind. Ferner berichtigt oder löscht der für die Verarbeitung Verantwortliche
+      personenbezogene Daten auf Wunsch oder Hinweis der betroffenen Person, soweit dem keine
+      gesetzlichen Aufbewahrungspflichten entgegenstehen. Die Gesamtheit der Mitarbeiter des für die
+      Verarbeitung Verantwortlichen stehen der betroffenen Person in diesem Zusammenhang als
+      Ansprechpartner zur Verfügung.
+    </Text>
+
+    <Heading size="md" mb="2">
+      6. Routinemäßige Löschung und Sperrung von personenbezogenen Daten
     </Heading>
     <Text mb="5">
       Der für die Verarbeitung Verantwortliche verarbeitet und speichert personenbezogene Daten der
@@ -891,7 +368,7 @@ const PrivacyDE = (props: PrivacyProps) => (
     </Text>
 
     <Heading size="md" mb="2">
-      5. Rechte der betroffenen Person
+      7. Rechte der betroffenen Person
     </Heading>
     <List pl="5">
       <ListItem mb="5">
@@ -1214,7 +691,7 @@ const PrivacyDE = (props: PrivacyProps) => (
       </ListItem>
     </List>
     <Heading size="md" mb="2">
-      6. Rechtsgrundlage der Verarbeitung
+      8. Rechtsgrundlage der Verarbeitung
     </Heading>
     <Text mb="5">
       Art. 6 I lit. a DS-GVO dient unserem Unternehmen als Rechtsgrundlage für
@@ -1245,7 +722,7 @@ const PrivacyDE = (props: PrivacyProps) => (
     </Text>
 
     <Heading size="md" mb="2">
-      7. Berechtigte Interessen an der Verarbeitung, die von dem Verantwortlichen oder einem Dritten
+      9. Berechtigte Interessen an der Verarbeitung, die von dem Verantwortlichen oder einem Dritten
       verfolgt werden
     </Heading>
     <Text mb="5">
@@ -1255,7 +732,7 @@ const PrivacyDE = (props: PrivacyProps) => (
     </Text>
 
     <Heading size="md" mb="2">
-      8. Dauer, für die die personenbezogenen Daten gespeichert werden
+      10. Dauer, für die die personenbezogenen Daten gespeichert werden
     </Heading>
     <Text mb="5">
       Das Kriterium für die Dauer der Speicherung von personenbezogenen Daten ist die jeweilige
@@ -1265,7 +742,7 @@ const PrivacyDE = (props: PrivacyProps) => (
     </Text>
 
     <Heading size="md" mb="2">
-      9. Gesetzliche oder vertragliche Vorschriften zur Bereitstellung der personenbezogenen Daten;
+      11. Gesetzliche oder vertragliche Vorschriften zur Bereitstellung der personenbezogenen Daten;
       Erforderlichkeit für den Vertragsabschluss; Verpflichtung der betroffenen Person, die
       personenbezogenen Daten bereitzustellen; mögliche Folgen der Nichtbereitstellung
     </Heading>
@@ -1287,7 +764,7 @@ const PrivacyDE = (props: PrivacyProps) => (
     </Text>
 
     <Heading size="md" mb="2">
-      10. Bestehen einer automatisierten Entscheidungsfindung
+      12. Bestehen einer automatisierten Entscheidungsfindung
     </Heading>
     <Text mb="5">
       Als verantwortungsbewusstes Unternehmen verzichten wir auf eine automatische
@@ -1321,13 +798,6 @@ type Props = {
 }
 
 const PrivacyPage = (props: Props) => {
-  const [lang, setLang] = useState<string>('')
-
-  useEffect(() => {
-    const preferredLanguage = localStorage.getItem('i18nextLng')?.substring(0, 2) ?? 'en'
-    setLang(preferredLanguage)
-  }, [])
-
   const privacyProps = {
     contactName: process.env.NEXT_PUBLIC_CONTACT_NAME as string,
     contactAddress: process.env.NEXT_PUBLIC_CONTACT_ADDRESS as string,
@@ -1342,9 +812,9 @@ const PrivacyPage = (props: Props) => {
       <Container maxW="7xl">
         <Box textAlign="left">
           <Heading as="h1" size="lg" mb="5">
-            Privacy
+            Datenschutzerklärung
           </Heading>
-          {lang == 'de' ? <PrivacyDE {...privacyProps} /> : <PrivacyEN {...privacyProps} />}
+          <PrivacyDE {...privacyProps} />
         </Box>
       </Container>
     </Layout>

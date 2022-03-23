@@ -55,8 +55,8 @@ const Overview = () => {
           Welcome To Germany
         </Heading>
         <Text color={useColorModeValue('gray.600', 'gray.400')} fontSize="lg">
-          Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-          invidunt ut labore
+          Here you can find a curated list of important links, phone numbers, phrases, and much more
+          to help you jump start your stay in Germany.
         </Text>
         <Stack divider={<StackDivider borderColor={useColorModeValue('gray.100', 'gray.700')} />}>
           <Feature

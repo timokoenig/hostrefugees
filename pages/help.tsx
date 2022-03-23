@@ -21,8 +21,8 @@ const HelpPage = (props: Props) => {
           <Link href="/place" fontWeight="semibold">
             place to stay
           </Link>
-          . If you found a place that meets your requirements, simply click on the "Request to
-          stay"-button, fill out the required fields, tell the host a bit about yourself, and
+          . If you found a place that meets your requirements, simply click on the &quot;Request to
+          stay&quot;-button, fill out the required fields, tell the host a bit about yourself, and
           confirm the requset. You will receive an email as soon as the host accepts the request. In
           that email you will the contact information and arrival instructions. We kindly ask you to
           contact the host to communicate the arrival.
@@ -36,6 +36,14 @@ const HelpPage = (props: Props) => {
           </Link>{' '}
           and register. After registration you will need to upload your ID or passport to identify
           yourself. This is mandatory to keep our guests safe.
+        </Item>
+        <Item title="What can I do when something is not working?">
+          The platform is in early development and might contain smaller bugs. If you find a bug or
+          have ideas for further improvements, please go to{' '}
+          <Link href="https://github.com/timokoenig/hostrefugees/issues" fontWeight="semibold">
+            Github
+          </Link>{' '}
+          and create an issue.
         </Item>
       </Container>
     </Layout>

@@ -36,7 +36,7 @@ const DocumentsPage = (props: Props) => {
             <Text mb="5" color={useColorModeValue('gray.600', 'gray.400')}>
               We provide a free flyer template in busines card size. You can download the PDF file,
               bring it to a copy shop, and share it with the refugees. It includes the url to our
-              welcome page and the most important phone numbers for police and ambulance.
+              welcome page and the most important phone number for police and ambulance.
             </Text>
             <SimpleGrid columns={2} spacing={5}>
               <Image src="/docs/BusinessCard_HostRefugees_Front.png" rounded="xl" />
