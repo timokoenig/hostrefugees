@@ -3,12 +3,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Box, Button, Flex, Image, Link, Stack, Text, useColorModeValue } from '@chakra-ui/react'
 import Marker from 'components/map/marker'
-import cookieCutter from 'cookie-cutter'
 import GoogleMapReact from 'google-map-react'
 import _ from 'lodash'
-import moment from 'moment'
 import { useRouter } from 'next/router'
 import React from 'react'
+import { COOKIE_CONSENT, getCookie, setCookie } from 'utils/cookies'
 import { MappedPlace } from 'utils/models'
 
 export type MarkerItem = {
@@ -21,10 +20,7 @@ const Placeholder = ({ height }: { height: string }) => {
   const router = useRouter()
 
   const enableCookies = () => {
-    cookieCutter.set('cookie-consent', 'technically_required,analytics,marketing', {
-      path: '/',
-      expires: moment().add(1, 'year').toDate(),
-    })
+    setCookie(COOKIE_CONSENT, 'technically_required,analytics,marketing')
     router.reload()
   }
 
@@ -79,9 +75,9 @@ type Props = {
 
 const GoogleMaps = (props: Props) => {
   if (
-    cookieCutter.get('cookie-consent') === undefined ||
-    !cookieCutter.get('cookie-consent').includes('marketing') ||
-    !cookieCutter.get('cookie-consent').includes('analytics')
+    getCookie(COOKIE_CONSENT) === undefined ||
+    !getCookie(COOKIE_CONSENT)?.includes('marketing') ||
+    !getCookie(COOKIE_CONSENT)?.includes('analytics')
   ) {
     // User did not accept the marketing and analytics cookies, therefore we need to show a placeholder instead of GoogleMaps
     return <Placeholder height={props.height} />

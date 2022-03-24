@@ -3,17 +3,15 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Box, Switch, Text, useColorModeValue } from '@chakra-ui/react'
-import cookieCutter from 'cookie-cutter'
-import moment from 'moment'
 import React, { useState } from 'react'
+import { COOKIE_CONSENT, getCookie, setCookie } from 'utils/cookies'
 
-const COOKIE_CONSENT = 'cookie-consent'
 const COOKIE_TECHNICALLY_REQUIRED = 'technically_required'
 const COOKIE_MARKETING = 'marketing'
 const COOKIE_ANALYTICS = 'analytics'
 
 const CookieForm = () => {
-  const [cookies, setCookies] = useState<string>(cookieCutter.get(COOKIE_CONSENT) ?? '')
+  const [cookies, setCookies] = useState<string>(getCookie(COOKIE_CONSENT) ?? '')
 
   const updateCookie = (name: string) => {
     let updatedCookies = cookies.split(',')
@@ -25,10 +23,7 @@ const CookieForm = () => {
     if (!updatedCookies.includes(COOKIE_TECHNICALLY_REQUIRED)) {
       updatedCookies.push(COOKIE_TECHNICALLY_REQUIRED)
     }
-    cookieCutter.set(COOKIE_CONSENT, updatedCookies.join(','), {
-      path: '/',
-      expires: moment().add(1, 'year').toDate(),
-    })
+    setCookie(COOKIE_CONSENT, updatedCookies.join(','))
     setCookies(updatedCookies.join(','))
   }
 

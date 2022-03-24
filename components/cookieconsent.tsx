@@ -1,32 +1,23 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { Button, Flex, Link, Spacer, Stack, Text, useColorModeValue } from '@chakra-ui/react'
-import cookieCutter from 'cookie-cutter'
-import moment from 'moment'
 import { useRouter } from 'next/router'
 import React from 'react'
+import { COOKIE_CONSENT, getCookie, setCookie } from 'utils/cookies'
 
 const CookieConsent = () => {
   const router = useRouter()
   const backgroundColor = useColorModeValue('gray.200', 'gray.500')
 
-  const aggreeOnlyEssentialCookies = () => {
-    cookieCutter.set('cookie-consent', 'technically_required', {
-      path: '/',
-      expires: moment().add(1, 'year').toDate(),
-    })
+  const agreeOnlyEssentialCookies = () => {
+    setCookie(COOKIE_CONSENT, 'technically_required')
     router.reload()
   }
 
-  const aggreeAllCookies = () => {
-    cookieCutter.set('cookie-consent', 'technically_required,analytics,marketing', {
-      path: '/',
-      expires: moment().add(1, 'year').toDate(),
-    })
+  const agreeAllCookies = () => {
+    setCookie(COOKIE_CONSENT, 'technically_required,analytics,marketing')
     router.reload()
   }
 
-  if (cookieCutter.get('cookie-consent') != null) {
+  if (getCookie(COOKIE_CONSENT) != null) {
     return null
   }
 
@@ -68,7 +59,7 @@ const CookieConsent = () => {
           mr={{ base: '0', md: '5' }}
           fontWeight="regular"
           mb={{ base: 5, md: 0 }}
-          onClick={aggreeOnlyEssentialCookies}
+          onClick={agreeOnlyEssentialCookies}
           wordBreak="break-word"
           whiteSpace="normal"
         >
@@ -78,11 +69,11 @@ const CookieConsent = () => {
           colorScheme="blue"
           width={{ base: '100%', md: 'auto' }}
           size="lg"
-          onClick={aggreeAllCookies}
+          onClick={agreeAllCookies}
           wordBreak="break-word"
           whiteSpace="normal"
         >
-          Aggree and continue
+          Agree and continue
         </Button>
       </Flex>
     </Stack>
