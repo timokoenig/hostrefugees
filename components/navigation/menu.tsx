@@ -1,16 +1,32 @@
-import { Avatar, Button, Menu, MenuButton, MenuDivider, MenuItem, MenuList } from '@chakra-ui/react'
+import {
+  Avatar,
+  Button,
+  Menu,
+  MenuButton,
+  MenuDivider,
+  MenuItem,
+  MenuList,
+  useToast,
+} from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React from 'react'
 
 const CustomMenu = () => {
   const router = useRouter()
+  const toast = useToast()
 
   const onLogout = async () => {
     try {
       await fetch('/api/logout')
       router.reload()
-    } catch (err: unknown) {
-      console.log(err)
+    } catch {
+      toast({
+        title: 'Logout failed',
+        description: 'Please try again',
+        status: 'error',
+        duration: 2000,
+        isClosable: true,
+      })
     }
   }
 

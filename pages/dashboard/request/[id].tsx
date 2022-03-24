@@ -3,7 +3,15 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { ArrowBackIcon } from '@chakra-ui/icons'
-import { Box, Button, Container, SimpleGrid, Text, useColorModeValue } from '@chakra-ui/react'
+import {
+  Box,
+  Button,
+  Container,
+  SimpleGrid,
+  Text,
+  useColorModeValue,
+  useToast,
+} from '@chakra-ui/react'
 import { Request, RequestStatus, UserRole } from '@prisma/client'
 import Layout from 'components/layout'
 import Summary from 'components/place/summary'
@@ -26,6 +34,7 @@ type Props = {
 const RequestPage = (props: Props) => {
   const { t: tLang } = useTranslation('languages')
   const router = useRouter()
+  const toast = useToast()
 
   const updateRequestStatus = async (status: RequestStatus) => {
     try {
@@ -41,9 +50,23 @@ const RequestPage = (props: Props) => {
       })
       if (res.ok) {
         router.reload()
+      } else {
+        toast({
+          title: 'Request failed',
+          description: 'Please try again',
+          status: 'error',
+          duration: 2000,
+          isClosable: true,
+        })
       }
-    } catch (err: unknown) {
-      console.log(err)
+    } catch {
+      toast({
+        title: 'Request failed',
+        description: 'Please try again',
+        status: 'error',
+        duration: 2000,
+        isClosable: true,
+      })
     }
   }
 

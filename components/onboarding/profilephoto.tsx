@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import { Button, Center, Heading, Image, Text } from '@chakra-ui/react'
+import { Button, Center, Heading, Image, Text, useToast } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { MappedUser } from 'utils/models'
 import VerificationButton from './verification-button'
@@ -10,6 +10,7 @@ type Props = {
 }
 
 const ProfilePhotoOnboarding = (props: Props) => {
+  const toast = useToast()
   const [isLoading, setLoading] = useState<boolean>(false)
   const [photo, setPhoto] = useState<File | null>(null)
 
@@ -23,9 +24,23 @@ const ProfilePhotoOnboarding = (props: Props) => {
       const res = await fetch(`/api/user/${props.user.id}/photo`, { method: 'POST', body })
       if (res.ok) {
         props.onNext()
+      } else {
+        toast({
+          title: 'Request failed',
+          description: 'Please try again',
+          status: 'error',
+          duration: 2000,
+          isClosable: true,
+        })
       }
-    } catch (err: unknown) {
-      console.log(err)
+    } catch {
+      toast({
+        title: 'Request failed',
+        description: 'Please try again',
+        status: 'error',
+        duration: 2000,
+        isClosable: true,
+      })
     }
     setLoading(false)
   }

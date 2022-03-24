@@ -12,6 +12,7 @@ import {
   Stack,
   Text,
   useColorModeValue,
+  useToast,
 } from '@chakra-ui/react'
 import { UserRole } from '@prisma/client'
 import { useFormik } from 'formik'
@@ -29,6 +30,7 @@ const validationSchema = Yup.object().shape({
 
 const Register = () => {
   const router = useRouter()
+  const toast = useToast()
   const [termsAccepted, setTermsAccepted] = useState<boolean>(false)
   const formik = useFormik({
     initialValues: {
@@ -61,9 +63,23 @@ const Register = () => {
             body: JSON.stringify(values),
           })
           await router.push('/onboarding')
+        } else {
+          toast({
+            title: 'Registration failed',
+            description: 'Please try again',
+            status: 'error',
+            duration: 2000,
+            isClosable: true,
+          })
         }
-      } catch (err: unknown) {
-        console.log(err)
+      } catch {
+        toast({
+          title: 'Registration failed',
+          description: 'Please try again',
+          status: 'error',
+          duration: 2000,
+          isClosable: true,
+        })
       }
     },
   })

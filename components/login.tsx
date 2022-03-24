@@ -10,6 +10,7 @@ import {
   Stack,
   Text,
   useColorModeValue,
+  useToast,
 } from '@chakra-ui/react'
 import { useFormik } from 'formik'
 import { useRouter } from 'next/router'
@@ -24,6 +25,7 @@ const validationSchema = Yup.object().shape({
 
 const Login = () => {
   const router = useRouter()
+  const toast = useToast()
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -44,9 +46,23 @@ const Login = () => {
           await router.push(
             router.query.place === undefined ? '/dashboard' : `/place/${router.query.place}/request`
           )
+        } else {
+          toast({
+            title: 'Login failed',
+            description: 'Please try again',
+            status: 'error',
+            duration: 2000,
+            isClosable: true,
+          })
         }
-      } catch (err: unknown) {
-        console.log(err)
+      } catch {
+        toast({
+          title: 'Login failed',
+          description: 'Please try again',
+          status: 'error',
+          duration: 2000,
+          isClosable: true,
+        })
       }
     },
   })

@@ -1,5 +1,14 @@
 import { ArrowBackIcon } from '@chakra-ui/icons'
-import { Box, Button, Container, GridItem, Heading, SimpleGrid, Text } from '@chakra-ui/react'
+import {
+  Box,
+  Button,
+  Container,
+  GridItem,
+  Heading,
+  SimpleGrid,
+  Text,
+  useToast,
+} from '@chakra-ui/react'
 import { Place, UserRole } from '@prisma/client'
 import Layout from 'components/layout'
 import Head from 'next/head'
@@ -15,6 +24,7 @@ type Props = {
 
 const NewPage = (props: Props) => {
   const router = useRouter()
+  const toast = useToast()
   const [isLoading, setLoading] = useState<boolean>(false)
 
   const onCreate = async (place: Place) => {
@@ -30,9 +40,23 @@ const NewPage = (props: Props) => {
       if (res.ok) {
         const json = (await res.json()) as { id: string }
         await router.replace(`/dashboard/place/${json.id}/photo`)
+      } else {
+        toast({
+          title: 'Request failed',
+          description: 'Please try again',
+          status: 'error',
+          duration: 2000,
+          isClosable: true,
+        })
       }
-    } catch (err: unknown) {
-      console.log(err)
+    } catch {
+      toast({
+        title: 'Request failed',
+        description: 'Please try again',
+        status: 'error',
+        duration: 2000,
+        isClosable: true,
+      })
     }
     setLoading(false)
   }

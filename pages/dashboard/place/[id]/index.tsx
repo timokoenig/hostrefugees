@@ -11,6 +11,7 @@ import {
   SimpleGrid,
   Switch,
   Text,
+  useToast,
 } from '@chakra-ui/react'
 import { Place, UserRole } from '@prisma/client'
 import Layout from 'components/layout'
@@ -29,6 +30,7 @@ type Props = {
 
 const PlacePage = (props: Props) => {
   const router = useRouter()
+  const toast = useToast()
   const [isLoading, setLoading] = useState<boolean>(false)
 
   const onUpdate = async (place: Place) => {
@@ -43,9 +45,23 @@ const PlacePage = (props: Props) => {
       })
       if (res.ok) {
         router.back()
+      } else {
+        toast({
+          title: 'Request failed',
+          description: 'Please try again',
+          status: 'error',
+          duration: 2000,
+          isClosable: true,
+        })
       }
-    } catch (err: unknown) {
-      console.log(err)
+    } catch {
+      toast({
+        title: 'Request failed',
+        description: 'Please try again',
+        status: 'error',
+        duration: 2000,
+        isClosable: true,
+      })
     }
     setLoading(false)
   }
@@ -64,9 +80,23 @@ const PlacePage = (props: Props) => {
       })
       if (res.ok) {
         router.reload()
+      } else {
+        toast({
+          title: 'Request failed',
+          description: 'Please try again',
+          status: 'error',
+          duration: 2000,
+          isClosable: true,
+        })
       }
-    } catch (err: unknown) {
-      console.log(err)
+    } catch {
+      toast({
+        title: 'Request failed',
+        description: 'Please try again',
+        status: 'error',
+        duration: 2000,
+        isClosable: true,
+      })
     }
     setLoading(false)
   }

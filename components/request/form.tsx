@@ -8,6 +8,7 @@ import {
   Text,
   Textarea,
   useColorModeValue,
+  useToast,
 } from '@chakra-ui/react'
 import { useFormik } from 'formik'
 import { useRouter } from 'next/router'
@@ -30,6 +31,7 @@ type Props = {
 
 const Form = (props: Props) => {
   const router = useRouter()
+  const toast = useToast()
   const formik = useFormik({
     initialValues: {
       adults: 1,
@@ -56,9 +58,23 @@ const Form = (props: Props) => {
         })
         if (res.ok) {
           await router.push(`/place/${props.place.id}/confirmation`)
+        } else {
+          toast({
+            title: 'Request failed',
+            description: 'Please try again',
+            status: 'error',
+            duration: 2000,
+            isClosable: true,
+          })
         }
-      } catch (err: unknown) {
-        console.log(err)
+      } catch {
+        toast({
+          title: 'Request failed',
+          description: 'Please try again',
+          status: 'error',
+          duration: 2000,
+          isClosable: true,
+        })
       }
     },
   })

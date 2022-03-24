@@ -1,4 +1,4 @@
-import { Button, Center, Heading, Image, Text } from '@chakra-ui/react'
+import { Button, Center, Heading, Image, Text, useToast } from '@chakra-ui/react'
 import LanguagePicker from 'components/common/languagepicker'
 import React, { useState } from 'react'
 import { MappedUser } from 'utils/models'
@@ -9,6 +9,7 @@ type Props = {
 }
 
 const LanguageOnboarding = (props: Props) => {
+  const toast = useToast()
   const [isLoading, setLoading] = useState<boolean>(false)
   const [languages, setLanguages] = useState<string[]>([])
 
@@ -26,9 +27,23 @@ const LanguageOnboarding = (props: Props) => {
       })
       if (res.ok) {
         props.onNext()
+      } else {
+        toast({
+          title: 'Request failed',
+          description: 'Please try again',
+          status: 'error',
+          duration: 2000,
+          isClosable: true,
+        })
       }
-    } catch (err: unknown) {
-      console.log(err)
+    } catch {
+      toast({
+        title: 'Request failed',
+        description: 'Please try again',
+        status: 'error',
+        duration: 2000,
+        isClosable: true,
+      })
     }
     setLoading(false)
   }
