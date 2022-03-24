@@ -115,6 +115,12 @@ const RequestPage = (props: Props) => {
                   {props.request.children}
                 </Text>
               </Text>
+              <Text>
+                Pets:{' '}
+                <Text as="span" fontWeight="semibold">
+                  {props.request.pets ? 'Yes' : 'No'}
+                </Text>
+              </Text>
               {props.user.role === UserRole.HOST && (
                 <Text>
                   Guest Languages:{' '}

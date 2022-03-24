@@ -93,6 +93,7 @@ model Request {
   place       Place          @relation(fields: [placeId], references: [id])
   adults      Int
   children    Int
+  pets        Boolean        @default(false)
   startDate   DateTime       @map("start_date")
   endDate     DateTime?      @map("end_date")
   about       String
