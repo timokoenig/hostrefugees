@@ -1,4 +1,13 @@
-import { Box, Button, Container, Heading, List, SimpleGrid, useDisclosure } from '@chakra-ui/react'
+import {
+  Box,
+  Button,
+  Container,
+  Heading,
+  List,
+  SimpleGrid,
+  Text,
+  useDisclosure,
+} from '@chakra-ui/react'
 import PlaceItem from 'components/place/item'
 import dynamic from 'next/dynamic'
 import prisma from 'prisma/client'
@@ -58,6 +67,11 @@ const PlacePage = (props: Props) => {
         </Heading>
         <SimpleGrid templateColumns={{ sm: '1fr', md: '1fr 1fr' }} spacing="10">
           <List spacing="2">
+            {filteredPlaces.length == 0 && (
+              <Text textAlign="center" p="10" fontWeight="semibold">
+                There are no places available at the moment
+              </Text>
+            )}
             {filteredPlaces.map((place, i) => (
               <PlaceItem key={i} place={place} />
             ))}

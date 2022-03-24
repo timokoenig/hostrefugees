@@ -24,7 +24,7 @@ const MapPlaces = (props: Props) => {
           <List spacing="2">
             {props.places.length == 0 && (
               <Text textAlign="center" p="10" fontWeight="semibold">
-                No Places Available
+                There are no places available at the moment
               </Text>
             )}
             {props.places.map((place, i) => (
