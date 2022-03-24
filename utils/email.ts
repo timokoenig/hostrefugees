@@ -13,52 +13,53 @@ const client = new SMTPClient({
   ssl: true,
 })
 
-const paragraph = (text: string): string => {
-  return `<p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">${text}</p>`
+const titleAndParagraph = (title: string, text: string): string => {
+  return `<tr>
+  <td style="padding:30px;background-color:#ffffff;">
+    <h1 style="margin-top:0;margin-bottom:16px;font-size:26px;line-height:32px;font-weight:bold;letter-spacing:-0.02em;">${title}</h1>
+    <p style="margin:0;">${text}</p>
+  </td>
+</tr>`
 }
 
-const button = (text: string, link: string): string => {
-  return `<table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; box-sizing: border-box; width: 100%;" width="100%">
-  <tbody>
-    <tr>
-      <td align="left" style="font-family: sans-serif; font-size: 14px; vertical-align: top; padding-bottom: 15px;" valign="top">
-        <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: auto;">
-          <tbody>
-            <tr>
-              <td style="font-family: sans-serif; font-size: 14px; vertical-align: top; border-radius: 5px; text-align: center; background-color: #3498db;" valign="top" align="center" bgcolor="#3498db"> <a href="${link}" target="_blank" style="border: solid 1px #3498db; border-radius: 5px; box-sizing: border-box; cursor: pointer; display: inline-block; font-size: 14px; font-weight: bold; margin: 0; padding: 12px 25px; text-decoration: none; text-transform: capitalize; background-color: #3498db; border-color: #3498db; color: #ffffff;">${text}</a> </td>
-            </tr>
-          </tbody>
-        </table>
-      </td>
-    </tr>
-  </tbody>
-</table>`
+const link = (text: string, href: string): string => {
+  return `<a href="${href}" style="color:#015abb;text-decoration:underline;">${text}</a>`
+}
+
+const paragraph = (text: string): string => {
+  return `<tr><td style="padding:30px;background-color:#ffffff;"><p style="margin:0;">${text}</p></td></tr>`
+}
+
+const button = (text: string, href: string): string => {
+  return `<tr>
+  <td style="padding:30px;font-size:16px;text-align:center;line-height:22px;font-weight:bold;background-color:#ffffff;border-bottom:1px solid #f0f0f5;border-color:rgba(201,201,207,.35);">
+    <p style="margin:0;"><a href="${href}" style="background: #015abb; text-decoration: none; padding: 10px 25px; color: #ffffff; border-radius: 4px; display:inline-block; mso-padding-alt:0;text-underline-color:#015abb"><!--[if mso]><i style="letter-spacing: 25px;mso-font-width:-100%;mso-text-raise:20pt">&nbsp;</i><![endif]--><span style="mso-text-raise:10pt;font-weight:bold;">${text}</span><!--[if mso]><i style="letter-spacing: 25px;mso-font-width:-100%">&nbsp;</i><![endif]--></a></p>
+  </td>
+</tr>`
 }
 
 const footer = (): string => {
-  return `<br> provided by
-  <br> ${process.env.NEXT_PUBLIC_CONTACT_NAME}, ${process.env.NEXT_PUBLIC_CONTACT_ADDRESS}
-  <br> ${process.env.NEXT_PUBLIC_CONTACT_ADDRESS_CITY}, ${process.env.NEXT_PUBLIC_CONTACT_ADDRESS_COUNTRY}`
+  return `<a href="https://hostrefugees.eu" style="color:#cccccc;text-decoration:underline;font-weight:bold;">hostrefugees.eu</a><br>provided by
+  <br>${process.env.NEXT_PUBLIC_CONTACT_NAME}, ${process.env.NEXT_PUBLIC_CONTACT_ADDRESS}
+  <br>${process.env.NEXT_PUBLIC_CONTACT_ADDRESS_CITY}, ${process.env.NEXT_PUBLIC_CONTACT_ADDRESS_COUNTRY}`
 }
 
 export const emailApprovedUser = (user: User): MessageHeaders => {
-  const subject = `You have been approved`
-  const preheader = 'You have been approved for hosting on HostRefugees.eu'
-  const text =
-    'You have been approved for hosting on HostRefugees.eu\nAdd new place at https://hostrefugees.eu/dashboard/place/new.'
+  const subject = 'You have been approved'
   const textHtml = [
-    paragraph('You have been approved for hosting on HostRefugees.eu'),
+    titleAndParagraph(
+      'You have been approved',
+      `You can now offer places on ${link('HostRefugees.eu', 'https://hostrefugees.eu')}`
+    ),
     button('Add new place', 'https://hostrefugees.eu/dashboard/place/new'),
   ].join('')
 
   let content = fs.readFileSync(emailPath, 'utf-8')
-  content = content.replace('{{TITLE}}', subject)
-  content = content.replace('{{PREHEADER}}', preheader)
   content = content.replace('{{BODY}}', textHtml)
   content = content.replace('{{FOOTER}}', footer())
 
   return {
-    text,
+    text: '',
     from: `${process.env.EMAIL_NAME} <${process.env.EMAIL_EMAIL}>`,
     to: `${user.firstname} <${user.email}>`,
     subject,
@@ -70,21 +71,17 @@ export const emailNewRequest = (
   request: Request & { place: Place & { author: User }; author: User }
 ): MessageHeaders => {
   const subject = `New Stay Request - ${request.place.title}`
-  const preheader = 'You have a new stay request for one of your places'
-  const text = 'You have a new stay request for one of your places'
   const textHtml = [
-    paragraph('You have a new stay request for one of your places'),
+    titleAndParagraph('New Stay Request', 'You have a new stay request for one of your places'),
     button('Show Request', 'https://hostrefugees.eu/dashboard'),
   ].join('')
 
   let content = fs.readFileSync(emailPath, 'utf-8')
-  content = content.replace('{{TITLE}}', subject)
-  content = content.replace('{{PREHEADER}}', preheader)
   content = content.replace('{{BODY}}', textHtml)
   content = content.replace('{{FOOTER}}', footer())
 
   return {
-    text,
+    text: '',
     from: `${process.env.EMAIL_NAME} <${process.env.EMAIL_EMAIL}>`,
     to: `${request.place.author.firstname} <${request.place.author.email}>`,
     subject,
@@ -96,26 +93,22 @@ export const emailAcceptRequestGuest = (
   request: Request & { place: Place & { author: User }; author: User }
 ): MessageHeaders => {
   const subject = `Stay Request Accepted - ${request.place.title}`
-  const preheader = 'Your stay request has been accepted'
-  const text = `Your stay request has been accepted.\nPlease get in touch with ${request.place.author.firstname} ${request.place.author.lastname}.\nEmail: ${request.place.author.email}\nPhone: ${request.place.phoneNumber}\nArrival Instructions:\n${request.place.arrivalInstructions}`
   const textHtml = [
-    paragraph('Your stay request has been accepted.'),
+    titleAndParagraph('Stay Request Accepted', 'Your stay request has been accepted.'),
     paragraph(
       `Please get in touch with <b>${request.place.author.firstname} ${request.place.author.lastname}</b>`
     ),
-    paragraph(`Email: ${request.place.author.email}`),
-    paragraph(`Phone: ${request.place.phoneNumber}`),
-    paragraph(`Arrival Instructions:<br />${request.place.arrivalInstructions}`),
+    paragraph(
+      `Email: ${request.place.author.email}<br>Phone: ${request.place.phoneNumber}<br><br>Arrival Instructions:<br>${request.place.arrivalInstructions}`
+    ),
   ].join('')
 
   let content = fs.readFileSync(emailPath, 'utf-8')
-  content = content.replace('{{TITLE}}', subject)
-  content = content.replace('{{PREHEADER}}', preheader)
   content = content.replace('{{BODY}}', textHtml)
   content = content.replace('{{FOOTER}}', footer())
 
   return {
-    text,
+    text: '',
     from: `${process.env.EMAIL_NAME} <${process.env.EMAIL_EMAIL}>`,
     to: `${request.author.firstname} <${request.author.email}>`,
     subject,
@@ -127,25 +120,20 @@ export const emailAcceptRequestHost = (
   request: Request & { place: Place & { author: User }; author: User }
 ): MessageHeaders => {
   const subject = `Stay Request Accepted - ${request.place.title}`
-  const preheader = 'You accepted a stay request'
-  const text = `You accepted a stay request.\nPlease get in touch with ${request.author.firstname} ${request.author.lastname}.\nEmail: ${request.author.email}\nPhone: ${request.phoneNumber}`
   const textHtml = [
-    paragraph('You accepted a stay request.'),
+    titleAndParagraph('Stay Request Accepted', 'You accepted a stay request.'),
     paragraph(
       `Please get in touch with <b>${request.author.firstname} ${request.author.lastname}</b>`
     ),
-    paragraph(`Email: ${request.author.email}`),
-    paragraph(`Phone: ${request.phoneNumber}`),
+    paragraph(`Email: ${request.author.email}<br>Phone: ${request.phoneNumber}`),
   ].join('')
 
   let content = fs.readFileSync(emailPath, 'utf-8')
-  content = content.replace('{{TITLE}}', subject)
-  content = content.replace('{{PREHEADER}}', preheader)
   content = content.replace('{{BODY}}', textHtml)
   content = content.replace('{{FOOTER}}', footer())
 
   return {
-    text,
+    text: '',
     from: `${process.env.EMAIL_NAME} <${process.env.EMAIL_EMAIL}>`,
     to: `${request.place.author.firstname} <${request.place.author.email}>`,
     subject,
@@ -157,21 +145,20 @@ export const emailDeclineRequest = (
   request: Request & { place: Place & { author: User }; author: User }
 ): MessageHeaders => {
   const subject = `Stay Request Declined - ${request.place.title}`
-  const preheader = 'Your stay request has been declined'
-  const text = 'We are sorry but your stay request has been declined.'
   const textHtml = [
-    paragraph('We are sorry but your stay request has been declined.'),
+    titleAndParagraph(
+      'Stay Request Declined',
+      'We are sorry but your stay request has been declined.'
+    ),
     button('Look for other places', 'https://hostrefugees.eu/place'),
   ].join('')
 
   let content = fs.readFileSync(emailPath, 'utf-8')
-  content = content.replace('{{TITLE}}', subject)
-  content = content.replace('{{PREHEADER}}', preheader)
   content = content.replace('{{BODY}}', textHtml)
   content = content.replace('{{FOOTER}}', footer())
 
   return {
-    text,
+    text: '',
     from: `${process.env.EMAIL_NAME} <${process.env.EMAIL_EMAIL}>`,
     to: `${request.author.firstname} <${request.author.email}>`,
     subject,
@@ -183,18 +170,16 @@ export const emailCancelRequest = (
   request: Request & { place: Place & { author: User }; author: User }
 ): MessageHeaders => {
   const subject = `Stay Request Canceled - ${request.place.title}`
-  const preheader = 'A stay request has been canceled'
-  const text = 'The guest canceled a stay request at your place.'
-  const textHtml = [paragraph('The guest canceled a stay request at your place.')].join('')
+  const textHtml = [
+    titleAndParagraph('Stay Request Canceled', 'The guest canceled a stay request for your place.'),
+  ].join('')
 
   let content = fs.readFileSync(emailPath, 'utf-8')
-  content = content.replace('{{TITLE}}', subject)
-  content = content.replace('{{PREHEADER}}', preheader)
   content = content.replace('{{BODY}}', textHtml)
   content = content.replace('{{FOOTER}}', footer())
 
   return {
-    text,
+    text: '',
     from: `${process.env.EMAIL_NAME} <${process.env.EMAIL_EMAIL}>`,
     to: `${request.place.author.firstname} <${request.place.author.email}>`,
     subject,
