@@ -13,7 +13,7 @@ import {
   Text,
   useColorModeValue,
 } from '@chakra-ui/react'
-import { Request } from '@prisma/client'
+import { BathroomType, Request } from '@prisma/client'
 import { useRouter } from 'next/router'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -164,7 +164,9 @@ export default function Detail(props: Props) {
                   <Text as="span" fontWeight="bold">
                     Bathroom:
                   </Text>{' '}
-                  {props.place.bathroom}
+                  {props.place.bathroom == BathroomType.YES
+                    ? 'Private Bathroom'
+                    : 'Shared Bathroom'}
                 </ListItem>
                 <ListItem>
                   <Text as="span" fontWeight="bold">
@@ -177,6 +179,12 @@ export default function Detail(props: Props) {
                     Children:
                   </Text>{' '}
                   {props.place.children}
+                </ListItem>
+                <ListItem>
+                  <Text as="span" fontWeight="bold">
+                    Pets Allowed:
+                  </Text>{' '}
+                  {props.place.pets ? 'Yes' : 'No'}
                 </ListItem>
                 <ListItem>
                   <Text as="span" fontWeight="bold">

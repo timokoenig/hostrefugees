@@ -61,6 +61,7 @@ model Place {
   bathroom            BathroomType
   adults              Int
   children            Int
+  pets                Boolean      @default(false)
   addressStreet       String       @map("address_street")
   addressHouseNumber  String       @map("address_house_number")
   addressZip          String       @map("address_zip")

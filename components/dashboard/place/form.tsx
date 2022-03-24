@@ -66,6 +66,7 @@ const Form = (props: Props) => {
       bathroom: BathroomType.SHARED,
       adults: 1,
       children: 0,
+      pets: false,
       addressStreet: '',
       addressHouseNumber: '',
       addressZip: '',
@@ -304,6 +305,17 @@ const Form = (props: Props) => {
                 onChange={newVal => formik.setFieldValue('children', newVal)}
               />
               <FormErrorMessage>{formik.errors.children}</FormErrorMessage>
+            </FormControl>
+
+            <FormControl isDisabled={formik.isSubmitting}>
+              <FormLabel htmlFor="pets">Are guests allowed to bring pets?</FormLabel>
+              <Switch
+                id="pets"
+                size="lg"
+                isChecked={formik.values.pets}
+                onChange={() => formik.setFieldValue('pets', !formik.values.pets)}
+              />
+              <FormErrorMessage>{formik.errors.type}</FormErrorMessage>
             </FormControl>
           </VStack>
 

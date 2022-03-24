@@ -25,6 +25,7 @@ export type MappedPlace = {
   bathroom: BathroomType
   adults: number
   children: number
+  pets: boolean
   addressCity: string
   addressCityLat: string | null
   addressCityLng: string | null

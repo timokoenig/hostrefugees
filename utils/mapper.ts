@@ -39,6 +39,7 @@ export const mapPlace = (prismaPlace: any): MappedPlace => {
     bathroom: prismaPlace.bathroom,
     adults: prismaPlace.adults,
     children: prismaPlace.children,
+    pets: prismaPlace.pets,
     addressCity: prismaPlace.addressCity,
     addressCityLat: prismaPlace.addressCityLat,
     addressCityLng: prismaPlace.addressCityLng,
