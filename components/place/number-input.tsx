@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
 import { Button, HStack, Text, useColorModeValue } from '@chakra-ui/react'
 import React from 'react'
 

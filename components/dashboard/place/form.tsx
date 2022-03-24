@@ -6,6 +6,7 @@ import {
   Input,
   Select,
   StackDivider,
+  Switch,
   Text,
   Textarea,
   useColorModeValue,
@@ -56,6 +57,10 @@ const Form = (props: Props) => {
       title: '',
       description: '',
       type: PlaceType.PRIVATE,
+      placeAdults: 1,
+      placeChildren: 0,
+      placeAdultWomen: false,
+      placeAdultMen: false,
       rooms: 1,
       beds: 1,
       bathroom: BathroomType.SHARED,
@@ -150,6 +155,62 @@ const Form = (props: Props) => {
               textTransform="uppercase"
               mb="4"
             >
+              Residents
+            </Text>
+
+            <FormControl isRequired isDisabled={formik.isSubmitting}>
+              <FormLabel htmlFor="placeAdults">How many adults live in the place?</FormLabel>
+              <NumberInput
+                active={false}
+                value={formik.values.placeAdults}
+                onChange={newVal => formik.setFieldValue('placeAdults', newVal)}
+              />
+              <FormErrorMessage>{formik.errors.type}</FormErrorMessage>
+            </FormControl>
+
+            <FormControl isDisabled={formik.isSubmitting}>
+              <FormLabel htmlFor="placeAdultWomen">Do any women live in the place?</FormLabel>
+              <Switch
+                id="placeAdultWomen"
+                size="lg"
+                isChecked={formik.values.placeAdultWomen}
+                onChange={() =>
+                  formik.setFieldValue('placeAdultWomen', !formik.values.placeAdultWomen)
+                }
+              />
+              <FormErrorMessage>{formik.errors.type}</FormErrorMessage>
+            </FormControl>
+
+            <FormControl isDisabled={formik.isSubmitting}>
+              <FormLabel htmlFor="placeAdultMen">Do any men live in the place?</FormLabel>
+              <Switch
+                id="placeAdultMen"
+                size="lg"
+                isChecked={formik.values.placeAdultMen}
+                onChange={() => formik.setFieldValue('placeAdultMen', !formik.values.placeAdultMen)}
+              />
+              <FormErrorMessage>{formik.errors.type}</FormErrorMessage>
+            </FormControl>
+
+            <FormControl isRequired isDisabled={formik.isSubmitting}>
+              <FormLabel htmlFor="placeChildren">How many children live in the place?</FormLabel>
+              <NumberInput
+                active={false}
+                value={formik.values.placeChildren}
+                onChange={newVal => formik.setFieldValue('placeChildren', newVal)}
+              />
+              <FormErrorMessage>{formik.errors.type}</FormErrorMessage>
+            </FormControl>
+          </VStack>
+
+          <VStack spacing={4} width="100%" align="flex-start">
+            <Text
+              fontSize={{ base: '16px', lg: '18px' }}
+              color={useColorModeValue('blue.500', 'blue.300')}
+              fontWeight="500"
+              textTransform="uppercase"
+              mb="4"
+            >
               Place Details
             </Text>
 
@@ -208,9 +269,8 @@ const Form = (props: Props) => {
                 value={formik.values.bathroom}
                 onChange={formik.handleChange}
               >
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
-                <option value="shared">Shared</option>
+                <option value="yes">Private Bathroom</option>
+                <option value="shared">Shared Bathroom</option>
               </Select>
               <FormErrorMessage>{formik.errors.bathroom}</FormErrorMessage>
             </FormControl>
@@ -221,7 +281,7 @@ const Form = (props: Props) => {
               isDisabled={formik.isSubmitting}
               isInvalid={formik.errors.adults !== undefined && formik.touched.adults}
             >
-              <FormLabel htmlFor="adults">Adults</FormLabel>
+              <FormLabel htmlFor="adults">How many adults can you host?</FormLabel>
               <NumberInput
                 active={false}
                 min={1}
@@ -237,7 +297,7 @@ const Form = (props: Props) => {
               isDisabled={formik.isSubmitting}
               isInvalid={formik.errors.children !== undefined && formik.touched.children}
             >
-              <FormLabel htmlFor="children">Children</FormLabel>
+              <FormLabel htmlFor="children">How many children can you host?</FormLabel>
               <NumberInput
                 active={false}
                 value={formik.values.children}
@@ -248,15 +308,21 @@ const Form = (props: Props) => {
           </VStack>
 
           <VStack spacing={4} width="100%" align="flex-start">
-            <Text
-              fontSize={{ base: '16px', lg: '18px' }}
-              color={useColorModeValue('blue.500', 'blue.300')}
-              fontWeight="500"
-              textTransform="uppercase"
-              mb="4"
-            >
-              Place Address
-            </Text>
+            <Box>
+              <Text
+                fontSize={{ base: '16px', lg: '18px' }}
+                color={useColorModeValue('blue.500', 'blue.300')}
+                fontWeight="500"
+                textTransform="uppercase"
+                mb="4"
+              >
+                Place Address
+              </Text>
+              <Text pb="4" color={useColorModeValue('gray.600', 'gray.400')}>
+                Only the city will be visible to everyone. The exact location will only be shared
+                with the guest when you accept a stay request.
+              </Text>
+            </Box>
 
             <FormControl
               isRequired
@@ -322,15 +388,19 @@ const Form = (props: Props) => {
           </VStack>
 
           <VStack spacing={4} width="100%" align="flex-start">
-            <Text
-              fontSize={{ base: '16px', lg: '18px' }}
-              color={useColorModeValue('blue.500', 'blue.300')}
-              fontWeight="500"
-              textTransform="uppercase"
-              mb="4"
-            >
-              Contact Information
-            </Text>
+            <Box>
+              <Text
+                fontSize={{ base: '16px', lg: '18px' }}
+                color={useColorModeValue('blue.500', 'blue.300')}
+                fontWeight="500"
+                textTransform="uppercase"
+              >
+                Contact Information
+              </Text>
+              <Text pb="4" color={useColorModeValue('gray.600', 'gray.400')}>
+                This information will only be shared with the guest when you accept a stay request.
+              </Text>
+            </Box>
 
             <FormControl
               isRequired
@@ -344,9 +414,6 @@ const Form = (props: Props) => {
                 value={formik.values.phoneNumber}
                 onChange={formik.handleChange}
               />
-              <Text color={useColorModeValue('gray.600', 'gray.400')}>
-                (will only be shared when you accept a stay request)
-              </Text>
               <FormErrorMessage>{formik.errors.phoneNumber}</FormErrorMessage>
             </FormControl>
 

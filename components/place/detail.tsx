@@ -106,6 +106,38 @@ export default function Detail(props: Props) {
                 textTransform="uppercase"
                 mb="4"
               >
+                Residents
+              </Text>
+
+              <List spacing={2}>
+                <ListItem>
+                  <Text as="span" fontWeight="bold">
+                    Adults
+                  </Text>{' '}
+                  {props.place.placeAdults} (
+                  {props.place.placeAdultWomen && props.place.placeAdultMen
+                    ? 'Women & Men'
+                    : props.place.placeAdultMen
+                    ? 'Only Men'
+                    : 'Only Women'}
+                  )
+                </ListItem>
+                <ListItem>
+                  <Text as="span" fontWeight="bold">
+                    Children
+                  </Text>{' '}
+                  {props.place.placeChildren}
+                </ListItem>
+              </List>
+            </Box>
+            <Box>
+              <Text
+                fontSize={{ base: '16px', lg: '18px' }}
+                color={useColorModeValue('blue.500', 'blue.300')}
+                fontWeight="500"
+                textTransform="uppercase"
+                mb="4"
+              >
                 Place Details
               </Text>
 

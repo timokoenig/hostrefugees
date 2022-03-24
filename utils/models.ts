@@ -15,6 +15,10 @@ export type MappedPlace = {
   active: boolean
   title: string
   description: string
+  placeAdults: number
+  placeChildren: number
+  placeAdultWomen: boolean
+  placeAdultMen: boolean
   type: PlaceType
   rooms: number
   beds: number

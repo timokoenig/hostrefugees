@@ -1,14 +1,5 @@
 import { ArrowBackIcon } from '@chakra-ui/icons'
-import {
-  Box,
-  Button,
-  Container,
-  GridItem,
-  Heading,
-  SimpleGrid,
-  Text,
-  useToast,
-} from '@chakra-ui/react'
+import { Box, Button, Container, GridItem, Heading, SimpleGrid, useToast } from '@chakra-ui/react'
 import { Place, UserRole } from '@prisma/client'
 import Layout from 'components/layout'
 import Head from 'next/head'
@@ -79,9 +70,7 @@ const NewPage = (props: Props) => {
           <GridItem>
             <Form onChange={onCreate} isLoading={isLoading} />
           </GridItem>
-          <Box>
-            <Text>Info</Text>
-          </Box>
+          <Box />
         </SimpleGrid>
       </Container>
     </Layout>
