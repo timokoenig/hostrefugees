@@ -8,7 +8,7 @@ export const COOKIE_CONSENT = 'cookie-consent'
 export const setCookie = (name: string, value: string) => {
   cookieCutter.set(name, value, {
     path: '/',
-    expires: moment().add(1, 'year').toDate(),
+    expires: moment().add(1, 'year').toDate().toUTCString(),
   })
 }
 
