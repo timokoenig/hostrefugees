@@ -1,15 +1,18 @@
 import {
   Box,
   Container,
+  Flex,
   Heading,
   HStack,
   Link,
+  Select,
   SimpleGrid,
+  Spacer,
   Stack,
   Text,
   useColorModeValue,
 } from '@chakra-ui/react'
-import React, { ReactNode } from 'react'
+import React, { ReactNode, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Github from './common/github'
 import Kofi from './common/kofi'
@@ -23,7 +26,19 @@ const ListHeader = ({ children }: { children: ReactNode }) => {
 }
 
 export default function Footer() {
-  const { t } = useTranslation('common')
+  const { t, i18n } = useTranslation('common')
+  const { t: tLang } = useTranslation('languages')
+  const [lang, setLang] = useState<string>(
+    localStorage.getItem('i18nextLng')?.substring(0, 2) ?? 'en'
+  )
+
+  const onChangeLang = (newLang: string) => {
+    i18n
+      .changeLanguage(newLang)
+      .then(() => setLang(newLang))
+      .catch(console.log)
+  }
+
   return (
     <Box
       bg={useColorModeValue('gray.50', 'gray.900')}
@@ -31,7 +46,7 @@ export default function Footer() {
       mt="20"
     >
       <Container as={Stack} maxW="7xl" py={10}>
-        <SimpleGrid templateColumns={{ sm: '1fr 1fr', md: '2fr 1fr 1fr 1fr' }} spacing={8}>
+        <SimpleGrid templateColumns={{ sm: '1fr 1fr', md: '2fr 1fr 1fr 1fr' }} spacing={8} mb="10">
           <Stack spacing={6}>
             <Box>
               <Heading size="md" fontWeight="extrabold" color="blue.500">
@@ -61,6 +76,14 @@ export default function Footer() {
             <Link href="/privacy">{t('privacy')}</Link>
           </Stack>
         </SimpleGrid>
+        <Flex flexDirection="row" justifyContent="center">
+          <Select value={lang} onChange={e => onChangeLang(e.target.value)} width="200px">
+            <option value="de">{tLang('de')}</option>
+            <option value="en">{tLang('en')}</option>
+            <option value="ua">{tLang('ua')}</option>
+          </Select>
+          <Spacer />
+        </Flex>
       </Container>
     </Box>
   )

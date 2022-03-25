@@ -1,9 +1,13 @@
 import { Flex } from '@chakra-ui/react'
+import dynamic from 'next/dynamic'
 import React from 'react'
 import { MappedUser } from '../utils/models'
-import Footer from './footer'
 import Navigation from './navigation'
 import Spacer from './spacer'
+
+const Footer = dynamic(() => import('./footer'), {
+  ssr: false,
+})
 
 type Props = {
   user?: MappedUser
