@@ -1,6 +1,7 @@
 import { Box, Container, Heading, List, SimpleGrid, Stack, Text } from '@chakra-ui/react'
 import dynamic from 'next/dynamic'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { MappedPlace } from '../utils/models'
 import MoreItem from './map/more-item'
 import PlaceItem from './place/item'
@@ -14,17 +15,18 @@ type Props = {
 }
 
 const MapPlaces = (props: Props) => {
+  const { t } = useTranslation('common')
   return (
     <Container maxW="7xl" py={10}>
       <Box mb="5" textAlign="center">
-        <Heading>Available Homes</Heading>
+        <Heading>{t('place.available')}</Heading>
       </Box>
       <SimpleGrid templateColumns={{ sm: '1fr', md: '1fr 1fr' }} spacing={8}>
         <Stack spacing={6}>
           <List spacing="2">
             {props.places.length == 0 && (
               <Text textAlign="center" p="10" fontWeight="semibold">
-                There are no places available at the moment
+                {t('place.empty')}
               </Text>
             )}
             {props.places.map((place, i) => (

@@ -1,5 +1,6 @@
 import { Button, Center, Heading, Image, SimpleGrid, Text } from '@chakra-ui/react'
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { MappedUser } from 'utils/models'
 import VerificationButton from './verification-button'
 
@@ -9,6 +10,7 @@ type Props = {
 }
 
 const VerificationOnboarding = (props: Props) => {
+  const { t } = useTranslation('common')
   const [isLoading, setLoading] = useState<boolean>(false)
   const [photoFront, setPhotoFront] = useState<string | null>(null)
   const [photoBack, setPhotoBack] = useState<string | null>(null)
@@ -28,23 +30,21 @@ const VerificationOnboarding = (props: Props) => {
   return (
     <>
       <Heading as="h2" size="xl" mt={6} mb={10}>
-        Profile Verification
+        {t('onboarding.verification')}
       </Heading>
       <Center mb={10}>
         <Image src="/svg/undraw_personal_information_re_vw8a.svg" maxWidth="250" />
       </Center>
       <Text mb="10">
-        <b>The safety of our guests is important to us.</b>
+        <b>{t('onboarding.verification.subtitle')}</b>
         <br />
-        Please upload the following three documents so we can verify your identity. We will manually
-        check these documents and activate your account. Until then you can create places, but they
-        won&apos;t appear in the search.
+        {t('onboarding.verification.text')}
       </Text>
       <SimpleGrid columns={[1, 2, 3]} spacing="10">
         <VerificationButton
           image={photoFront}
-          title="ID Card"
-          subtitle="Front"
+          title={t('idcard')}
+          subtitle={t('front')}
           isDisabled={isLoading}
           onUpload={async file => {
             await uploadDocument('front', file)
@@ -57,8 +57,8 @@ const VerificationOnboarding = (props: Props) => {
         />
         <VerificationButton
           image={photoBack}
-          title="ID Card"
-          subtitle="Back"
+          title={t('idcard')}
+          subtitle={t('back')}
           isDisabled={isLoading}
           onUpload={async file => {
             await uploadDocument('back', file)
@@ -71,8 +71,8 @@ const VerificationOnboarding = (props: Props) => {
         />
         <VerificationButton
           image={photoSelfie}
-          title="Selfie"
-          subtitle="Hold ID Card next to your face"
+          title={t('selfie')}
+          subtitle={t('onboarding.verification.selfie.info')}
           isDisabled={isLoading}
           onUpload={async file => {
             await uploadDocument('selfie', file)
@@ -90,7 +90,7 @@ const VerificationOnboarding = (props: Props) => {
         onClick={props.onNext}
         isDisabled={isLoading || photoFront == null || photoBack == null || photoSelfie == null}
       >
-        {isLoading ? 'Loading...' : 'Continue'}
+        {isLoading ? t('loading') : t('continue')}
       </Button>
     </>
   )

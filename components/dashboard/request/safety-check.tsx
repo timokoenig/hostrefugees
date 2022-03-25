@@ -11,6 +11,7 @@ import {
 } from '@chakra-ui/react'
 import { Request, SafetyCheck, UserRole } from '@prisma/client'
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { MappedUser } from 'utils/models'
 
 type Props = {
@@ -20,6 +21,7 @@ type Props = {
 }
 
 const SafetyCheckComponent = (props: Props): JSX.Element => {
+  const { t } = useTranslation('common')
   const toast = useToast()
   const [isLoading, setLoading] = useState<boolean>(false)
   const [safetyCheck, setSafetyCheck] = useState<SafetyCheck | null>(props.safetyCheck)
@@ -72,19 +74,16 @@ const SafetyCheckComponent = (props: Props): JSX.Element => {
       <Image src="/svg/undraw_security_on_re_e491.svg" />
       <Box color={useColorModeValue('gray.900', 'gray.100')}>
         <Heading size="md" mb="2">
-          Your Safety Is Our Priority!
+          {t('request.safety')}
         </Heading>
-        <Text mb="5">
-          We want to make sure that our guests arrive safely at their place. As soon as you arrive,
-          please click the button below to let us know that everything is ok.
-        </Text>
+        <Text mb="5">{t('request.safety.info')}</Text>
         {safetyCheck ? (
           <Text fontSize="xl" fontWeight="semibold" color="blue.500">
             {safetyCheck.safe
               ? props.user.role == UserRole.HOST
-                ? 'Thank You!'
-                : 'Enjoy your stay!'
-              : 'Thank you for your feedback'}
+                ? t('thankyou')
+                : t('request.safety.enjoy')
+              : t('request.safety.feedback')}
             {}
           </Text>
         ) : (
@@ -95,7 +94,9 @@ const SafetyCheckComponent = (props: Props): JSX.Element => {
               isDisabled={isLoading}
               textTransform="uppercase"
             >
-              {props.user.role == UserRole.HOST ? 'My guest is safe' : 'I am safe'}
+              {props.user.role == UserRole.HOST
+                ? t('request.safety.safe.host')
+                : t('request.safety.safe.guest')}
             </Button>
             <Button
               size="sm"
@@ -105,7 +106,7 @@ const SafetyCheckComponent = (props: Props): JSX.Element => {
               isDisabled={isLoading}
               textTransform="uppercase"
             >
-              Something is not right
+              {t('request.safety.notsafe')}
             </Button>
           </VStack>
         )}

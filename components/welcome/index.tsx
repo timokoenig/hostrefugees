@@ -11,6 +11,7 @@ import {
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React, { ReactElement } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   IoBasketSharp,
   IoBedSharp,
@@ -48,52 +49,52 @@ const Feature = ({ id, text, icon, iconBg }: FeatureProps) => {
 }
 
 const Overview = () => {
+  const { t } = useTranslation('common')
   return (
     <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
       <Stack spacing={4}>
         <Heading as="h1" size="xl">
-          Welcome To Germany
+          {t('welcomegermany')}
         </Heading>
         <Text color={useColorModeValue('gray.600', 'gray.400')} fontSize="lg">
-          Here you can find a curated list of important links, phone numbers, phrases, and much more
-          to help you jump start your stay in Germany.
+          {t('welcomegermany.info')}
         </Text>
         <Stack divider={<StackDivider borderColor={useColorModeValue('gray.100', 'gray.700')} />}>
           <Feature
             id="first-steps"
             icon={<Icon as={IoBulbSharp} color="yellow.500" w={5} h={5} />}
             iconBg={useColorModeValue('yellow.100', 'yellow.900')}
-            text="First Steps"
+            text={t('welcomegermany.feature.first')}
           />
           <Feature
             id="places"
             icon={<Icon as={IoBedSharp} color="blue.500" w={5} h={5} />}
             iconBg={useColorModeValue('blue.100', 'blue.900')}
-            text="A Place To Stay"
+            text={t('welcomegermany.feature.place')}
           />
           <Feature
             id="translations"
             icon={<Icon as={IoChatbubblesSharp} color="green.500" w={5} h={5} />}
             iconBg={useColorModeValue('green.100', 'green.900')}
-            text="How Do I Say This?"
+            text={t('welcomegermany.feature.translation')}
           />
           <Feature
             id="necessities"
             icon={<Icon as={IoBasketSharp} color="orange.500" w={5} h={5} />}
             iconBg={useColorModeValue('orange.100', 'orange.900')}
-            text="Where Can I Find All Necessities?"
+            text={t('welcomegermany.feature.necessities')}
           />
           <Feature
             id="covid"
             icon={<Icon as={IoMedicalSharp} color="red.500" w={5} h={5} />}
             iconBg={useColorModeValue('red.100', 'red.900')}
-            text="Current Covid Restrictions"
+            text={t('welcomegermany.feature.covid')}
           />
           <Feature
             id="other"
             icon={<Icon as={IoBookSharp} color="purple.500" w={5} h={5} />}
             iconBg={useColorModeValue('purple.100', 'purple.900')}
-            text="Other Information"
+            text={t('welcomegermany.feature.other')}
           />
         </Stack>
       </Stack>

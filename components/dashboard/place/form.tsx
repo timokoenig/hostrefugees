@@ -17,6 +17,7 @@ import DatePicker from 'components/common/datepicker'
 import NumberInput from 'components/place/number-input'
 import { useFormik } from 'formik'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import * as Yup from 'yup'
 import Button from '../../common/button'
 
@@ -43,6 +44,7 @@ type Props = {
 }
 
 const Form = (props: Props) => {
+  const { t } = useTranslation('common')
   const formik = useFormik({
     initialValues: props.place ?? {
       id: '',
@@ -100,7 +102,7 @@ const Form = (props: Props) => {
               textTransform="uppercase"
               mb="4"
             >
-              General
+              {t('general')}
             </Text>
 
             <FormControl
@@ -108,7 +110,7 @@ const Form = (props: Props) => {
               isDisabled={formik.isSubmitting}
               isInvalid={formik.errors.title !== undefined && formik.touched.title}
             >
-              <FormLabel htmlFor="title">Title</FormLabel>
+              <FormLabel htmlFor="title">{t('title')}</FormLabel>
               <Input
                 id="title"
                 type="text"
@@ -123,7 +125,7 @@ const Form = (props: Props) => {
               isDisabled={formik.isSubmitting}
               isInvalid={formik.errors.description !== undefined && formik.touched.description}
             >
-              <FormLabel htmlFor="description">Description</FormLabel>
+              <FormLabel htmlFor="description">{t('description')}</FormLabel>
               <Textarea
                 id="description"
                 type="text"
@@ -137,7 +139,7 @@ const Form = (props: Props) => {
               isDisabled={formik.isSubmitting}
               isInvalid={formik.errors.houseRules !== undefined && formik.touched.houseRules}
             >
-              <FormLabel htmlFor="houseRules">House Rules</FormLabel>
+              <FormLabel htmlFor="houseRules">{t('houserules')}</FormLabel>
               <Textarea
                 id="houseRules"
                 type="text"
@@ -156,11 +158,11 @@ const Form = (props: Props) => {
               textTransform="uppercase"
               mb="4"
             >
-              Residents
+              {t('residents')}
             </Text>
 
             <FormControl isRequired isDisabled={formik.isSubmitting}>
-              <FormLabel htmlFor="placeAdults">How many adults live in the place?</FormLabel>
+              <FormLabel htmlFor="placeAdults">{t('dashboard.place.howmanyadults')}</FormLabel>
               <NumberInput
                 active={false}
                 value={formik.values.placeAdults}
@@ -170,7 +172,7 @@ const Form = (props: Props) => {
             </FormControl>
 
             <FormControl isDisabled={formik.isSubmitting}>
-              <FormLabel htmlFor="placeAdultWomen">Do any women live in the place?</FormLabel>
+              <FormLabel htmlFor="placeAdultWomen">{t('dashboard.place.anywomen')}</FormLabel>
               <Switch
                 id="placeAdultWomen"
                 size="lg"
@@ -183,7 +185,7 @@ const Form = (props: Props) => {
             </FormControl>
 
             <FormControl isDisabled={formik.isSubmitting}>
-              <FormLabel htmlFor="placeAdultMen">Do any men live in the place?</FormLabel>
+              <FormLabel htmlFor="placeAdultMen">{t('dashboard.place.anymen')}</FormLabel>
               <Switch
                 id="placeAdultMen"
                 size="lg"
@@ -194,7 +196,7 @@ const Form = (props: Props) => {
             </FormControl>
 
             <FormControl isRequired isDisabled={formik.isSubmitting}>
-              <FormLabel htmlFor="placeChildren">How many children live in the place?</FormLabel>
+              <FormLabel htmlFor="placeChildren">{t('dashboard.place.howmanychildren')}</FormLabel>
               <NumberInput
                 active={false}
                 value={formik.values.placeChildren}
@@ -212,20 +214,20 @@ const Form = (props: Props) => {
               textTransform="uppercase"
               mb="4"
             >
-              Place Details
+              {t('place.detail')}
             </Text>
 
             <FormControl isRequired isDisabled={formik.isSubmitting}>
-              <FormLabel htmlFor="type">Type of place</FormLabel>
+              <FormLabel htmlFor="type">{t('place.detail.type')}</FormLabel>
               <Select
                 id="type"
                 name="type"
                 value={formik.values.type}
                 onChange={formik.handleChange}
               >
-                <option value="place">Entire Place</option>
-                <option value="private">Private Room</option>
-                <option value="shared">Shared Room</option>
+                <option value="place">{t('place.entire')}</option>
+                <option value="private">{t('place.private')}</option>
+                <option value="shared">{t('place.shared')}</option>
               </Select>
               <FormErrorMessage>{formik.errors.type}</FormErrorMessage>
             </FormControl>
@@ -236,7 +238,7 @@ const Form = (props: Props) => {
               isDisabled={formik.isSubmitting}
               isInvalid={formik.errors.rooms !== undefined && formik.touched.rooms}
             >
-              <FormLabel htmlFor="rooms">Rooms</FormLabel>
+              <FormLabel htmlFor="rooms">{t('rooms')}</FormLabel>
               <NumberInput
                 active={false}
                 min={1}
@@ -252,7 +254,7 @@ const Form = (props: Props) => {
               isDisabled={formik.isSubmitting}
               isInvalid={formik.errors.beds !== undefined && formik.touched.beds}
             >
-              <FormLabel htmlFor="beds">Beds</FormLabel>
+              <FormLabel htmlFor="beds">{t('beds')}</FormLabel>
               <NumberInput
                 active={false}
                 min={1}
@@ -263,15 +265,15 @@ const Form = (props: Props) => {
             </FormControl>
 
             <FormControl isRequired isDisabled={formik.isSubmitting}>
-              <FormLabel htmlFor="bathroom">Bathroom</FormLabel>
+              <FormLabel htmlFor="bathroom">{t('bathroom')}</FormLabel>
               <Select
                 id="bathroom"
                 name="bathroom"
                 value={formik.values.bathroom}
                 onChange={formik.handleChange}
               >
-                <option value="yes">Private Bathroom</option>
-                <option value="shared">Shared Bathroom</option>
+                <option value="yes">{t('bathroom.private')}</option>
+                <option value="shared">{t('bathroom.shared')}</option>
               </Select>
               <FormErrorMessage>{formik.errors.bathroom}</FormErrorMessage>
             </FormControl>
@@ -282,7 +284,7 @@ const Form = (props: Props) => {
               isDisabled={formik.isSubmitting}
               isInvalid={formik.errors.adults !== undefined && formik.touched.adults}
             >
-              <FormLabel htmlFor="adults">How many adults can you host?</FormLabel>
+              <FormLabel htmlFor="adults">{t('dashboard.place.hostadults')}</FormLabel>
               <NumberInput
                 active={false}
                 min={1}
@@ -298,7 +300,7 @@ const Form = (props: Props) => {
               isDisabled={formik.isSubmitting}
               isInvalid={formik.errors.children !== undefined && formik.touched.children}
             >
-              <FormLabel htmlFor="children">How many children can you host?</FormLabel>
+              <FormLabel htmlFor="children">{t('dashboard.place.hostchildren')}</FormLabel>
               <NumberInput
                 active={false}
                 value={formik.values.children}
@@ -308,7 +310,7 @@ const Form = (props: Props) => {
             </FormControl>
 
             <FormControl isDisabled={formik.isSubmitting}>
-              <FormLabel htmlFor="pets">Are guests allowed to bring pets?</FormLabel>
+              <FormLabel htmlFor="pets">{t('dashboard.place.pets')}</FormLabel>
               <Switch
                 id="pets"
                 size="lg"
@@ -328,11 +330,10 @@ const Form = (props: Props) => {
                 textTransform="uppercase"
                 mb="4"
               >
-                Place Address
+                {t('dashboard.place.address')}
               </Text>
               <Text pb="4" color={useColorModeValue('gray.600', 'gray.400')}>
-                Only the city will be visible to everyone. The exact location will only be shared
-                with the guest when you accept a stay request.
+                {t('dashboard.place.address.info')}
               </Text>
             </Box>
 
@@ -341,7 +342,7 @@ const Form = (props: Props) => {
               isDisabled={formik.isSubmitting}
               isInvalid={formik.errors.addressStreet !== undefined && formik.touched.addressStreet}
             >
-              <FormLabel htmlFor="addressStreet">Street</FormLabel>
+              <FormLabel htmlFor="addressStreet">{t('street')}</FormLabel>
               <Input
                 id="addressStreet"
                 type="text"
@@ -358,7 +359,7 @@ const Form = (props: Props) => {
                 formik.errors.addressHouseNumber !== undefined && formik.touched.addressHouseNumber
               }
             >
-              <FormLabel htmlFor="addressHouseNumber">House Number</FormLabel>
+              <FormLabel htmlFor="addressHouseNumber">{t('housenumber')}</FormLabel>
               <Input
                 id="addressHouseNumber"
                 type="text"
@@ -373,7 +374,7 @@ const Form = (props: Props) => {
               isDisabled={formik.isSubmitting}
               isInvalid={formik.errors.addressZip !== undefined && formik.touched.addressZip}
             >
-              <FormLabel htmlFor="addressZip">Zipcode</FormLabel>
+              <FormLabel htmlFor="addressZip">{t('zipcode')}</FormLabel>
               <Input
                 id="addressZip"
                 type="text"
@@ -388,7 +389,7 @@ const Form = (props: Props) => {
               isDisabled={formik.isSubmitting}
               isInvalid={formik.errors.addressCity !== undefined && formik.touched.addressCity}
             >
-              <FormLabel htmlFor="addressCity">City</FormLabel>
+              <FormLabel htmlFor="addressCity">{t('city')}</FormLabel>
               <Input
                 id="addressCity"
                 type="text"
@@ -407,10 +408,10 @@ const Form = (props: Props) => {
                 fontWeight="500"
                 textTransform="uppercase"
               >
-                Contact Information
+                {t('dashboard.place.contact')}
               </Text>
               <Text pb="4" color={useColorModeValue('gray.600', 'gray.400')}>
-                This information will only be shared with the guest when you accept a stay request.
+                {t('dashboard.place.contact.info')}
               </Text>
             </Box>
 
@@ -419,7 +420,7 @@ const Form = (props: Props) => {
               isDisabled={formik.isSubmitting}
               isInvalid={formik.errors.phoneNumber !== undefined && formik.touched.phoneNumber}
             >
-              <FormLabel htmlFor="phoneNumber">Phone Number</FormLabel>
+              <FormLabel htmlFor="phoneNumber">{t('phone')}</FormLabel>
               <Input
                 id="phoneNumber"
                 type="text"
@@ -436,10 +437,10 @@ const Form = (props: Props) => {
                 formik.touched.arrivalInstructions
               }
             >
-              <FormLabel htmlFor="arrivalInstructions">Arrival Instructions</FormLabel>
+              <FormLabel htmlFor="arrivalInstructions">{t('dashboard.place.arrival')}</FormLabel>
               <Textarea
                 id="arrivalInstructions"
-                placeholder="How can the guest arrive at your place? Will you pick up the guest?"
+                placeholder={t('dashboard.place.arrival.info')}
                 value={formik.values.arrivalInstructions}
                 onChange={formik.handleChange}
               />
@@ -455,7 +456,7 @@ const Form = (props: Props) => {
               textTransform="uppercase"
               mb="4"
             >
-              Availability
+              {t('availability')}
             </Text>
 
             <FormControl
@@ -466,7 +467,7 @@ const Form = (props: Props) => {
                 formik.touched.availabilityStart !== undefined
               }
             >
-              <FormLabel htmlFor="availabilityStart">Availability Start</FormLabel>
+              <FormLabel htmlFor="availabilityStart">{t('availability.start')}</FormLabel>
               <DatePicker
                 value={formik.values.availabilityStart}
                 onChange={newVal => formik.setFieldValue('availabilityStart', newVal)}
@@ -480,7 +481,9 @@ const Form = (props: Props) => {
                 formik.errors.availabilityEnd !== undefined && formik.touched.availabilityEnd
               }
             >
-              <FormLabel htmlFor="availabilityEnd">Availability End (optional)</FormLabel>
+              <FormLabel htmlFor="availabilityEnd">
+                {t('availability.end')} ({t('optional')})
+              </FormLabel>
               <DatePicker
                 value={formik.values.availabilityEnd}
                 onChange={newVal => formik.setFieldValue('availabilityEnd', newVal)}
@@ -492,7 +495,7 @@ const Form = (props: Props) => {
 
           <FormControl>
             <Button
-              title={props.isLoading ? 'Loading...' : 'Save'}
+              title={props.isLoading ? t('loading') : t('save')}
               fullWidth
               isDisabled={props.isLoading}
             />

@@ -1,74 +1,63 @@
 import { Heading, ListItem, Text, UnorderedList, useColorModeValue } from '@chakra-ui/react'
+import parse from 'html-react-parser'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { IoMedicalSharp } from 'react-icons/io5'
 import Section from './section'
 
 const SectionCovid = () => {
+  const { t } = useTranslation('common')
   return (
-    <Section id="covid" title="Current Covid Restrictions" icon={IoMedicalSharp} color="red">
+    <Section id="covid" title={t('welcomegermany.feature.covid')} icon={IoMedicalSharp} color="red">
       <Text color={useColorModeValue('gray.600', 'gray.400')}>
-        Every state in Germany has their own Covid Regulations so please inform yourself in the
-        state you are in. Here is a list of general applicable rules and recommendations.
+        {t('welcomegermany.covid.info')}
       </Text>
 
       <Heading as="h4" size="md">
-        Contacts
+        {t('welcomegermany.covid.contacts')}
       </Heading>
       <Text color={useColorModeValue('gray.600', 'gray.400')}>
-        Please continue to avoid all personal contacts that are not essential. "Keeping your
-        distance" helps to avoid transmission of the coronavirus. Therefore, always keep a distance
-        of 1.50 meters from other people.
-        <br />
-        <br />
-        There are no restrictions for private meetings.
+        {parse(t('welcomegermany.covid.contacts.info'))}
       </Text>
 
       <Heading as="h4" size="md">
-        Maskenpflicht
+        {t('welcomegermany.covid.mask')}
       </Heading>
       <Text color={useColorModeValue('gray.600', 'gray.400')}>
-        In closed rooms of public facilities are FF2 masks mandatory for everyone older than 14
-        years. Children up to 14 years need to wear a medical mask. Children under the age of 6 are
-        exempt from the mask requirement.
+        {t('welcomegermany.covid.mask.info')}
       </Text>
 
       <Heading as="h4" size="md">
-        3G Entry Restriction
+        {t('welcomegermany.covid.3g')}
       </Heading>
       <Text color={useColorModeValue('gray.600', 'gray.400')}>
-        3G entry resitrctions allow everyone who is fully vaccinated, recovered, or tested to
-        participate. The following areas apply to the 3G restrictions if not stated otherwise:
+        {t('welcomegermany.covid.3g.info')}
         <UnorderedList>
-          <ListItem>Restaurants / Bars (inside / outside)</ListItem>
-          <ListItem>Body-Related Services, like hairstylist and accomondations</ListItem>
-          <ListItem>Swimming Pools, Spas, Saunas, indoor sports facilities</ListItem>
+          <ListItem>{t('welcomegermany.covid.3g.1')}</ListItem>
+          <ListItem>{t('welcomegermany.covid.3g.2')}</ListItem>
+          <ListItem>{t('welcomegermany.covid.3g.3')}</ListItem>
         </UnorderedList>
       </Text>
 
       <Heading as="h4" size="md">
-        2G+ Entry Restriction
+        {t('welcomegermany.covid.2g')}
       </Heading>
       <Text color={useColorModeValue('gray.600', 'gray.400')}>
-        2G+ entry restrictions allow everyone who is fully vaccinated, or recovered to participate
-        but those people need to show proof of a negative rapid or PCR test result. Under certain
-        conditions you don't need to provide an additional test. Please look up the local
-        requirements for the test exception. The following areas apply to the 2G+ restrictions if
-        not stated otherwise:
+        {t('welcomegermany.covid.2g.info')}
         <UnorderedList>
-          <ListItem>Clubs</ListItem>
+          <ListItem>{t('welcomegermany.covid.2g.1')}</ListItem>
         </UnorderedList>
       </Text>
 
       <Heading as="h4" size="md">
-        Tests
+        {t('welcomegermany.covid.test')}
       </Heading>
       <Text color={useColorModeValue('gray.600', 'gray.400')}>
-        In some cases you need an additional rapid or PCR test result. Please make sure the test
-        fulfills the following requirements:
+        {t('welcomegermany.covid.test.info')}
         <UnorderedList>
-          <ListItem>Test Result must be NEGATIVE</ListItem>
-          <ListItem>PCR tests are only valid for 48 hours</ListItem>
-          <ListItem>Rapid tests are only valid for 24 hours</ListItem>
+          <ListItem>{t('welcomegermany.covid.test.1')}</ListItem>
+          <ListItem>{t('welcomegermany.covid.test.2')}</ListItem>
+          <ListItem>{t('welcomegermany.covid.test.3')}</ListItem>
         </UnorderedList>
       </Text>
     </Section>

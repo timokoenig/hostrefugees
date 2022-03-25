@@ -8,19 +8,21 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { IoBasketSharp, IoOpenOutline } from 'react-icons/io5'
 import Section from './section'
 
 const SectionNecessities = () => {
+  const { t } = useTranslation('common')
   return (
     <Section
       id="necessities"
-      title="Where Can I Find All Necessities?"
+      title={t('welcomegermany.feature.necessities')}
       icon={IoBasketSharp}
       color="orange"
     >
       <Heading as="h4" size="md">
-        What supermarkets are there in Germany?
+        {t('welcomegermany.necessities.supermarkets')}
       </Heading>
       <Text color={useColorModeValue('gray.600', 'gray.400')}>
         <UnorderedList>
@@ -75,7 +77,7 @@ const SectionNecessities = () => {
         </UnorderedList>
       </Text>
       <Heading as="h4" size="md">
-        What drug stores are there in Germany?
+        {t('welcomegermany.necessities.drugstores')}
       </Heading>
       <Text color={useColorModeValue('gray.600', 'gray.400')} fontSize="lg">
         <UnorderedList>
@@ -100,10 +102,10 @@ const SectionNecessities = () => {
         </UnorderedList>
       </Text>
       <Heading as="h4" size="md">
-        How do I find a pharmacy?
+        {t('welcomegermany.necessities.pharmacy')}
       </Heading>
       <Text color={useColorModeValue('gray.600', 'gray.400')} fontSize="lg">
-        Pharmacies are labeled with a big red A (for Apotheke).
+        {t('welcomegermany.necessities.pharmacy.info')}
       </Text>
     </Section>
   )

@@ -2,6 +2,7 @@ import { Box, GridItem, Image, ListItem, SimpleGrid, useColorModeValue } from '@
 import moment from 'moment'
 import { useRouter } from 'next/router'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { MappedPlace } from 'utils/models'
 
 type Props = {
@@ -10,6 +11,7 @@ type Props = {
 }
 
 const PlaceItem = (props: Props) => {
+  const { t } = useTranslation('common')
   const router = useRouter()
   return (
     <ListItem onClick={props.onClick ?? (() => router.push(`/place/${props.place.id}`))}>
@@ -27,7 +29,7 @@ const PlaceItem = (props: Props) => {
             ) : (
               <Image
                 rounded="md"
-                alt="product image"
+                alt="place image"
                 src={`/api/place/${props.place.id}/photo/${props.place.photos[0]}`}
                 fit="cover"
                 align="center"
@@ -45,7 +47,7 @@ const PlaceItem = (props: Props) => {
                 fontSize="xs"
                 textTransform="uppercase"
               >
-                {props.place.rooms} rooms &bull; {props.place.beds} beds
+                {props.place.rooms} {t('rooms')} &bull; {props.place.beds} {t('beds')}
               </Box>
             </Box>
             <Box mt="1" fontWeight="semibold" as="h4" lineHeight="tight" isTruncated>
@@ -53,7 +55,7 @@ const PlaceItem = (props: Props) => {
             </Box>
             <Box>
               {moment(props.place.availabilityStart).isBefore(moment())
-                ? 'Available Now'
+                ? t('availablenow')
                 : moment(props.place.availabilityStart).format('DD.MM.YYYY')}
             </Box>
           </GridItem>

@@ -5,6 +5,7 @@ import Detail from 'components/place/detail'
 import { useRouter } from 'next/router'
 import prisma from 'prisma/client'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { mapPlace } from 'utils/mapper'
 import { MappedPlace, MappedUser } from 'utils/models'
 import { withSessionSsr } from 'utils/session'
@@ -17,6 +18,7 @@ type Props = {
 }
 
 const PlaceDetailPage = (props: Props) => {
+  const { t } = useTranslation('common')
   const router = useRouter()
   return (
     <Layout user={props.user}>
@@ -28,7 +30,7 @@ const PlaceDetailPage = (props: Props) => {
               leftIcon={<ArrowBackIcon />}
               onClick={() => router.push('/place')}
             >
-              Available Places
+              {t('place.available')}
             </Button>
           </Box>
           <Detail

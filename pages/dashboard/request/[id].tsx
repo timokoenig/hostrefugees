@@ -34,6 +34,7 @@ type Props = {
 }
 
 const RequestPage = (props: Props) => {
+  const { t } = useTranslation('common')
   const { t: tLang } = useTranslation('languages')
   const router = useRouter()
   const toast = useToast()
@@ -81,7 +82,7 @@ const RequestPage = (props: Props) => {
       <Container maxW="7xl">
         <Box mb="5">
           <Button variant="ghost" pl={0} leftIcon={<ArrowBackIcon />} onClick={router.back}>
-            Dashboard
+            {t('dashboard')}
           </Button>
         </Box>
         <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={5}>
@@ -97,35 +98,35 @@ const RequestPage = (props: Props) => {
                 textTransform="uppercase"
                 mb="4"
               >
-                Stay Request Details
+                {t('request.detail')}
               </Text>
               <Text>
-                Requested on:{' '}
+                {t('request.detail.requested')}:{' '}
                 <Text as="span" fontWeight="semibold">
                   {moment(props.request.createdAt).format('DD.MM.YYYY HH:mm')}
                 </Text>
               </Text>
               <Text>
-                Adults:{' '}
+                {t('adults')}:{' '}
                 <Text as="span" fontWeight="semibold">
                   {props.request.adults}
                 </Text>
               </Text>
               <Text>
-                Children:{' '}
+                {t('children')}:{' '}
                 <Text as="span" fontWeight="semibold">
                   {props.request.children}
                 </Text>
               </Text>
               <Text>
-                Pets:{' '}
+                {t('pets')}:{' '}
                 <Text as="span" fontWeight="semibold">
                   {props.request.pets ? 'Yes' : 'No'}
                 </Text>
               </Text>
               {props.user.role === UserRole.HOST && (
                 <Text>
-                  Guest Languages:{' '}
+                  {t('languages.guest')}:{' '}
                   <Text as="span" fontWeight="semibold">
                     {(props.request as any).author.languages
                       .map((lang: string) => tLang(lang))
@@ -143,7 +144,7 @@ const RequestPage = (props: Props) => {
                 textTransform="uppercase"
                 mb="4"
               >
-                About
+                {t('about')}
               </Text>
               <Text>{props.request.about.length == 0 ? 'N/A' : props.request.about}</Text>
             </Box>

@@ -15,6 +15,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import prisma from 'prisma/client'
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { MappedUser } from 'utils/models'
 import { withSessionSsr } from 'utils/session'
 
@@ -33,6 +34,7 @@ const getPhotos = (place: Place): string[] => {
 }
 
 const PhotoPage = (props: Props) => {
+  const { t } = useTranslation('common')
   const router = useRouter()
   const [isLoading, setLoading] = useState<boolean>(false)
   const [photos, setPhotos] = useState<string[]>(getPhotos(props.place))
@@ -78,15 +80,15 @@ const PhotoPage = (props: Props) => {
           </Button>
         </Box>
         <Heading as="h2" size="lg" mb="5">
-          Change Photos
+          {t('place.changephotos')}
         </Heading>
         <Text color={useColorModeValue('gray.600', 'gray.400')} mb="10">
-          Upload at least one photo to make your place available for guests
+          {t('place.changephotos.info')}
         </Text>
         <SimpleGrid templateColumns={{ sm: '1fr', md: '1fr 1fr', lg: '1fr 1fr 1fr' }} spacing={10}>
           <VerificationButton
             image={photoURL(photos[0])}
-            title={photos[0] == '' ? 'Upload Photo' : ''}
+            title={photos[0] == '' ? t('place.uploadphoto') : ''}
             isDisabled={isLoading}
             onUpload={async file => {
               const id = await uploadPhoto(file)
@@ -103,7 +105,7 @@ const PhotoPage = (props: Props) => {
           />
           <VerificationButton
             image={photoURL(photos[1])}
-            title={photos[1] == '' ? 'Upload Photo' : ''}
+            title={photos[1] == '' ? t('place.uploadphoto') : ''}
             isDisabled={isLoading}
             onUpload={async file => {
               const id = await uploadPhoto(file)
@@ -120,7 +122,7 @@ const PhotoPage = (props: Props) => {
           />
           <VerificationButton
             image={photoURL(photos[2])}
-            title={photos[2] == '' ? 'Upload Photo' : ''}
+            title={photos[2] == '' ? t('place.uploadphoto') : ''}
             isDisabled={isLoading}
             onUpload={async file => {
               const id = await uploadPhoto(file)

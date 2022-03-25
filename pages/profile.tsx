@@ -32,6 +32,7 @@ type Props = {
 }
 
 const ProfilePage = (props: Props) => {
+  const { t } = useTranslation('common')
   const { t: tLang } = useTranslation('languages')
   const { toggleColorMode, newColorMode } = useColorMode()
   const [firstname, setFirstname] = useState<string>(props.user.firstname)
@@ -40,11 +41,11 @@ const ProfilePage = (props: Props) => {
   return (
     <Layout user={props.user}>
       <Head>
-        <title>HostRefugees</title>
+        <title>HostRefugees - Profile</title>
       </Head>
       <Container maxW="7xl">
         <Heading as="h2" size="xl" mb="5">
-          Profile
+          {t('profile')}
         </Heading>
         <SimpleGrid templateColumns={{ sm: '1fr', md: '3fr 1fr' }} spacing="10">
           <GridItem>
@@ -52,13 +53,13 @@ const ProfilePage = (props: Props) => {
               <Alert status="warning" variant="solid" rounded="lg" mb="5">
                 <AlertIcon />
                 <Text as="span" fontWeight="semibold" mr="1">
-                  Waiting for Approval
+                  {t('profile.approval')}
                 </Text>
-                - You will receive an email as soon as your profile has been approved.
+                - {t('profile.approval.text')}
               </Alert>
             )}
             <FormControl mb="5">
-              <FormLabel htmlFor="firstname">First Name</FormLabel>
+              <FormLabel htmlFor="firstname">{t('firstname')}</FormLabel>
               <Input
                 id="firstname"
                 type="firstname"
@@ -68,7 +69,7 @@ const ProfilePage = (props: Props) => {
               />
             </FormControl>
             <FormControl mb="5">
-              <FormLabel htmlFor="lastname">Last Name</FormLabel>
+              <FormLabel htmlFor="lastname">{t('lastname')}</FormLabel>
               <Input
                 id="lastname"
                 type="lastname"
@@ -78,11 +79,11 @@ const ProfilePage = (props: Props) => {
               />
             </FormControl>
             <FormControl mb="5">
-              <FormLabel htmlFor="email">Email address</FormLabel>
+              <FormLabel htmlFor="email">{t('email')}</FormLabel>
               <Input id="email" type="email" value={props.user.email} isDisabled={true} />
             </FormControl>
             <FormControl mb="5">
-              <FormLabel htmlFor="languages">Languages</FormLabel>
+              <FormLabel htmlFor="languages">{t('languages')}</FormLabel>
               <Input
                 id="languages"
                 type="languages"
@@ -94,17 +95,15 @@ const ProfilePage = (props: Props) => {
           <GridItem>
             <Box>
               <Heading size="md" mb="5">
-                Info
+                {t('info')}
               </Heading>
-              <Text mb="20">
-                You can not update your profile at the moment. We are working on a solution.
-              </Text>
+              <Text mb="20">{t('profile.info')}</Text>
             </Box>
             <Box>
               <Heading size="md" mb="5">
-                Appearance
+                {t('profile.appearance')}
               </Heading>
-              <Text mb="5">Switch between Dark and Light Mode</Text>
+              <Text mb="5">{t('profile.appearance.text')}</Text>
               <Switch size="lg" isChecked={newColorMode == 'light'} onChange={toggleColorMode} />
             </Box>
           </GridItem>

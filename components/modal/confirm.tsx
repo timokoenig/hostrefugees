@@ -10,6 +10,7 @@ import {
   Text,
 } from '@chakra-ui/react'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 type Props = {
   title: string
@@ -19,6 +20,7 @@ type Props = {
 }
 
 const ConfirmModal = (props: Props) => {
+  const { t } = useTranslation('common')
   return (
     <Modal isOpen={props.isOpen} onClose={() => props.onClose(false)}>
       <ModalOverlay />
@@ -30,10 +32,10 @@ const ConfirmModal = (props: Props) => {
         </ModalBody>
         <ModalFooter>
           <Button colorScheme="blue" variant="ghost" onClick={() => props.onClose(false)} mr="5">
-            No
+            {t('no')}
           </Button>
           <Button colorScheme="red" onClick={() => props.onClose(true)}>
-            Yes
+            {t('yes')}
           </Button>
         </ModalFooter>
       </ModalContent>

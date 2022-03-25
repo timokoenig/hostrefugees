@@ -8,7 +8,7 @@ const BecomeHostPage = () => {
   return (
     <Layout>
       <Head>
-        <title>HostRefugees</title>
+        <title>HostRefugees - Become a Host</title>
       </Head>
       <BecomeHost />
     </Layout>

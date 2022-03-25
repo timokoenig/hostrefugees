@@ -18,6 +18,7 @@ import { UserRole } from '@prisma/client'
 import { useFormik } from 'formik'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
+import { Trans, useTranslation } from 'react-i18next'
 import * as Yup from 'yup'
 import Button from './common/button'
 
@@ -29,6 +30,7 @@ const validationSchema = Yup.object().shape({
 })
 
 const Register = () => {
+  const { t } = useTranslation('common')
   const router = useRouter()
   const toast = useToast()
   const [termsAccepted, setTermsAccepted] = useState<boolean>(false)
@@ -88,20 +90,16 @@ const Register = () => {
     <Flex align="center">
       <Stack spacing={8} mx="auto" maxW="lg" py={12} px={6}>
         <Stack align="center">
-          <Heading fontSize="4xl">Become a Host</Heading>
+          <Heading fontSize="4xl">{t('becomehost')}</Heading>
           <Text fontSize="lg" textAlign="center" color={useColorModeValue('gray.600', 'gray.400')}>
-            You have a free room or apartment?
+            {t('becomehost.1')}
             <br />
-            Offer your place to people in need.
+            {t('becomehost.2')}
             <br />
-            <br />
-            - Sign Up as a Host -
-            <br />
-            - Validate your Identity -
-            <br />
-            - Upload information of your place -
-            <br />
-            - Then you are all set to receive stay requests -
+            <br />- {t('becomehost.3')} -
+            <br />- {t('becomehost.4')} -
+            <br />- {t('becomehost.5')} -
+            <br />- {t('becomehost.6')} -
             <br />
           </Text>
         </Stack>
@@ -115,7 +113,7 @@ const Register = () => {
                     isDisabled={formik.isSubmitting}
                     isInvalid={formik.errors.firstname !== undefined && formik.touched.firstname}
                   >
-                    <FormLabel htmlFor="firstname">First Name</FormLabel>
+                    <FormLabel htmlFor="firstname">{t('firstname')}</FormLabel>
                     <Input
                       id="firstname"
                       type="text"
@@ -131,7 +129,7 @@ const Register = () => {
                     isDisabled={formik.isSubmitting}
                     isInvalid={formik.errors.lastname !== undefined && formik.touched.lastname}
                   >
-                    <FormLabel htmlFor="lastname">Last Name</FormLabel>
+                    <FormLabel htmlFor="lastname">{t('lastname')}</FormLabel>
                     <Input
                       id="lastname"
                       type="text"
@@ -147,7 +145,7 @@ const Register = () => {
                 isDisabled={formik.isSubmitting}
                 isInvalid={formik.errors.email !== undefined && formik.touched.email}
               >
-                <FormLabel htmlFor="email">Email address</FormLabel>
+                <FormLabel htmlFor="email">{t('email')}</FormLabel>
                 <Input
                   id="email"
                   type="email"
@@ -161,7 +159,7 @@ const Register = () => {
                 isDisabled={formik.isSubmitting}
                 isInvalid={formik.errors.password !== undefined && formik.touched.password}
               >
-                <FormLabel htmlFor="password">Password</FormLabel>
+                <FormLabel htmlFor="password">{t('password')}</FormLabel>
                 <Input
                   id="password"
                   type="password"
@@ -175,13 +173,15 @@ const Register = () => {
                   onChange={() => setTermsAccepted(!termsAccepted)}
                   value={termsAccepted ? 1 : 0}
                 >
-                  I accept the{' '}
-                  <Link href="/privacy" target="_blank" color="blue.400">
-                    Privacy Policy
-                  </Link>
+                  <Trans i18nKey="signup.accept" t={t}>
+                    a
+                    <Link href="/privacy" target="_blank" color="blue.400">
+                      1
+                    </Link>
+                  </Trans>
                 </Checkbox>
                 <Button
-                  title="Sign up"
+                  title={t('signup')}
                   fullWidth
                   isDisabled={!termsAccepted || formik.isSubmitting}
                 />

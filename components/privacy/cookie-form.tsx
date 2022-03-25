@@ -4,6 +4,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Box, Switch, Text, useColorModeValue } from '@chakra-ui/react'
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { COOKIE_CONSENT, getCookie, setCookie } from 'utils/cookies'
 
 const COOKIE_TECHNICALLY_REQUIRED = 'technically_required'
@@ -11,6 +12,7 @@ const COOKIE_MARKETING = 'marketing'
 const COOKIE_ANALYTICS = 'analytics'
 
 const CookieForm = () => {
+  const { t } = useTranslation('common')
   const [cookies, setCookies] = useState<string>(getCookie(COOKIE_CONSENT) ?? '')
 
   const updateCookie = (name: string) => {
@@ -30,17 +32,16 @@ const CookieForm = () => {
   return (
     <>
       <Box mb="5">
-        <Text fontSize="lg">Technically necessary cookies</Text>
+        <Text fontSize="lg">{t('privacy.cookie.technically')}</Text>
         <Text color={useColorModeValue('gray.600', 'gray.400')}>
-          Enables you to navigate, use the basic functions, and to store preferences
+          {t('privacy.cookie.technically.info')}
         </Text>
         <Switch isChecked isDisabled onChange={() => {}} />
       </Box>
       <Box mb="5">
-        <Text fontSize="lg">Analytics cookies</Text>
+        <Text fontSize="lg">{t('privacy.cookie.analytics')}</Text>
         <Text color={useColorModeValue('gray.600', 'gray.400')}>
-          Enables us to determine how visitors interact with our service in order to improve the
-          user experience
+          {t('privacy.cookie.analytics.info')}
         </Text>
         <Switch
           isChecked={cookies.includes(COOKIE_ANALYTICS)}
@@ -48,9 +49,9 @@ const CookieForm = () => {
         />
       </Box>
       <Box mb="5">
-        <Text fontSize="lg">Marketing cookies</Text>
+        <Text fontSize="lg">{t('privacy.cookie.marketing')}</Text>
         <Text color={useColorModeValue('gray.600', 'gray.400')}>
-          Enables us to offer and evaluate relevant content and interest-based advertising
+          {t('privacy.cookie.marketing.info')}
         </Text>
         <Switch
           isChecked={cookies.includes(COOKIE_MARKETING)}

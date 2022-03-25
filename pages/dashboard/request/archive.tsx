@@ -8,6 +8,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import prisma from 'prisma/client'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { MappedUser } from 'utils/models'
 import { withSessionSsr } from 'utils/session'
 
@@ -17,6 +18,7 @@ type Props = {
 }
 
 const ArchivePage = (props: Props) => {
+  const { t } = useTranslation('common')
   const router = useRouter()
   return (
     <Layout user={props.user}>
@@ -26,16 +28,16 @@ const ArchivePage = (props: Props) => {
       <Container maxW="7xl">
         <Box mb="5">
           <Button variant="ghost" pl={0} leftIcon={<ArrowBackIcon />} onClick={router.back}>
-            Dashboard
+            {t('dashboard')}
           </Button>
         </Box>
         <Box align="center">
           <Heading as="h2" size="xl" mb="5">
-            Request Archive
+            {t('request.archive')}
           </Heading>
         </Box>
         <Stack spacing={6}>
-          {props.requests.length === 0 && <Text>No requests older than 14 days</Text>}
+          {props.requests.length === 0 && <Text>{t('request.archive.empty')}</Text>}
           <List spacing="2">
             {props.requests.map((request, i) => (
               <RequestItem key={i} request={request} />

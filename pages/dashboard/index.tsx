@@ -8,6 +8,7 @@ import moment from 'moment'
 import Head from 'next/head'
 import prisma from 'prisma/client'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { mapPlace } from 'utils/mapper'
 import { MappedUser } from 'utils/models'
 import { onboardingCheck } from 'utils/onboarding-check'
@@ -21,15 +22,16 @@ type Props = {
 }
 
 const DashboardPage = (props: Props) => {
+  const { t } = useTranslation('common')
   return (
     <Layout user={props.user}>
       <Head>
-        <title>HostRefugees</title>
+        <title>HostRefugees - Dashboard</title>
       </Head>
       <Container maxW="7xl">
         <Box align="center">
           <Heading as="h2" size="xl">
-            Welcome{' '}
+            {t('welcome')}{' '}
             <Text as="span" color="blue.400">
               {props.user.firstname}
             </Text>
@@ -43,9 +45,9 @@ const DashboardPage = (props: Props) => {
               <Alert status="warning" variant="solid" rounded="lg" my="5">
                 <AlertIcon />
                 <Text as="span" fontWeight="semibold" mr="1">
-                  Waiting for Approval
+                  {t('profile.approval')}
                 </Text>
-                - You will receive an email as soon as your profile has been approved.
+                - {t('profile.approval.text')}
               </Alert>
             )}
             <Host places={props.places} requests={props.requests} />

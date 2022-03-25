@@ -14,6 +14,7 @@ import {
 import { useFormik } from 'formik'
 import { useRouter } from 'next/router'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { MappedPlace } from 'utils/models'
 import * as Yup from 'yup'
 import CustomButton from '../common/button'
@@ -31,6 +32,7 @@ type Props = {
 }
 
 const Form = (props: Props) => {
+  const { t } = useTranslation('common')
   const router = useRouter()
   const toast = useToast()
   const formik = useFormik({
@@ -92,18 +94,18 @@ const Form = (props: Props) => {
             textTransform="uppercase"
             mb="4"
           >
-            Request to stay
+            {t('request.new')}
           </Text>
 
           <Heading size="sm" mb="2">
-            How many people want to stay at this place?
+            {t('request.new.guests')}
           </Heading>
           <Box py="2" width="100%">
             <Flex>
               <Text flex="1" fontSize="lg" pt="1">
-                Adults{' '}
+                {t('adults')}{' '}
                 <Text as="span" fontSize="xs" fontWeight="bold">
-                  (max {props.place.adults})
+                  ({t('max')} {props.place.adults})
                 </Text>
               </Text>
               <Box>
@@ -127,9 +129,9 @@ const Form = (props: Props) => {
           <Box py="2">
             <Flex>
               <Text flex="1" fontSize="lg" pt="1">
-                Children{' '}
+                {t('children')}{' '}
                 <Text as="span" fontSize="xs" fontWeight="bold">
-                  (max {props.place.children})
+                  ({t('max')} {props.place.children})
                 </Text>
               </Text>
               <Box>
@@ -152,7 +154,7 @@ const Form = (props: Props) => {
           <Box py="2">
             <Flex>
               <Text flex="1" fontSize="lg" pt="1">
-                Do you bring any pets?
+                {t('request.new.pets')}
               </Text>
               <Box pt="1">
                 <FormControl isDisabled={formik.isSubmitting}>
@@ -176,7 +178,7 @@ const Form = (props: Props) => {
             textTransform="uppercase"
             mb="4"
           >
-            Tell the host about yourself
+            {t('request.new.about')}
           </Text>
           <FormControl
             isRequired
@@ -185,7 +187,7 @@ const Form = (props: Props) => {
           >
             <Textarea
               id="about"
-              placeholder="Do you want to tell the host anything in advance? What kind of pets do you want to bring?"
+              placeholder={t('request.new.about.placeholder')}
               value={formik.values.about}
               onChange={formik.handleChange}
             />
@@ -200,12 +202,12 @@ const Form = (props: Props) => {
             fontWeight="500"
             textTransform="uppercase"
           >
-            Contact Information
+            {t('request.new.contact')}
           </Text>
           <Text color={useColorModeValue('gray.600', 'gray.400')} mb="4">
-            This information will only be shared with the host when your request gets accepted.
+            {t('request.new.contact.info')}
           </Text>
-          <Text fontSize="lg">Phone Number</Text>
+          <Text fontSize="lg">{t('phone')}</Text>
           <FormControl
             isRequired
             isDisabled={formik.isSubmitting}
@@ -221,7 +223,7 @@ const Form = (props: Props) => {
           </FormControl>
         </Box>
 
-        <CustomButton title="Confirm Request" fullWidth isDisabled={formik.isSubmitting} />
+        <CustomButton title={t('request.new.confirm')} fullWidth isDisabled={formik.isSubmitting} />
       </Box>
     </form>
   )

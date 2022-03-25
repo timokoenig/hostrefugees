@@ -10,8 +10,10 @@ import {
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 const CustomMenu = () => {
+  const { t } = useTranslation('common')
   const router = useRouter()
   const toast = useToast()
 
@@ -36,10 +38,10 @@ const CustomMenu = () => {
         <Avatar size="sm" src="/svg/undraw_profile_pic_ic-5-t.svg" />
       </MenuButton>
       <MenuList>
-        <MenuItem onClick={() => router.push('/dashboard')}>Dashboard</MenuItem>
-        <MenuItem onClick={() => router.push('/profile')}>Profile</MenuItem>
+        <MenuItem onClick={() => router.push('/dashboard')}>{t('dashboard')}</MenuItem>
+        <MenuItem onClick={() => router.push('/profile')}>{t('profile')}</MenuItem>
         <MenuDivider />
-        <MenuItem onClick={onLogout}>Logout</MenuItem>
+        <MenuItem onClick={onLogout}>{t('logout')}</MenuItem>
       </MenuList>
     </Menu>
   )

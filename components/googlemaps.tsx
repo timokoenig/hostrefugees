@@ -7,6 +7,7 @@ import GoogleMapReact from 'google-map-react'
 import _ from 'lodash'
 import { useRouter } from 'next/router'
 import React from 'react'
+import { Trans, useTranslation } from 'react-i18next'
 import { COOKIE_CONSENT, getCookie, setCookie } from 'utils/cookies'
 import { MappedPlace } from 'utils/models'
 
@@ -17,6 +18,7 @@ export type MarkerItem = {
 }
 
 const Placeholder = ({ height }: { height: string }) => {
+  const { t } = useTranslation('common')
   const router = useRouter()
 
   const enableCookies = () => {
@@ -44,21 +46,20 @@ const Placeholder = ({ height }: { height: string }) => {
           spacing="5"
         >
           <Text fontWeight="semibold" fontSize="lg">
-            Google Maps Disabled
+            {t('maps.disabled')}
           </Text>
+          <Text>{t('maps.info')}</Text>
           <Text>
-            This website uses Google Maps to display places in Germany. To enable this feature,
-            please allow the usage of non-essential cookies.
-          </Text>
-          <Text>
-            For further information, please refer to our{' '}
-            <Link href="/privacy" fontWeight="semibold">
-              Privacy Policy
-            </Link>
-            .
+            <Trans i18nKey="maps.privacy" t={t}>
+              a
+              <Link href="/privacy" fontWeight="semibold">
+                1
+              </Link>
+              b
+            </Trans>
           </Text>
           <Button colorScheme="blue" onClick={enableCookies}>
-            Enable Cookies
+            {t('maps.enablecookies')}
           </Button>
         </Stack>
       </Flex>

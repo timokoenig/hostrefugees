@@ -1,6 +1,7 @@
 import { Box, Button, Center, Flex, Heading, HStack, Link } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { MappedUser } from 'utils/models'
 import Menu from './menu'
 
@@ -9,6 +10,7 @@ type Props = {
 }
 
 export default function Navigation(props: Props) {
+  const { t } = useTranslation('common')
   const router = useRouter()
 
   return (
@@ -33,10 +35,10 @@ export default function Navigation(props: Props) {
                 mr={4}
                 onClick={() => router.push('/become-host')}
               >
-                Become a Host
+                {t('becomehost')}
               </Button>
               <Button variant="ghost" size="sm" onClick={() => router.push('/login')}>
-                Login
+                {t('login')}
               </Button>
             </Flex>
           )}

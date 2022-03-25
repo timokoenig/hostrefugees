@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import { Button, Center, Heading, Image, Text, useToast } from '@chakra-ui/react'
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { MappedUser } from 'utils/models'
 import VerificationButton from './verification-button'
 
@@ -10,6 +11,7 @@ type Props = {
 }
 
 const ProfilePhotoOnboarding = (props: Props) => {
+  const { t } = useTranslation('common')
   const toast = useToast()
   const [isLoading, setLoading] = useState<boolean>(false)
   const [photo, setPhoto] = useState<File | null>(null)
@@ -48,22 +50,21 @@ const ProfilePhotoOnboarding = (props: Props) => {
   return (
     <>
       <Heading as="h2" size="xl" mt={6} mb={10}>
-        Profile Photo
+        {t('onboarding.photo')}
       </Heading>
       <Center mb={10}>
         <Image src="/svg/undraw_selfie_re_h9um.svg" maxWidth="250" />
       </Center>
       <Text mb="10">
-        <b>It's selfie time</b>
+        <b>{t('onboarding.photo.subtitle')}</b>
         <br />
-        You can upload an optional profile photo to increase the chance of getting accepted from the
-        host.
+        {t('onboarding.photo.text')}
       </Text>
       <Center>
         <VerificationButton
           image={photo ? URL.createObjectURL(photo) : null}
-          title={photo == null ? 'Selfie' : ''}
-          subtitle={photo == null ? 'Click to upload' : ''}
+          title={photo == null ? t('onboarding.photo.selfie') : ''}
+          subtitle={photo == null ? t('onboarding.photo.upload') : ''}
           isDisabled={isLoading}
           onUpload={async file => {
             setPhoto(file)
@@ -82,7 +83,11 @@ const ProfilePhotoOnboarding = (props: Props) => {
         }}
         isDisabled={isLoading}
       >
-        {isLoading ? 'Loading...' : photo == null ? 'Continue wihout photo' : 'Continue'}
+        {isLoading
+          ? t('loading')
+          : photo == null
+          ? t('onboarding.photo.continuewithout')
+          : t('continue')}
       </Button>
     </>
   )

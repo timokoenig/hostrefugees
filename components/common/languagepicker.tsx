@@ -41,7 +41,8 @@ const availableLanguages = [
 ]
 
 const LanguagePicker = (props: Props) => {
-  const { t } = useTranslation('languages')
+  const { t } = useTranslation('common')
+  const { t: tLang } = useTranslation('languages')
   return (
     <Select<LanguageOption, true>
       isMulti
@@ -49,12 +50,12 @@ const LanguagePicker = (props: Props) => {
       options={availableLanguages
         .map(lang => {
           return {
-            label: t(lang),
+            label: tLang(lang),
             value: lang,
           }
         })
         .sort((a, b) => (a.label > b.label ? 1 : -1))}
-      placeholder="Select at least one language"
+      placeholder={t('onboarding.language.picker')}
       closeMenuOnSelect={false}
       size="lg"
       isDisabled={props.isDisabled}

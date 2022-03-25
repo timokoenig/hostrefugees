@@ -2,6 +2,7 @@ import { Box, Container, Flex, Heading, List, SimpleGrid, Stack, Text } from '@c
 import { Place, Request } from '@prisma/client'
 import { useRouter } from 'next/router'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { mapPlace } from 'utils/mapper'
 import Button from '../common/button'
 import PlaceItem from '../place/item'
@@ -13,6 +14,7 @@ type Props = {
 }
 
 const Host = (props: Props) => {
+  const { t } = useTranslation('common')
   const router = useRouter()
   return (
     <Container px={0} maxW="7xl" py={10}>
@@ -20,12 +22,16 @@ const Host = (props: Props) => {
         <Box>
           <Flex mb="5" textAlign="center">
             <Heading size="md" flex="1" textAlign="left">
-              Your Places
+              {t('dashboard.host.places')}
             </Heading>
-            <Button title="NEW" size="sm" onClick={() => router.push('/dashboard/place/new')} />
+            <Button
+              title={t('new').toUpperCase()}
+              size="sm"
+              onClick={() => router.push('/dashboard/place/new')}
+            />
           </Flex>
           <Stack spacing={6}>
-            {props.places.length == 0 && <Text>No Places</Text>}
+            {props.places.length == 0 && <Text>{t('dashboard.noplaces')}</Text>}
             <List spacing="2">
               {props.places.map((place, i) => (
                 <PlaceItem
@@ -40,16 +46,16 @@ const Host = (props: Props) => {
         <Box>
           <Flex mb="5" textAlign="center">
             <Heading size="md" flex="1" textAlign="left">
-              Stay Requests
+              {t('dashboard.host.requests')}
             </Heading>
             <Button
-              title="ARCHIVE"
+              title={t('archive').toUpperCase()}
               size="sm"
               onClick={() => router.push('/dashboard/request/archive')}
             />
           </Flex>
           <Stack spacing={6}>
-            {props.requests.length == 0 && <Text>No Requests</Text>}
+            {props.requests.length == 0 && <Text>{t('dashboard.norequests')}</Text>}
             <List spacing="2">
               {props.requests.map((req, i) => (
                 <RequestItem key={i} request={req} />

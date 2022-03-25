@@ -29,6 +29,7 @@ type Props = {
 }
 
 export default function Detail(props: Props) {
+  const { t } = useTranslation('common')
   const { t: tLang } = useTranslation('languages')
   const router = useRouter()
   const titleColor = useColorModeValue('blue.500', 'blue.300')
@@ -37,9 +38,9 @@ export default function Detail(props: Props) {
     if (props.request !== null) {
       return (
         <Status color="yellow.500" title="WAITING">
-          <Text mb="2">You already have sent a request to stay to this place</Text>
+          <Text mb="2">{t('place.detail.existingrequest')}</Text>
           <Link fontWeight="semibold" href={`/dashboard/request/${props.request.id}`}>
-            Show Request
+            {t('place.detail.show')}
           </Link>
         </Status>
       )
@@ -48,7 +49,7 @@ export default function Detail(props: Props) {
       return (
         <Button
           fullWidth
-          title="Request to stay"
+          title={t('place.detail.request')}
           onClick={() => router.push(`/place/${props.place.id}/request`)}
         />
       )
@@ -67,7 +68,7 @@ export default function Detail(props: Props) {
               <GridItem key={i} colSpan={i == 0 ? 2 : 1}>
                 <Image
                   rounded="md"
-                  alt="product image"
+                  alt="place image"
                   src={`/api/place/${props.place.id}/photo/${photo}`}
                   fit="cover"
                   align="center"
@@ -106,25 +107,25 @@ export default function Detail(props: Props) {
                 textTransform="uppercase"
                 mb="4"
               >
-                Residents
+                {t('residents')}
               </Text>
 
               <List spacing={2}>
                 <ListItem>
                   <Text as="span" fontWeight="bold">
-                    Adults
+                    {t('adults')}
                   </Text>{' '}
                   {props.place.placeAdults} (
                   {props.place.placeAdultWomen && props.place.placeAdultMen
-                    ? 'Women & Men'
+                    ? t('womenmen')
                     : props.place.placeAdultMen
-                    ? 'Only Men'
-                    : 'Only Women'}
+                    ? t('onlymen')
+                    : t('onlywomen')}
                   )
                 </ListItem>
                 <ListItem>
                   <Text as="span" fontWeight="bold">
-                    Children
+                    {t('children')}
                   </Text>{' '}
                   {props.place.placeChildren}
                 </ListItem>
@@ -138,64 +139,63 @@ export default function Detail(props: Props) {
                 textTransform="uppercase"
                 mb="4"
               >
-                Place Details
+                {t('place.detail')}
               </Text>
 
               <List spacing={2}>
                 <ListItem>
                   <Text as="span" fontWeight="bold">
-                    Type of place
+                    {t('place.detail.type')}
                   </Text>{' '}
                   {formatPlaceType(props.place)}
                 </ListItem>
                 <ListItem>
                   <Text as="span" fontWeight="bold">
-                    Rooms:
+                    {t('rooms')}:
                   </Text>{' '}
                   {props.place.rooms}
                 </ListItem>
                 <ListItem>
                   <Text as="span" fontWeight="bold">
-                    Beds:
+                    {t('Beds')}:
                   </Text>{' '}
                   {props.place.beds}
                 </ListItem>
                 <ListItem>
                   <Text as="span" fontWeight="bold">
-                    Bathroom:
+                    {t('bathroom')}:
                   </Text>{' '}
                   {props.place.bathroom == BathroomType.YES
-                    ? 'Private Bathroom'
-                    : 'Shared Bathroom'}
+                    ? t('bathroom.private')
+                    : t('bathroom.shared')}
                 </ListItem>
                 <ListItem>
                   <Text as="span" fontWeight="bold">
-                    Adults:
+                    {t('adults')}:
                   </Text>{' '}
                   {props.place.adults}
                 </ListItem>
                 <ListItem>
                   <Text as="span" fontWeight="bold">
-                    Children:
+                    {t('children')}:
                   </Text>{' '}
                   {props.place.children}
                 </ListItem>
                 <ListItem>
                   <Text as="span" fontWeight="bold">
-                    Pets Allowed:
+                    {t('place.detail.pets')}:
                   </Text>{' '}
                   {props.place.pets ? 'Yes' : 'No'}
                 </ListItem>
                 <ListItem>
                   <Text as="span" fontWeight="bold">
-                    Address:
+                    {t('address')}:
                   </Text>{' '}
-                  {props.place.addressCity} (exact location will be shared when the stay gets
-                  accepted)
+                  {props.place.addressCity} ({t('place.detail.address.info')})
                 </ListItem>
                 <ListItem>
                   <Text as="span" fontWeight="bold">
-                    Host Language:
+                    {t('languages.host')}:
                   </Text>{' '}
                   {props.place.author.languages.map(lang => tLang(lang)).join(', ')}
                 </ListItem>
@@ -210,7 +210,7 @@ export default function Detail(props: Props) {
                   textTransform="uppercase"
                   mb="4"
                 >
-                  House Rules
+                  {t('houserules')}
                 </Text>
                 <Text fontSize="lg">{props.place.houseRules}</Text>
               </Box>

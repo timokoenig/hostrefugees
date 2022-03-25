@@ -1,6 +1,7 @@
 import { Button, Center, Heading, Image, Text, useToast } from '@chakra-ui/react'
 import LanguagePicker from 'components/common/languagepicker'
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { MappedUser } from 'utils/models'
 
 type Props = {
@@ -9,6 +10,7 @@ type Props = {
 }
 
 const LanguageOnboarding = (props: Props) => {
+  const { t } = useTranslation('common')
   const toast = useToast()
   const [isLoading, setLoading] = useState<boolean>(false)
   const [languages, setLanguages] = useState<string[]>([])
@@ -51,7 +53,7 @@ const LanguageOnboarding = (props: Props) => {
   return (
     <>
       <Heading as="h2" size="xl" mt={6} mb={10}>
-        We are happy to welcome you at{' '}
+        {t('onboarding.language')}{' '}
         <Text as="span" color="blue.400">
           HostRefugees
         </Text>
@@ -59,9 +61,7 @@ const LanguageOnboarding = (props: Props) => {
       <Center mb={10}>
         <Image src="/svg/undraw_audio_conversation_re_ptsl.svg" maxWidth="250" />
       </Center>
-      <Text mb="5">
-        To improve the communication for hosts and guests, please select all languages you speak
-      </Text>
+      <Text mb="5">{t('onboarding.language.text')}</Text>
       <LanguagePicker onChange={setLanguages} isDisabled={isLoading} />
       <Button
         colorScheme="blue"
@@ -69,7 +69,7 @@ const LanguageOnboarding = (props: Props) => {
         onClick={updateLanguage}
         isDisabled={languages.length == 0 || isLoading}
       >
-        {isLoading ? 'Loading...' : 'Continue'}
+        {isLoading ? t('loading') : t('continue')}
       </Button>
     </>
   )

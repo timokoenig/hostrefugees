@@ -13,6 +13,7 @@ import {
   Text,
 } from '@chakra-ui/react'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { Filter } from '../../state/app'
 import NumberInput from './number-input'
 
@@ -24,16 +25,17 @@ type Props = {
 }
 
 const FilterModal = (props: Props) => {
+  const { t } = useTranslation('common')
   return (
     <Modal isOpen={props.isOpen} onClose={props.onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Filters</ModalHeader>
+        <ModalHeader>{t('filter')}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <Flex py="5">
             <Text flex="1" fontSize="lg">
-              Adults
+              {t('adults')}
             </Text>
             <NumberInput
               active={props.filter.adults !== null}
@@ -44,7 +46,7 @@ const FilterModal = (props: Props) => {
           </Flex>
           <Flex py="5">
             <Text flex="1" fontSize="lg">
-              Children
+              {t('children')}
             </Text>
             <NumberInput
               active={props.filter.children !== null}
@@ -54,7 +56,7 @@ const FilterModal = (props: Props) => {
           </Flex>
           <Flex py="5">
             <Text flex="1" fontSize="lg" pr="10">
-              City
+              {t('city')}
             </Text>
             <Input
               value={props.filter.city ?? ''}
@@ -67,11 +69,11 @@ const FilterModal = (props: Props) => {
             variant="ghost"
             onClick={() => props.onChange({ adults: null, children: null, city: null })}
           >
-            Clear All
+            {t('clearall')}
           </Button>
           <Box flex="1" />
           <Button colorScheme="blue" onClick={props.onClose}>
-            Apply
+            {t('apply')}
           </Button>
         </ModalFooter>
       </ModalContent>

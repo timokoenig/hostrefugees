@@ -1,18 +1,19 @@
 import { Button, Heading, Icon, Link, Text, useColorModeValue } from '@chakra-ui/react'
+import parse from 'html-react-parser'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { IoBedSharp, IoOpenOutline } from 'react-icons/io5'
 import Section from './section'
 
 const SectionPlaces = () => {
+  const { t } = useTranslation('common')
   return (
-    <Section id="places" title="A Place To Stay" icon={IoBedSharp} color="blue">
+    <Section id="places" title={t('welcomegermany.feature.place')} icon={IoBedSharp} color="blue">
       <Heading as="h4" size="md">
-        State-run initial reception centres
+        {t('welcomegermany.place.state')}
       </Heading>
       <Text color={useColorModeValue('gray.600', 'gray.400')}>
-        You can take part in the reception program for war refugees from Ukraine by applying for a
-        residence permit for temprary protection at your local foreigners authority, which you can
-        find in the BAMF-NAvI directory at{' '}
+        {t('welcomegermany.place.state.info')}{' '}
         <Link
           href="https://bamf-navi.bamf.de/de/Themen/Behoerden"
           target="_blank"
@@ -24,18 +25,14 @@ const SectionPlaces = () => {
         .
       </Text>
       <Heading as="h4" size="md">
-        Private Accommodation
+        {t('welcomegermany.place.private')}
       </Heading>
       <Text color={useColorModeValue('gray.600', 'gray.400')}>
-        <Text as="span" fontWeight="semibold">
-          HostRefugees
-        </Text>{' '}
-        is a platform where private people can offer their place to refugees for free. As a refugee
-        you can apply for a temporary stay at those places.
+        {parse(t('welcomegermany.place.private.info'))}
       </Text>
       <Text color={useColorModeValue('gray.600', 'gray.400')} fontSize="lg">
         <Button as={Link} href="/place" fontWeight="semibold">
-          Find a place from one of our amazing hosts
+          {t('welcomegermany.place.private.button')}
         </Button>
       </Text>
     </Section>

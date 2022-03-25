@@ -1,5 +1,6 @@
 import { Box, Button, Image, Text } from '@chakra-ui/react'
 import React, { useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 type Props = {
   image: string | null
@@ -11,6 +12,7 @@ type Props = {
 }
 
 const VerificationButton = (props: Props) => {
+  const { t } = useTranslation('common')
   const [isLoading, setLoading] = useState<boolean>(false)
   const inputFileRef = useRef<HTMLInputElement>(null)
 
@@ -43,7 +45,7 @@ const VerificationButton = (props: Props) => {
         p="10"
         maxWidth="200"
       >
-        <Text fontWeight="semibold">Loading...</Text>
+        <Text fontWeight="semibold">{t('loading')}</Text>
       </Box>
     )
   }
@@ -83,14 +85,7 @@ const VerificationButton = (props: Props) => {
       maxWidth="200"
       textAlign="center"
     >
-      <Image
-        rounded="md"
-        alt="product image"
-        src={props.image}
-        fit="cover"
-        align="center"
-        w="100%"
-      />
+      <Image rounded="md" alt="user image" src={props.image} fit="cover" align="center" w="100%" />
       <Text fontWeight="semibold" mt="2">
         {props.title}
       </Text>
@@ -106,7 +101,7 @@ const VerificationButton = (props: Props) => {
         onClick={onRemove}
         isDisabled={props.isDisabled}
       >
-        Remove
+        {t('remove')}
       </Button>
     </Box>
   )

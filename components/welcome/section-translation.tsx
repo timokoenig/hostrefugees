@@ -11,6 +11,7 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { IoChatbubblesSharp } from 'react-icons/io5'
 import Section from './section'
 
@@ -39,18 +40,25 @@ const translationsPhrases: { de: string; ua: string }[] = [
 ]
 
 const SectionTranslations = () => {
+  const { t } = useTranslation('common')
+  const { t: tLang } = useTranslation('languages')
   return (
-    <Section id="translations" title="How Do I Say This?" icon={IoChatbubblesSharp} color="green">
+    <Section
+      id="translations"
+      title={t('welcomegermany.feature.translation')}
+      icon={IoChatbubblesSharp}
+      color="green"
+    >
       <Text color={useColorModeValue('gray.600', 'gray.400')}>
-        A list of common words and phrases
+        {t('welcomegermany.translation.info')}
       </Text>
       <SimpleGrid templateColumns={{ sm: '1fr', md: '1fr 1fr' }} spacing={20}>
         <GridItem>
           <Table size="md">
             <Thead>
               <Tr>
-                <Th>German</Th>
-                <Th>Ukrainian</Th>
+                <Th>{tLang('de')}</Th>
+                <Th>{tLang('ua')}</Th>
               </Tr>
             </Thead>
             <Tbody>
@@ -67,8 +75,8 @@ const SectionTranslations = () => {
           <Table size="md">
             <Thead>
               <Tr>
-                <Th>German</Th>
-                <Th>Ukrainian</Th>
+                <Th>{tLang('de')}</Th>
+                <Th>{tLang('ua')}</Th>
               </Tr>
             </Thead>
             <Tbody>

@@ -15,6 +15,7 @@ import {
 import { useFormik } from 'formik'
 import { useRouter } from 'next/router'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import * as Yup from 'yup'
 import Button from './common/button'
 
@@ -24,6 +25,7 @@ const validationSchema = Yup.object().shape({
 })
 
 const Login = () => {
+  const { t } = useTranslation('common')
   const router = useRouter()
   const toast = useToast()
   const formik = useFormik({
@@ -71,7 +73,7 @@ const Login = () => {
     <Flex align="center">
       <Stack spacing={8} mx="auto" maxW="lg" py={12} px={6}>
         <Stack align="center">
-          <Heading fontSize="4xl">Sign in to your account</Heading>
+          <Heading fontSize="4xl">{t('signin')}</Heading>
         </Stack>
         <Box rounded="lg" bg={useColorModeValue('white', 'gray.700')} boxShadow="lg" p={8}>
           <form onSubmit={formik.handleSubmit}>
@@ -81,7 +83,7 @@ const Login = () => {
                 isDisabled={formik.isSubmitting}
                 isInvalid={formik.errors.email !== undefined && formik.touched.email}
               >
-                <FormLabel htmlFor="email">Email address</FormLabel>
+                <FormLabel htmlFor="email">{t('email')}</FormLabel>
                 <Input
                   id="email"
                   type="email"
@@ -95,7 +97,7 @@ const Login = () => {
                 isDisabled={formik.isSubmitting}
                 isInvalid={formik.errors.password !== undefined && formik.touched.password}
               >
-                <FormLabel htmlFor="password">Password</FormLabel>
+                <FormLabel htmlFor="password">{t('password')}</FormLabel>
                 <Input
                   id="password"
                   type="password"
@@ -105,15 +107,15 @@ const Login = () => {
                 <FormErrorMessage>{formik.errors.password}</FormErrorMessage>
               </FormControl>
               <Stack spacing={10}>
-                <Button title="Sign in" fullWidth isDisabled={formik.isSubmitting} />
+                <Button title={t('signin')} fullWidth isDisabled={formik.isSubmitting} />
               </Stack>
             </Stack>
           </form>
         </Box>
         <Text fontSize="lg" color={useColorModeValue('gray.600', 'gray.400')} textAlign="center">
-          Don&apos;t have an account?{' '}
+          {t('signin.newaccount')}{' '}
           <Link color="blue.400" href="/register">
-            Register now
+            {t('signin.register')}
           </Link>
         </Text>
       </Stack>

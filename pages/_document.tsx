@@ -17,14 +17,13 @@ export default class Document extends NextDocument {
     return (
       <Html lang="en">
         <Head>
-          <meta name="description" content="HostRefugees.eu" />
+          <meta name="description" content="HostRefugees, at you place!" />
           <meta name="theme-color" content="#ffffff" />
           <meta property="og:title" content="hostrefugees.eu" />
           <meta property="og:url" content="https://hostrefugees.eu" />
           <meta property="og:image" content="https://hostrefugees.eu/icon-192x192.png" />
-          <meta property="og:description" content="hostrefugees.eu" />
+          <meta property="og:description" content="HostRefugees, at you place!" />
           <meta property="og:type" content="website" />
-          <link rel="manifest" href="/manifest.json" />
           <link rel="icon" href="/favicon.ico" />
           <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
           <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />

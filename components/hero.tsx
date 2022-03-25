@@ -1,8 +1,10 @@
 import { Button, Container, Flex, Heading, Image, Stack, Text } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 export default function Hero() {
+  const { t } = useTranslation('common')
   const router = useRouter()
   return (
     <Container maxW="7xl">
@@ -36,7 +38,7 @@ export default function Hero() {
             </Text>
             <br />
             <Text as="span" color="blue.500">
-              at your place!
+              {t('hostrefugees.subtitle')}
             </Text>
           </Heading>
           <Stack spacing={{ base: 4, sm: 6 }} direction={{ base: 'column', sm: 'row' }}>
@@ -50,7 +52,7 @@ export default function Hero() {
               _hover={{ bg: 'blue.600' }}
               onClick={() => router.push('/place')}
             >
-              Available Places
+              {t('place.available')}
             </Button>
             <Button
               rounded="full"
@@ -59,7 +61,7 @@ export default function Hero() {
               px={6}
               onClick={() => router.push('/welcome')}
             >
-              Welcome To Germany
+              {t('welcomegermany')}
             </Button>
           </Stack>
         </Stack>

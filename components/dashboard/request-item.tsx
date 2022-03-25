@@ -5,41 +5,44 @@ import { Request, RequestStatus } from '@prisma/client'
 import moment from 'moment'
 import { useRouter } from 'next/router'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 type Props = {
   request: Request
 }
 
 const StatusBadge = (props: { status: RequestStatus | null }): JSX.Element => {
+  const { t } = useTranslation('common')
   if (props.status === RequestStatus.ACCEPTED) {
     return (
       <Badge colorScheme="green" borderRadius="full" px="2" ml="2">
-        Accepted
+        {t('accepted')}
       </Badge>
     )
   }
   if (props.status === RequestStatus.DECLINED) {
     return (
       <Badge colorScheme="red" borderRadius="full" px="2" ml="2">
-        Declined
+        {t('declined')}
       </Badge>
     )
   }
   if (props.status === RequestStatus.CANCELED) {
     return (
       <Badge colorScheme="gray" borderRadius="full" px="2" ml="2">
-        Canceled
+        {t('canceled')}
       </Badge>
     )
   }
   return (
     <Badge colorScheme="yellow" borderRadius="full" px="2" ml="2">
-      Waiting
+      {t('waiting')}
     </Badge>
   )
 }
 
 const RequestItem = (props: Props) => {
+  const { t } = useTranslation('common')
   const router = useRouter()
   return (
     <ListItem onClick={() => router.push(`/dashboard/request/${props.request.id}`)}>
@@ -67,7 +70,7 @@ const RequestItem = (props: Props) => {
             {(props.request as any).place.title}
           </Box>
           <Box>
-            {props.request.adults} adults &bull; {props.request.children} children
+            {props.request.adults} {t('adults')} &bull; {props.request.children} {t('children')}
           </Box>
         </Box>
       </Box>

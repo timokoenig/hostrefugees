@@ -1,6 +1,7 @@
 import { Container, Heading, Link } from '@chakra-ui/react'
 import Item from 'components/help/item'
 import React from 'react'
+import { Trans, useTranslation } from 'react-i18next'
 import { MappedUser } from 'utils/models'
 import { withSessionSsr } from 'utils/session'
 import Layout from '../components/layout'
@@ -10,40 +11,39 @@ type Props = {
 }
 
 const HelpPage = (props: Props) => {
+  const { t } = useTranslation('common')
   return (
     <Layout user={props.user}>
       <Container maxW="7xl">
         <Heading as="h1" size="lg" mb="5">
-          Help Center
+          {t('help')}
         </Heading>
-        <Item title="How can I apply for a stay?">
-          First look for a{' '}
-          <Link href="/place" fontWeight="semibold">
-            place to stay
-          </Link>
-          . If you found a place that meets your requirements, simply click on the &quot;Request to
-          stay&quot;-button, fill out the required fields, tell the host a bit about yourself, and
-          confirm the requset. You will receive an email as soon as the host accepts the request. In
-          that email you will the contact information and arrival instructions. We kindly ask you to
-          contact the host to communicate the arrival.
+        <Item title={t('help.howtostay')}>
+          <Trans i18nKey="help.howtostay.text" t={t}>
+            a
+            <Link href="/place" fontWeight="semibold">
+              1
+            </Link>
+            b
+          </Trans>
         </Item>
-        <Item title="How can I offer a place to stay?">
-          To host on HostRefugees you must have an apartment, room, or other place that is located
-          in Germany. The place needs to be in good condition and has at least one bed and bathroom.
-          If you fulfill these requirements you can go to{' '}
-          <Link href="/become-host" fontWeight="semibold">
-            Become a Host
-          </Link>{' '}
-          and register. After registration you will need to upload your ID or passport to identify
-          yourself. This is mandatory to keep our guests safe.
+        <Item title={t('help.offerplace')}>
+          <Trans i18nKey="help.offerplace.text" t={t}>
+            a
+            <Link href="/become-host" fontWeight="semibold">
+              1
+            </Link>
+            b
+          </Trans>
         </Item>
-        <Item title="What can I do when something is not working?">
-          The platform is in early development and might contain smaller bugs. If you find a bug or
-          have ideas for further improvements, please go to{' '}
-          <Link href="https://github.com/timokoenig/hostrefugees/issues" fontWeight="semibold">
-            Github
-          </Link>{' '}
-          and create an issue.
+        <Item title={t('help.issue')}>
+          <Trans i18nKey="help.issue.text" t={t}>
+            a
+            <Link href="https://github.com/timokoenig/hostrefugees/issues" fontWeight="semibold">
+              1
+            </Link>
+            b
+          </Trans>
         </Item>
       </Container>
     </Layout>

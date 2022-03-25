@@ -1,9 +1,11 @@
 import { Button, Flex, Link, Spacer, Stack, Text, useColorModeValue } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React from 'react'
+import { Trans, useTranslation } from 'react-i18next'
 import { COOKIE_CONSENT, getCookie, setCookie } from 'utils/cookies'
 
 const CookieConsent = () => {
+  const { t } = useTranslation('common')
   const router = useRouter()
   const backgroundColor = useColorModeValue('gray.200', 'gray.500')
 
@@ -33,23 +35,22 @@ const CookieConsent = () => {
       maxWidth="100%"
     >
       <Text>
-        We use cookies and similar technologies to provide certain features, enhance the user
-        experience and deliver content that is relevant to your interests. Depending on their
-        purpose, analysis and marketing cookies may be used in addition to technically necessary
-        cookies. By clicking on &quot;Agree and continue&quot;, you declare your consent to the use
-        of the aforementioned cookies.{' '}
-        <Link href="/privacy/cookies" fontWeight="semibold">
-          Here
-        </Link>{' '}
-        you can make detailed settings or revoke your consent (in part if necessary) with effect for
-        the future.
+        <Trans i18nKey="privacy.consent.text" t={t}>
+          a
+          <Link href="/privacy/cookies" fontWeight="semibold">
+            1
+          </Link>
+          b
+        </Trans>
       </Text>
       <Text>
-        For further information, please refer to our{' '}
-        <Link href="/privacy" target="_blank" fontWeight="semibold">
-          Privacy Policy
-        </Link>
-        .
+        <Trans i18nKey="privacy.consent.info" t={t}>
+          a
+          <Link href="/privacy" target="_blank" fontWeight="semibold">
+            1
+          </Link>
+          b
+        </Trans>
       </Text>
       <Flex flexDirection={{ base: 'column', md: 'row' }} align="flex-end">
         <Spacer />
@@ -63,7 +64,7 @@ const CookieConsent = () => {
           wordBreak="break-word"
           whiteSpace="normal"
         >
-          Continue with technically required cookies only
+          {t('privacy.consent.continue.partial')}
         </Button>
         <Button
           colorScheme="blue"
@@ -73,7 +74,7 @@ const CookieConsent = () => {
           wordBreak="break-word"
           whiteSpace="normal"
         >
-          Agree and continue
+          {t('privacy.consent.continue.full')}
         </Button>
       </Flex>
     </Stack>

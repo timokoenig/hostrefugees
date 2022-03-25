@@ -12,6 +12,7 @@ import PlaceItem from 'components/place/item'
 import dynamic from 'next/dynamic'
 import prisma from 'prisma/client'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { mapPlace } from 'utils/mapper'
 import { MappedPlace, MappedUser } from 'utils/models'
 import { withSessionSsr } from 'utils/session'
@@ -29,6 +30,7 @@ type Props = {
 }
 
 const PlacePage = (props: Props) => {
+  const { t } = useTranslation('common')
   const { isOpen, onOpen, onClose } = useDisclosure()
   const appState = app.use()
   const filterCount = (() => {
@@ -60,16 +62,17 @@ const PlacePage = (props: Props) => {
     <Layout user={props.user}>
       <Container maxW="7xl">
         <Heading mb="10">
-          {filteredPlaces.length} Places Available{' '}
+          {filteredPlaces.length} {t('place.available')}{' '}
           <Button size="sm" ml="5" colorScheme={filterCount > 0 ? 'blue' : 'gray'} onClick={onOpen}>
-            Filter{filterCount > 0 ? ` (${filterCount})` : ''}
+            {t('filter')}
+            {filterCount > 0 ? ` (${filterCount})` : ''}
           </Button>
         </Heading>
         <SimpleGrid templateColumns={{ sm: '1fr', md: '1fr 1fr' }} spacing="10">
           <List spacing="2">
             {filteredPlaces.length == 0 && (
               <Text textAlign="center" p="10" fontWeight="semibold">
-                There are no places available at the moment
+                {t('place.empty')}
               </Text>
             )}
             {filteredPlaces.map((place, i) => (

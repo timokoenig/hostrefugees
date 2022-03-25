@@ -1,8 +1,10 @@
 import { Box, ListItem, Text, useColorModeValue } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 const MoreItem = () => {
+  const { t } = useTranslation('common')
   const router = useRouter()
   return (
     <ListItem onClick={() => router.push('/place')}>
@@ -15,7 +17,7 @@ const MoreItem = () => {
       >
         <Box p="6">
           <Text fontSize="lg" fontWeight="bold" color="blue.500">
-            See More Places
+            {t('place.more')}
           </Text>
         </Box>
       </Box>

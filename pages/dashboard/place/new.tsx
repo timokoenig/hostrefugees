@@ -5,6 +5,7 @@ import Layout from 'components/layout'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { MappedUser } from 'utils/models'
 import { withSessionSsr } from 'utils/session'
 import Form from '../../../components/dashboard/place/form'
@@ -14,6 +15,7 @@ type Props = {
 }
 
 const NewPage = (props: Props) => {
+  const { t } = useTranslation('common')
   const router = useRouter()
   const toast = useToast()
   const [isLoading, setLoading] = useState<boolean>(false)
@@ -60,11 +62,11 @@ const NewPage = (props: Props) => {
       <Container maxW="7xl">
         <Box mb="5">
           <Button variant="ghost" pl={0} leftIcon={<ArrowBackIcon />} onClick={router.back}>
-            Dashboard
+            {t('dashboard')}
           </Button>
         </Box>
         <Heading as="h2" size="lg" mb="10">
-          Create New Place
+          {t('place.new')}
         </Heading>
         <SimpleGrid templateColumns={{ sm: '1fr', md: '3fr 1fr' }} spacing={5}>
           <GridItem>

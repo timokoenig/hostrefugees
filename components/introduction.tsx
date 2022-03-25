@@ -11,45 +11,44 @@ import {
   VStack,
 } from '@chakra-ui/react'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { IconType } from 'react-icons'
 import { IoBodySharp, IoCheckmarkSharp, IoLogoGithub, IoShieldSharp } from 'react-icons/io5'
 
-const features: { icon: IconType; title: string; text: string }[] = [
-  {
-    icon: IoBodySharp,
-    title: 'Private Places',
-    text: 'All available places on this platform are private homes',
-  },
-  {
-    icon: IoCheckmarkSharp,
-    title: 'Verified Hosts',
-    text: 'Every host needs to verify their identify before a place is offered to a guest',
-  },
-  {
-    icon: IoShieldSharp,
-    title: 'Safety Check',
-    text: 'The safety check for hosts and guests makes sure that both parties arrive safely',
-  },
-  {
-    icon: IoLogoGithub,
-    title: 'Open Source',
-    text: 'HostRefugees is an Open Source project on Github to be as transparent as possible',
-  },
-]
-
 const Introduction = () => {
+  const { t } = useTranslation('common')
   const textColor = useColorModeValue('gray.600', 'gray.400')
   const iconColor = useColorModeValue('blue.100', 'blue.900')
+
+  const features: { icon: IconType; title: string; text: string }[] = [
+    {
+      icon: IoBodySharp,
+      title: t('feature.private'),
+      text: t('feature.private.text'),
+    },
+    {
+      icon: IoCheckmarkSharp,
+      title: t('feature.verified'),
+      text: t('feature.verified.text'),
+    },
+    {
+      icon: IoShieldSharp,
+      title: t('feature.safety'),
+      text: t('feature.safety.text'),
+    },
+    {
+      icon: IoLogoGithub,
+      title: t('feature.opensource'),
+      text: t('feature.opensource.text'),
+    },
+  ]
+
   return (
     <Box p={4} mb="20">
       <Stack spacing={4} as={Container} maxW="3xl" textAlign="center">
-        <Heading fontSize="3xl">How Does It Work?</Heading>
+        <Heading fontSize="3xl">{t('howto')}</Heading>
         <Text color={textColor} fontSize="xl">
-          HostRefugees offers a list of all available private places that you can stay at. If you
-          found a place that matches your requirements, you can request to stay there. The host will
-          get notified about your request and then you will receive an email as soon as the host
-          accepts it. In that email you will find the exact name, address, and other contact
-          information to get in touch with the host.
+          {t('howto.text')}
         </Text>
       </Stack>
 

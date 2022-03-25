@@ -10,6 +10,7 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react'
 import React, { ReactNode } from 'react'
+import { useTranslation } from 'react-i18next'
 import Github from './common/github'
 import Kofi from './common/kofi'
 
@@ -22,6 +23,7 @@ const ListHeader = ({ children }: { children: ReactNode }) => {
 }
 
 export default function Footer() {
+  const { t } = useTranslation('common')
   return (
     <Box
       bg={useColorModeValue('gray.50', 'gray.900')}
@@ -43,20 +45,20 @@ export default function Footer() {
             </HStack>
           </Stack>
           <Stack align="flex-start">
-            <ListHeader>Guest</ListHeader>
-            <Link href="/welcome">Welcome To Germany</Link>
-            <Link href="/place">Available Places</Link>
+            <ListHeader>{t('guest')}</ListHeader>
+            <Link href="/welcome">{t('welcomegermany')}</Link>
+            <Link href="/place">{t('place.available')}</Link>
           </Stack>
           <Stack align="flex-start">
-            <ListHeader>Host</ListHeader>
-            <Link href="/become-host">Become a Host</Link>
-            <Link href="/documents">Documents</Link>
+            <ListHeader>{t('host')}</ListHeader>
+            <Link href="/become-host">{t('becomehost')}</Link>
+            <Link href="/documents">{t('documents')}</Link>
           </Stack>
           <Stack align="flex-start">
-            <ListHeader>Support</ListHeader>
-            <Link href="/help">Help Center</Link>
-            <Link href="/imprint">Imprint</Link>
-            <Link href="/privacy">Privacy Policy</Link>
+            <ListHeader>{t('support')}</ListHeader>
+            <Link href="/help">{t('help')}</Link>
+            <Link href="/imprint">{t('imprint')}</Link>
+            <Link href="/privacy">{t('privacy')}</Link>
           </Stack>
         </SimpleGrid>
       </Container>

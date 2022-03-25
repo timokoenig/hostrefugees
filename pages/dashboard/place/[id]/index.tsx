@@ -19,6 +19,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import prisma from 'prisma/client'
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { MappedUser } from 'utils/models'
 import { withSessionSsr } from 'utils/session'
 import Form from '../../../../components/dashboard/place/form'
@@ -29,6 +30,7 @@ type Props = {
 }
 
 const PlacePage = (props: Props) => {
+  const { t } = useTranslation('common')
   const router = useRouter()
   const toast = useToast()
   const [isLoading, setLoading] = useState<boolean>(false)
@@ -109,11 +111,11 @@ const PlacePage = (props: Props) => {
       <Container maxW="7xl">
         <Box mb="5">
           <Button variant="ghost" pl={0} leftIcon={<ArrowBackIcon />} onClick={router.back}>
-            Dashboard
+            {t('dashboard')}
           </Button>
         </Box>
         <Heading as="h2" size="lg" mb="10">
-          Update Place
+          {t('place.update')}
         </Heading>
         <SimpleGrid templateColumns={{ sm: '1fr', md: '3fr 1fr' }} spacing={5}>
           <GridItem>
@@ -121,9 +123,9 @@ const PlacePage = (props: Props) => {
               <Alert status="warning" variant="solid" rounded="lg" mb="5">
                 <AlertIcon />
                 <Text as="span" fontWeight="semibold" mr="1">
-                  Missing Photo
+                  {t('place.nophoto')}
                 </Text>
-                - You need to upload at least one photo to make this place available for guests.
+                - {t('place.nophoto.text')}
               </Alert>
             )}
             <Form place={props.place} onChange={onUpdate} isLoading={isLoading} />
@@ -131,11 +133,9 @@ const PlacePage = (props: Props) => {
           <Box>
             <Box mb="20">
               <Heading size="md" mb="5">
-                Status
+                {t('status')}
               </Heading>
-              <Text mb="5">
-                {props.place.active ? 'Your place is active' : 'Click to activate your place'}
-              </Text>
+              <Text mb="5">{props.place.active ? t('place.active') : t('place.inactive')}</Text>
               <Switch
                 size="lg"
                 isChecked={props.place.active}
@@ -145,7 +145,7 @@ const PlacePage = (props: Props) => {
             </Box>
             <Box>
               <Heading size="md" mb="5">
-                Photos
+                {t('photos')}
               </Heading>
               <SimpleGrid columns={2} spacing="5" mb="5">
                 {props.place.photos.map(photo => (
@@ -163,7 +163,7 @@ const PlacePage = (props: Props) => {
                 isFullWidth
                 isDisabled={isLoading}
               >
-                Change Photos
+                {t('place.changephotos')}
               </Button>
             </Box>
           </Box>

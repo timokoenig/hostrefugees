@@ -1,6 +1,7 @@
 import { Container, Heading, Text, useColorModeValue } from '@chakra-ui/react'
 import dynamic from 'next/dynamic'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { MappedUser } from 'utils/models'
 import { withSessionSsr } from 'utils/session'
 import Layout from '../../components/layout'
@@ -14,21 +15,18 @@ type Props = {
 }
 
 const HelpPage = (props: Props) => {
+  const { t } = useTranslation('common')
   return (
     <Layout user={props.user}>
       <Container maxW="7xl">
         <Heading as="h1" size="lg" mb="5">
-          Privacy - Cookies
+          {t('privacy.cookie')}
         </Heading>
         <Text color={useColorModeValue('gray.600', 'gray.400')} mb="5">
-          We use cookies and similar technologies to provide certain features, enhance the user
-          experience and deliver content that is relevant to your interests. Depending on their
-          purpose, analysis and marketing cookies may be used in addition to technically necessary
-          cookies.
+          {t('privacy.cookie.text1')}
         </Text>
         <Text color={useColorModeValue('gray.600', 'gray.400')} mb="10">
-          You can decide which cookies are used by selecting the respective options below. Please
-          note that your selection may impair the functionality of the service.
+          {t('privacy.cookie.text2')}
         </Text>
         <CookieForm />
       </Container>

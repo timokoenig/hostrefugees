@@ -8,7 +8,7 @@ const LoginPage = () => {
   return (
     <Layout>
       <Head>
-        <title>HostRefugees</title>
+        <title>HostRefugees - Login</title>
       </Head>
       <Login />
     </Layout>

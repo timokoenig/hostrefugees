@@ -9,6 +9,7 @@ import {
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { MappedUser } from 'utils/models'
 import { withSessionSsr } from 'utils/session'
 import Layout from '../../../components/layout'
@@ -18,6 +19,7 @@ type Props = {
 }
 
 const RequestPage = (props: Props) => {
+  const { t } = useTranslation('common')
   const router = useRouter()
   return (
     <Layout user={props.user}>
@@ -26,18 +28,16 @@ const RequestPage = (props: Props) => {
           <Image src="/svg/undraw_completing_re_i7ap.svg" maxWidth="250" />
         </Center>
         <Heading as="h2" size="xl" mt={6} mb={2}>
-          Your Request has been sent
+          {t('request.title')}
         </Heading>
-        <Text color={useColorModeValue('gray.600', 'gray.400')}>
-          You will receive a confirmation email when the host accepts your request to stay
-        </Text>
+        <Text color={useColorModeValue('gray.600', 'gray.400')}>{t('request.info')}</Text>
         <Button my="10" onClick={() => router.push('/')}>
-          Check out the StarterKit for Germany
+          {t('request.starterkit')}
         </Button>
         <Text color={useColorModeValue('gray.600', 'gray.400')}>or</Text>
 
         <Button my="10" onClick={() => router.push('/dashboard')}>
-          Check out your pending requests
+          {t('request.dashboard')}
         </Button>
       </Container>
     </Layout>
