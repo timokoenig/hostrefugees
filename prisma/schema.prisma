@@ -14,20 +14,21 @@ enum UserRole {
 }
 
 model User {
-  id                      String    @id @default(uuid())
-  createdAt               DateTime  @default(now()) @map("created_at")
-  updatedAt               DateTime  @default(now()) @map("updated_at")
+  id                      String        @id @default(uuid())
+  createdAt               DateTime      @default(now()) @map("created_at")
+  updatedAt               DateTime      @default(now()) @map("updated_at")
   firstname               String
   lastname                String
-  email                   String    @unique
+  email                   String        @unique
   password                String
-  role                    UserRole  @default(GUEST)
+  role                    UserRole      @default(GUEST)
   languages               String[]
-  verified                Boolean   @default(false)
-  verificationSubmittedAt DateTime? @map("verification_submitted_at")
-  photoUpdatedAt          DateTime? @map("photo_updated_at")
+  verified                Boolean       @default(false)
+  verificationSubmittedAt DateTime?     @map("verification_submitted_at")
+  photoUpdatedAt          DateTime?     @map("photo_updated_at")
   places                  Place[]
   requests                Request[]
+  safetyChecks            SafetyCheck[]
 }
 
 enum PlaceType {
@@ -86,19 +87,30 @@ enum RequestStatus {
 }
 
 model Request {
-  id          String         @id @default(uuid())
-  createdAt   DateTime       @default(now()) @map("created_at")
-  updatedAt   DateTime       @default(now()) @map("updated_at")
-  author      User           @relation(fields: [userId], references: [id])
-  place       Place          @relation(fields: [placeId], references: [id])
-  adults      Int
-  children    Int
-  pets        Boolean        @default(false)
-  startDate   DateTime       @map("start_date")
-  endDate     DateTime?      @map("end_date")
-  about       String
-  phoneNumber String?        @map("phone_number")
-  status      RequestStatus?
-  userId      String         @map("user_id")
-  placeId     String         @map("place_id")
+  id           String         @id @default(uuid())
+  createdAt    DateTime       @default(now()) @map("created_at")
+  updatedAt    DateTime       @default(now()) @map("updated_at")
+  author       User           @relation(fields: [userId], references: [id])
+  place        Place          @relation(fields: [placeId], references: [id])
+  adults       Int
+  children     Int
+  pets         Boolean        @default(false)
+  startDate    DateTime       @map("start_date")
+  endDate      DateTime?      @map("end_date")
+  about        String
+  phoneNumber  String?        @map("phone_number")
+  status       RequestStatus?
+  userId       String         @map("user_id")
+  placeId      String         @map("place_id")
+  safetyChecks SafetyCheck[]
+}
+
+model SafetyCheck {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  author    User     @relation(fields: [userId], references: [id])
+  request   Request  @relation(fields: [requestId], references: [id])
+  safe      Boolean
+  userId    String   @map("user_id")
+  requestId String   @map("request_id")
 }

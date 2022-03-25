@@ -12,7 +12,8 @@ import {
   useColorModeValue,
   useToast,
 } from '@chakra-ui/react'
-import { Request, RequestStatus, UserRole } from '@prisma/client'
+import { Request, RequestStatus, SafetyCheck, UserRole } from '@prisma/client'
+import SafetyCheckComponent from 'components/dashboard/request/safety-check'
 import Layout from 'components/layout'
 import Summary from 'components/place/summary'
 import moment from 'moment'
@@ -29,6 +30,7 @@ import StatusHost from '../../../components/dashboard/request/status-host'
 type Props = {
   user: MappedUser
   request: Request
+  safetyCheck: SafetyCheck | null
 }
 
 const RequestPage = (props: Props) => {
@@ -146,17 +148,27 @@ const RequestPage = (props: Props) => {
               <Text>{props.request.about.length == 0 ? 'N/A' : props.request.about}</Text>
             </Box>
 
-            {props.user.role === UserRole.HOST && (
-              <StatusHost
-                status={props.request.status}
-                onAccept={() => updateRequestStatus(RequestStatus.ACCEPTED)}
-                onDecline={() => updateRequestStatus(RequestStatus.DECLINED)}
-              />
-            )}
-            {props.user.role === UserRole.GUEST && (
-              <StatusGuest
-                status={props.request.status}
-                onCancelRequest={() => updateRequestStatus(RequestStatus.CANCELED)}
+            <Box mb="10">
+              {props.user.role === UserRole.HOST && (
+                <StatusHost
+                  status={props.request.status}
+                  onAccept={() => updateRequestStatus(RequestStatus.ACCEPTED)}
+                  onDecline={() => updateRequestStatus(RequestStatus.DECLINED)}
+                />
+              )}
+              {props.user.role === UserRole.GUEST && (
+                <StatusGuest
+                  status={props.request.status}
+                  onCancelRequest={() => updateRequestStatus(RequestStatus.CANCELED)}
+                />
+              )}
+            </Box>
+
+            {props.request.status == RequestStatus.ACCEPTED && (
+              <SafetyCheckComponent
+                user={props.user}
+                request={props.request}
+                safetyCheck={props.safetyCheck}
               />
             )}
           </Box>
@@ -213,10 +225,30 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
     }
   }
 
+  const safetyCheck = await prisma.safetyCheck.findFirst({
+    where: {
+      author: {
+        id: context.req.session.user.id,
+      },
+      request: {
+        id: request.id,
+      },
+    },
+    include: {
+      author: {
+        select: {
+          id: true,
+          role: true,
+        },
+      },
+    },
+  })
+
   return {
     props: {
       user: context.req.session.user,
       request,
+      safetyCheck,
     },
   }
 })
