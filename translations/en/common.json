@@ -180,6 +180,7 @@
   "signin.title": "Sign in to your account",
   "signin.newaccount": "Don't have an account?",
   "signin.register": "Register Now",
+  "signin.forgotpassword": "Forgot password?",
 
   "forgotpassword": "Forgot Your Password?",
   "forgotpassword.success": "You will receive an email with a reset link",

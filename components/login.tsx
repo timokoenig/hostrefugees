@@ -106,6 +106,11 @@ const Login = () => {
                 />
                 <FormErrorMessage>{formik.errors.password}</FormErrorMessage>
               </FormControl>
+              <Box>
+                <Link color="blue.400" href="/forgot-password">
+                  {t('signin.forgotpassword')}
+                </Link>
+              </Box>
               <Stack spacing={10}>
                 <Button title={t('signin')} fullWidth isDisabled={formik.isSubmitting} />
               </Stack>
