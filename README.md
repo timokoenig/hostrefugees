@@ -30,6 +30,8 @@ NEXT_PUBLIC_VERSION=0.0.1
 
 NEXT_PUBLIC_GOOGLE_MAP_KEY=xxx
 
+GOOGLE_TRANSLATE_KEY=xxx
+
 DATABASE_URL=postgresql://postgres:@127.0.0.1:5432/hostrefugees?sslmode=disable
 
 EMAIL_ENABLE=true
@@ -85,6 +87,14 @@ https://auth0.com/blog/hashing-in-action-understanding-bcrypt/
 ### Google Maps
 
 Sign up at Google to get an API Key for Maps.
+
+### Google Translate API
+
+The platform uses the Google Translate API to translate free text fields for places.
+
+```sh
+GOOGLE_TRANSLATE_KEY=xxx
+```
 
 ### Snapshot Tests
 
