@@ -27,7 +27,7 @@ export const onboardingCheck = async (userId: string): Promise<string[]> => {
   }
 
   // Check if user should to submit a photo
-  if (user.photoUpdatedAt == null) {
+  if (user.role == UserRole.GUEST && user.photoUpdatedAt == null) {
     steps.push(ONBOARDING_PROFILE_PHOTO)
   }
 
