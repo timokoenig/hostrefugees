@@ -12,6 +12,10 @@ i18next
         common: require('../translations/en/common.json'),
         languages: require('../translations/en/languages.json'),
       },
+      de: {
+        common: require('../translations/de/common.json'),
+        languages: require('../translations/de/languages.json'),
+      },
     },
   })
   .catch(console.log)
