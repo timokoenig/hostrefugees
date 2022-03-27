@@ -44,6 +44,26 @@ const footer = (): string => {
   <br>${process.env.NEXT_PUBLIC_CONTACT_ADDRESS_CITY}, ${process.env.NEXT_PUBLIC_CONTACT_ADDRESS_COUNTRY}`
 }
 
+export const emailPasswordReset = (user: User, hash: string): MessageHeaders => {
+  const subject = 'HostRefugees - Password Reset'
+  const textHtml = [
+    titleAndParagraph('Password Reset', 'Please click the link below to set a new password.'),
+    button('Reset Password', `https://hostrefugees.eu/reset-password?hash=${hash}`),
+  ].join('')
+
+  let content = fs.readFileSync(emailPath, 'utf-8')
+  content = content.replace('{{BODY}}', textHtml)
+  content = content.replace('{{FOOTER}}', footer())
+
+  return {
+    text: '',
+    from: `${process.env.EMAIL_NAME} <${process.env.EMAIL_EMAIL}>`,
+    to: `${user.firstname} <${user.email}>`,
+    subject,
+    attachment: [{ data: content, alternative: true }],
+  }
+}
+
 export const emailApprovedUser = (user: User): MessageHeaders => {
   const subject = 'You have been approved'
   const textHtml = [

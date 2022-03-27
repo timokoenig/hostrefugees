@@ -21,6 +21,8 @@ model User {
   lastname                String
   email                   String        @unique
   password                String
+  passwordResetAt         DateTime?     @map("password_reset_at")
+  passwordResetHash       String?       @map("password_reset_hash")
   role                    UserRole      @default(GUEST)
   languages               String[]
   verified                Boolean       @default(false)

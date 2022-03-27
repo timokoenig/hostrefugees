@@ -181,6 +181,15 @@
   "signin.newaccount": "Don't have an account?",
   "signin.register": "Register Now",
 
+  "forgotpassword": "Forgot Your Password?",
+  "forgotpassword.success": "You will receive an email with a reset link",
+  "forgotpassword.button": "Reset Password",
+
+  "resetpassword": "Reset Password",
+  "resetpassword.button": "Reset Password",
+  "resetpassword.success": "Your password has been successfully reset",
+  "resetpassword.success.button": "Login Now",
+
   "feature.private": "Private Places",
   "feature.private.text": "All available places on this platform are private homes",
   "feature.verified": "Verified Hosts",
