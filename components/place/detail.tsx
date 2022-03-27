@@ -35,14 +35,21 @@ export default function Detail(props: Props) {
   const router = useRouter()
   const titleColor = useColorModeValue('blue.500', 'blue.300')
   const [place, setPlace] = useState<MappedPlace>(props.place)
+  const [translated, setTranslated] = useState<boolean>(false)
   const [isLoading, setLoading] = useState<boolean>(false)
 
   const onTranslate = async () => {
+    if (translated) {
+      setPlace(props.place)
+      setTranslated(false)
+      return
+    }
     setLoading(true)
     const res = await fetch(`/api/place/${place.id}/translate`)
     if (res.ok && res.body != null) {
       const json = (await res.json()) as MappedPlace
       setPlace(json)
+      setTranslated(true)
     }
     setLoading(false)
   }
@@ -101,7 +108,7 @@ export default function Detail(props: Props) {
             >
               {place.title}{' '}
               <Button size="xs" onClick={onTranslate} isDisabled={isLoading}>
-                Translate to Ukrainian
+                {t(translated ? 'translate.original' : 'translate')}
               </Button>
             </Heading>
             <Text color={useColorModeValue('gray.900', 'gray.400')} fontWeight={300} fontSize="2xl">
@@ -161,7 +168,7 @@ export default function Detail(props: Props) {
               <List spacing={2}>
                 <ListItem>
                   <Text as="span" fontWeight="bold">
-                    {t('place.detail.type')}
+                    {t('place.detail.type')}:
                   </Text>{' '}
                   {formatPlaceType(place)}
                 </ListItem>
