@@ -25,7 +25,7 @@ const PostPage = (props: Props) => {
           <Heading fontSize="4xl">{t('posts')}</Heading>
         </Center>
         <Box mb="10" textAlign="right">
-          <CustomButton title={t('post.new')} onClick={() => router.push('/post/new')} />
+          <CustomButton size="md" title={t('post.new')} onClick={() => router.push('/post/new')} />
         </Box>
         <Box w="100%" sx={{ columnCount: { base: 1, md: 2, lg: 3 }, columnGap: '8px' }}>
           {props.posts.map(post => (
