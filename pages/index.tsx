@@ -58,6 +58,10 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
     where: {
       approved: true,
     },
+    orderBy: {
+      createdAt: 'desc',
+    },
+    take: 4,
   })
 
   return {
