@@ -29,7 +29,7 @@ const validationSchema = Yup.object().shape({
   adults: Yup.number().required('Required'),
   children: Yup.number().required('Required'),
   addressStreet: Yup.string().min(2, 'Too Short').max(100, 'Too Long').required('Required'),
-  addressHouseNumber: Yup.string().min(2, 'Too Short').max(100, 'Too Long').required('Required'),
+  addressHouseNumber: Yup.string().min(1, 'Too Short').max(100, 'Too Long').required('Required'),
   addressZip: Yup.string().min(5, 'Too Short').max(5, 'Too Long').required('Required'),
   addressCity: Yup.string().min(2, 'Too Short').max(100, 'Too Long').required('Required'),
   houseRules: Yup.string().max(1000, 'Too Long'),
