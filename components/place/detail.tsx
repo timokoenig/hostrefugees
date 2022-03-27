@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Container,
   GridItem,
   Heading,
@@ -14,12 +15,12 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react'
 import { BathroomType, Request } from '@prisma/client'
+import CustomButton from 'components/common/button'
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { formatAvailability, formatPlaceType } from 'utils/formatter'
 import { MappedPlace } from 'utils/models'
-import Button from '../common/button'
 import Status from '../dashboard/request/status'
 
 type Props = {
@@ -33,9 +34,21 @@ export default function Detail(props: Props) {
   const { t: tLang } = useTranslation('languages')
   const router = useRouter()
   const titleColor = useColorModeValue('blue.500', 'blue.300')
+  const [place, setPlace] = useState<MappedPlace>(props.place)
+  const [isLoading, setLoading] = useState<boolean>(false)
+
+  const onTranslate = async () => {
+    setLoading(true)
+    const res = await fetch(`/api/place/${place.id}/translate`)
+    if (res.ok && res.body != null) {
+      const json = (await res.json()) as MappedPlace
+      setPlace(json)
+    }
+    setLoading(false)
+  }
 
   const RequestButton = (): JSX.Element | null => {
-    if (props.request !== null) {
+    if (props.request != null) {
       return (
         <Status color="yellow.500" title="WAITING">
           <Text mb="2">{t('place.detail.existingrequest')}</Text>
@@ -47,10 +60,10 @@ export default function Detail(props: Props) {
     }
     if (props.enableRequest) {
       return (
-        <Button
+        <CustomButton
           fullWidth
           title={t('place.detail.request')}
-          onClick={() => router.push(`/place/${props.place.id}/request`)}
+          onClick={() => router.push(`/place/${place.id}/request`)}
         />
       )
     }
@@ -61,15 +74,15 @@ export default function Detail(props: Props) {
     <Container maxW="7xl">
       <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={{ base: 8, md: 10 }}>
         <SimpleGrid columns={2} spacing="5">
-          {props.place.photos.length == 0 ? (
+          {place.photos.length == 0 ? (
             <Box rounded="md" backgroundColor="gray" w="100%" h="100%" />
           ) : (
-            props.place.photos.map((photo, i) => (
+            place.photos.map((photo, i) => (
               <GridItem key={i} colSpan={i == 0 ? 2 : 1}>
                 <Image
                   rounded="md"
                   alt="place image"
-                  src={`/api/place/${props.place.id}/photo/${photo}`}
+                  src={`/api/place/${place.id}/photo/${photo}`}
                   fit="cover"
                   align="center"
                   w="100%"
@@ -86,10 +99,13 @@ export default function Detail(props: Props) {
               fontWeight={600}
               fontSize={{ base: '2xl', sm: '4xl', lg: '5xl' }}
             >
-              {props.place.title}
+              {place.title}{' '}
+              <Button size="xs" onClick={onTranslate} isDisabled={isLoading}>
+                Translate to Ukrainian
+              </Button>
             </Heading>
             <Text color={useColorModeValue('gray.900', 'gray.400')} fontWeight={300} fontSize="2xl">
-              {formatAvailability(props.place)}
+              {formatAvailability(place)}
             </Text>
           </Box>
 
@@ -98,7 +114,7 @@ export default function Detail(props: Props) {
             direction="column"
             divider={<StackDivider borderColor={useColorModeValue('gray.200', 'gray.600')} />}
           >
-            <Text fontSize="lg">{props.place.description}</Text>
+            <Text fontSize="lg">{place.description}</Text>
             <Box>
               <Text
                 fontSize={{ base: '16px', lg: '18px' }}
@@ -115,10 +131,10 @@ export default function Detail(props: Props) {
                   <Text as="span" fontWeight="bold">
                     {t('adults')}
                   </Text>{' '}
-                  {props.place.placeAdults} (
-                  {props.place.placeAdultWomen && props.place.placeAdultMen
+                  {place.placeAdults} (
+                  {place.placeAdultWomen && place.placeAdultMen
                     ? t('womenmen')
-                    : props.place.placeAdultMen
+                    : place.placeAdultMen
                     ? t('onlymen')
                     : t('onlywomen')}
                   )
@@ -127,7 +143,7 @@ export default function Detail(props: Props) {
                   <Text as="span" fontWeight="bold">
                     {t('children')}
                   </Text>{' '}
-                  {props.place.placeChildren}
+                  {place.placeChildren}
                 </ListItem>
               </List>
             </Box>
@@ -147,25 +163,25 @@ export default function Detail(props: Props) {
                   <Text as="span" fontWeight="bold">
                     {t('place.detail.type')}
                   </Text>{' '}
-                  {formatPlaceType(props.place)}
+                  {formatPlaceType(place)}
                 </ListItem>
                 <ListItem>
                   <Text as="span" fontWeight="bold">
                     {t('rooms')}:
                   </Text>{' '}
-                  {props.place.rooms}
+                  {place.rooms}
                 </ListItem>
                 <ListItem>
                   <Text as="span" fontWeight="bold">
                     {t('Beds')}:
                   </Text>{' '}
-                  {props.place.beds}
+                  {place.beds}
                 </ListItem>
                 <ListItem>
                   <Text as="span" fontWeight="bold">
                     {t('bathroom')}:
                   </Text>{' '}
-                  {props.place.bathroom == BathroomType.YES
+                  {place.bathroom == BathroomType.YES
                     ? t('bathroom.private')
                     : t('bathroom.shared')}
                 </ListItem>
@@ -173,35 +189,35 @@ export default function Detail(props: Props) {
                   <Text as="span" fontWeight="bold">
                     {t('adults')}:
                   </Text>{' '}
-                  {props.place.adults}
+                  {place.adults}
                 </ListItem>
                 <ListItem>
                   <Text as="span" fontWeight="bold">
                     {t('children')}:
                   </Text>{' '}
-                  {props.place.children}
+                  {place.children}
                 </ListItem>
                 <ListItem>
                   <Text as="span" fontWeight="bold">
                     {t('place.detail.pets')}:
                   </Text>{' '}
-                  {props.place.pets ? 'Yes' : 'No'}
+                  {place.pets ? 'Yes' : 'No'}
                 </ListItem>
                 <ListItem>
                   <Text as="span" fontWeight="bold">
                     {t('address')}:
                   </Text>{' '}
-                  {props.place.addressCity} ({t('place.detail.address.info')})
+                  {place.addressCity} ({t('place.detail.address.info')})
                 </ListItem>
                 <ListItem>
                   <Text as="span" fontWeight="bold">
                     {t('languages.host')}:
                   </Text>{' '}
-                  {props.place.author.languages.map(lang => tLang(lang)).join(', ')}
+                  {place.author.languages.map(lang => tLang(lang)).join(', ')}
                 </ListItem>
               </List>
             </Box>
-            {props.place.houseRules !== '' && (
+            {place.houseRules !== '' && (
               <Box>
                 <Text
                   fontSize={{ base: '16px', lg: '18px' }}
@@ -212,7 +228,7 @@ export default function Detail(props: Props) {
                 >
                   {t('houserules')}
                 </Text>
-                <Text fontSize="lg">{props.place.houseRules}</Text>
+                <Text fontSize="lg">{place.houseRules}</Text>
               </Box>
             )}
           </Stack>
