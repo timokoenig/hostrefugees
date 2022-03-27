@@ -52,7 +52,7 @@ const Introduction = () => {
         </Text>
       </Stack>
 
-      <Container maxW="6xl" mt={20}>
+      <Container maxW="6xl" mt={20} pt="10">
         <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={10}>
           {features.map((feature, key) => (
             <VStack key={key} textAlign="center">

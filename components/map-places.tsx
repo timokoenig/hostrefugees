@@ -17,7 +17,7 @@ type Props = {
 const MapPlaces = (props: Props) => {
   const { t } = useTranslation('common')
   return (
-    <Container maxW="7xl" py={10}>
+    <Container maxW="7xl" py={10} mb="20">
       <Box mb="5" textAlign="center">
         <Heading>{t('place.available')}</Heading>
       </Box>

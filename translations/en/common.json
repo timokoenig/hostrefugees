@@ -322,6 +322,9 @@
   "email.request.canceled.message": "The guest canceled a stay request for your place.",
 
   "posts": "Bulletin Board",
+  "posts.info": "You can find free classes, help and much more offered by people around you",
+  "posts.empty": "No posts available",
+  "posts.more": "See More",
   "post.new": "Do you have something to offer?",
   "post.new.title.placeholder": "e.g. Free German Classes",
   "post.new.description.placeholder": "e.g. Our German class is every Monday at XYZ school at 6pm. Join us for free.",

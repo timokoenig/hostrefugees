@@ -1,3 +1,4 @@
+import { Post } from '@prisma/client'
 import Layout from 'components/layout'
 import Head from 'next/head'
 import prisma from 'prisma/client'
@@ -8,10 +9,12 @@ import { withSessionSsr } from 'utils/session'
 import Hero from '../components/hero'
 import Introduction from '../components/introduction'
 import MapPlaces from '../components/map-places'
+import Posts from '../components/posts'
 
 type Props = {
   user?: MappedUser
   places: MappedPlace[]
+  posts: Post[]
 }
 
 const IndexPage = (props: Props) => {
@@ -23,6 +26,7 @@ const IndexPage = (props: Props) => {
       <Hero />
       <Introduction />
       <MapPlaces places={props.places} />
+      <Posts posts={props.posts} />
     </Layout>
   )
 }
@@ -49,10 +53,18 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
       createdAt: 'desc',
     },
   })
+
+  const posts = await prisma.post.findMany({
+    where: {
+      approved: true,
+    },
+  })
+
   return {
     props: {
       user: context.req.session.user ?? null,
       places: places.map(mapPlace),
+      posts,
     },
   }
 })
