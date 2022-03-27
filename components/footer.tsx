@@ -63,6 +63,7 @@ export default function Footer() {
             <ListHeader>{t('guest')}</ListHeader>
             <Link href="/welcome">{t('welcomegermany')}</Link>
             <Link href="/place">{t('place.available')}</Link>
+            <Link href="/post">{t('posts')}</Link>
           </Stack>
           <Stack align="flex-start">
             <ListHeader>{t('host')}</ListHeader>
