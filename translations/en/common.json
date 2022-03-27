@@ -174,7 +174,8 @@
   "signup.accept": "I accept the <1>Privacy Policy</1>",
   "signup.existingaccount": "Already have an account?",
 
-  "signin": "Sign in to your account",
+  "signin": "Sign In",
+  "signin.title": "Sign in to your account",
   "signin.newaccount": "Don't have an account?",
   "signin.register": "Register Now",
 

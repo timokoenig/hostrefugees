@@ -73,7 +73,7 @@ const Login = () => {
     <Flex align="center">
       <Stack spacing={8} mx="auto" maxW="lg" py={12} px={6}>
         <Stack align="center">
-          <Heading fontSize="4xl">{t('signin')}</Heading>
+          <Heading fontSize="4xl">{t('signin.title')}</Heading>
         </Stack>
         <Box rounded="lg" bg={useColorModeValue('white', 'gray.700')} boxShadow="lg" p={8}>
           <form onSubmit={formik.handleSubmit}>
