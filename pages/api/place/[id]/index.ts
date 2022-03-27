@@ -12,11 +12,16 @@ interface Request extends NextApiRequest {
     title?: string
     description?: string
     type?: PlaceType
+    placeAdults?: number
+    placeChildren?: number
+    placeAdultWomen?: boolean
+    placeAdultMen?: boolean
     rooms?: number
     beds?: number
     bathroom?: BathroomType
     adults?: number
     children?: number
+    pets?: boolean
     addressStreet?: string
     addressHouseNumber?: string
     addressZip?: string
@@ -66,11 +71,16 @@ async function handleUpdatePlace(req: Request, res: NextApiResponse) {
       title: req.body.title,
       description: req.body.description,
       type: req.body.type,
+      placeAdults: req.body.placeAdults,
+      placeChildren: req.body.placeChildren,
+      placeAdultWomen: req.body.placeAdultWomen,
+      placeAdultMen: req.body.placeAdultMen,
       rooms: req.body.rooms,
       beds: req.body.beds,
       bathroom: req.body.bathroom,
       adults: req.body.adults,
       children: req.body.children,
+      pets: req.body.pets,
       addressStreet: req.body.addressStreet,
       addressHouseNumber: req.body.addressHouseNumber,
       addressZip: req.body.addressZip,

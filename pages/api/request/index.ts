@@ -48,6 +48,7 @@ async function handleNewRequest(req: CreateRequest, res: NextApiResponse) {
       },
       adults: req.body.request.adults,
       children: req.body.request.children,
+      pets: req.body.request.pets,
       startDate: req.body.request.startDate,
       endDate: req.body.request.endDate,
       about: req.body.request.about,
