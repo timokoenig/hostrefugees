@@ -16,12 +16,13 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react'
-import { User } from '@prisma/client'
+import { Post, User } from '@prisma/client'
 import { useRouter } from 'next/router'
 import React from 'react'
 
 type Props = {
   users: User[]
+  posts: Post[]
 }
 
 const Admin = (props: Props) => {
@@ -42,9 +43,24 @@ const Admin = (props: Props) => {
     }
   }
 
+  const approve = async (post: Post) => {
+    const res = await fetch(`/api/post/${post.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        approved: true,
+      }),
+    })
+    if (res.ok) {
+      router.reload()
+    }
+  }
+
   return (
     <Container px={0} maxW="7xl" py={10}>
-      <Box>
+      <Box mb="10">
         <Flex mb="5" textAlign="center">
           <Heading size="md">Users</Heading>
         </Flex>
@@ -80,6 +96,46 @@ const Admin = (props: Props) => {
                     </MenuButton>
                     <MenuList>
                       <MenuItem onClick={() => verify(user)}>Verify</MenuItem>
+                    </MenuList>
+                  </Menu>
+                </Td>
+              </Tr>
+            ))}
+          </Tbody>
+        </Table>
+      </Box>
+      <Box>
+        <Flex mb="5" textAlign="center">
+          <Heading size="md">Posts</Heading>
+        </Flex>
+        <Table>
+          <Thead>
+            <Tr>
+              <Th>Title</Th>
+              <Th>Description</Th>
+              <Th>Approved</Th>
+              <Th />
+            </Tr>
+          </Thead>
+          <Tbody>
+            {props.posts.map(post => (
+              <Tr key={post.id}>
+                <Td>{post.title}</Td>
+                <Td>{post.description}</Td>
+                <Td>
+                  {post.approved ? (
+                    <Badge colorScheme="green">Approved</Badge>
+                  ) : (
+                    <Badge colorScheme="red">Not Approved</Badge>
+                  )}
+                </Td>
+                <Td>
+                  <Menu>
+                    <MenuButton as="button">
+                      <HamburgerIcon width="5" height="5" />
+                    </MenuButton>
+                    <MenuList>
+                      <MenuItem onClick={() => approve(post)}>Approve</MenuItem>
                     </MenuList>
                   </Menu>
                 </Td>

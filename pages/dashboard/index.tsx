@@ -1,5 +1,5 @@
 import { Alert, AlertIcon, Box, Container, Heading, Text } from '@chakra-ui/react'
-import { Place, Request, User, UserRole } from '@prisma/client'
+import { Place, Post, Request, User, UserRole } from '@prisma/client'
 import Admin from 'components/dashboard/admin'
 import Guest from 'components/dashboard/guest'
 import Host from 'components/dashboard/host'
@@ -19,6 +19,7 @@ type Props = {
   users: User[]
   places: Place[]
   requests: Request[]
+  posts: Post[]
 }
 
 const DashboardPage = (props: Props) => {
@@ -37,7 +38,7 @@ const DashboardPage = (props: Props) => {
             </Text>
           </Heading>
         </Box>
-        {props.user.role === UserRole.ADMIN && <Admin users={props.users} />}
+        {props.user.role === UserRole.ADMIN && <Admin users={props.users} posts={props.posts} />}
         {props.user.role === UserRole.GUEST && <Guest requests={props.requests} />}
         {props.user.role === UserRole.HOST && (
           <>
@@ -138,12 +139,18 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
     users = await prisma.user.findMany({})
   }
 
+  let posts: Post[] = []
+  if (context.req.session.user.role == UserRole.ADMIN) {
+    posts = await prisma.post.findMany({})
+  }
+
   return {
     props: {
       user: { ...context.req.session.user, verified: user?.verified },
       places: places.map(mapPlace),
       requests,
       users,
+      posts,
     },
   }
 })
