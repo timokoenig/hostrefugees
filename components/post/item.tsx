@@ -1,13 +1,16 @@
-import { Box, Heading, Text, useColorModeValue } from '@chakra-ui/react'
+import { Box, Heading, Link, Text, useColorModeValue } from '@chakra-ui/react'
 import { Post } from '@prisma/client'
 import moment from 'moment'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 type Props = {
   post: Post
 }
 
 const PostItem = (props: Props) => {
+  const { t } = useTranslation('common')
+
   return (
     <Box
       w="100%"
@@ -22,12 +25,30 @@ const PostItem = (props: Props) => {
         {props.post.title}
       </Heading>
       <Text mb="5">{props.post.description}</Text>
-      <Text mb="5">
-        {props.post.addressStreet} {props.post.addressHouseNumber}
-        <br />
-        {props.post.addressZip} {props.post.addressCity}
-        <br />
-      </Text>
+      {props.post.addressCity && (
+        <Text mb="5">
+          {props.post.addressStreet} {props.post.addressHouseNumber}
+          <br />
+          {props.post.addressZip} {props.post.addressCity}
+          <br />
+        </Text>
+      )}
+      {props.post.website && (
+        <Text mb="5">
+          {t('website')}{' '}
+          <Link href={props.post.website} color="blue.500" isExternal>
+            {props.post.website}
+          </Link>
+        </Text>
+      )}
+      {props.post.phoneNumber && (
+        <Text mb="5">
+          {t('phone')}{' '}
+          <Link href={`tel:${props.post.phoneNumber}`} color="blue.500" isExternal>
+            {props.post.phoneNumber}
+          </Link>
+        </Text>
+      )}
       <Text fontSize="xs" color={useColorModeValue('gray.400', 'gray.600')} textAlign="right">
         {moment(props.post.createdAt).format('DD.MM.YYYY')}
       </Text>

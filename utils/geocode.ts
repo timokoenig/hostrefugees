@@ -1,4 +1,4 @@
-type LatLngLiteral = {
+export type LatLngLiteral = {
   lat: string
   lng: string
 }

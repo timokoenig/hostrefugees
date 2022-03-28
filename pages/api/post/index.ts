@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from 'prisma/client'
-import geocode from 'utils/geocode'
+import geocode, { LatLngLiteral } from 'utils/geocode'
 import { withSessionRoute } from 'utils/session'
 
 const DEFAULT_COUNTRY = 'Germany'
@@ -9,6 +9,8 @@ interface Request extends NextApiRequest {
   body: {
     title: string
     description: string
+    website: string
+    phoneNumber: string
     addressStreet: string
     addressHouseNumber: string
     addressZip: string
@@ -17,7 +19,10 @@ interface Request extends NextApiRequest {
 }
 
 async function handleNewPost(req: Request, res: NextApiResponse) {
-  const latLng = await geocode(req.body.addressCity, DEFAULT_COUNTRY)
+  let latLng: LatLngLiteral | null = null
+  if (req.body.addressCity != '') {
+    latLng = await geocode(req.body.addressCity, DEFAULT_COUNTRY)
+  }
 
   const post = await prisma.post.create({
     data: {
@@ -25,12 +30,14 @@ async function handleNewPost(req: Request, res: NextApiResponse) {
       updatedAt: new Date(),
       title: req.body.title,
       description: req.body.description,
+      website: req.body.website,
+      phoneNumber: req.body.phoneNumber,
       addressStreet: req.body.addressStreet,
       addressHouseNumber: req.body.addressHouseNumber,
       addressZip: req.body.addressZip,
       addressCity: req.body.addressCity,
-      addressCityLat: latLng.lat,
-      addressCityLng: latLng.lng,
+      addressCityLat: latLng?.lat,
+      addressCityLng: latLng?.lng,
       addressCountry: DEFAULT_COUNTRY,
     },
   })

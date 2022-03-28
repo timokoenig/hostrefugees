@@ -28,10 +28,12 @@ import CustomButton from './common/button'
 const validationSchema = Yup.object().shape({
   title: Yup.string().min(2, 'Too Short').max(50, 'Too Long').required('Required'),
   description: Yup.string().min(2, 'Too Short').max(5000, 'Too Long').required('Required'),
-  addressStreet: Yup.string().min(2, 'Too Short').max(100, 'Too Long').required('Required'),
-  addressHouseNumber: Yup.string().min(1, 'Too Short').max(100, 'Too Long').required('Required'),
-  addressZip: Yup.string().min(5, 'Too Short').max(5, 'Too Long').required('Required'),
-  addressCity: Yup.string().min(2, 'Too Short').max(100, 'Too Long').required('Required'),
+  website: Yup.string().min(2, 'Too Short').max(200, 'Too Long'),
+  phoneNumber: Yup.string().min(2, 'Too Short').max(50, 'Too Long'),
+  addressStreet: Yup.string().min(2, 'Too Short').max(100, 'Too Long'),
+  addressHouseNumber: Yup.string().min(1, 'Too Short').max(100, 'Too Long'),
+  addressZip: Yup.string().min(5, 'Too Short').max(5, 'Too Long'),
+  addressCity: Yup.string().min(2, 'Too Short').max(100, 'Too Long'),
 })
 
 const NewPost = () => {
@@ -43,6 +45,8 @@ const NewPost = () => {
     initialValues: {
       title: '',
       description: '',
+      website: '',
+      phoneNumber: '',
       addressStreet: '',
       addressHouseNumber: '',
       addressZip: '',
@@ -177,7 +181,6 @@ const NewPost = () => {
 
                   <SimpleGrid templateColumns={{ base: '1fr', md: '2fr 1fr' }} spacing={5}>
                     <FormControl
-                      isRequired
                       isDisabled={formik.isSubmitting}
                       isInvalid={
                         formik.errors.addressStreet !== undefined && formik.touched.addressStreet
@@ -194,7 +197,6 @@ const NewPost = () => {
                     </FormControl>
 
                     <FormControl
-                      isRequired
                       isDisabled={formik.isSubmitting}
                       isInvalid={
                         formik.errors.addressHouseNumber !== undefined &&
@@ -214,7 +216,6 @@ const NewPost = () => {
 
                   <SimpleGrid templateColumns={{ base: '1fr', md: '1fr 2fr' }} spacing={5}>
                     <FormControl
-                      isRequired
                       isDisabled={formik.isSubmitting}
                       isInvalid={
                         formik.errors.addressZip !== undefined && formik.touched.addressZip
@@ -231,7 +232,6 @@ const NewPost = () => {
                     </FormControl>
 
                     <FormControl
-                      isRequired
                       isDisabled={formik.isSubmitting}
                       isInvalid={
                         formik.errors.addressCity !== undefined && formik.touched.addressCity
@@ -247,6 +247,36 @@ const NewPost = () => {
                       <FormErrorMessage>{formik.errors.addressCity}</FormErrorMessage>
                     </FormControl>
                   </SimpleGrid>
+
+                  <FormControl
+                    isDisabled={formik.isSubmitting}
+                    isInvalid={formik.errors.website !== undefined && formik.touched.website}
+                  >
+                    <FormLabel htmlFor="website">{t('website')}</FormLabel>
+                    <Input
+                      id="website"
+                      type="text"
+                      value={formik.values.website}
+                      onChange={formik.handleChange}
+                    />
+                    <FormErrorMessage>{formik.errors.website}</FormErrorMessage>
+                  </FormControl>
+
+                  <FormControl
+                    isDisabled={formik.isSubmitting}
+                    isInvalid={
+                      formik.errors.phoneNumber !== undefined && formik.touched.phoneNumber
+                    }
+                  >
+                    <FormLabel htmlFor="phoneNumber">{t('phone')}</FormLabel>
+                    <Input
+                      id="phoneNumber"
+                      type="text"
+                      value={formik.values.phoneNumber}
+                      onChange={formik.handleChange}
+                    />
+                    <FormErrorMessage>{formik.errors.phoneNumber}</FormErrorMessage>
+                  </FormControl>
 
                   <CustomButton title={t('submit')} fullWidth isDisabled={formik.isSubmitting} />
                 </Stack>
