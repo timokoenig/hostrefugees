@@ -15,6 +15,14 @@ const CookieForm = () => {
   const { t } = useTranslation('common')
   const [cookies, setCookies] = useState<string>(getCookie(COOKIE_CONSENT) ?? '')
 
+  const clearAllCookies = () => {
+    document.cookie
+      .split(';')
+      .map(c => c.split('=')[0])
+      .filter(c => c.includes('ga'))
+      .forEach(cookie => setCookie(cookie, '', new Date(0)))
+  }
+
   const updateCookie = (name: string) => {
     let updatedCookies = cookies.split(',')
     if (cookies.includes(name)) {
@@ -25,6 +33,7 @@ const CookieForm = () => {
     if (!updatedCookies.includes(COOKIE_TECHNICALLY_REQUIRED)) {
       updatedCookies.push(COOKIE_TECHNICALLY_REQUIRED)
     }
+    clearAllCookies()
     setCookie(COOKIE_CONSENT, updatedCookies.join(','))
     setCookies(updatedCookies.join(','))
   }

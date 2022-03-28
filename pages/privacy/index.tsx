@@ -690,8 +690,97 @@ const PrivacyDE = (props: PrivacyProps) => (
         </Text>
       </ListItem>
     </List>
+
     <Heading size="md" mb="2">
-      8. Rechtsgrundlage der Verarbeitung
+      8. Datenschutzbestimmungen zu Einsatz und Verwendung von Google Analytics (mit
+      Anonymisierungsfunktion)
+    </Heading>
+
+    <Text mb="5">
+      Der für die Verarbeitung Verantwortliche hat auf dieser Internetseite die Komponente Google
+      Analytics (mit Anonymisierungsfunktion) integriert. Google Analytics ist ein
+      Web-Analyse-Dienst. Web-Analyse ist die Erhebung, Sammlung und Auswertung von Daten über das
+      Verhalten von Besuchern von Internetseiten. Ein Web-Analyse-Dienst erfasst unter anderem Daten
+      darüber, von welcher Internetseite eine betroffene Person auf eine Internetseite gekommen ist
+      (sogenannte Referrer), auf welche Unterseiten der Internetseite zugegriffen oder wie oft und
+      für welche Verweildauer eine Unterseite betrachtet wurde. Eine Web-Analyse wird überwiegend
+      zur Optimierung einer Internetseite und zur Kosten-Nutzen-Analyse von Internetwerbung
+      eingesetzt.
+    </Text>
+    <Text mb="5">
+      Betreibergesellschaft der Google-Analytics-Komponente ist die Google Ireland Limited, Gordon
+      House, Barrow Street, Dublin, D04 E5W5, Ireland.
+    </Text>
+    <Text mb="5">
+      Der für die Verarbeitung Verantwortliche verwendet für die Web-Analyse über Google Analytics
+      den Zusatz &quot;_gat._anonymizeIp&quot;. Mittels dieses Zusatzes wird die IP-Adresse des
+      Internetanschlusses der betroffenen Person von Google gekürzt und anonymisiert, wenn der
+      Zugriff auf unsere Internetseiten aus einem Mitgliedstaat der Europäischen Union oder aus
+      einem anderen Vertragsstaat des Abkommens über den Europäischen Wirtschaftsraum erfolgt.
+    </Text>
+    <Text mb="5">
+      Der Zweck der Google-Analytics-Komponente ist die Analyse der Besucherströme auf unserer
+      Internetseite. Google nutzt die gewonnenen Daten und Informationen unter anderem dazu, die
+      Nutzung unserer Internetseite auszuwerten, um für uns Online-Reports, welche die Aktivitäten
+      auf unseren Internetseiten aufzeigen, zusammenzustellen, und um weitere mit der Nutzung
+      unserer Internetseite in Verbindung stehende Dienstleistungen zu erbringen.
+    </Text>
+    <Text mb="5">
+      Google Analytics setzt ein Cookie auf dem informationstechnologischen System der betroffenen
+      Person. Was Cookies sind, wurde oben bereits erläutert. Mit Setzung des Cookies wird Google
+      eine Analyse der Benutzung unserer Internetseite ermöglicht. Durch jeden Aufruf einer der
+      Einzelseiten dieser Internetseite, die durch den für die Verarbeitung Verantwortlichen
+      betrieben wird und auf welcher eine Google-Analytics-Komponente integriert wurde, wird der
+      Internetbrowser auf dem informationstechnologischen System der betroffenen Person automatisch
+      durch die jeweilige Google-Analytics-Komponente veranlasst, Daten zum Zwecke der
+      Online-Analyse an Google zu übermitteln. Im Rahmen dieses technischen Verfahrens erhält Google
+      Kenntnis über personenbezogene Daten, wie der IP-Adresse der betroffenen Person, die Google
+      unter anderem dazu dienen, die Herkunft der Besucher und Klicks nachzuvollziehen und in der
+      Folge Provisionsabrechnungen zu ermöglichen.
+    </Text>
+    <Text mb="5">
+      Mittels des Cookies werden personenbezogene Informationen, beispielsweise die Zugriffszeit,
+      der Ort, von welchem ein Zugriff ausging und die Häufigkeit der Besuche unserer Internetseite
+      durch die betroffene Person, gespeichert. Bei jedem Besuch unserer Internetseiten werden diese
+      personenbezogenen Daten, einschließlich der IP-Adresse des von der betroffenen Person
+      genutzten Internetanschlusses, an Google in den Vereinigten Staaten von Amerika übertragen.
+      Diese personenbezogenen Daten werden durch Google in den Vereinigten Staaten von Amerika
+      gespeichert. Google gibt diese über das technische Verfahren erhobenen personenbezogenen Daten
+      unter Umständen an Dritte weiter.
+    </Text>
+    <Text mb="5">
+      Die betroffene Person kann die Setzung von Cookies durch unsere Internetseite, wie oben
+      bereits dargestellt, jederzeit mittels einer entsprechenden Einstellung des genutzten
+      Internetbrowsers verhindern und damit der Setzung von Cookies dauerhaft widersprechen. Eine
+      solche Einstellung des genutzten Internetbrowsers würde auch verhindern, dass Google ein
+      Cookie auf dem informationstechnologischen System der betroffenen Person setzt. Zudem kann ein
+      von Google Analytics bereits gesetzter Cookie jederzeit über den Internetbrowser oder andere
+      Softwareprogramme gelöscht werden.
+    </Text>
+    <Text mb="5">
+      Ferner besteht für die betroffene Person die Möglichkeit, einer Erfassung der durch Google
+      Analytics erzeugten, auf eine Nutzung dieser Internetseite bezogenen Daten sowie der
+      Verarbeitung dieser Daten durch Google zu widersprechen und eine solche zu verhindern. Hierzu
+      muss die betroffene Person ein Browser-Add-On unter dem Link
+      https://tools.google.com/dlpage/gaoptout herunterladen und installieren. Dieses Browser-Add-On
+      teilt Google Analytics über JavaScript mit, dass keine Daten und Informationen zu den Besuchen
+      von Internetseiten an Google Analytics übermittelt werden dürfen. Die Installation des
+      Browser-Add-Ons wird von Google als Widerspruch gewertet. Wird das informationstechnologische
+      System der betroffenen Person zu einem späteren Zeitpunkt gelöscht, formatiert oder neu
+      installiert, muss durch die betroffene Person eine erneute Installation des Browser-Add-Ons
+      erfolgen, um Google Analytics zu deaktivieren. Sofern das Browser-Add-On durch die betroffene
+      Person oder einer anderen Person, die ihrem Machtbereich zuzurechnen ist, deinstalliert oder
+      deaktiviert wird, besteht die Möglichkeit der Neuinstallation oder der erneuten Aktivierung
+      des Browser-Add-Ons.
+    </Text>
+    <Text mb="5">
+      Weitere Informationen und die geltenden Datenschutzbestimmungen von Google können unter
+      https://www.google.de/intl/de/policies/privacy/ und unter
+      http://www.google.com/analytics/terms/de.html abgerufen werden. Google Analytics wird unter
+      diesem Link https://www.google.com/intl/de_de/analytics/ genauer erläutert.
+    </Text>
+    <Heading size="md" mb="2">
+      9. Rechtsgrundlage der Verarbeitung
     </Heading>
     <Text mb="5">
       Art. 6 I lit. a DS-GVO dient unserem Unternehmen als Rechtsgrundlage für
@@ -722,8 +811,8 @@ const PrivacyDE = (props: PrivacyProps) => (
     </Text>
 
     <Heading size="md" mb="2">
-      9. Berechtigte Interessen an der Verarbeitung, die von dem Verantwortlichen oder einem Dritten
-      verfolgt werden
+      10. Berechtigte Interessen an der Verarbeitung, die von dem Verantwortlichen oder einem
+      Dritten verfolgt werden
     </Heading>
     <Text mb="5">
       Basiert die Verarbeitung personenbezogener Daten auf Artikel 6 I lit. f DS-GVO ist unser
@@ -732,7 +821,7 @@ const PrivacyDE = (props: PrivacyProps) => (
     </Text>
 
     <Heading size="md" mb="2">
-      10. Dauer, für die die personenbezogenen Daten gespeichert werden
+      11. Dauer, für die die personenbezogenen Daten gespeichert werden
     </Heading>
     <Text mb="5">
       Das Kriterium für die Dauer der Speicherung von personenbezogenen Daten ist die jeweilige
@@ -742,7 +831,7 @@ const PrivacyDE = (props: PrivacyProps) => (
     </Text>
 
     <Heading size="md" mb="2">
-      11. Gesetzliche oder vertragliche Vorschriften zur Bereitstellung der personenbezogenen Daten;
+      12. Gesetzliche oder vertragliche Vorschriften zur Bereitstellung der personenbezogenen Daten;
       Erforderlichkeit für den Vertragsabschluss; Verpflichtung der betroffenen Person, die
       personenbezogenen Daten bereitzustellen; mögliche Folgen der Nichtbereitstellung
     </Heading>
@@ -764,7 +853,7 @@ const PrivacyDE = (props: PrivacyProps) => (
     </Text>
 
     <Heading size="md" mb="2">
-      12. Bestehen einer automatisierten Entscheidungsfindung
+      13. Bestehen einer automatisierten Entscheidungsfindung
     </Heading>
     <Text mb="5">
       Als verantwortungsbewusstes Unternehmen verzichten wir auf eine automatische
