@@ -1,3 +1,4 @@
+import { ArrowBackIcon } from '@chakra-ui/icons'
 import {
   Box,
   Button,
@@ -88,6 +89,11 @@ const NewPost = () => {
 
   return (
     <Container maxW="7xl">
+      <Box mb="5">
+        <Button variant="ghost" leftIcon={<ArrowBackIcon />} onClick={() => router.push('/post')}>
+          {t('posts')}
+        </Button>
+      </Box>
       <Center mb="10">
         <Heading fontSize="4xl">{t('post.new')}</Heading>
       </Center>
