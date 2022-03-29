@@ -180,7 +180,7 @@ const RequestPage = (props: Props) => {
 }
 
 export const getServerSideProps = withSessionSsr(async function getServerSideProps(context) {
-  if (context.req.session.user === undefined) {
+  if (context.req.session.user == undefined) {
     return {
       redirect: {
         destination: '/',
@@ -214,9 +214,9 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
   })
   if (
     request === null ||
-    (context.req.session.user?.role !== UserRole.ADMIN &&
-      request.author.id !== context.req.session.user?.id &&
-      request.place.author.id !== context.req.session.user?.id)
+    (context.req.session.user.role !== UserRole.ADMIN &&
+      request.author.id !== context.req.session.user.id &&
+      request.place.author.id !== context.req.session.user.id)
   ) {
     return {
       redirect: {

@@ -80,7 +80,7 @@ const NewPage = (props: Props) => {
 }
 
 export const getServerSideProps = withSessionSsr(async function getServerSideProps(context) {
-  if (context.req.session.user === undefined || context.req.session.user?.role === UserRole.GUEST) {
+  if (context.req.session.user == undefined || context.req.session.user.role === UserRole.GUEST) {
     return {
       redirect: {
         destination: '/',

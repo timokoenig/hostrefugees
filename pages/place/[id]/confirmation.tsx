@@ -45,7 +45,7 @@ const RequestPage = (props: Props) => {
 }
 
 export const getServerSideProps = withSessionSsr(async function getServerSideProps(context) {
-  if (context.req.session.user === undefined) {
+  if (context.req.session.user == undefined) {
     return {
       redirect: {
         destination: `/`,

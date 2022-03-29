@@ -19,8 +19,17 @@ import {
 import { Post, User } from '@prisma/client'
 import { useRouter } from 'next/router'
 import React from 'react'
+import Stats from './stats'
 
 type Props = {
+  usersCount: number
+  usersChange: number
+  placesCount: number
+  placesChange: number
+  requestsCount: number
+  requestsChange: number
+  postsCount: number
+  postsChange: number
   users: User[]
   posts: Post[]
 }
@@ -60,6 +69,7 @@ const Admin = (props: Props) => {
 
   return (
     <Container px={0} maxW="7xl" py={10}>
+      <Stats {...props} />
       <Box mb="10">
         <Flex mb="5" textAlign="center">
           <Heading size="md">Users</Heading>

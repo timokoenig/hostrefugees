@@ -114,7 +114,7 @@ const ProfilePage = (props: Props) => {
 }
 
 export const getServerSideProps = withSessionSsr(async function getServerSideProps(context) {
-  if (context.req.session.user === undefined) {
+  if (context.req.session.user == undefined) {
     return {
       redirect: {
         destination: '/',
@@ -125,7 +125,7 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
 
   const user = await prisma.user.findUnique({
     where: {
-      id: context.req.session.user?.id,
+      id: context.req.session.user.id,
     },
   })
   if (user == null) {

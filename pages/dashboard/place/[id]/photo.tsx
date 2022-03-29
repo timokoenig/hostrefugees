@@ -144,7 +144,7 @@ const PhotoPage = (props: Props) => {
 }
 
 export const getServerSideProps = withSessionSsr(async function getServerSideProps(context) {
-  if (context.req.session.user === undefined || context.req.session.user?.role === UserRole.GUEST) {
+  if (context.req.session.user == undefined || context.req.session.user.role === UserRole.GUEST) {
     return {
       redirect: {
         destination: '/',
@@ -169,8 +169,8 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
   })
   if (
     place === null ||
-    (context.req.session.user?.role !== UserRole.ADMIN &&
-      place.author.id !== context.req.session.user?.id)
+    (context.req.session.user.role !== UserRole.ADMIN &&
+      place.author.id !== context.req.session.user.id)
   ) {
     return {
       redirect: {
