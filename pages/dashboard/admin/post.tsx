@@ -1,10 +1,15 @@
-import { ArrowBackIcon } from '@chakra-ui/icons'
+import { ArrowBackIcon, HamburgerIcon } from '@chakra-ui/icons'
 import {
+  Badge,
   Box,
   Button,
   Container,
   Flex,
   Heading,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   Table,
   Tbody,
   Td,
@@ -30,6 +35,21 @@ type Props = {
 const PostPage = (props: Props) => {
   const router = useRouter()
 
+  const approve = async (post: Post) => {
+    const res = await fetch(`/api/post/${post.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        approved: true,
+      }),
+    })
+    if (res.ok) {
+      router.reload()
+    }
+  }
+
   return (
     <Layout user={props.user}>
       <Head>
@@ -53,6 +73,8 @@ const PostPage = (props: Props) => {
             <Tr>
               <Th>Date</Th>
               <Th>Title</Th>
+              <Th>Approved</Th>
+              <Th />
             </Tr>
           </Thead>
           <Tbody>
@@ -60,6 +82,23 @@ const PostPage = (props: Props) => {
               <Tr key={post.id}>
                 <Td>{moment(post.createdAt).format('DD.MM.YYYY HH:mm')}</Td>
                 <Td>{post.title}</Td>
+                <Td>
+                  {post.approved ? (
+                    <Badge colorScheme="green">Approved</Badge>
+                  ) : (
+                    <Badge colorScheme="red">Not Approved</Badge>
+                  )}
+                </Td>
+                <Td>
+                  <Menu>
+                    <MenuButton as="button">
+                      <HamburgerIcon width="5" height="5" />
+                    </MenuButton>
+                    <MenuList>
+                      <MenuItem onClick={() => approve(post)}>Approve</MenuItem>
+                    </MenuList>
+                  </Menu>
+                </Td>
               </Tr>
             ))}
           </Tbody>
