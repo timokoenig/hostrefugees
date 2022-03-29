@@ -26,3 +26,7 @@ export const formatAvailability = (place: MappedPlace): string => {
   }
   return `Available from ${startFormatted}`
 }
+
+export const formatUrl = (url: string): string => {
+  return url.replace('http://', '').replace('https://', '').replace('www.', '')
+}

@@ -29,7 +29,7 @@ const PostPage = (props: Props) => {
         </Box>
         <Box w="100%" sx={{ columnCount: { base: 1, md: 2, lg: 3 }, columnGap: '8px' }}>
           {props.posts.map(post => (
-            <PostItem key={post.id} post={post} />
+            <PostItem key={post.id} post={post} active={router.query.id == post.id} />
           ))}
         </Box>
       </Container>
@@ -41,6 +41,9 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
   const posts = await prisma.post.findMany({
     where: {
       approved: true,
+    },
+    orderBy: {
+      createdAt: 'desc',
     },
   })
   return {
