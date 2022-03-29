@@ -12,6 +12,8 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react'
 import { Post } from '@prisma/client'
+import parse from 'html-react-parser'
+import moment from 'moment'
 import { useRouter } from 'next/router'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -52,13 +54,13 @@ const Posts = (props: Props) => {
               </Text>
             )}
             {props.posts.map((post, i) => (
-              <ListItem key={i} onClick={() => router.push('/post')}>
+              <ListItem key={i} onClick={() => router.push(`/post?id=${post.id}`)}>
                 <Box
                   borderWidth="1px"
                   borderRadius="lg"
                   overflow="hidden"
                   cursor="pointer"
-                  padding="6"
+                  padding="4"
                   _hover={{ background: hoverColor }}
                 >
                   <Box display="flex" alignItems="baseline">
@@ -69,12 +71,14 @@ const Posts = (props: Props) => {
                       fontSize="xs"
                       textTransform="uppercase"
                     >
-                      {post.addressCity}
+                      {[post.addressCity, moment(post.createdAt).format('DD.MM.YYYY')]
+                        .filter(Boolean)
+                        .join(parse(' &bull; ') as string)}
                     </Box>
                   </Box>
-                  <Box mt="1" fontWeight="semibold" as="h4" lineHeight="tight" isTruncated>
+                  <Text mt="1" fontWeight="semibold" as="h4" lineHeight="tight">
                     {post.title}
-                  </Box>
+                  </Text>
                 </Box>
               </ListItem>
             ))}
