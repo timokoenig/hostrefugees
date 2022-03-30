@@ -15,17 +15,25 @@ type DisplayItem = {
 }
 
 const SafetyItem = (props: Props) => {
-  let displayItems: DisplayItem[] = [{ title: 'Safety Check', badge: 'OVERDUE', color: 'yellow' }]
+  const displayItems: DisplayItem[] = [
+    { title: 'Guest', badge: 'OVERDUE', color: 'yellow' },
+    { title: 'Host', badge: 'OVERDUE', color: 'yellow' },
+  ]
 
   if (props.request.safetyChecks.length > 0) {
-    displayItems = props.request.safetyChecks.map(check => {
-      return {
-        title:
-          check.userId == props.request.userId
-            ? `Guest SafetyCheck - ${moment(check.createdAt).format('DD.MM.YYYY HH:mm')}`
-            : `Author SafetyCheck - ${moment(check.createdAt).format('DD.MM.YYYY HH:mm')}`,
-        badge: check.safe ? 'SAFE' : 'NOT SAFE',
-        color: check.safe ? 'green' : 'red',
+    props.request.safetyChecks.forEach(check => {
+      if (check.userId == props.request.userId) {
+        displayItems[0] = {
+          title: `Guest - ${moment(check.createdAt).format('DD.MM.YYYY HH:mm')}`,
+          badge: check.safe ? 'SAFE' : 'NOT SAFE',
+          color: check.safe ? 'green' : 'red',
+        }
+      } else {
+        displayItems[1] = {
+          title: `Author - ${moment(check.createdAt).format('DD.MM.YYYY HH:mm')}`,
+          badge: check.safe ? 'SAFE' : 'NOT SAFE',
+          color: check.safe ? 'green' : 'red',
+        }
       }
     })
   }
@@ -48,7 +56,7 @@ const SafetyItem = (props: Props) => {
             {item.title}
           </Text>
         ))}
-        <Text fontSize="sm">{`Start Date ${moment(props.request.startDate)
+        <Text mt="1" fontSize="sm">{`Due Since ${moment(props.request.startDate)
           .add(1, 'day')
           .format('DD.MM.YYYY')}`}</Text>
       </Box>

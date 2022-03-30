@@ -111,7 +111,7 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
     },
   })
 
-  const safetyCheckRequests = await prisma.request.findMany({
+  const safetyCheckRequestsResult = await prisma.request.findMany({
     where: {
       OR: [
         {
@@ -132,6 +132,10 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
     include: {
       safetyChecks: true,
     },
+  })
+  const safetyCheckRequests = safetyCheckRequestsResult.filter(r => {
+    if (r.safetyChecks.length == 2 && r.safetyChecks[0].safe && r.safetyChecks[1].safe) return false
+    return true
   })
 
   return {
