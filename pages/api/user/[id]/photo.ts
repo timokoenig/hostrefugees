@@ -3,6 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 /* eslint-disable @typescript-eslint/prefer-ts-expect-error */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
+import { UserRole } from '@prisma/client'
 import formidable, { IncomingForm } from 'formidable'
 import fs from 'fs'
 import type { NextApiRequest, NextApiResponse } from 'next'
@@ -83,7 +84,10 @@ async function handleGetUserPhoto(req: NextApiRequest, res: NextApiResponse) {
       id: req.query.id as string,
     },
   })
-  if (user === null || user.id != req.session.user.id) {
+  if (
+    user === null ||
+    (user.id != req.session.user.id && req.session.user.role != UserRole.ADMIN)
+  ) {
     res.status(400).end()
     return
   }

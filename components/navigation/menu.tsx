@@ -11,8 +11,13 @@ import {
 import { useRouter } from 'next/router'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+import { MappedUser } from 'utils/models'
 
-const CustomMenu = () => {
+type Props = {
+  user?: MappedUser
+}
+
+const CustomMenu = (props: Props) => {
   const { t } = useTranslation('common')
   const router = useRouter()
   const toast = useToast()
@@ -35,7 +40,12 @@ const CustomMenu = () => {
   return (
     <Menu>
       <MenuButton as={Button} rounded="full" variant="link" cursor="pointer" minW={0}>
-        <Avatar size="sm" src="/svg/undraw_profile_pic_ic-5-t.svg" />
+        <Avatar
+          size="sm"
+          src={
+            props.user ? `/api/user/${props.user.id}/photo` : '/svg/undraw_profile_pic_ic-5-t.svg'
+          }
+        />
       </MenuButton>
       <MenuList>
         <MenuItem onClick={() => router.push('/dashboard')}>{t('dashboard')}</MenuItem>

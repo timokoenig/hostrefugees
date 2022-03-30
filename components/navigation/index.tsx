@@ -24,7 +24,7 @@ export default function Navigation(props: Props) {
           </HStack>
           {props.user ? (
             <Flex alignItems="center">
-              <Menu />
+              <Menu user={props.user} />
             </Flex>
           ) : (
             <Flex alignItems="center">
