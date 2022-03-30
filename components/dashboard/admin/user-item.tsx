@@ -16,7 +16,7 @@ const UserItem = (props: Props) => (
     rounded="10"
     onClick={props.onClick}
   >
-    <Avatar src="https://bit.ly/sage-adebayo" />
+    <Avatar src={`/api/user/${props.user.id}/photo`} />
     <Box ml="3">
       <Text fontWeight="bold">
         {`${props.user.firstname} ${props.user.lastname}`}
