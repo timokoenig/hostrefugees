@@ -1,5 +1,5 @@
 import { Box, Container, Heading, Text } from '@chakra-ui/react'
-import { Post, User, UserRole } from '@prisma/client'
+import { Post, Request, SafetyCheck, User, UserRole } from '@prisma/client'
 import Admin from 'components/dashboard/admin'
 import Layout from 'components/layout'
 import moment from 'moment'
@@ -22,6 +22,7 @@ type Props = {
   postsChange: number
   users: User[]
   posts: Post[]
+  safetyCheckRequests: (Request & { safetyChecks: SafetyCheck[] })[]
 }
 
 const AdminPage = (props: Props) => {
@@ -110,6 +111,29 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
     },
   })
 
+  const safetyCheckRequests = await prisma.request.findMany({
+    where: {
+      OR: [
+        {
+          safetyChecks: {
+            none: {},
+          },
+          startDate: {
+            lte: moment().subtract(1, 'day').toDate(),
+          },
+        },
+        {
+          safetyChecks: {
+            some: {},
+          },
+        },
+      ],
+    },
+    include: {
+      safetyChecks: true,
+    },
+  })
+
   return {
     props: {
       user: context.req.session.user,
@@ -123,6 +147,7 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
       postsChange,
       users,
       posts,
+      safetyCheckRequests,
     },
   }
 })
