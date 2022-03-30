@@ -7,7 +7,7 @@ import formidable, { IncomingForm } from 'formidable'
 import fs from 'fs'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from 'prisma/client'
-import { deleteFile, S3_BUCKET_USER, uploadFile } from 'utils/aws/s3'
+import { deleteFile, readFile, S3_BUCKET_USER, uploadFile } from 'utils/aws/s3'
 import { withSessionRoute } from 'utils/session'
 
 export const config = {
@@ -72,9 +72,38 @@ async function handleProfilePhotoUpload(req: NextApiRequest, res: NextApiRespons
   res.status(200).end()
 }
 
+async function handleGetUserPhoto(req: NextApiRequest, res: NextApiResponse) {
+  if (req.session.user == undefined) {
+    res.status(400).end()
+    return
+  }
+
+  const user = await prisma.user.findUnique({
+    where: {
+      id: req.query.id as string,
+    },
+  })
+  if (user === null || user.id != req.session.user.id) {
+    res.status(400).end()
+    return
+  }
+
+  try {
+    const image = await readFile(user.id, S3_BUCKET_USER)
+    res.setHeader('Content-Type', image.contentType)
+    res.send(image.data)
+  } catch (err: unknown) {
+    res.status(400).end()
+  }
+}
+
 async function handler(req: NextApiRequest, res: NextApiResponse<Response>) {
   if (req.method === 'POST') {
     await handleProfilePhotoUpload(req, res)
+    return
+  }
+  if (req.method === 'GET') {
+    await handleGetUserPhoto(req, res)
     return
   }
   res.status(400).end()
