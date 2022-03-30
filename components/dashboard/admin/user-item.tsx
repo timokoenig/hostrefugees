@@ -12,7 +12,7 @@ const UserItem = (props: Props) => (
   <Flex
     cursor="pointer"
     _hover={{ background: useColorModeValue('gray.100', 'gray.900') }}
-    py="5"
+    p="5"
     rounded="10"
     onClick={props.onClick}
   >
