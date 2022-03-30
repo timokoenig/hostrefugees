@@ -95,6 +95,7 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
   const users = await prisma.user.findMany({
     where: {
       verified: false,
+      role: UserRole.HOST,
     },
     orderBy: {
       createdAt: 'desc',
