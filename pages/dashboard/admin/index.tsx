@@ -92,8 +92,22 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
     },
   })
 
-  const users = await prisma.user.findMany({})
-  const posts = await prisma.post.findMany({})
+  const users = await prisma.user.findMany({
+    where: {
+      verified: false,
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+  })
+  const posts = await prisma.post.findMany({
+    where: {
+      approved: false,
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+  })
 
   return {
     props: {

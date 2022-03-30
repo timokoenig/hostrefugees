@@ -1,25 +1,18 @@
-import { HamburgerIcon } from '@chakra-ui/icons'
 import {
-  Badge,
   Box,
   Container,
   Flex,
   Heading,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  Table,
-  Tbody,
-  Td,
-  Th,
-  Thead,
-  Tr,
+  SimpleGrid,
+  Stack,
+  StackDivider,
+  useColorModeValue,
 } from '@chakra-ui/react'
 import { Post, User } from '@prisma/client'
-import { useRouter } from 'next/router'
 import React from 'react'
+import PostItem from './post-item'
 import Stats from './stats'
+import UserItem from './user-item'
 
 type Props = {
   usersCount: number
@@ -35,125 +28,37 @@ type Props = {
 }
 
 const Admin = (props: Props) => {
-  const router = useRouter()
-
-  const verify = async (user: User) => {
-    const res = await fetch(`/api/user/${user.id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        verified: true,
-      }),
-    })
-    if (res.ok) {
-      router.reload()
-    }
-  }
-
-  const approve = async (post: Post) => {
-    const res = await fetch(`/api/post/${post.id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        approved: true,
-      }),
-    })
-    if (res.ok) {
-      router.reload()
-    }
-  }
-
   return (
     <Container px={0} maxW="7xl" py={10}>
       <Stats {...props} />
-      <Box mb="10">
-        <Flex mb="5" textAlign="center">
-          <Heading size="md">Users</Heading>
-        </Flex>
-        <Table>
-          <Thead>
-            <Tr>
-              <Th>Email</Th>
-              <Th>Firstname</Th>
-              <Th>Lastname</Th>
-              <Th>Role</Th>
-              <Th>Status</Th>
-              <Th />
-            </Tr>
-          </Thead>
-          <Tbody>
+      <SimpleGrid templateColumns={{ md: '1fr', lg: '1fr 1fr' }} spacing="10">
+        <Box>
+          <Flex mb="5" textAlign="center">
+            <Heading size="md">Unverified Hosts</Heading>
+          </Flex>
+          <Stack
+            spacing={5}
+            divider={<StackDivider borderColor={useColorModeValue('gray.200', 'gray.600')} />}
+          >
             {props.users.map(user => (
-              <Tr key={user.id}>
-                <Td>{user.email}</Td>
-                <Td>{user.firstname}</Td>
-                <Td>{user.lastname}</Td>
-                <Td>{user.role}</Td>
-                <Td>
-                  {user.verified ? (
-                    <Badge colorScheme="green">Verified</Badge>
-                  ) : (
-                    <Badge colorScheme="red">Not Verified</Badge>
-                  )}
-                </Td>
-                <Td>
-                  <Menu>
-                    <MenuButton as="button">
-                      <HamburgerIcon width="5" height="5" />
-                    </MenuButton>
-                    <MenuList>
-                      <MenuItem onClick={() => verify(user)}>Verify</MenuItem>
-                    </MenuList>
-                  </Menu>
-                </Td>
-              </Tr>
+              <UserItem key={user.id} user={user} />
             ))}
-          </Tbody>
-        </Table>
-      </Box>
-      <Box>
-        <Flex mb="5" textAlign="center">
-          <Heading size="md">Posts</Heading>
-        </Flex>
-        <Table>
-          <Thead>
-            <Tr>
-              <Th>Title</Th>
-              <Th>Description</Th>
-              <Th>Approved</Th>
-              <Th />
-            </Tr>
-          </Thead>
-          <Tbody>
+          </Stack>
+        </Box>
+        <Box>
+          <Flex mb="5" textAlign="center">
+            <Heading size="md">New Posts</Heading>
+          </Flex>
+          <Stack
+            spacing={5}
+            divider={<StackDivider borderColor={useColorModeValue('gray.200', 'gray.600')} />}
+          >
             {props.posts.map(post => (
-              <Tr key={post.id}>
-                <Td>{post.title}</Td>
-                <Td>{post.description}</Td>
-                <Td>
-                  {post.approved ? (
-                    <Badge colorScheme="green">Approved</Badge>
-                  ) : (
-                    <Badge colorScheme="red">Not Approved</Badge>
-                  )}
-                </Td>
-                <Td>
-                  <Menu>
-                    <MenuButton as="button">
-                      <HamburgerIcon width="5" height="5" />
-                    </MenuButton>
-                    <MenuList>
-                      <MenuItem onClick={() => approve(post)}>Approve</MenuItem>
-                    </MenuList>
-                  </Menu>
-                </Td>
-              </Tr>
+              <PostItem key={post.id} post={post} />
             ))}
-          </Tbody>
-        </Table>
-      </Box>
+          </Stack>
+        </Box>
+      </SimpleGrid>
     </Container>
   )
 }
