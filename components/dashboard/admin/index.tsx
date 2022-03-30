@@ -1,14 +1,6 @@
-import {
-  Box,
-  Container,
-  Flex,
-  Heading,
-  SimpleGrid,
-  Stack,
-  StackDivider,
-  useColorModeValue,
-} from '@chakra-ui/react'
+import { Box, Container, Flex, Heading, SimpleGrid, Stack } from '@chakra-ui/react'
 import { Post, User } from '@prisma/client'
+import { useRouter } from 'next/router'
 import React from 'react'
 import PostItem from './post-item'
 import Stats from './stats'
@@ -28,6 +20,7 @@ type Props = {
 }
 
 const Admin = (props: Props) => {
+  const router = useRouter()
   return (
     <Container px={0} maxW="7xl" py={10}>
       <Stats {...props} />
@@ -36,12 +29,13 @@ const Admin = (props: Props) => {
           <Flex mb="5" textAlign="center">
             <Heading size="md">Unverified Hosts</Heading>
           </Flex>
-          <Stack
-            spacing={5}
-            divider={<StackDivider borderColor={useColorModeValue('gray.200', 'gray.600')} />}
-          >
+          <Stack>
             {props.users.map(user => (
-              <UserItem key={user.id} user={user} />
+              <UserItem
+                key={user.id}
+                user={user}
+                onClick={() => router.push('/dashboard/admin/user')}
+              />
             ))}
           </Stack>
         </Box>
@@ -49,12 +43,13 @@ const Admin = (props: Props) => {
           <Flex mb="5" textAlign="center">
             <Heading size="md">New Posts</Heading>
           </Flex>
-          <Stack
-            spacing={5}
-            divider={<StackDivider borderColor={useColorModeValue('gray.200', 'gray.600')} />}
-          >
+          <Stack>
             {props.posts.map(post => (
-              <PostItem key={post.id} post={post} />
+              <PostItem
+                key={post.id}
+                post={post}
+                onClick={() => router.push('/dashboard/admin/post')}
+              />
             ))}
           </Stack>
         </Box>

@@ -1,14 +1,21 @@
-import { Avatar, Badge, Box, Flex, Text } from '@chakra-ui/react'
+import { Avatar, Badge, Box, Flex, Text, useColorModeValue } from '@chakra-ui/react'
 import { User } from '@prisma/client'
 import moment from 'moment'
 import React from 'react'
 
 type Props = {
   user: User
+  onClick: () => void
 }
 
 const UserItem = (props: Props) => (
-  <Flex>
+  <Flex
+    cursor="pointer"
+    _hover={{ background: useColorModeValue('gray.100', 'gray.900') }}
+    py="5"
+    rounded="10"
+    onClick={props.onClick}
+  >
     <Avatar src="https://bit.ly/sage-adebayo" />
     <Box ml="3">
       <Text fontWeight="bold">
