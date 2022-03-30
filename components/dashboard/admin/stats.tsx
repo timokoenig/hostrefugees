@@ -1,14 +1,16 @@
 import { Stat, StatArrow, StatGroup, StatHelpText, StatLabel, StatNumber } from '@chakra-ui/react'
+import { useRouter } from 'next/router'
 import React from 'react'
 
 type ItemProps = {
   label: string
   count: number
   change: number
+  onClick: () => void
 }
 
 const StatItem = (props: ItemProps) => (
-  <Stat>
+  <Stat rounded="10" cursor="pointer" _hover={{ color: 'blue.600' }} onClick={props.onClick}>
     <StatLabel>{props.label}</StatLabel>
     <StatNumber>{props.count}</StatNumber>
     <StatHelpText>
@@ -30,11 +32,32 @@ type Props = {
 }
 
 const Stats = (props: Props) => {
+  const router = useRouter()
   const stats: ItemProps[] = [
-    { label: 'Users', count: props.usersCount, change: props.usersChange },
-    { label: 'Places', count: props.placesCount, change: props.placesChange },
-    { label: 'Requests', count: props.requestsCount, change: props.requestsChange },
-    { label: 'Posts', count: props.postsCount, change: props.postsChange },
+    {
+      label: 'Users',
+      count: props.usersCount,
+      change: props.usersChange,
+      onClick: () => router.push('/dashboard/admin/user'),
+    },
+    {
+      label: 'Places',
+      count: props.placesCount,
+      change: props.placesChange,
+      onClick: () => router.push('/dashboard/admin/place'),
+    },
+    {
+      label: 'Requests',
+      count: props.requestsCount,
+      change: props.requestsChange,
+      onClick: () => router.push('/dashboard/admin/request'),
+    },
+    {
+      label: 'Posts',
+      count: props.postsCount,
+      change: props.postsChange,
+      onClick: () => router.push('/dashboard/admin/post'),
+    },
   ]
   return (
     <StatGroup borderBottomWidth={1} borderColor="gray.200" pb="10" mb="10" textAlign="center">
