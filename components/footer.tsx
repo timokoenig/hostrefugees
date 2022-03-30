@@ -79,7 +79,7 @@ export default function Footer() {
         </SimpleGrid>
         <Flex flexDirection="row" justifyContent="center">
           <Select value={lang} onChange={e => onChangeLang(e.target.value)} width="200px">
-            {/* <option value="de">{tLang('de')}</option> */}
+            <option value="de">{tLang('de')}</option>
             <option value="en">{tLang('en')}</option>
             {/* <option value="ua">{tLang('ua')}</option> */}
           </Select>
