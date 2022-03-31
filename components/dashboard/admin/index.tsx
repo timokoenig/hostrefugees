@@ -1,4 +1,13 @@
-import { Box, Container, Flex, Heading, SimpleGrid, Stack } from '@chakra-ui/react'
+import {
+  Box,
+  Container,
+  Flex,
+  Heading,
+  SimpleGrid,
+  Stack,
+  Text,
+  useColorModeValue,
+} from '@chakra-ui/react'
 import { Post, Request, SafetyCheck, User } from '@prisma/client'
 import { useRouter } from 'next/router'
 import React from 'react'
@@ -23,6 +32,8 @@ type Props = {
 
 const Admin = (props: Props) => {
   const router = useRouter()
+  const subtitleTextColor = useColorModeValue('gray.600', 'gray.400')
+
   return (
     <Container px={0} maxW="7xl" py={10}>
       <Stats {...props} />
@@ -32,6 +43,7 @@ const Admin = (props: Props) => {
             <Heading size="md">Unverified Hosts</Heading>
           </Flex>
           <Stack>
+            {props.users.length == 0 && <Text color={subtitleTextColor}>Nothing new</Text>}
             {props.users.map(user => (
               <UserItem
                 key={user.id}
@@ -46,6 +58,7 @@ const Admin = (props: Props) => {
             <Heading size="md">New Posts</Heading>
           </Flex>
           <Stack>
+            {props.posts.length == 0 && <Text color={subtitleTextColor}>Nothing new</Text>}
             {props.posts.map(post => (
               <PostItem
                 key={post.id}
@@ -60,6 +73,9 @@ const Admin = (props: Props) => {
             <Heading size="md">Safety Checks</Heading>
           </Flex>
           <Stack>
+            {props.safetyCheckRequests.length == 0 && (
+              <Text color={subtitleTextColor}>Nothing new</Text>
+            )}
             {props.safetyCheckRequests.map(request => (
               <SafetyItem
                 key={request.id}
