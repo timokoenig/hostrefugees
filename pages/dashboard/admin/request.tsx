@@ -41,6 +41,7 @@ const RequestPage = (props: Props) => {
       <Container maxW="7xl">
         <Box mb="5">
           <Button
+            pl="0"
             variant="ghost"
             leftIcon={<ArrowBackIcon />}
             onClick={() => router.push('/dashboard/admin')}

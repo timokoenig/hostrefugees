@@ -48,7 +48,7 @@ const Admin = (props: Props) => {
               <UserItem
                 key={user.id}
                 user={user}
-                onClick={() => router.push('/dashboard/admin/user')}
+                onClick={() => router.push(`/dashboard/admin/user/${user.id}`)}
               />
             ))}
           </Stack>

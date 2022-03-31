@@ -1,4 +1,4 @@
-import { ArrowBackIcon, HamburgerIcon } from '@chakra-ui/icons'
+import { ArrowBackIcon } from '@chakra-ui/icons'
 import {
   Badge,
   Box,
@@ -6,16 +6,13 @@ import {
   Container,
   Flex,
   Heading,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
   Table,
   Tbody,
   Td,
   Th,
   Thead,
   Tr,
+  useColorModeValue,
 } from '@chakra-ui/react'
 import { User, UserRole } from '@prisma/client'
 import Layout from 'components/layout'
@@ -33,21 +30,7 @@ type Props = {
 
 const UserPage = (props: Props) => {
   const router = useRouter()
-
-  const verify = async (user: User) => {
-    const res = await fetch(`/api/user/${user.id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        verified: true,
-      }),
-    })
-    if (res.ok) {
-      router.reload()
-    }
-  }
+  const hoverColor = useColorModeValue('gray.100', 'gray.900')
 
   return (
     <Layout user={props.user}>
@@ -75,12 +58,16 @@ const UserPage = (props: Props) => {
               <Th>Lastname</Th>
               <Th>Role</Th>
               <Th>Status</Th>
-              <Th />
             </Tr>
           </Thead>
           <Tbody>
             {props.users.map(user => (
-              <Tr key={user.id}>
+              <Tr
+                key={user.id}
+                onClick={() => router.push(`/dashboard/admin/user/${user.id}`)}
+                _hover={{ backgroundColor: hoverColor }}
+                cursor="pointer"
+              >
                 <Td>{user.email}</Td>
                 <Td>{user.firstname}</Td>
                 <Td>{user.lastname}</Td>
@@ -91,16 +78,6 @@ const UserPage = (props: Props) => {
                   ) : (
                     <Badge colorScheme="red">Not Verified</Badge>
                   )}
-                </Td>
-                <Td>
-                  <Menu>
-                    <MenuButton as="button">
-                      <HamburgerIcon width="5" height="5" />
-                    </MenuButton>
-                    <MenuList>
-                      <MenuItem onClick={() => verify(user)}>Verify</MenuItem>
-                    </MenuList>
-                  </Menu>
                 </Td>
               </Tr>
             ))}

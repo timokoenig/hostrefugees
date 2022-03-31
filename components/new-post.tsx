@@ -90,7 +90,12 @@ const NewPost = () => {
   return (
     <Container maxW="7xl">
       <Box mb="5">
-        <Button variant="ghost" leftIcon={<ArrowBackIcon />} onClick={() => router.push('/post')}>
+        <Button
+          pl="0"
+          variant="ghost"
+          leftIcon={<ArrowBackIcon />}
+          onClick={() => router.push('/post')}
+        >
           {t('posts')}
         </Button>
       </Box>
