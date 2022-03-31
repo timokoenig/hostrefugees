@@ -8,6 +8,7 @@ import formidable, { IncomingForm } from 'formidable'
 import fs from 'fs'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from 'prisma/client'
+import sharp from 'sharp'
 import { deleteFile, readFile, S3_BUCKET_USER, uploadFile } from 'utils/aws/s3'
 import { withSessionRoute } from 'utils/session'
 
@@ -94,8 +95,9 @@ async function handleGetUserPhoto(req: NextApiRequest, res: NextApiResponse) {
 
   try {
     const image = await readFile(user.id, S3_BUCKET_USER)
+    const resizedImage = await sharp(image.data).resize(100).toBuffer()
     res.setHeader('Content-Type', image.contentType)
-    res.send(image.data)
+    res.send(resizedImage)
   } catch (err: unknown) {
     res.status(400).end()
   }
