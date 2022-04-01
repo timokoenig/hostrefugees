@@ -196,7 +196,7 @@
   "feature.private": "Private Places",
   "feature.private.text": "All available places on this platform are private homes",
   "feature.verified": "Verified Hosts",
-  "feature.verified.text": "Every host needs to verify their identify before a place is offered to a guest",
+  "feature.verified.text": "Every host needs to verify their identity before a place is offered to a guest",
   "feature.safety": "Safety Check",
   "feature.safety.text": "The safety check for hosts and guests makes sure that both parties arrive safely",
   "feature.opensource": "Open Source",
