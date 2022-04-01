@@ -2,6 +2,7 @@ import {
   Box,
   Center,
   Container,
+  Flex,
   Heading,
   Image,
   List,
@@ -12,6 +13,7 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react'
 import { Post } from '@prisma/client'
+import Category from 'components/post/category'
 import parse from 'html-react-parser'
 import moment from 'moment'
 import { useRouter } from 'next/router'
@@ -64,17 +66,22 @@ const Posts = (props: Props) => {
                   _hover={{ background: hoverColor }}
                 >
                   <Box display="flex" alignItems="baseline">
-                    <Box
+                    <Flex
                       color="gray.500"
                       fontWeight="semibold"
                       letterSpacing="wide"
                       fontSize="xs"
                       textTransform="uppercase"
+                      flex="1"
                     >
                       {[post.addressCity, moment(post.createdAt).format('DD.MM.YYYY')]
                         .filter(Boolean)
                         .join(parse(' &bull; ') as string)}
-                    </Box>
+                      <Box flex="1" />
+                      {post.category.map(cat => (
+                        <Category key={cat} category={cat} />
+                      ))}
+                    </Flex>
                   </Box>
                   <Text mt="1" fontWeight="semibold" as="h4" lineHeight="tight">
                     {post.title}
