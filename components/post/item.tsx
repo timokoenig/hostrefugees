@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 import React from 'react'
 import { IoOpenOutline } from 'react-icons/io5'
 import { formatUrl } from 'utils/formatter'
+import Category from './category'
 
 type Props = {
   post: Post
@@ -31,6 +32,13 @@ const PostItem = (props: Props) => {
       <Heading as="h3" size="md" fontWeight="semibold" mb="2">
         {props.post.title}
       </Heading>
+      {props.post.category.length > 0 && (
+        <Box mb="2">
+          {props.post.category.map(cat => (
+            <Category key={cat} category={cat} />
+          ))}
+        </Box>
+      )}
       <Text mb="5">{props.post.description}</Text>
       {props.post.addressCity && (
         <Text mb="5">
