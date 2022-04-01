@@ -30,6 +30,14 @@ async function handleNewPost(req: Request, res: NextApiResponse) {
     data: {
       createdAt: new Date(),
       updatedAt: new Date(),
+      author:
+        req.session.user == undefined
+          ? undefined
+          : {
+              connect: {
+                id: req.session.user.id,
+              },
+            },
       title: req.body.title,
       description: req.body.description,
       category: req.body.category as PostCategory[],
