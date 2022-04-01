@@ -28,6 +28,11 @@ type Props = {
   users: User[]
 }
 
+const VerifiedBadge = (props: { user: User }) => {
+  if (props.user.verified) return <Badge colorScheme="green">Verified</Badge>
+  return <Badge colorScheme="red">Not Verified</Badge>
+}
+
 const UserPage = (props: Props) => {
   const router = useRouter()
   const hoverColor = useColorModeValue('gray.100', 'gray.900')
@@ -72,13 +77,7 @@ const UserPage = (props: Props) => {
                 <Td>{user.firstname}</Td>
                 <Td>{user.lastname}</Td>
                 <Td>{user.role}</Td>
-                <Td>
-                  {user.verified ? (
-                    <Badge colorScheme="green">Verified</Badge>
-                  ) : (
-                    <Badge colorScheme="red">Not Verified</Badge>
-                  )}
-                </Td>
+                <Td>{user.role == UserRole.HOST && <VerifiedBadge user={user} />}</Td>
               </Tr>
             ))}
           </Tbody>

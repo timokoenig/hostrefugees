@@ -133,16 +133,18 @@ const UserPage = (props: Props) => {
               </Heading>
               <Avatar size="2xl" src={props.photo} />
             </Box>
-            <Box>
-              <Heading size="md" mb="5">
-                Verification
-              </Heading>
-              {props.selectedUser.verified ? (
-                <Badge colorScheme="green">User is verified</Badge>
-              ) : (
-                <Button onClick={onVerify}>Click to approve</Button>
-              )}
-            </Box>
+            {props.selectedUser.role == UserRole.HOST && (
+              <Box>
+                <Heading size="md" mb="5">
+                  Verification
+                </Heading>
+                {props.selectedUser.verified ? (
+                  <Badge colorScheme="green">User is verified</Badge>
+                ) : (
+                  <Button onClick={onVerify}>Click to approve</Button>
+                )}
+              </Box>
+            )}
           </GridItem>
         </SimpleGrid>
       </Container>
