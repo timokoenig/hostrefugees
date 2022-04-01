@@ -3,7 +3,6 @@ import { Post } from '@prisma/client'
 import moment from 'moment'
 import { useRouter } from 'next/router'
 import React from 'react'
-import { useTranslation } from 'react-i18next'
 import { IoOpenOutline } from 'react-icons/io5'
 import { formatUrl } from 'utils/formatter'
 
@@ -13,7 +12,6 @@ type Props = {
 }
 
 const PostItem = (props: Props) => {
-  const { t } = useTranslation('common')
   const router = useRouter()
   const backgroundColor = useColorModeValue('gray.100', 'gray.700')
   const backgroundColorActive = useColorModeValue('blue.100', 'blue.700')
@@ -47,15 +45,14 @@ const PostItem = (props: Props) => {
         </Text>
       )}
       {props.post.website && (
-        <Text mb="5">
+        <Text mb="2">
           <Link href={props.post.website} color="blue.500" isExternal>
             {formatUrl(props.post.website)} <Icon as={IoOpenOutline} w="4" h="4" mx="1" pt="1" />
           </Link>
         </Text>
       )}
       {props.post.phoneNumber && (
-        <Text mb="5">
-          {t('phone')}{' '}
+        <Text mb="2">
           <Link href={`tel:${props.post.phoneNumber}`} color="blue.500" isExternal>
             {props.post.phoneNumber}
           </Link>
