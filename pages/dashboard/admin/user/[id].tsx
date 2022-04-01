@@ -1,3 +1,4 @@
+/* eslint-disable no-empty */
 /* eslint-disable guard-for-in */
 /* eslint-disable no-await-in-loop */
 /* eslint-disable @typescript-eslint/no-for-in-array */
@@ -183,9 +184,7 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
       const file = await readFile(`${user.id}/${verificationDocuments[i]}`, S3_BUCKET_DOCUMENTS)
       const resizedFile = await sharp(file.data).resize(300).toBuffer()
       documents.push(`data:${file.contentType};base64, ${resizedFile.toString('base64')}`)
-    } catch (err: unknown) {
-      console.log(err)
-    }
+    } catch {}
   }
 
   let photo = ''
@@ -193,9 +192,7 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
     const file = await readFile(user.id, S3_BUCKET_USER)
     const resizedFile = await sharp(file.data).resize(300).toBuffer()
     photo = `data:${file.contentType};base64, ${resizedFile.toString('base64')}`
-  } catch (err: unknown) {
-    console.log(err)
-  }
+  } catch {}
 
   return {
     props: {
