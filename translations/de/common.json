@@ -89,7 +89,7 @@
 
   "help": "Hilfe",
   "help.howtostay": "Wie kann ich mich für eine Unterkunft bewerben?",
-  "help.howtostay.text": "Suchen Sie zuerst nach einer <1>Unterkunft</1>. Suchen Sie zunächst nach einer <1>Unterkunft</1>. Wenn Sie eine Unterkunft gefunden haben, die Ihren Anforderungen entspricht, klicken Sie einfach auf die Schaltfläche <1>Anfrage stellen</1>, füllen Sie die erforderlichen Felder aus, erzählen Sie dem Gastgeber/-in ein wenig über sich und bestätigen Sie die Anfrage. Sie erhalten eine E-Mail, sobald der Gastgeber/-in Ihre Anfrage akzeptiert hat. In dieser E-Mail finden Sie die Kontaktinformationen und Anweisungen zur Anreise. Wir bitten Sie, den Gastgeber/-in bezüglich Ihrer Anreise zu kontaktieren.",
+  "help.howtostay.text": "Suchen Sie zuerst nach einer <1>Unterkunft</1>. Suchen Sie zunächst nach einer <1>Unterkunft</1>. Wenn Sie eine passende Unterkunft gefunden haben, klicken Sie einfach auf die Schaltfläche <1>Anfrage stellen</1>, füllen Sie die erforderlichen Felder aus, erzählen Sie dem Gastgeber/-in ein wenig über sich und bestätigen Sie die Anfrage. Sie erhalten eine E-Mail, sobald der Gastgeber/-in Ihre Anfrage akzeptiert hat. In dieser E-Mail finden Sie die Kontaktinformationen und Anweisungen zur Anreise. Wir bitten Sie, den Gastgeber/-in bezüglich Ihrer Anreise zu kontaktieren.",
   "help.offerplace": "Wie kann ich eine Unterkunft anbieten?",
   "help.offerplace.text": "Um Gastgeber bei HostRefugees zu sein, müssen Sie eine Wohnung, ein Zimmer oder eine andere Unterkunft in Deutschland haben. Die Wohnung muss in einem guten Zustand sein und mindestens ein Bett und ein Badezimmer haben. Wenn Sie diese Voraussetzungen erfüllen, können Sie sich unter <1>Gastgeber werden</1> registrieren. Nach der Registrierung müssen Sie Ihren Personalausweis oder Reisepass hochladen, um sich zu identifizieren. Dies ist zwingend erforderlich, um die Sicherheit unserer Gäste zu gewährleisten.",
   "help.issue": "Was kann ich tun, wenn etwas nicht funktioniert?",
@@ -202,7 +202,7 @@
   "feature.opensource.text": "HostRefugees ist ein Open-Source-Projekt auf Github, um so transparent wie möglich zu sein",
 
   "howto": "Wie funktioniert es?",
-  "howto.text": "HostRefugees bietet eine Liste aller verfügbaren privaten Unterkünfte, in denen Sie übernachten können. Wenn Sie eine Unterkunft gefunden haben, die Ihren Anforderungen entspricht, können Sie beantragen, dort zu bleiben. Der Gastgeber/-in wird über Ihre Anfrage benachrichtigt und Sie erhalten eine E-Mail, sobald der Gastgeber/-in sie akzeptiert. In dieser E-Mail finden Sie den genauen Namen, die Adresse und andere Kontaktinformationen, um mit dem Gastgeber/-in in Kontakt zu treten.",
+  "howto.text": "HostRefugees bietet eine Liste aller verfügbaren privaten Unterkünfte, in denen Sie übernachten können. Wenn Sie eine passende Unterkunft gefunden haben, können Sie sich auf diese bewerben. Der Gastgeber/-in wird über Ihre Anfrage benachrichtigt und Sie erhalten eine E-Mail, sobald der Gastgeber/-in sie akzeptiert. In dieser E-Mail finden Sie den genauen Namen, die Adresse und andere Kontaktinformationen, um mit dem Gastgeber/-in in Kontakt zu treten.",
 
   "maps.disabled": "Google Maps deaktiviert",
   "maps.info": "Diese Website verwendet Google Maps zur Anzeige von Unterkünften in Deutschland. Um diese Funktion zu nutzen, erlauben Sie bitte die Verwendung von nicht wesentlichen Cookies.",
