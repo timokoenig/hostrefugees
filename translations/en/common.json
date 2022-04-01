@@ -71,6 +71,7 @@
   "translate.original": "Show Original",
   "submit": "Submit",
   "website": "Website",
+  "category": "Category",
 
   "hostrefugees.subtitle": "at your place!",
 
@@ -336,5 +337,6 @@
   "post.new.3": "Let's Stay Active",
   "post.new.3.info": "Whether young or old, everybody loves sports. Do you have some spots in your team left where people can train for free?",
   "post.new.success": "You successfully submitted your post. We will review and approve it as soon as possible. After that it will appear for everyone on this platform.",
-  "post.new.success.button": "Create another post"
+  "post.new.success.button": "Create another post",
+  "post.category.picker": "Select a category"
 }

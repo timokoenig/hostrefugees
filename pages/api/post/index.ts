@@ -1,3 +1,4 @@
+import { PostCategory } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from 'prisma/client'
 import geocode, { LatLngLiteral } from 'utils/geocode'
@@ -9,6 +10,7 @@ interface Request extends NextApiRequest {
   body: {
     title: string
     description: string
+    category: string[]
     website: string
     phoneNumber: string
     addressStreet: string
@@ -30,6 +32,7 @@ async function handleNewPost(req: Request, res: NextApiResponse) {
       updatedAt: new Date(),
       title: req.body.title,
       description: req.body.description,
+      category: req.body.category as PostCategory[],
       website: req.body.website,
       phoneNumber: req.body.phoneNumber,
       addressStreet: req.body.addressStreet,

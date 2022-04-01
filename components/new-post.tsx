@@ -25,6 +25,7 @@ import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import * as Yup from 'yup'
 import CustomButton from './common/button'
+import CategoryPicker from './post/category-picker'
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().min(2, 'Too Short').max(50, 'Too Long').required('Required'),
@@ -46,6 +47,7 @@ const NewPost = () => {
     initialValues: {
       title: '',
       description: '',
+      category: [],
       website: '',
       phoneNumber: '',
       addressStreet: '',
@@ -188,6 +190,15 @@ const NewPost = () => {
                       onChange={formik.handleChange}
                     />
                     <FormErrorMessage>{formik.errors.description}</FormErrorMessage>
+                  </FormControl>
+
+                  <FormControl>
+                    <FormLabel htmlFor="category">{t('category')}</FormLabel>
+                    <CategoryPicker
+                      value={formik.values.category}
+                      isDisabled={formik.isSubmitting}
+                      onChange={values => formik.setFieldValue('category', values)}
+                    />
                   </FormControl>
 
                   <SimpleGrid templateColumns={{ base: '1fr', md: '2fr 1fr' }} spacing={5}>
