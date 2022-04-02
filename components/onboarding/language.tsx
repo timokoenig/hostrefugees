@@ -1,7 +1,7 @@
 import { Button, Center, Heading, Image, Text, useToast } from '@chakra-ui/react'
 import LanguagePicker from 'components/common/languagepicker'
 import React, { useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { Trans, useTranslation } from 'react-i18next'
 import { MappedUser } from 'utils/models'
 
 type Props = {
@@ -53,10 +53,13 @@ const LanguageOnboarding = (props: Props) => {
   return (
     <>
       <Heading as="h2" size="xl" mt={6} mb={10}>
-        {t('onboarding.language')}{' '}
-        <Text as="span" color="blue.400">
-          HostRefugees
-        </Text>
+        <Trans i18nKey="onboarding.language" t={t}>
+          x
+          <Text as="span" color="blue.400">
+            y
+          </Text>
+          z
+        </Trans>
       </Heading>
       <Center mb={10}>
         <Image src="/svg/undraw_audio_conversation_re_ptsl.svg" maxWidth="250" />

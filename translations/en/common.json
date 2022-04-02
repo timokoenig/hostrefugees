@@ -228,7 +228,7 @@
   "becomehost.5": "Contact and Arrival",
   "becomehost.5.info": "You and the guest will receive an email with all contact information. Please get in touch with the other person to arrange the arrival",
 
-  "onboarding.language": "We are happy to welcome you at",
+  "onboarding.language": "We are happy to welcome you at <1>HostRefugees</1>",
   "onboarding.language.text": "To improve the communication for hosts and guests, please select all languages you speak",
   "onboarding.language.picker": "Select at least one language",
   "onboarding.photo": "Profile Photo",
