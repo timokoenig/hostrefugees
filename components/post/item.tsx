@@ -17,6 +17,14 @@ const PostItem = (props: Props) => {
   const backgroundColor = useColorModeValue('gray.100', 'gray.700')
   const backgroundColorActive = useColorModeValue('blue.100', 'blue.700')
 
+  const onClick = async () => {
+    await router.push(
+      router.query.id == props.post.id ? '/post' : `/post?id=${props.post.id}`,
+      undefined,
+      { shallow: true }
+    )
+  }
+
   return (
     <Box
       w="100%"
@@ -26,7 +34,7 @@ const PostItem = (props: Props) => {
       bg={props.active ? backgroundColorActive : backgroundColor}
       boxShadow="lg"
       cursor="pointer"
-      onClick={() => router.push(`/post?id=${props.post.id}`, undefined, { shallow: true })}
+      onClick={onClick}
       p={4}
     >
       <Heading as="h3" size="md" fontWeight="semibold" mb="2">
