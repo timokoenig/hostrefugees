@@ -3,6 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from 'prisma/client'
 import geocode from 'utils/geocode'
 import { withSessionRoute } from 'utils/session'
+import translateAll from 'utils/translate-all'
 
 const DEFAULT_COUNTRY = 'Germany'
 
@@ -27,6 +28,7 @@ interface Request extends NextApiRequest {
     addressCity: string
     addressCountry: string
     houseRules: string
+    arrivalInstructions: string
     availabilityStart: Date
     availabilityEnd: Date | null
   }
@@ -34,6 +36,11 @@ interface Request extends NextApiRequest {
 
 async function handleNewPlace(req: Request, res: NextApiResponse) {
   const latLng = await geocode(req.body.addressCity, DEFAULT_COUNTRY)
+
+  const titleTranslation = await translateAll(req.body.title)
+  const descriptionTranslation = await translateAll(req.body.description)
+  const arrivalInstructionsTranslation = await translateAll(req.body.arrivalInstructions)
+  const houseRulesTranslation = await translateAll(req.body.houseRules)
 
   const place = await prisma.place.create({
     data: {
@@ -47,7 +54,9 @@ async function handleNewPlace(req: Request, res: NextApiResponse) {
       approved: false,
       active: true,
       title: req.body.title,
+      titleTranslation,
       description: req.body.description,
+      descriptionTranslation,
       type: req.body.type,
       placeAdults: req.body.placeAdults,
       placeChildren: req.body.placeChildren,
@@ -67,6 +76,9 @@ async function handleNewPlace(req: Request, res: NextApiResponse) {
       addressCityLng: latLng.lng,
       addressCountry: DEFAULT_COUNTRY,
       houseRules: req.body.houseRules,
+      houseRulesTranslation,
+      arrivalInstructions: req.body.arrivalInstructions,
+      arrivalInstructionsTranslation,
       availabilityStart: req.body.availabilityStart,
       availabilityEnd: req.body.availabilityEnd,
       photos: [],

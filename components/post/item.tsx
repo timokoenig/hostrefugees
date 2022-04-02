@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 import React from 'react'
 import { IoOpenOutline } from 'react-icons/io5'
 import { formatUrl } from 'utils/formatter'
+import showTranslation from 'utils/show-translation'
 import Category from './category'
 
 type Props = {
@@ -38,7 +39,7 @@ const PostItem = (props: Props) => {
       p={4}
     >
       <Heading as="h3" size="md" fontWeight="semibold" mb="2">
-        {props.post.title}
+        {showTranslation(props.post.title, props.post.titleTranslation)}
       </Heading>
       {props.post.category.length > 0 && (
         <Box mb="2">
@@ -47,7 +48,9 @@ const PostItem = (props: Props) => {
           ))}
         </Box>
       )}
-      <Text mb="5">{props.post.description}</Text>
+      <Text mb="5">
+        {showTranslation(props.post.description, props.post.descriptionTranslation)}
+      </Text>
       {props.post.addressCity && (
         <Text mb="5">
           {props.post.addressStreet && (

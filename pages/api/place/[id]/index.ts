@@ -3,6 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from 'prisma/client'
 import geocode from 'utils/geocode'
 import { withSessionRoute } from 'utils/session'
+import translateAll, { Translation } from 'utils/translate-all'
 
 const DEFAULT_COUNTRY = 'Germany'
 
@@ -27,7 +28,9 @@ interface Request extends NextApiRequest {
     addressZip?: string
     addressCity?: string
     addressCountry?: string
+    phoneNumber?: string
     houseRules?: string
+    arrivalInstructions?: string
     availabilityStart?: Date
     availabilityEnd?: Date | null
   }
@@ -61,6 +64,44 @@ async function handleUpdatePlace(req: Request, res: NextApiResponse) {
     lng = latLng.lng
   }
 
+  let titleTranslation = place.titleTranslation as Translation | undefined | null
+  if (req.body.title && req.body.title != place.title) {
+    // Title changed, therefore we need to update the translation
+    titleTranslation = await translateAll(req.body.title)
+  }
+  if (titleTranslation == null) {
+    titleTranslation = undefined
+  }
+
+  let descriptionTranslation = place.descriptionTranslation as Translation | undefined
+  if (req.body.description && req.body.description != place.description) {
+    // Description changed, therefore we need to update the translation
+    descriptionTranslation = await translateAll(req.body.description)
+  }
+  if (descriptionTranslation == null) {
+    descriptionTranslation = undefined
+  }
+
+  let houseRulesTranslation = place.houseRulesTranslation as Translation | undefined
+  if (req.body.houseRules && req.body.houseRules != place.houseRules) {
+    // HouseRules changed, therefore we need to update the translation
+    houseRulesTranslation = await translateAll(req.body.houseRules)
+  }
+  if (houseRulesTranslation == null) {
+    houseRulesTranslation = undefined
+  }
+
+  let arrivalInstructionsTranslation = place.arrivalInstructionsTranslation as
+    | Translation
+    | undefined
+  if (req.body.arrivalInstructions && req.body.arrivalInstructions != place.arrivalInstructions) {
+    // ArrivalInstructions changed, therefore we need to update the translation
+    arrivalInstructionsTranslation = await translateAll(req.body.arrivalInstructions)
+  }
+  if (arrivalInstructionsTranslation == null) {
+    arrivalInstructionsTranslation = undefined
+  }
+
   await prisma.place.update({
     where: {
       id: req.query.id as string,
@@ -69,7 +110,9 @@ async function handleUpdatePlace(req: Request, res: NextApiResponse) {
       updatedAt: new Date(),
       active: req.body.active,
       title: req.body.title,
+      titleTranslation,
       description: req.body.description,
+      descriptionTranslation,
       type: req.body.type,
       placeAdults: req.body.placeAdults,
       placeChildren: req.body.placeChildren,
@@ -88,6 +131,9 @@ async function handleUpdatePlace(req: Request, res: NextApiResponse) {
       addressCityLat: lat,
       addressCityLng: lng,
       houseRules: req.body.houseRules,
+      houseRulesTranslation,
+      arrivalInstructions: req.body.arrivalInstructions,
+      arrivalInstructionsTranslation,
       availabilityStart: req.body.availabilityStart,
       availabilityEnd: req.body.availabilityEnd,
     },

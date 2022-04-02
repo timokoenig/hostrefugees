@@ -3,6 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from 'prisma/client'
 import geocode, { LatLngLiteral } from 'utils/geocode'
 import { withSessionRoute } from 'utils/session'
+import translateAll from 'utils/translate-all'
 
 const DEFAULT_COUNTRY = 'Germany'
 
@@ -26,6 +27,9 @@ async function handleNewPost(req: Request, res: NextApiResponse) {
     latLng = await geocode(req.body.addressCity, DEFAULT_COUNTRY)
   }
 
+  const titleTranslation = await translateAll(req.body.title)
+  const descriptionTranslation = await translateAll(req.body.description)
+
   const post = await prisma.post.create({
     data: {
       createdAt: new Date(),
@@ -39,7 +43,9 @@ async function handleNewPost(req: Request, res: NextApiResponse) {
               },
             },
       title: req.body.title,
+      titleTranslation,
       description: req.body.description,
+      descriptionTranslation,
       category: req.body.category,
       website: req.body.website,
       phoneNumber: req.body.phoneNumber,

@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { MappedPlace } from 'utils/models'
+import showTranslation from 'utils/show-translation'
 
 type Props = {
   place: MappedPlace
@@ -51,7 +52,8 @@ const PlaceItem = (props: Props) => {
               </Box>
             </Box>
             <Box mt="1" fontWeight="semibold" as="h4" lineHeight="tight" isTruncated>
-              {props.place.addressCity}: {props.place.title}
+              {props.place.addressCity}:{' '}
+              {showTranslation(props.place.title, props.place.titleTranslation)}
             </Box>
             <Box>
               {moment(props.place.availabilityStart).isBefore(moment())

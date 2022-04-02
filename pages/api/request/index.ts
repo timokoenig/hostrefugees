@@ -11,6 +11,7 @@ import {
   sendEmail,
 } from 'utils/email'
 import { withSessionRoute } from 'utils/session'
+import translateAll from 'utils/translate-all'
 
 interface CreateRequest extends NextApiRequest {
   body: {
@@ -32,6 +33,8 @@ async function handleNewRequest(req: CreateRequest, res: NextApiResponse) {
     return
   }
 
+  const aboutTranslation = await translateAll(req.body.request.about)
+
   const request = await prisma.request.create({
     data: {
       createdAt: new Date(),
@@ -52,6 +55,7 @@ async function handleNewRequest(req: CreateRequest, res: NextApiResponse) {
       startDate: req.body.request.startDate,
       endDate: req.body.request.endDate,
       about: req.body.request.about,
+      aboutTranslation,
     },
     include: {
       author: true,

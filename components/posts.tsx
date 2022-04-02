@@ -19,6 +19,7 @@ import moment from 'moment'
 import { useRouter } from 'next/router'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+import showTranslation from 'utils/show-translation'
 import MoreItem from './post/more'
 
 type Props = {
@@ -84,7 +85,7 @@ const Posts = (props: Props) => {
                     </Flex>
                   </Box>
                   <Text mt="1" fontWeight="semibold" as="h4" lineHeight="tight">
-                    {post.title}
+                    {showTranslation(post.title, post.titleTranslation)}
                   </Text>
                 </Box>
               </ListItem>
