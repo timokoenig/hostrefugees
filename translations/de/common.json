@@ -71,6 +71,11 @@
   "translate.original": "Original anzeigen",
   "website": "Webseite",
   "category": "Kategorie",
+  "sport": "Sport",
+  "education": "Bildung",
+  "kids": "Kinder",
+  "outdoor": "Außen",
+  "other": "Sonstig",
 
   "hostrefugees.subtitle": "at your place!",
 
@@ -338,5 +343,6 @@
   "post.new.success": "Sie haben Ihren Beitrag erfolgreich eingereicht. Wir werden ihn so schnell wie möglich überprüfen und freigeben. Danach wird er für alle auf dieser Plattform erscheinen.",
   "post.new.success.button": "Weiteren Beitrag erstellen",
   "post.category.picker": "Kategorie auswählen",
-  "post.new.hint": "Note: You need to log into your account before submitting your post, if you would like to edit it at a later time."
+  "post.new.hint": "Note: You need to log into your account before submitting your post, if you would like to edit it at a later time.",
+  "post.update": "Aktivität aktualisieren"
 }

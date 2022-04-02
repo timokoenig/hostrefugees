@@ -31,14 +31,14 @@ const CategoryPicker = (props: Props) => {
       name="category"
       value={props.value.map(cat => {
         return {
-          label: t(cat),
+          label: t(cat.toLowerCase()),
           value: cat,
         }
       })}
       options={availableCategories
         .map(cat => {
           return {
-            label: t(cat),
+            label: t(cat.toLowerCase()),
             value: cat,
           }
         })
