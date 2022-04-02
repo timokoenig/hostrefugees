@@ -341,5 +341,6 @@
   "post.new.success": "You successfully submitted your post. We will review and approve it as soon as possible. After that it will appear for everyone on this platform.",
   "post.new.success.button": "Create another post",
   "post.category.picker": "Select a category",
-  "post.new.hint": "Note: You need to log into your account before submitting your post, if you would like to edit it at a later time."
+  "post.new.hint": "Note: You need to log into your account before submitting your post, if you would like to edit it at a later time.",
+  "post.update": "Update Post"
 }

@@ -10,7 +10,7 @@ interface Request extends NextApiRequest {
   body: {
     title: string
     description: string
-    category: string[]
+    category: PostCategory[]
     website: string
     phoneNumber: string
     addressStreet: string
@@ -40,7 +40,7 @@ async function handleNewPost(req: Request, res: NextApiResponse) {
             },
       title: req.body.title,
       description: req.body.description,
-      category: req.body.category as PostCategory[],
+      category: req.body.category,
       website: req.body.website,
       phoneNumber: req.body.phoneNumber,
       addressStreet: req.body.addressStreet,
