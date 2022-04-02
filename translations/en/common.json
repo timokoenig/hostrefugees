@@ -294,7 +294,7 @@
   "welcomegermany.covid.mask": "Mask Mandate",
   "welcomegermany.covid.mask.info": "In closed rooms of public facilities are FFP2 masks mandatory for everyone older than 14 years. Children up to 14 years need to wear a medical mask. Children under the age of 6 are exempt from the mask mandate.",
   "welcomegermany.covid.3g": "3G Entry Restriction",
-  "welcomegermany.covid.3g.info": "3G entry resitrctions allow everyone who is fully vaccinated, recovered, or tested to participate. The following areas apply to the 3G restrictions if not stated otherwise:",
+  "welcomegermany.covid.3g.info": "3G entry restrictions allow everyone who is fully vaccinated, recovered, or tested to participate. The following areas apply to the 3G restrictions if not stated otherwise:",
   "welcomegermany.covid.3g.1": "Restaurants / Bars (inside / outside)",
   "welcomegermany.covid.3g.2": "Body-Related Services, like hairstylist and accommodations",
   "welcomegermany.covid.3g.3": "Swimming Pools, Spas, Saunas, indoor sports facilities",
@@ -329,7 +329,7 @@
   "posts.more": "See More",
   "post.new": "Do you have something to offer?",
   "post.new.title.placeholder": "e.g. Free German Classes",
-  "post.new.description.placeholder": "e.g. Our German class is every Monday at XYZ school at 6pm. Join us for free.",
+  "post.new.description.placeholder": "e.g. our German class is every Monday at XYZ school at 6pm. Join us for free.",
   "post.new.1": "Any Help Is Appreciated!",
   "post.new.1.info": "Use this bulletin board to offer your help to others",
   "post.new.2": "Better Communication",
@@ -338,5 +338,6 @@
   "post.new.3.info": "Whether young or old, everybody loves sports. Do you have some spots in your team left where people can train for free?",
   "post.new.success": "You successfully submitted your post. We will review and approve it as soon as possible. After that it will appear for everyone on this platform.",
   "post.new.success.button": "Create another post",
-  "post.category.picker": "Select a category"
+  "post.category.picker": "Select a category",
+  "post.new.hint": "Note: You need to log into your account before submitting your post, if you would like to edit it at a later time."
 }

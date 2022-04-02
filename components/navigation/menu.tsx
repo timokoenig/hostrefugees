@@ -40,12 +40,7 @@ const CustomMenu = (props: Props) => {
   return (
     <Menu>
       <MenuButton as={Button} rounded="full" variant="link" cursor="pointer" minW={0}>
-        <Avatar
-          size="sm"
-          src={
-            props.user ? `/api/user/${props.user.id}/photo` : '/svg/undraw_profile_pic_ic-5-t.svg'
-          }
-        />
+        <Avatar size="sm" src={props.user ? `/api/user/${props.user.id}/photo` : undefined} />
       </MenuButton>
       <MenuList>
         <MenuItem onClick={() => router.push('/dashboard')}>{t('dashboard')}</MenuItem>
