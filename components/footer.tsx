@@ -81,6 +81,7 @@ export default function Footer() {
             <option value="de">{`🇩🇪 Deutsch`}</option>
             <option value="en">{`🇺🇸 English`}</option>
             <option value="ua">{`🇺🇦 Український`}</option>
+            <option value="ru">{`🇷🇺 Pусский`}</option>
           </Select>
           <Spacer />
         </Flex>
