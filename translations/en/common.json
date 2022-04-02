@@ -239,6 +239,8 @@
 
   "dashboard.noplaces": "No Places",
   "dashboard.norequests": "No Requests",
+  "dashboard.noposts": "No Posts",
+  "dashboard.posts": "Your Posts",
   "dashboard.host.places": "Your Places",
   "dashboard.host.requests": "Stay Requests",
   "dashboard.guest.requests": "Your Requests",

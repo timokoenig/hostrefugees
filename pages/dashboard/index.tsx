@@ -1,5 +1,5 @@
 import { Alert, AlertIcon, Box, Container, Heading, Text } from '@chakra-ui/react'
-import { Place, Request, UserRole } from '@prisma/client'
+import { Place, Post, Request, UserRole } from '@prisma/client'
 import Guest from 'components/dashboard/guest'
 import Host from 'components/dashboard/host'
 import Layout from 'components/layout'
@@ -17,6 +17,7 @@ type Props = {
   user: MappedUser & { verified?: boolean }
   places: Place[]
   requests: Request[]
+  posts: Post[]
 }
 
 const DashboardPage = (props: Props) => {
@@ -35,7 +36,9 @@ const DashboardPage = (props: Props) => {
             </Text>
           </Heading>
         </Box>
-        {props.user.role === UserRole.GUEST && <Guest requests={props.requests} />}
+        {props.user.role === UserRole.GUEST && (
+          <Guest requests={props.requests} posts={props.posts} />
+        )}
         {props.user.role === UserRole.HOST && (
           <>
             {props.user.verified !== true && (
@@ -47,7 +50,7 @@ const DashboardPage = (props: Props) => {
                 - {t('profile.approval.text')}
               </Alert>
             )}
-            <Host places={props.places} requests={props.requests} />
+            <Host places={props.places} requests={props.requests} posts={props.posts} />
           </>
         )}
       </Container>
@@ -139,11 +142,20 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
     },
   })
 
+  const posts = await prisma.post.findMany({
+    where: {
+      author: {
+        id: context.req.session.user.id,
+      },
+    },
+  })
+
   return {
     props: {
       user: { ...context.req.session.user, verified: user?.verified },
       places: places.map(mapPlace),
       requests,
+      posts,
     },
   }
 })

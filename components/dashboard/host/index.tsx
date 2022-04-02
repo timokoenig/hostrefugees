@@ -1,16 +1,18 @@
 import { Box, Container, Flex, Heading, List, SimpleGrid, Stack, Text } from '@chakra-ui/react'
-import { Place, Request } from '@prisma/client'
+import { Place, Post, Request } from '@prisma/client'
 import { useRouter } from 'next/router'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { mapPlace } from 'utils/mapper'
-import Button from '../common/button'
-import PlaceItem from '../place/item'
-import RequestItem from './request-item'
+import Button from '../../common/button'
+import PlaceItem from '../../place/item'
+import PostItem from '../post-item'
+import RequestItem from '../request-item'
 
 type Props = {
   places: Place[]
   requests: Request[]
+  posts: Post[]
 }
 
 const Host = (props: Props) => {
@@ -18,7 +20,7 @@ const Host = (props: Props) => {
   const router = useRouter()
   return (
     <Container px={0} maxW="7xl" py={10}>
-      <SimpleGrid templateColumns={{ sm: '1fr', md: '1fr 1fr' }} spacing={8}>
+      <SimpleGrid templateColumns={{ sm: '1fr', md: '1fr 1fr' }} spacing={8} mb="10">
         <Box>
           <Flex mb="5" textAlign="center">
             <Heading size="md" flex="1" textAlign="left">
@@ -64,6 +66,17 @@ const Host = (props: Props) => {
           </Stack>
         </Box>
       </SimpleGrid>
+      <Flex mb="5" textAlign="center">
+        <Heading size="md">{t('dashboard.posts')}</Heading>
+      </Flex>
+      <Stack spacing={6}>
+        <List spacing="2">
+          {props.posts.length == 0 && <Text>{t('dashboard.noposts')}</Text>}
+          {props.posts.map((post, i) => (
+            <PostItem key={i} post={post} />
+          ))}
+        </List>
+      </Stack>
     </Container>
   )
 }
