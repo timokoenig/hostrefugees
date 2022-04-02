@@ -88,6 +88,7 @@ const NewPost = () => {
       }
     },
   })
+  const infoColor = useColorModeValue('gray.600', 'gray.400')
 
   return (
     <Container maxW="7xl">
@@ -301,6 +302,8 @@ const NewPost = () => {
                   </FormControl>
 
                   <CustomButton title={t('submit')} fullWidth isDisabled={formik.isSubmitting} />
+
+                  <Text color={infoColor}>{t('post.new.hint')}</Text>
                 </Stack>
               </form>
             )}
