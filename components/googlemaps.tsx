@@ -8,6 +8,7 @@ import _ from 'lodash'
 import { useRouter } from 'next/router'
 import React from 'react'
 import { Trans, useTranslation } from 'react-i18next'
+import useColorMode from 'utils/color-mode'
 import { COOKIE_CONSENT, getCookie, setCookie } from 'utils/cookies'
 import { MappedPlace } from 'utils/models'
 
@@ -75,6 +76,7 @@ type Props = {
 }
 
 const GoogleMaps = (props: Props) => {
+  const { isDarkMode } = useColorMode()
   if (
     getCookie(COOKIE_CONSENT) === undefined ||
     !getCookie(COOKIE_CONSENT)?.includes('marketing') ||
@@ -102,6 +104,58 @@ const GoogleMaps = (props: Props) => {
         options={{
           zoomControl: false,
           fullscreenControl: false,
+          styles: isDarkMode
+            ? [
+                { elementType: 'geometry', stylers: [{ color: '#2F855A' }] },
+                { elementType: 'labels.text.stroke', stylers: [{ color: '#2F855A' }] },
+                { elementType: 'labels.text.fill', stylers: [{ color: '#ffffff' }] },
+                {
+                  featureType: 'administrative.locality',
+                  elementType: 'labels.text.fill',
+                  stylers: [{ color: '#ffffff' }],
+                },
+                {
+                  featureType: 'administrative.country',
+                  elementType: 'geometry.stroke',
+                  stylers: [{ color: '#1C4532' }],
+                },
+                {
+                  featureType: 'road.highway',
+                  elementType: 'geometry',
+                  stylers: [{ color: '#38A169' }],
+                },
+                {
+                  featureType: 'road.highway',
+                  elementType: 'labels.text.fill',
+                  stylers: [{ color: '#f3d19c' }],
+                },
+                {
+                  featureType: 'transit',
+                  elementType: 'geometry',
+                  stylers: [{ color: '#2f3948' }],
+                },
+                {
+                  featureType: 'transit.station',
+                  elementType: 'labels.text.fill',
+                  stylers: [{ color: '#d59563' }],
+                },
+                {
+                  featureType: 'water',
+                  elementType: 'geometry',
+                  stylers: [{ color: '#2C5282' }],
+                },
+                {
+                  featureType: 'water',
+                  elementType: 'labels.text.fill',
+                  stylers: [{ color: '#515c6d' }],
+                },
+                {
+                  featureType: 'water',
+                  elementType: 'labels.text.stroke',
+                  stylers: [{ color: '#2C5282' }],
+                },
+              ]
+            : undefined,
         }}
       >
         {Object.keys(groupedItems).map(key => {
