@@ -27,7 +27,6 @@ const ListHeader = ({ children }: { children: ReactNode }) => {
 
 export default function Footer() {
   const { t, i18n } = useTranslation('common')
-  const { t: tLang } = useTranslation('languages')
   const [lang, setLang] = useState<string>(
     localStorage.getItem('i18nextLng')?.substring(0, 2) ?? 'en'
   )
@@ -79,9 +78,9 @@ export default function Footer() {
         </SimpleGrid>
         <Flex flexDirection="row" justifyContent="center">
           <Select value={lang} onChange={e => onChangeLang(e.target.value)} width="200px">
-            <option value="de">{tLang('de')}</option>
-            <option value="en">{tLang('en')}</option>
-            {/* <option value="ua">{tLang('ua')}</option> */}
+            <option value="de">{`🇩🇪 Deutsch`}</option>
+            <option value="en">{`🇺🇸 English`}</option>
+            <option value="ua">{`🇺🇦 Український`}</option>
           </Select>
           <Spacer />
         </Flex>
