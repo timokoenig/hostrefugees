@@ -229,9 +229,9 @@ const Form = (props: Props) => {
                 value={formik.values.type}
                 onChange={formik.handleChange}
               >
-                <option value="place">{t('place.entire')}</option>
-                <option value="private">{t('place.private')}</option>
-                <option value="shared">{t('place.shared')}</option>
+                <option value={PlaceType.PLACE}>{t('place.entire')}</option>
+                <option value={PlaceType.PRIVATE}>{t('place.private')}</option>
+                <option value={PlaceType.SHARED}>{t('place.shared')}</option>
               </Select>
               <FormErrorMessage>{formik.errors.type}</FormErrorMessage>
             </FormControl>
@@ -276,8 +276,8 @@ const Form = (props: Props) => {
                 value={formik.values.bathroom}
                 onChange={formik.handleChange}
               >
-                <option value="yes">{t('bathroom.private')}</option>
-                <option value="shared">{t('bathroom.shared')}</option>
+                <option value={BathroomType.YES}>{t('bathroom.private')}</option>
+                <option value={BathroomType.SHARED}>{t('bathroom.shared')}</option>
               </Select>
               <FormErrorMessage>{formik.errors.bathroom}</FormErrorMessage>
             </FormControl>
