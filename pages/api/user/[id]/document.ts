@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
@@ -6,11 +7,14 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 /* eslint-disable @typescript-eslint/prefer-ts-expect-error */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { User } from '@prisma/client'
+import { User, UserRole } from '@prisma/client'
 import formidable, { IncomingForm } from 'formidable'
 import fs from 'fs'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from 'prisma/client'
+import { newAuthenticatedHandler, withErrorHandler, withHandlers } from 'utils/api/helper'
+import HttpError, { HTTP_STATUS_CODE } from 'utils/api/http-error'
+import HTTP_METHOD from 'utils/api/http-method'
 import { deleteFile, listFiles, S3_BUCKET_DOCUMENTS, uploadFile } from 'utils/aws/s3'
 import { withSessionRoute } from 'utils/session'
 
@@ -28,20 +32,12 @@ const allDocumentsUploaded = async (user: User): Promise<boolean> => {
 }
 
 async function handleDocumentUpload(req: NextApiRequest, res: NextApiResponse) {
-  if (req.session.user == undefined) {
-    res.status(401).end()
-    return
-  }
-
   const user = await prisma.user.findUnique({
     where: {
-      id: req.session.user.id,
+      id: req.session.user!.id,
     },
   })
-  if (user === null) {
-    res.status(400).end()
-    return
-  }
+  if (user == null) throw new HttpError('User not found', HTTP_STATUS_CODE.NOT_FOUND)
 
   await new Promise<void>((resolve, reject) => {
     const form = new IncomingForm({
@@ -81,7 +77,7 @@ async function handleDocumentUpload(req: NextApiRequest, res: NextApiResponse) {
   if (allDocuments) {
     await prisma.user.update({
       where: {
-        id: req.session.user.id,
+        id: req.session.user!.id,
       },
       data: {
         updatedAt: new Date(),
@@ -93,12 +89,8 @@ async function handleDocumentUpload(req: NextApiRequest, res: NextApiResponse) {
   res.status(200).end()
 }
 
-async function handler(req: NextApiRequest, res: NextApiResponse<Response>) {
-  if (req.method === 'POST') {
-    await handleDocumentUpload(req, res)
-    return
-  }
-  res.status(400).end()
-}
-
-export default withSessionRoute(handler)
+export default withErrorHandler(
+  withSessionRoute(
+    withHandlers([newAuthenticatedHandler(HTTP_METHOD.POST, [UserRole.HOST], handleDocumentUpload)])
+  )
+)

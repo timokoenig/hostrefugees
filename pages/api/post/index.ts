@@ -1,6 +1,8 @@
 import { PostCategory } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from 'prisma/client'
+import { newHandler, withErrorHandler, withHandlers } from 'utils/api/helper'
+import HTTP_METHOD from 'utils/api/http-method'
 import geocode, { LatLngLiteral } from 'utils/geocode'
 import { withSessionRoute } from 'utils/session'
 import translateAll from 'utils/translate-all'
@@ -21,7 +23,7 @@ interface Request extends NextApiRequest {
   }
 }
 
-async function handleNewPost(req: Request, res: NextApiResponse) {
+async function handleCreatePost(req: Request, res: NextApiResponse) {
   let latLng: LatLngLiteral | null = null
   if (req.body.addressCity != '') {
     latLng = await geocode(req.body.addressCity, DEFAULT_COUNTRY)
@@ -61,12 +63,6 @@ async function handleNewPost(req: Request, res: NextApiResponse) {
   res.status(201).send({ id: post.id })
 }
 
-async function handler(req: Request, res: NextApiResponse) {
-  if (req.method === 'POST') {
-    await handleNewPost(req, res)
-    return
-  }
-  res.status(400).end()
-}
-
-export default withSessionRoute(handler)
+export default withErrorHandler(
+  withSessionRoute(withHandlers([newHandler(HTTP_METHOD.POST, handleCreatePost)]))
+)

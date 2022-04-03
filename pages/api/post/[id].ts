@@ -1,6 +1,9 @@
 import { PostCategory, UserRole } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from 'prisma/client'
+import { newAuthenticatedHandler, withErrorHandler, withHandlers } from 'utils/api/helper'
+import HttpError, { HTTP_STATUS_CODE } from 'utils/api/http-error'
+import HTTP_METHOD from 'utils/api/http-method'
 import geocode, { LatLngLiteral } from 'utils/geocode'
 import { withSessionRoute } from 'utils/session'
 import translateAll, { Translation } from 'utils/translate-all'
@@ -49,10 +52,7 @@ async function handleUpdatePost(req: Request, res: NextApiResponse) {
       },
     },
   })
-  if (post == null) {
-    res.status(400).end()
-    return
-  }
+  if (post == null) throw new HttpError('Post not found', HTTP_STATUS_CODE.NOT_FOUND)
 
   let latLng: LatLngLiteral = { lat: post.addressCityLat ?? '', lng: post.addressCityLng ?? '' }
   if (req.body.addressCity && req.body.addressCity != post.addressCity) {
@@ -101,20 +101,11 @@ async function handleUpdatePost(req: Request, res: NextApiResponse) {
   res.status(200).end()
 }
 
-async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.session.user == undefined) {
-    res.status(401).end()
-    return
-  }
-  if (req.method === 'PUT') {
-    if (req.session.user.role == UserRole.ADMIN) {
-      await handleUpdatePostAdmin(req, res)
-    } else {
-      await handleUpdatePost(req, res)
-    }
-    return
-  }
-  res.status(400).end()
-}
-
-export default withSessionRoute(handler)
+export default withErrorHandler(
+  withSessionRoute(
+    withHandlers([
+      newAuthenticatedHandler(HTTP_METHOD.PUT, [UserRole.ADMIN], handleUpdatePostAdmin),
+      newAuthenticatedHandler(HTTP_METHOD.PUT, [UserRole.GUEST, UserRole.HOST], handleUpdatePost),
+    ])
+  )
+)

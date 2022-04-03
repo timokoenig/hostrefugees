@@ -3,6 +3,9 @@ import { UserRole } from '@prisma/client'
 import crypto from 'crypto'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from 'prisma/client'
+import { newHandler, withErrorHandler, withHandlers } from 'utils/api/helper'
+import HttpError, { HTTP_STATUS_CODE } from 'utils/api/http-error'
+import HTTP_METHOD from 'utils/api/http-method'
 import { emailPasswordReset, sendEmail } from 'utils/email'
 import { withSessionRoute } from 'utils/session'
 
@@ -18,10 +21,8 @@ async function handleRequestPasswordReset(req: PasswordHashRequest, res: NextApi
       email: req.body.email,
     },
   })
-  if (user === null || user.role === UserRole.ADMIN) {
-    res.status(400).end()
-    return
-  }
+  if (user === null || user.role === UserRole.ADMIN)
+    throw new HttpError('User not found', HTTP_STATUS_CODE.NOT_FOUND)
 
   const passwordHash = crypto.randomBytes(64).toString('hex')
   await prisma.user.update({
@@ -42,12 +43,6 @@ async function handleRequestPasswordReset(req: PasswordHashRequest, res: NextApi
   })
 }
 
-async function handler(req: NextApiRequest, res: NextApiResponse<Response>) {
-  if (req.method === 'POST') {
-    await handleRequestPasswordReset(req, res)
-    return
-  }
-  res.status(400).end()
-}
-
-export default withSessionRoute(handler)
+export default withErrorHandler(
+  withSessionRoute(withHandlers([newHandler(HTTP_METHOD.POST, handleRequestPasswordReset)]))
+)

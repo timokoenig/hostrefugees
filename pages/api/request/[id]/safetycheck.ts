@@ -1,5 +1,9 @@
+import { UserRole } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from 'prisma/client'
+import { newAuthenticatedHandler, withErrorHandler, withHandlers } from 'utils/api/helper'
+import HttpError, { HTTP_STATUS_CODE } from 'utils/api/http-error'
+import HTTP_METHOD from 'utils/api/http-method'
 import { withSessionRoute } from 'utils/session'
 
 interface Request extends NextApiRequest {
@@ -19,10 +23,8 @@ async function handleSafetyCheck(req: Request, res: NextApiResponse) {
       },
     },
   })
-  if (safetyCheck !== null) {
-    res.status(400).end()
-    return
-  }
+  if (safetyCheck != null)
+    throw new HttpError('Safetycheck already exists', HTTP_STATUS_CODE.BAD_REQUEST)
 
   const newSafetyCheck = await prisma.safetyCheck.create({
     data: {
@@ -44,16 +46,10 @@ async function handleSafetyCheck(req: Request, res: NextApiResponse) {
   res.status(200).send(newSafetyCheck)
 }
 
-async function handler(req: Request, res: NextApiResponse) {
-  if (req.session.user == undefined) {
-    res.status(401).end()
-    return
-  }
-  if (req.method === 'POST') {
-    await handleSafetyCheck(req, res)
-    return
-  }
-  res.status(400).end()
-}
-
-export default withSessionRoute(handler)
+export default withErrorHandler(
+  withSessionRoute(
+    withHandlers([
+      newAuthenticatedHandler(HTTP_METHOD.POST, [UserRole.GUEST, UserRole.HOST], handleSafetyCheck),
+    ])
+  )
+)

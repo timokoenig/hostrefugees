@@ -1,6 +1,9 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { UserRole } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from 'prisma/client'
+import { newAuthenticatedHandler, withErrorHandler, withHandlers } from 'utils/api/helper'
+import HTTP_METHOD from 'utils/api/http-method'
 import { emailApprovedUser, sendEmail } from 'utils/email'
 import { withSessionRoute } from 'utils/session'
 
@@ -12,12 +15,7 @@ interface UpdateRequest extends NextApiRequest {
 }
 
 async function handleUpdateUser(req: UpdateRequest, res: NextApiResponse) {
-  if (req.session.user == undefined) {
-    res.status(401).end()
-    return
-  }
-
-  if (req.query.id !== req.session.user.id && req.session.user.role !== UserRole.ADMIN) {
+  if (req.query.id !== req.session.user!.id && req.session.user!.role !== UserRole.ADMIN) {
     // Users can only edit their own profile, except users with role ADMIN
     res.status(400).end()
     return
@@ -44,7 +42,7 @@ async function handleUpdateUser(req: UpdateRequest, res: NextApiResponse) {
     data.languages = req.body.languages
   }
 
-  if (req.session.user.role == UserRole.ADMIN) {
+  if (req.session.user!.role == UserRole.ADMIN) {
     if (req.body.verified !== undefined) {
       data.verified = req.body.verified
     }
@@ -58,7 +56,7 @@ async function handleUpdateUser(req: UpdateRequest, res: NextApiResponse) {
   })
 
   if (
-    req.session.user.role === UserRole.ADMIN &&
+    req.session.user!.role === UserRole.ADMIN &&
     user.verified !== req.body.verified &&
     req.body.verified
   ) {
@@ -68,12 +66,6 @@ async function handleUpdateUser(req: UpdateRequest, res: NextApiResponse) {
   res.status(200).end()
 }
 
-async function handler(req: NextApiRequest, res: NextApiResponse<Response>) {
-  if (req.method === 'PUT') {
-    await handleUpdateUser(req, res)
-    return
-  }
-  res.status(400).end()
-}
-
-export default withSessionRoute(handler)
+export default withErrorHandler(
+  withSessionRoute(withHandlers([newAuthenticatedHandler(HTTP_METHOD.PUT, [], handleUpdateUser)]))
+)

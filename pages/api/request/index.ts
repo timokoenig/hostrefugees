@@ -1,7 +1,10 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable no-await-in-loop */
 import { Request, RequestStatus, UserRole } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from 'prisma/client'
+import { newAuthenticatedHandler, withErrorHandler, withHandlers } from 'utils/api/helper'
+import HTTP_METHOD from 'utils/api/http-method'
 import {
   emailAcceptRequestGuest,
   emailAcceptRequestHost,
@@ -27,12 +30,6 @@ interface UpdateRequest extends NextApiRequest {
 }
 
 async function handleNewRequest(req: CreateRequest, res: NextApiResponse) {
-  if (req.session.user?.role !== UserRole.GUEST) {
-    // Only guests can create requests
-    res.status(400).end()
-    return
-  }
-
   const aboutTranslation = await translateAll(req.body.request.about)
 
   const request = await prisma.request.create({
@@ -41,7 +38,7 @@ async function handleNewRequest(req: CreateRequest, res: NextApiResponse) {
       updatedAt: new Date(),
       author: {
         connect: {
-          id: req.session.user.id,
+          id: req.session.user!.id,
         },
       },
       place: {
@@ -196,20 +193,15 @@ async function handleUpdateRequest(req: UpdateRequest, res: NextApiResponse) {
   res.status(200).end()
 }
 
-async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.session.user == undefined) {
-    res.status(401).end()
-    return
-  }
-  if (req.method === 'POST') {
-    await handleNewRequest(req, res)
-    return
-  }
-  if (req.method === 'PUT') {
-    await handleUpdateRequest(req, res)
-    return
-  }
-  res.status(400).end()
-}
-
-export default withSessionRoute(handler)
+export default withErrorHandler(
+  withSessionRoute(
+    withHandlers([
+      newAuthenticatedHandler(HTTP_METHOD.POST, [UserRole.GUEST], handleNewRequest),
+      newAuthenticatedHandler(
+        HTTP_METHOD.PUT,
+        [UserRole.GUEST, UserRole.HOST],
+        handleUpdateRequest
+      ),
+    ])
+  )
+)

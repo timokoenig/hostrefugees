@@ -1,6 +1,8 @@
 import { BathroomType, PlaceType, UserRole } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from 'prisma/client'
+import { newAuthenticatedHandler, withHandlers } from 'utils/api/helper'
+import HTTP_METHOD from 'utils/api/http-method'
 import geocode from 'utils/geocode'
 import { withSessionRoute } from 'utils/session'
 import translateAll from 'utils/translate-all'
@@ -34,9 +36,8 @@ interface Request extends NextApiRequest {
   }
 }
 
-async function handleNewPlace(req: Request, res: NextApiResponse) {
+async function handleCreatePlace(req: Request, res: NextApiResponse) {
   const latLng = await geocode(req.body.addressCity, DEFAULT_COUNTRY)
-
   const titleTranslation = await translateAll(req.body.title)
   const descriptionTranslation = await translateAll(req.body.description)
   const arrivalInstructionsTranslation = await translateAll(req.body.arrivalInstructions)
@@ -87,16 +88,6 @@ async function handleNewPlace(req: Request, res: NextApiResponse) {
   res.status(201).send({ id: place.id })
 }
 
-async function handler(req: Request, res: NextApiResponse) {
-  if (req.session.user == undefined || req.session.user.role === UserRole.GUEST) {
-    res.status(401).end()
-    return
-  }
-  if (req.method === 'POST') {
-    await handleNewPlace(req, res)
-    return
-  }
-  res.status(400).end()
-}
-
-export default withSessionRoute(handler)
+export default withSessionRoute(
+  withHandlers([newAuthenticatedHandler(HTTP_METHOD.POST, [UserRole.GUEST], handleCreatePlace)])
+)

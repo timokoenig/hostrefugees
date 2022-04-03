@@ -12,6 +12,7 @@ module.exports = {
   rules: {
     strictNullChecks: 0,
     semi: 0,
+    '@typescript-eslint/no-throw-literal': 0,
   },
   settings: {
     'import/resolver': {

@@ -1,6 +1,9 @@
 import { compare } from 'bcrypt'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from 'prisma/client'
+import { newHandler, withErrorHandler, withHandlers } from 'utils/api/helper'
+import HttpError, { HTTP_STATUS_CODE } from 'utils/api/http-error'
+import HTTP_METHOD from 'utils/api/http-method'
 import { mapUser } from 'utils/mapper'
 import { withSessionRoute } from 'utils/session'
 
@@ -11,27 +14,16 @@ interface Request extends NextApiRequest {
   }
 }
 
-async function handler(req: Request, res: NextApiResponse) {
-  if (req.method !== 'POST') {
-    res.status(400).end()
-    return
-  }
-
+async function handleLogin(req: Request, res: NextApiResponse) {
   const user = await prisma.user.findFirst({
     where: {
       email: req.body.email,
     },
   })
-  if (user === null) {
-    res.status(400).end()
-    return
-  }
+  if (user == null) throw new HttpError('User not found', HTTP_STATUS_CODE.NOT_FOUND)
 
   const valid = await compare(req.body.password, user.password)
-  if (!valid) {
-    res.status(400).end()
-    return
-  }
+  if (!valid) throw new HttpError('Invalid password', HTTP_STATUS_CODE.BAD_REQUEST)
 
   req.session.user = mapUser(user)
   await req.session.save()
@@ -39,4 +31,6 @@ async function handler(req: Request, res: NextApiResponse) {
   res.status(200).end()
 }
 
-export default withSessionRoute(handler)
+export default withErrorHandler(
+  withSessionRoute(withHandlers([newHandler(HTTP_METHOD.POST, handleLogin)]))
+)
