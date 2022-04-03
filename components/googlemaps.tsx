@@ -86,6 +86,7 @@ const GoogleMaps = (props: Props) => {
     return <Placeholder height={props.height} />
   }
 
+  const language = localStorage.getItem('i18nextLng')?.substring(0, 2)
   const markerItems: MarkerItem[] = props.places.map(place => {
     return {
       city: place.addressCity,
@@ -98,7 +99,7 @@ const GoogleMaps = (props: Props) => {
   return (
     <Stack height={props.height} borderRadius="lg" overflow="hidden">
       <GoogleMapReact
-        bootstrapURLKeys={{ key: process.env.NEXT_PUBLIC_GOOGLE_MAP_KEY as string }}
+        bootstrapURLKeys={{ key: process.env.NEXT_PUBLIC_GOOGLE_MAP_KEY as string, language }}
         defaultCenter={{ lat: 51.1657, lng: 10.4515 }} // center of Germany
         defaultZoom={6}
         options={{
