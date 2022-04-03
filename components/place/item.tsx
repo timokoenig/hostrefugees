@@ -1,8 +1,8 @@
 import { Box, GridItem, Image, ListItem, SimpleGrid, useColorModeValue } from '@chakra-ui/react'
-import moment from 'moment'
 import { useRouter } from 'next/router'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+import { formatAvailability } from 'utils/formatter'
 import { MappedPlace } from 'utils/models'
 import showTranslation from 'utils/show-translation'
 
@@ -56,11 +56,7 @@ const PlaceItem = (props: Props) => {
               {props.place.addressCity}:{' '}
               {showTranslation(props.place.title, props.place.titleTranslation)}
             </Box>
-            <Box>
-              {moment(props.place.availabilityStart).isBefore(moment())
-                ? t('availablenow')
-                : moment(props.place.availabilityStart).format('DD.MM.YYYY')}
-            </Box>
+            <Box>{formatAvailability(t, props.place)}</Box>
           </GridItem>
         </SimpleGrid>
       </Box>

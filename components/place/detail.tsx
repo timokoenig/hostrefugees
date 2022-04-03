@@ -18,7 +18,7 @@ import CustomButton from 'components/common/button'
 import { useRouter } from 'next/router'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { formatAvailability, formatPlaceType } from 'utils/formatter'
+import { formatAvailability } from 'utils/formatter'
 import { MappedPlace } from 'utils/models'
 import showTranslation from 'utils/show-translation'
 import Status from '../dashboard/request/status'
@@ -90,7 +90,7 @@ export default function Detail(props: Props) {
               {showTranslation(props.place.title, props.place.titleTranslation)}
             </Heading>
             <Text color={useColorModeValue('gray.900', 'gray.400')} fontWeight={300} fontSize="2xl">
-              {formatAvailability(props.place)}
+              {formatAvailability(t, props.place)}
             </Text>
           </Box>
 
@@ -153,7 +153,7 @@ export default function Detail(props: Props) {
                   <Text as="span" fontWeight="bold">
                     {t('place.detail.type')}:
                   </Text>{' '}
-                  {formatPlaceType(props.place)}
+                  {t(`place.type.${props.place.type.toLowerCase()}`)}
                 </ListItem>
                 <ListItem>
                   <Text as="span" fontWeight="bold">
@@ -191,7 +191,7 @@ export default function Detail(props: Props) {
                   <Text as="span" fontWeight="bold">
                     {t('place.detail.pets')}:
                   </Text>{' '}
-                  {props.place.pets ? 'Yes' : 'No'}
+                  {t(props.place.pets ? 'yes' : 'no')}
                 </ListItem>
                 <ListItem>
                   <Text as="span" fontWeight="bold">

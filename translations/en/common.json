@@ -77,6 +77,7 @@
   "kids": "Kids",
   "outdoor": "Outdoor",
   "other": "Other",
+  "help": "Help",
 
   "hostrefugees.subtitle": "at your place!",
 
@@ -94,13 +95,13 @@
   "documents.flyer.desc": "We provide a free flyer template in business card size. You can download the PDF file, bring it to a copy shop, and share it with the refugees. It includes the url to our welcome page and the most important phone number for police and ambulance.",
   "documents.flyer.download": "Download PDF",
 
-  "help": "Help Center",
-  "help.howtostay": "How can I apply for a stay?",
-  "help.howtostay.text": "First look for a <1>place to stay</1>. If you found a place that meets your requirements, simply click on the \"Request to stay\"-button, fill out the required fields, tell the host a bit about yourself, and confirm the request. You will receive an email as soon as the host accepts the request. In that email you will find the contact information and arrival instructions. We kindly ask you to contact the host to communicate the arrival.",
-  "help.offerplace": "How can I offer a place to stay?",
-  "help.offerplace.text": "To host on HostRefugees you must have an apartment, room, or other place that is located in Germany. The place needs to be in good condition and has at least one bed and bathroom. If you fulfill these requirements you can go to <1>Become a Host</1> and register. After registration you will need to upload your ID or passport to identify yourself. This is mandatory to keep our guests safe.",
-  "help.issue": "What can I do when something is not working?",
-  "help.issue.text": "The platform is in early development and might contain smaller bugs. If you find a bug or have ideas for further improvements, please go to <1>Github</1> and create an issue.",
+  "helpcenter": "Help Center",
+  "helpcenter.howtostay": "How can I apply for a stay?",
+  "helpcenter.howtostay.text": "First look for a <1>place to stay</1>. If you found a place that meets your requirements, simply click on the \"Request to stay\"-button, fill out the required fields, tell the host a bit about yourself, and confirm the request. You will receive an email as soon as the host accepts the request. In that email you will find the contact information and arrival instructions. We kindly ask you to contact the host to communicate the arrival.",
+  "helpcenter.offerplace": "How can I offer a place to stay?",
+  "helpcenter.offerplace.text": "To host on HostRefugees you must have an apartment, room, or other place that is located in Germany. The place needs to be in good condition and has at least one bed and bathroom. If you fulfill these requirements you can go to <1>Become a Host</1> and register. After registration you will need to upload your ID or passport to identify yourself. This is mandatory to keep our guests safe.",
+  "helpcenter.issue": "What can I do when something is not working?",
+  "helpcenter.issue.text": "The platform is in early development and might contain smaller bugs. If you find a bug or have ideas for further improvements, please go to <1>Github</1> and create an issue.",
 
   "profile": "Profile",
   "profile.approval": "Waiting for Approval",
@@ -180,6 +181,12 @@
   "place.detail.pets": "Pets Allowed",
   "place.detail.address.info": "exact location will be shared when the stay gets accepted",
   "place.detail.noresidents": "No residents at the place",
+  "place.type.place": "Entire Place",
+  "place.type.private": "Private Room",
+  "place.type.shared": "Shared Room",
+  "place.availability.fromto": "Available from {{start}} to {{end}}",
+  "place.availability.from": "Available from {{start}}",
+  "place.availability.now": "Available now",
 
   "signup": "Sign Up",
   "signup.accept": "I accept the <1>Privacy Policy</1>",

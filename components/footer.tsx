@@ -71,7 +71,7 @@ export default function Footer() {
           </Stack>
           <Stack align="flex-start">
             <ListHeader>{t('support')}</ListHeader>
-            <Link href="/help">{t('help')}</Link>
+            <Link href="/help">{t('helpcenter')}</Link>
             <Link href="/imprint">{t('imprint')}</Link>
             <Link href="/privacy">{t('privacy')}</Link>
           </Stack>

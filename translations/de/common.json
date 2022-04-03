@@ -76,6 +76,7 @@
   "kids": "Kinder",
   "outdoor": "Außen",
   "other": "Sonstig",
+  "help": "Hilfe",
 
   "hostrefugees.subtitle": "at your place!",
 
@@ -93,13 +94,13 @@
   "documents.flyer.desc": "Wir stellen einen kostenlosen Flyer in Visitenkartengröße zur Verfügung. Sie können die PDF-Datei herunterladen, in einen Copyshop bringen und sie an die Flüchtlinge weitergeben. Sie enthält die URL zu unserer Willkommensseite und die wichtigsten Telefonnummern für Polizei und Rettungsdienst.",
   "documents.flyer.download": "PDF downloaden",
 
-  "help": "Hilfe",
-  "help.howtostay": "Wie kann ich mich für eine Unterkunft bewerben?",
-  "help.howtostay.text": "Suchen Sie zuerst nach einer <1>Unterkunft</1>. Suchen Sie zunächst nach einer <1>Unterkunft</1>. Wenn Sie eine passende Unterkunft gefunden haben, klicken Sie einfach auf die Schaltfläche <1>Anfrage stellen</1>, füllen Sie die erforderlichen Felder aus, erzählen Sie dem Gastgeber/-in ein wenig über sich und bestätigen Sie die Anfrage. Sie erhalten eine E-Mail, sobald der Gastgeber/-in Ihre Anfrage akzeptiert hat. In dieser E-Mail finden Sie die Kontaktinformationen und Anweisungen zur Anreise. Wir bitten Sie, den Gastgeber/-in bezüglich Ihrer Anreise zu kontaktieren.",
-  "help.offerplace": "Wie kann ich eine Unterkunft anbieten?",
-  "help.offerplace.text": "Um Gastgeber bei HostRefugees zu sein, müssen Sie eine Wohnung, ein Zimmer oder eine andere Unterkunft in Deutschland haben. Die Wohnung muss in einem guten Zustand sein und mindestens ein Bett und ein Badezimmer haben. Wenn Sie diese Voraussetzungen erfüllen, können Sie sich unter <1>Gastgeber werden</1> registrieren. Nach der Registrierung müssen Sie Ihren Personalausweis oder Reisepass hochladen, um sich zu identifizieren. Dies ist zwingend erforderlich, um die Sicherheit unserer Gäste zu gewährleisten.",
-  "help.issue": "Was kann ich tun, wenn etwas nicht funktioniert?",
-  "help.issue.text": "Die Plattform befindet sich in einer frühen Entwicklungsphase und kann noch kleinere Fehler enthalten. Wenn Sie einen Fehler finden oder Ideen für weitere Verbesserungen haben, gehen Sie bitte zu <1>Github</1> und erstellen Sie ein Issue.",
+  "helpcenter": "Hilfebereich",
+  "helpcenter.howtostay": "Wie kann ich mich für eine Unterkunft bewerben?",
+  "helpcenter.howtostay.text": "Suchen Sie zuerst nach einer <1>Unterkunft</1>. Suchen Sie zunächst nach einer <1>Unterkunft</1>. Wenn Sie eine passende Unterkunft gefunden haben, klicken Sie einfach auf die Schaltfläche <1>Anfrage stellen</1>, füllen Sie die erforderlichen Felder aus, erzählen Sie dem Gastgeber/-in ein wenig über sich und bestätigen Sie die Anfrage. Sie erhalten eine E-Mail, sobald der Gastgeber/-in Ihre Anfrage akzeptiert hat. In dieser E-Mail finden Sie die Kontaktinformationen und Anweisungen zur Anreise. Wir bitten Sie, den Gastgeber/-in bezüglich Ihrer Anreise zu kontaktieren.",
+  "helpcenter.offerplace": "Wie kann ich eine Unterkunft anbieten?",
+  "helpcenter.offerplace.text": "Um Gastgeber bei HostRefugees zu sein, müssen Sie eine Wohnung, ein Zimmer oder eine andere Unterkunft in Deutschland haben. Die Wohnung muss in einem guten Zustand sein und mindestens ein Bett und ein Badezimmer haben. Wenn Sie diese Voraussetzungen erfüllen, können Sie sich unter <1>Gastgeber werden</1> registrieren. Nach der Registrierung müssen Sie Ihren Personalausweis oder Reisepass hochladen, um sich zu identifizieren. Dies ist zwingend erforderlich, um die Sicherheit unserer Gäste zu gewährleisten.",
+  "helpcenter.issue": "Was kann ich tun, wenn etwas nicht funktioniert?",
+  "helpcenter.issue.text": "Die Plattform befindet sich in einer frühen Entwicklungsphase und kann noch kleinere Fehler enthalten. Wenn Sie einen Fehler finden oder Ideen für weitere Verbesserungen haben, gehen Sie bitte zu <1>Github</1> und erstellen Sie ein Issue.",
 
   "profile": "Profil",
   "profile.approval": "Auf Freigabe warten",
@@ -179,6 +180,12 @@
   "place.detail.pets": "Haustiere erlaubt",
   "place.detail.address.info": "Der genaue Standort wird mitgeteilt, wenn die Anfrage akzeptiert wird",
   "place.detail.noresidents": "Keine Bewohner in der Wohnung",
+  "place.type.place": "Ganze Wohnung",
+  "place.type.private": "Privates Zimmer",
+  "place.type.shared": "Gemeinschaftszimmer",
+  "place.availability.fromto": "Verfügbar ab {{start}} bis {{end}}",
+  "place.availability.from": "Verfügbar ab {{start}}",
+  "place.availability.now": "Jetzt Verfügbar",
 
   "signup": "Registrieren",
   "signup.accept": "Ich akzeptiere die <1>Datenschutzbestimmungen</1>",

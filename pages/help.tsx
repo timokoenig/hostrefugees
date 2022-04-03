@@ -16,10 +16,10 @@ const HelpPage = (props: Props) => {
     <Layout user={props.user}>
       <Container maxW="7xl">
         <Heading as="h1" size="lg" mb="5">
-          {t('help')}
+          {t('helpcenter')}
         </Heading>
-        <Item title={t('help.howtostay')}>
-          <Trans i18nKey="help.howtostay.text" t={t}>
+        <Item title={t('helpcenter.howtostay')}>
+          <Trans i18nKey="helpcenter.howtostay.text" t={t}>
             a
             <Link href="/place" fontWeight="semibold">
               1
@@ -27,8 +27,8 @@ const HelpPage = (props: Props) => {
             b
           </Trans>
         </Item>
-        <Item title={t('help.offerplace')}>
-          <Trans i18nKey="help.offerplace.text" t={t}>
+        <Item title={t('helpcenter.offerplace')}>
+          <Trans i18nKey="helpcenter.offerplace.text" t={t}>
             a
             <Link href="/become-host" fontWeight="semibold">
               1
@@ -36,8 +36,8 @@ const HelpPage = (props: Props) => {
             b
           </Trans>
         </Item>
-        <Item title={t('help.issue')}>
-          <Trans i18nKey="help.issue.text" t={t}>
+        <Item title={t('helpcenter.issue')}>
+          <Trans i18nKey="helpcenter.issue.text" t={t}>
             a
             <Link href="https://github.com/timokoenig/hostrefugees/issues" fontWeight="semibold">
               1

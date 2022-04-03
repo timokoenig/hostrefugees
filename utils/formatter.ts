@@ -1,30 +1,17 @@
-import { PlaceType } from '@prisma/client'
 import moment from 'moment'
+import { TFunction } from 'react-i18next'
 import { MappedPlace } from './models'
 
-export const formatPlaceType = (place: MappedPlace): string => {
-  switch (place.type) {
-    case PlaceType.PLACE:
-      return 'Entire Place'
-    case PlaceType.PRIVATE:
-      return 'Private Room'
-    case PlaceType.SHARED:
-      return 'Shared Room'
-    default:
-      return place.type
-  }
-}
-
-export const formatAvailability = (place: MappedPlace): string => {
+export const formatAvailability = (t: TFunction, place: MappedPlace): string => {
   const startFormatted = moment(place.availabilityStart).format('DD.MM.YYYY')
   if (place.availabilityEnd) {
     const endFormatted = moment(place.availabilityEnd).format('DD.MM.YYYY')
-    return `Available from ${startFormatted} to ${endFormatted}`
+    return t(`place.availability.fromto`, { start: startFormatted, end: endFormatted })
   }
-  if (startFormatted == moment().format('DD.MM.YYYY')) {
-    return 'Available now'
+  if (moment().isAfter(moment(place.availabilityStart))) {
+    return t(`place.availability.now`)
   }
-  return `Available from ${startFormatted}`
+  return t(`place.availability.from`, { start: startFormatted })
 }
 
 export const formatUrl = (url: string): string => {
