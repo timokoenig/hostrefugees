@@ -3,7 +3,13 @@
 import { UserRole } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from 'prisma/client'
-import { newAuthenticatedHandler, withErrorHandler, withHandlers } from 'utils/api/helper'
+import sharp from 'sharp'
+import {
+  newAuthenticatedHandler,
+  newHandler,
+  withErrorHandler,
+  withHandlers,
+} from 'utils/api/helper'
 import HttpError, { HTTP_STATUS_CODE } from 'utils/api/http-error'
 import HTTP_METHOD from 'utils/api/http-method'
 import { deleteFile, readFile, S3_BUCKET_PLACE } from 'utils/aws/s3'
@@ -57,8 +63,9 @@ async function handleGetPlacePhoto(req: NextApiRequest, res: NextApiResponse) {
 
   try {
     const image = await readFile(`${place.id}/${req.query.photoId}`, S3_BUCKET_PLACE)
+    const resizedImage = await sharp(image.data).resize(600).toBuffer()
     res.setHeader('Content-Type', image.contentType)
-    res.send(image.data)
+    res.send(resizedImage)
   } catch (err: unknown) {
     res.status(400).end()
   }
@@ -67,7 +74,7 @@ async function handleGetPlacePhoto(req: NextApiRequest, res: NextApiResponse) {
 export default withErrorHandler(
   withSessionRoute(
     withHandlers([
-      newAuthenticatedHandler(HTTP_METHOD.GET, [], handleGetPlacePhoto),
+      newHandler(HTTP_METHOD.GET, handleGetPlacePhoto),
       newAuthenticatedHandler(HTTP_METHOD.DELETE, [UserRole.HOST], handlePlacePhotoDelete),
     ])
   )
