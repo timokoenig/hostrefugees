@@ -12,7 +12,7 @@ export type Translation = {
 }
 
 const translateAll = async (text: string): Promise<Translation | undefined> => {
-  const languages = ['en', 'de', 'uk']
+  const languages = ['en', 'de', 'uk', 'ru']
   const res: Translation = {
     sourceLanguage: '',
     translations: [],
