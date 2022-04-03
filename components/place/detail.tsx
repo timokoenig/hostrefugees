@@ -112,27 +112,30 @@ export default function Detail(props: Props) {
               >
                 {t('residents')}
               </Text>
-
-              <List spacing={2}>
-                <ListItem>
-                  <Text as="span" fontWeight="bold">
-                    {t('adults')}
-                  </Text>{' '}
-                  {props.place.placeAdults} (
-                  {props.place.placeAdultWomen && props.place.placeAdultMen
-                    ? t('womenmen')
-                    : props.place.placeAdultMen
-                    ? t('onlymen')
-                    : t('onlywomen')}
-                  )
-                </ListItem>
-                <ListItem>
-                  <Text as="span" fontWeight="bold">
-                    {t('children')}
-                  </Text>{' '}
-                  {props.place.placeChildren}
-                </ListItem>
-              </List>
+              {props.place.placeAdults == 0 && props.place.placeChildren == 0 ? (
+                <Text>{t('place.detail.noresidents')}</Text>
+              ) : (
+                <List spacing={2}>
+                  <ListItem>
+                    <Text as="span" fontWeight="bold">
+                      {t('adults')}
+                    </Text>{' '}
+                    {props.place.placeAdults} (
+                    {props.place.placeAdultWomen && props.place.placeAdultMen
+                      ? t('womenmen')
+                      : props.place.placeAdultMen
+                      ? t('onlymen')
+                      : t('onlywomen')}
+                    )
+                  </ListItem>
+                  <ListItem>
+                    <Text as="span" fontWeight="bold">
+                      {t('children')}
+                    </Text>{' '}
+                    {props.place.placeChildren}
+                  </ListItem>
+                </List>
+              )}
             </Box>
             <Box>
               <Text

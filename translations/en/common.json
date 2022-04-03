@@ -179,6 +179,7 @@
   "place.detail.request": "Request to stay",
   "place.detail.pets": "Pets Allowed",
   "place.detail.address.info": "exact location will be shared when the stay gets accepted",
+  "place.detail.noresidents": "No residents at the place",
 
   "signup": "Sign Up",
   "signup.accept": "I accept the <1>Privacy Policy</1>",
