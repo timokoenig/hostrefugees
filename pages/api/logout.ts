@@ -9,5 +9,5 @@ function handleLogout(req: NextApiRequest, res: NextApiResponse) {
 }
 
 export default withErrorHandler(
-  withSessionRoute(withHandlers([newAuthenticatedHandler(HTTP_METHOD.POST, [], handleLogout)]))
+  withSessionRoute(withHandlers([newAuthenticatedHandler(HTTP_METHOD.GET, [], handleLogout)]))
 )

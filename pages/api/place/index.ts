@@ -89,5 +89,5 @@ async function handleCreatePlace(req: Request, res: NextApiResponse) {
 }
 
 export default withSessionRoute(
-  withHandlers([newAuthenticatedHandler(HTTP_METHOD.POST, [UserRole.GUEST], handleCreatePlace)])
+  withHandlers([newAuthenticatedHandler(HTTP_METHOD.POST, [UserRole.HOST], handleCreatePlace)])
 )
