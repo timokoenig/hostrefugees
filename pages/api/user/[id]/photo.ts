@@ -10,6 +10,7 @@ import fs from 'fs'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from 'prisma/client'
 import sharp from 'sharp'
+import compress from 'utils/api/compress'
 import {
   newAuthenticatedHandler,
   newHandler,
@@ -87,8 +88,10 @@ async function handleGetUserPhoto(req: NextApiRequest, res: NextApiResponse) {
   try {
     const image = await readFile(user.id, S3_BUCKET_USER)
     const resizedImage = await sharp(image.data).resize(100).toBuffer()
+    const compressedImage = await compress(resizedImage)
     res.setHeader('Content-Type', image.contentType)
-    res.send(resizedImage)
+    res.setHeader('Content-Encoding', 'gzip')
+    res.send(compressedImage)
   } catch (err: unknown) {
     res.status(400).end()
   }

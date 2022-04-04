@@ -4,6 +4,7 @@ import { UserRole } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from 'prisma/client'
 import sharp from 'sharp'
+import compress from 'utils/api/compress'
 import {
   newAuthenticatedHandler,
   newHandler,
@@ -64,8 +65,10 @@ async function handleGetPlacePhoto(req: NextApiRequest, res: NextApiResponse) {
   try {
     const image = await readFile(`${place.id}/${req.query.photoId}`, S3_BUCKET_PLACE)
     const resizedImage = await sharp(image.data).resize(600).toBuffer()
+    const compressedImage = await compress(resizedImage)
     res.setHeader('Content-Type', image.contentType)
-    res.send(resizedImage)
+    res.setHeader('Content-Encoding', 'gzip')
+    res.send(compressedImage)
   } catch (err: unknown) {
     res.status(400).end()
   }
