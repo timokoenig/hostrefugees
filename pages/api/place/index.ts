@@ -29,6 +29,7 @@ interface Request extends NextApiRequest {
     addressZip: string
     addressCity: string
     addressCountry: string
+    phoneNumber: string
     houseRules: string
     arrivalInstructions: string
     availabilityStart: Date
@@ -76,6 +77,7 @@ async function handleCreatePlace(req: Request, res: NextApiResponse) {
       addressCityLat: latLng.lat,
       addressCityLng: latLng.lng,
       addressCountry: DEFAULT_COUNTRY,
+      phoneNumber: req.body.phoneNumber,
       houseRules: req.body.houseRules,
       houseRulesTranslation,
       arrivalInstructions: req.body.arrivalInstructions,
