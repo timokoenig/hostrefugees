@@ -11,6 +11,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from 'prisma/client'
 import sharp from 'sharp'
 import compress from 'utils/api/compress'
+import convertHeic from 'utils/api/convert-heic'
 import {
   newAuthenticatedHandler,
   newHandler,
@@ -42,18 +43,36 @@ async function handleProfilePhotoUpload(req: NextApiRequest, res: NextApiRespons
       maxFileSize: 20 * 1024 * 1024,
       filter: ({ mimetype }): boolean => {
         // keep only images
-        return mimetype?.includes('image') ?? false
+        if (mimetype == null || !mimetype.includes('image')) {
+          return false
+        }
+        return (
+          mimetype.includes('jpg') ||
+          mimetype.includes('jpeg') ||
+          mimetype.includes('png') ||
+          mimetype.includes('heic') ||
+          mimetype.includes('heif')
+        )
       },
     })
     form.parse(req, async (_err, _fields, files) => {
       try {
         // @ts-ignore
-        if (files.file === undefined) {
+        if (files.file == undefined) {
           // Delete existing file
           await deleteFile(user.id, S3_BUCKET_USER)
         } else {
           const formFile = files.file as unknown as formidable.File
-          const file = fs.readFileSync(formFile.filepath)
+          let file = fs.readFileSync(formFile.filepath)
+
+          if (formFile.mimetype == null) {
+            throw new Error('no mimetype')
+          }
+          // convert heic/heif to jpg if needed
+          if (formFile.mimetype.includes('heic') || formFile.mimetype.includes('heif')) {
+            file = await convertHeic(file)
+          }
+
           await uploadFile(user.id, file, formFile.mimetype, S3_BUCKET_USER)
         }
         resolve()
