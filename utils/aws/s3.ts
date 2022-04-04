@@ -10,9 +10,9 @@ const s3 = new AWS.S3({
   secretAccessKey: process.env.AWS_S3_ACCESS_SECRET,
 })
 
-export const S3_BUCKET_DOCUMENTS = 'hostrefugees-document'
-export const S3_BUCKET_PLACE = 'hostrefugees-place'
-export const S3_BUCKET_USER = 'hostrefugees-user'
+export const S3_BUCKET_DOCUMENTS = process.env.AWS_S3_BUCKET_DOCUMENTS as string
+export const S3_BUCKET_PLACE = process.env.AWS_S3_BUCKET_PLACE as string
+export const S3_BUCKET_USER = process.env.AWS_S3_BUCKET_USER as string
 
 export const uploadFile = async (
   key: string,
