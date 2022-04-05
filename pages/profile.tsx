@@ -41,7 +41,7 @@ const ProfilePage = (props: Props) => {
   return (
     <Layout user={props.user}>
       <Head>
-        <title>HostRefugees - Profile</title>
+        <title>{t('page.title.profile')}</title>
       </Head>
       <Container maxW="7xl">
         <Heading as="h2" size="xl" mb="5">

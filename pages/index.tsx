@@ -3,6 +3,7 @@ import Layout from 'components/layout'
 import Head from 'next/head'
 import prisma from 'prisma/client'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { mapPlace } from 'utils/mapper'
 import { MappedPlace, MappedUser } from 'utils/models'
 import { withSessionSsr } from 'utils/session'
@@ -18,10 +19,11 @@ type Props = {
 }
 
 const IndexPage = (props: Props) => {
+  const { t } = useTranslation('common')
   return (
     <Layout user={props.user}>
       <Head>
-        <title>HostRefugees</title>
+        <title>{t('page.title')}</title>
       </Head>
       <Hero />
       <Introduction />

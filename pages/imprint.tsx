@@ -1,4 +1,5 @@
 import { Box, Container, Heading, Text } from '@chakra-ui/react'
+import Head from 'next/head'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { MappedUser } from 'utils/models'
@@ -13,6 +14,9 @@ const ImprintPage = (props: Props) => {
   const { t } = useTranslation('common')
   return (
     <Layout user={props.user}>
+      <Head>
+        <title>{t('page.title.imprint')}</title>
+      </Head>
       <Container maxW="7xl">
         <Box align="center">
           <Heading>{t('imprint')}</Heading>

@@ -2,8 +2,10 @@ import { Container } from '@chakra-ui/react'
 import LanguageOnboarding from 'components/onboarding/language'
 import ProfilePhotoOnboarding from 'components/onboarding/profilephoto'
 import VerificationOnboarding from 'components/onboarding/verification'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { MappedUser } from 'utils/models'
 import {
   onboardingCheck,
@@ -21,6 +23,7 @@ type Props = {
 
 const OnboardingPage = (props: Props) => {
   const router = useRouter()
+  const { t } = useTranslation('common')
   const [steps, setSteps] = useState<string[]>(props.steps)
 
   const onNext = async () => {
@@ -37,6 +40,9 @@ const OnboardingPage = (props: Props) => {
 
   return (
     <Layout user={props.user}>
+      <Head>
+        <title>{t('page.title.onboarding')}</title>
+      </Head>
       <Container maxW="7xl" textAlign="center" maxWidth="700">
         {steps[0] === ONBOARDING_LANGUAGE && (
           <LanguageOnboarding user={props.user} onNext={onNext} />

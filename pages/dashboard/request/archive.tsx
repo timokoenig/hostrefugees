@@ -23,7 +23,7 @@ const ArchivePage = (props: Props) => {
   return (
     <Layout user={props.user}>
       <Head>
-        <title>HostRefugees</title>
+        <title>{t('page.title.dashboard.request.archive')}</title>
       </Head>
       <Container maxW="7xl">
         <Box mb="5">

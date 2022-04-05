@@ -7,6 +7,7 @@ import {
   Text,
   useColorModeValue,
 } from '@chakra-ui/react'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -23,6 +24,9 @@ const RequestPage = (props: Props) => {
   const router = useRouter()
   return (
     <Layout user={props.user}>
+      <Head>
+        <title>HostRefugees - Confirmation</title>
+      </Head>
       <Container maxW="7xl" textAlign="center" maxWidth="700">
         <Center>
           <Image src="/svg/undraw_completing_re_i7ap.svg" maxWidth="250" />

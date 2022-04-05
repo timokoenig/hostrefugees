@@ -1,14 +1,16 @@
 import Head from 'next/head'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { withSessionSsr } from 'utils/session'
 import BecomeHost from '../components/become-host'
 import Layout from '../components/layout'
 
 const BecomeHostPage = () => {
+  const { t } = useTranslation('common')
   return (
     <Layout>
       <Head>
-        <title>HostRefugees - Become a Host</title>
+        <title>{t('page.title.becomehost')}</title>
       </Head>
       <BecomeHost />
     </Layout>

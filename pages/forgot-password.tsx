@@ -1,14 +1,16 @@
 import Head from 'next/head'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { withSessionSsr } from 'utils/session'
 import ForgotPassword from '../components/forgot-password'
 import Layout from '../components/layout'
 
 const ForgotPasswordPage = () => {
+  const { t } = useTranslation('common')
   return (
     <Layout>
       <Head>
-        <title>HostRefugees - Forgot Password</title>
+        <title>{t('page.title.login.forgotpassword')}</title>
       </Head>
       <ForgotPassword />
     </Layout>

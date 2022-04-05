@@ -5,7 +5,9 @@ import SectionNecessities from 'components/welcome/section-necessities'
 import SectionOther from 'components/welcome/section-other'
 import SectionPlaces from 'components/welcome/section-places'
 import SectionTranslations from 'components/welcome/section-translation'
+import Head from 'next/head'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { MappedUser } from 'utils/models'
 import { withSessionSsr } from 'utils/session'
 import Layout from '../components/layout'
@@ -16,8 +18,12 @@ type Props = {
 }
 
 const WelcomePage = (props: Props) => {
+  const { t } = useTranslation('common')
   return (
     <Layout user={props.user}>
+      <Head>
+        <title>{t('page.title.welcome')}</title>
+      </Head>
       <Container maxW="7xl">
         <Stack
           spacing={20}

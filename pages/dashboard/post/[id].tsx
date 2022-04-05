@@ -58,7 +58,7 @@ const PostPage = (props: Props) => {
   return (
     <Layout user={props.user}>
       <Head>
-        <title>HostRefugees</title>
+        <title>{t('page.title.dashboard.posts')}</title>
       </Head>
       <Container maxW="7xl">
         <Box mb="5">

@@ -2,9 +2,11 @@ import { ArrowBackIcon } from '@chakra-ui/icons'
 import { Box, Button, Container, SimpleGrid } from '@chakra-ui/react'
 import { UserRole } from '@prisma/client'
 import Form from 'components/request/form'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 import prisma from 'prisma/client'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { mapPlace } from 'utils/mapper'
 import { MappedPlace, MappedUser } from 'utils/models'
 import { onboardingCheck } from 'utils/onboarding-check'
@@ -19,8 +21,12 @@ type Props = {
 
 const RequestPage = (props: Props) => {
   const router = useRouter()
+  const { t } = useTranslation('common')
   return (
     <Layout user={props.user}>
+      <Head>
+        <title>{t('page.title.place.request')}</title>
+      </Head>
       <Container maxW="7xl">
         <Box mb="5">
           <Button variant="ghost" pl={0} leftIcon={<ArrowBackIcon />} onClick={router.back}>

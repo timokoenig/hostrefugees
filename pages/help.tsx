@@ -1,5 +1,6 @@
 import { Container, Heading, Link } from '@chakra-ui/react'
 import Item from 'components/help/item'
+import Head from 'next/head'
 import React from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { MappedUser } from 'utils/models'
@@ -14,6 +15,9 @@ const HelpPage = (props: Props) => {
   const { t } = useTranslation('common')
   return (
     <Layout user={props.user}>
+      <Head>
+        <title>{t('page.title.help')}</title>
+      </Head>
       <Container maxW="7xl">
         <Heading as="h1" size="lg" mb="5">
           {t('helpcenter')}

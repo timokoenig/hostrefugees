@@ -2,6 +2,7 @@ import { ArrowBackIcon } from '@chakra-ui/icons'
 import { Box, Button, Center } from '@chakra-ui/react'
 import { Request, UserRole } from '@prisma/client'
 import Detail from 'components/place/detail'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 import prisma from 'prisma/client'
 import React from 'react'
@@ -22,6 +23,9 @@ const PlaceDetailPage = (props: Props) => {
   const router = useRouter()
   return (
     <Layout user={props.user}>
+      <Head>
+        <title>{t('page.title.place', { title: props.place.title })}</title>
+      </Head>
       <Center>
         <Box maxW="7xl">
           <Box mb="5">

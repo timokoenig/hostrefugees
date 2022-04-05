@@ -60,7 +60,7 @@ const UserPage = (props: Props) => {
   return (
     <Layout user={props.user}>
       <Head>
-        <title>HostRefugees</title>
+        <title>HostRefugees - Admin User</title>
       </Head>
       <Container maxW="7xl">
         <Box mb="5">

@@ -1,5 +1,6 @@
 import { Container, Heading, Text, useColorModeValue } from '@chakra-ui/react'
 import dynamic from 'next/dynamic'
+import Head from 'next/head'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { MappedUser } from 'utils/models'
@@ -18,6 +19,9 @@ const HelpPage = (props: Props) => {
   const { t } = useTranslation('common')
   return (
     <Layout user={props.user}>
+      <Head>
+        <title>{t('page.title.privacy.cookies')}</title>
+      </Head>
       <Container maxW="7xl">
         <Heading as="h1" size="lg" mb="5">
           {t('privacy.cookie')}

@@ -10,6 +10,7 @@ import {
   Text,
   useColorModeValue,
 } from '@chakra-ui/react'
+import Head from 'next/head'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { MappedUser } from 'utils/models'
@@ -24,6 +25,9 @@ const DocumentsPage = (props: Props) => {
   const { t } = useTranslation('common')
   return (
     <Layout user={props.user}>
+      <Head>
+        <title>{t('page.title.documents')}</title>
+      </Head>
       <Container maxW="7xl">
         <Center mb="10">
           <Heading as="h1" size="xl">

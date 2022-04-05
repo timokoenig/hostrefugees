@@ -1,5 +1,7 @@
 import { Box, Container, Heading, Link, List, ListItem, Text } from '@chakra-ui/react'
+import Head from 'next/head'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { MappedUser } from 'utils/models'
 import { withSessionSsr } from 'utils/session'
 import Layout from '../../components/layout'
@@ -887,6 +889,7 @@ type Props = {
 }
 
 const PrivacyPage = (props: Props) => {
+  const { t } = useTranslation('common')
   const privacyProps = {
     contactName: process.env.NEXT_PUBLIC_CONTACT_NAME as string,
     contactAddress: process.env.NEXT_PUBLIC_CONTACT_ADDRESS as string,
@@ -898,6 +901,9 @@ const PrivacyPage = (props: Props) => {
 
   return (
     <Layout user={props.user}>
+      <Head>
+        <title>{t('page.title.privacy')}</title>
+      </Head>
       <Container maxW="7xl">
         <Box textAlign="left">
           <Heading as="h1" size="lg" mb="5">

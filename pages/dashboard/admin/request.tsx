@@ -36,7 +36,7 @@ const RequestPage = (props: Props) => {
   return (
     <Layout user={props.user}>
       <Head>
-        <title>HostRefugees - Admin Dashboard</title>
+        <title>HostRefugees - Admin Requests</title>
       </Head>
       <Container maxW="7xl">
         <Box mb="5">

@@ -10,6 +10,7 @@ import {
 } from '@chakra-ui/react'
 import PlaceItem from 'components/place/item'
 import dynamic from 'next/dynamic'
+import Head from 'next/head'
 import prisma from 'prisma/client'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -60,6 +61,9 @@ const PlacePage = (props: Props) => {
 
   return (
     <Layout user={props.user}>
+      <Head>
+        <title>{t('page.title.places')}</title>
+      </Head>
       <Container maxW="7xl">
         <Heading mb="10">
           {filteredPlaces.length} {t('place.available')}{' '}

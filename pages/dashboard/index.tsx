@@ -25,7 +25,7 @@ const DashboardPage = (props: Props) => {
   return (
     <Layout user={props.user}>
       <Head>
-        <title>HostRefugees - Dashboard</title>
+        <title>{t('page.title.dashboard')}</title>
       </Head>
       <Container maxW="7xl">
         <Box align="center">

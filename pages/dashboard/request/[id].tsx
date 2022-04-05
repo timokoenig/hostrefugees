@@ -76,7 +76,7 @@ const RequestPage = (props: Props) => {
   return (
     <Layout user={props.user}>
       <Head>
-        <title>HostRefugees</title>
+        <title>{t('page.title.dashboard.request')}</title>
       </Head>
 
       <Container maxW="7xl">

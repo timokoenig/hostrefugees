@@ -14,6 +14,7 @@ import CustomButton from 'components/common/button'
 import Layout from 'components/layout'
 import FilterModal from 'components/post/filter-modal'
 import PostItem from 'components/post/item'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 import prisma from 'prisma/client'
 import React, { useState } from 'react'
@@ -68,6 +69,9 @@ const PostPage = (props: Props) => {
 
   return (
     <Layout user={props.user}>
+      <Head>
+        <title>{t('page.title.posts')}</title>
+      </Head>
       <Container maxW="7xl">
         <Center mb="2">
           <Heading fontSize="4xl">{t('posts')}</Heading>
