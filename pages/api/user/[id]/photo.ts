@@ -1,17 +1,9 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable import/order */
-/* eslint-disable @typescript-eslint/no-unnecessary-condition */
-/* eslint-disable @typescript-eslint/prefer-ts-expect-error */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { UserRole } from '@prisma/client'
-import formidable, { IncomingForm } from 'formidable'
-import fs from 'fs'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from 'prisma/client'
 import sharp from 'sharp'
 import compress from 'utils/api/compress'
-import convertHeic from 'utils/api/convert-heic'
 import {
   newAuthenticatedHandler,
   newHandler,
@@ -20,7 +12,8 @@ import {
 } from 'utils/api/helper'
 import HttpError, { HTTP_STATUS_CODE } from 'utils/api/http-error'
 import HTTP_METHOD from 'utils/api/http-method'
-import { deleteFile, readFile, S3_BUCKET_USER, uploadFile } from 'utils/aws/s3'
+import parsePhotoRequest from 'utils/api/parse-photo-request'
+import { readFile, S3_BUCKET_USER, uploadFile } from 'utils/aws/s3'
 import { withSessionRoute } from 'utils/session'
 
 export const config = {
@@ -37,50 +30,9 @@ async function handleProfilePhotoUpload(req: NextApiRequest, res: NextApiRespons
   })
   if (user == null) throw new HttpError('User not found', HTTP_STATUS_CODE.NOT_FOUND)
 
-  await new Promise<void>((resolve, reject) => {
-    const form = new IncomingForm({
-      maxFiles: 1,
-      maxFileSize: 20 * 1024 * 1024,
-      filter: ({ mimetype }): boolean => {
-        // keep only images
-        if (mimetype == null || !mimetype.includes('image')) {
-          return false
-        }
-        return (
-          mimetype.includes('jpg') ||
-          mimetype.includes('jpeg') ||
-          mimetype.includes('png') ||
-          mimetype.includes('heic') ||
-          mimetype.includes('heif')
-        )
-      },
-    })
-    form.parse(req, async (_err, _fields, files) => {
-      try {
-        // @ts-ignore
-        if (files.file == undefined) {
-          // Delete existing file
-          await deleteFile(user.id, S3_BUCKET_USER)
-        } else {
-          const formFile = files.file as unknown as formidable.File
-          let file = fs.readFileSync(formFile.filepath)
+  const photo = await parsePhotoRequest(req)
 
-          if (formFile.mimetype == null) {
-            throw new Error('no mimetype')
-          }
-          // convert heic/heif to jpg if needed
-          if (formFile.mimetype.includes('heic') || formFile.mimetype.includes('heif')) {
-            file = await convertHeic(file)
-          }
-
-          await uploadFile(user.id, file, formFile.mimetype, S3_BUCKET_USER)
-        }
-        resolve()
-      } catch (err: unknown) {
-        reject(err)
-      }
-    })
-  })
+  await uploadFile(user.id, photo.data, photo.mimetype, S3_BUCKET_USER)
 
   await prisma.user.update({
     where: {

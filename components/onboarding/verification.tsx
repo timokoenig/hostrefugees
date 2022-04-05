@@ -18,12 +18,16 @@ const VerificationOnboarding = (props: Props) => {
 
   const uploadDocument = async (type: string, file: File | null) => {
     setLoading(true)
-    const body = new FormData()
-    body.set('type', type)
-    if (file !== null) {
+    if (file == null) {
+      // Delete file
+      await fetch(`/api/user/${props.user.id}/document/${type}`, { method: 'DELETE' })
+    } else {
+      // Upload file
+      const body = new FormData()
+      body.set('type', type)
       body.append('file', file)
+      await fetch(`/api/user/${props.user.id}/document`, { method: 'POST', body })
     }
-    await fetch(`/api/user/${props.user.id}/document`, { method: 'POST', body })
     setLoading(false)
   }
 
