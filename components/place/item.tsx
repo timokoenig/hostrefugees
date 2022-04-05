@@ -49,7 +49,8 @@ const PlaceItem = (props: Props) => {
                 fontSize="xs"
                 textTransform="uppercase"
               >
-                {props.place.rooms} {t('rooms')} &bull; {props.place.beds} {t('beds')}
+                {props.place.rooms} {t('rooms', { count: props.place.rooms })} &bull;{' '}
+                {props.place.beds} {t('beds', { count: props.place.beds })}
               </Box>
             </Box>
             <Box mt="1" fontWeight="semibold" as="h4" lineHeight="tight" isTruncated>
