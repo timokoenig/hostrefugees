@@ -25,7 +25,7 @@ const RequestPage = (props: Props) => {
   return (
     <Layout user={props.user}>
       <Head>
-        <title>HostRefugees - Confirmation</title>
+        <title>{t('page.title.place.confirmation')}</title>
       </Head>
       <Container maxW="7xl" textAlign="center" maxWidth="700">
         <Center>
