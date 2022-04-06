@@ -168,7 +168,7 @@ export const emailDeclineRequest = (
   const textHtml = [
     titleAndParagraph(
       'Stay Request Declined',
-      'We are sorry but your stay request has been declined.'
+      'We are sorry but your stay request has been declined. This can happend due to the amount of requests a host receives at the moment.'
     ),
     button('Look for other places', 'https://hostrefugees.eu/place'),
   ].join('')
