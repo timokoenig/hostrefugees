@@ -27,6 +27,7 @@ export const mapPlace = (prismaPlace: any): MappedPlace => {
     },
     approved: prismaPlace.approved,
     active: prismaPlace.active,
+    reserved: prismaPlace.reserved,
     title: prismaPlace.title,
     titleTranslation: prismaPlace.titleTranslation,
     description: prismaPlace.description,

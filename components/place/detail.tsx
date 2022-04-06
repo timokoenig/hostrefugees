@@ -29,6 +29,16 @@ type Props = {
   enableRequest: boolean
 }
 
+const ReservationStatus = (props: { place: MappedPlace }): JSX.Element | null => {
+  const { t } = useTranslation('common')
+  if (!props.place.reserved) return null
+  return (
+    <Status color="yellow.500" title={t('reserved').toUpperCase()}>
+      <Text>{t('place.detail.reserved')}</Text>
+    </Status>
+  )
+}
+
 export default function Detail(props: Props) {
   const { t } = useTranslation('common')
   const { t: tLang } = useTranslation('languages')
@@ -38,13 +48,16 @@ export default function Detail(props: Props) {
   const RequestButton = (): JSX.Element | null => {
     if (props.request != null) {
       return (
-        <Status color="yellow.500" title="WAITING">
+        <Status color="yellow.500" title={t('waiting').toUpperCase()}>
           <Text mb="2">{t('place.detail.existingrequest')}</Text>
           <Link fontWeight="semibold" href={`/dashboard/request/${props.request.id}`}>
             {t('place.detail.show')}
           </Link>
         </Status>
       )
+    }
+    if (props.place.reserved) {
+      return <ReservationStatus place={props.place} />
     }
     if (props.enableRequest) {
       return (

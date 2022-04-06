@@ -53,6 +53,7 @@ model Place {
   author                         User         @relation(fields: [userId], references: [id])
   approved                       Boolean
   active                         Boolean
+  reserved                       Boolean      @default(false)
   title                          String
   titleTranslation               Json?        @map("title_translation")
   description                    String

@@ -182,6 +182,7 @@
   "place.detail.pets": "Допускаються домашні тварини",
   "place.detail.address.info": "Точне місцезнаходження буде повідомлено, коли проживання буде прийнято",
   "place.detail.noresidents": "Жителів на місці немає",
+  "place.detail.reserved": "Наразі житло зарезервовано для одного з наших гостей",
   "place.type.place": "Ціле місце",
   "place.type.private": "Окрема кімната",
   "place.type.shared": "Спільна кімната",

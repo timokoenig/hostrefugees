@@ -183,6 +183,7 @@
   "place.detail.pets": "Домашние животные разрешены",
   "place.detail.address.info": "точное местоположение будет сообщено, когда проживание будет принято",
   "place.detail.noresidents": "Жильцов на месте нет",
+  "place.detail.reserved": "В настоящее время жилье зарезервировано для одного из наших гостей",
   "place.type.place": "Целое место",
   "place.type.private": "Приватная комната",
   "place.type.shared": "Общая комната",

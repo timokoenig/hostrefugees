@@ -14,6 +14,7 @@ export type MappedPlace = {
   author: MappedUser
   approved: boolean
   active: boolean
+  reserved: boolean
   title: string
   titleTranslation: Translation | null
   description: string
