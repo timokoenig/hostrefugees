@@ -1,4 +1,4 @@
-import { Avatar, Box, Flex, Text, useColorModeValue } from '@chakra-ui/react'
+import { Avatar, Badge, Box, Flex, Text, useColorModeValue } from '@chakra-ui/react'
 import { User } from '@prisma/client'
 import moment from 'moment'
 import React from 'react'
@@ -18,7 +18,14 @@ const UserItem = (props: Props) => (
   >
     <Avatar src={`/api/user/${props.user.id}/photo`} />
     <Box ml="3">
-      <Text fontWeight="bold">{`${props.user.firstname} ${props.user.lastname}`}</Text>
+      <Text fontWeight="bold">
+        {`${props.user.firstname} ${props.user.lastname}`}{' '}
+        {props.user.verificationSubmittedAt != null && (
+          <Badge colorScheme="green" ml="2">
+            Ready
+          </Badge>
+        )}
+      </Text>
       <Text fontSize="sm">Joined {moment(props.user.createdAt).format('DD.MM.YYYY')}</Text>
     </Box>
   </Flex>
