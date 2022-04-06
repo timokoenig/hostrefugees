@@ -41,5 +41,5 @@
     "**/*.tsx",
     "pages/index.tsx",
     "tests/setup-tests.js"
-  ]
+, "next.config.js"  ]
 }
