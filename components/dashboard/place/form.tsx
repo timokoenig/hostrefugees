@@ -52,6 +52,7 @@ const Form = (props: Props) => {
       updatedAt: new Date(),
       approved: false,
       active: false,
+      reserved: false,
       addressCityLat: '',
       addressCityLng: '',
       addressCountry: '',
