@@ -1,5 +1,5 @@
 import { Box, Container, Heading, Text } from '@chakra-ui/react'
-import { Post, Request, SafetyCheck, User, UserRole } from '@prisma/client'
+import { Post, Request, RequestStatus, SafetyCheck, User, UserRole } from '@prisma/client'
 import Admin from 'components/dashboard/admin'
 import Layout from 'components/layout'
 import moment from 'moment'
@@ -128,6 +128,7 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
           },
         },
       ],
+      status: RequestStatus.ACCEPTED,
     },
     include: {
       safetyChecks: true,
