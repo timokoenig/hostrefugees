@@ -11,6 +11,7 @@ const GoogleMaps = dynamic(() => import('./googlemaps'), {
 })
 
 type Props = {
+  googleMapsKey: string
   places: MappedPlace[]
 }
 
@@ -35,7 +36,7 @@ const MapPlaces = (props: Props) => {
             {props.places.length > 0 && <MoreItem />}
           </List>
         </Stack>
-        <GoogleMaps height="50vh" places={props.places} />
+        <GoogleMaps apiKey={props.googleMapsKey} height="50vh" places={props.places} />
       </SimpleGrid>
     </Container>
   )

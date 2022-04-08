@@ -40,8 +40,8 @@ const button = (text: string, href: string): string => {
 
 const footer = (): string => {
   return `<a href="https://hostrefugees.eu" style="color:#cccccc;text-decoration:underline;font-weight:bold;">hostrefugees.eu</a><br>provided by
-  <br>${process.env.NEXT_PUBLIC_CONTACT_NAME}, ${process.env.NEXT_PUBLIC_CONTACT_ADDRESS}
-  <br>${process.env.NEXT_PUBLIC_CONTACT_ADDRESS_CITY}, ${process.env.NEXT_PUBLIC_CONTACT_ADDRESS_COUNTRY}`
+  <br>${process.env.CONTACT_NAME}, ${process.env.CONTACT_ADDRESS}
+  <br>${process.env.CONTACT_ADDRESS_CITY}, ${process.env.CONTACT_ADDRESS_COUNTRY}`
 }
 
 export const emailPasswordReset = (user: User, hash: string): MessageHeaders => {

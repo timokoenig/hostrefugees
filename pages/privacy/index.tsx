@@ -886,18 +886,16 @@ const PrivacyDE = (props: PrivacyProps) => (
 
 type Props = {
   user?: MappedUser
+  contactName: string
+  contactAddress: string
+  contactAddressCity: string
+  contactAddressCountry: string
+  contactEmail: string
+  contactWebsite: string
 }
 
 const PrivacyPage = (props: Props) => {
   const { t } = useTranslation('common')
-  const privacyProps = {
-    contactName: process.env.NEXT_PUBLIC_CONTACT_NAME as string,
-    contactAddress: process.env.NEXT_PUBLIC_CONTACT_ADDRESS as string,
-    contactAddressCity: process.env.NEXT_PUBLIC_CONTACT_ADDRESS_CITY as string,
-    contactAddressCountry: process.env.NEXT_PUBLIC_CONTACT_ADDRESS_COUNTRY as string,
-    contactEmail: process.env.NEXT_PUBLIC_CONTACT_EMAIL as string,
-    contactWebsite: process.env.NEXT_PUBLIC_CONTACT_WEBSITE as string,
-  }
 
   return (
     <Layout user={props.user}>
@@ -909,7 +907,7 @@ const PrivacyPage = (props: Props) => {
           <Heading as="h1" size="lg" mb="5">
             Datenschutzerklärung
           </Heading>
-          <PrivacyDE {...privacyProps} />
+          <PrivacyDE {...props} />
         </Box>
       </Container>
     </Layout>
@@ -920,6 +918,12 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
   return {
     props: {
       user: context.req.session.user ?? null,
+      contactName: process.env.CONTACT_NAME ?? '',
+      contactAddress: process.env.CONTACT_ADDRESS ?? '',
+      contactAddressCity: process.env.CONTACT_ADDRESS_CITY ?? '',
+      contactAddressCountry: process.env.CONTACT_ADDRESS_COUNTRY ?? '',
+      contactEmail: process.env.CONTACT_EMAIL ?? '',
+      contactWebsite: process.env.CONTACT_WEBSITE ?? '',
     },
   }
 })

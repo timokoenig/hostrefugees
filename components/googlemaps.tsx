@@ -70,6 +70,7 @@ const Placeholder = ({ height }: { height: string }) => {
 }
 
 type Props = {
+  apiKey: string
   height: string
   places: MappedPlace[]
   onClick?: (city: string) => void
@@ -99,7 +100,7 @@ const GoogleMaps = (props: Props) => {
   return (
     <Stack height={props.height} borderRadius="lg" overflow="hidden">
       <GoogleMapReact
-        bootstrapURLKeys={{ key: process.env.NEXT_PUBLIC_GOOGLE_MAP_KEY as string, language }}
+        bootstrapURLKeys={{ key: props.apiKey, language }}
         defaultCenter={{ lat: 51.1657, lng: 10.4515 }} // center of Germany
         defaultZoom={6}
         options={{

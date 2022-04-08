@@ -26,6 +26,7 @@ const GoogleMaps = dynamic(() => import('components/googlemaps'), {
 })
 
 type Props = {
+  googleMapsKey: string
   user?: MappedUser
   places: MappedPlace[]
 }
@@ -85,6 +86,7 @@ const PlacePage = (props: Props) => {
           </List>
           <Box>
             <GoogleMaps
+              apiKey={props.googleMapsKey}
               height="80vh"
               places={props.places}
               onClick={city => setFilter({ ...appState.filter, city })}
@@ -123,6 +125,7 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
   })
   return {
     props: {
+      googleMapsKey: process.env.GOOGLE_MAP_KEY ?? '',
       user: context.req.session.user ?? null,
       places: places.map(mapPlace),
     },

@@ -13,6 +13,7 @@ import MapPlaces from '../components/map-places'
 import Posts from '../components/posts'
 
 type Props = {
+  googleMapsKey: string
   user?: MappedUser
   places: MappedPlace[]
   posts: Post[]
@@ -27,7 +28,7 @@ const IndexPage = (props: Props) => {
       </Head>
       <Hero />
       <Introduction />
-      <MapPlaces places={props.places} />
+      <MapPlaces googleMapsKey={props.googleMapsKey} places={props.places} />
       <Posts posts={props.posts} />
     </Layout>
   )
@@ -68,6 +69,7 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
 
   return {
     props: {
+      googleMapsKey: process.env.GOOGLE_MAP_KEY ?? '',
       user: context.req.session.user ?? null,
       places: places.map(mapPlace),
       posts,

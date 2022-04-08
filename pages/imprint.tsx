@@ -8,6 +8,11 @@ import Layout from '../components/layout'
 
 type Props = {
   user?: MappedUser
+  contactName: string
+  contactAddress: string
+  contactAddressCity: string
+  contactAddressCountry: string
+  contactEmail: string
 }
 
 const ImprintPage = (props: Props) => {
@@ -24,18 +29,18 @@ const ImprintPage = (props: Props) => {
 
           <Heading size="md">{t('imprint.legal')}</Heading>
           <Text mb="10">
-            {process.env.NEXT_PUBLIC_CONTACT_NAME}
+            {props.contactName}
             <br />
-            {process.env.NEXT_PUBLIC_CONTACT_ADDRESS}
+            {props.contactAddress}
             <br />
-            {process.env.NEXT_PUBLIC_CONTACT_ADDRESS_CITY}
+            {props.contactAddressCity}
             <br />
-            {process.env.NEXT_PUBLIC_CONTACT_ADDRESS_COUNTRY}
+            {props.contactAddressCountry}
           </Text>
 
           <Heading size="md">{t('imprint.contact')}</Heading>
           <Text mb="10">
-            {t('imprint.email')}: {process.env.NEXT_PUBLIC_CONTACT_EMAIL}
+            {t('imprint.email')}: {props.contactEmail}
           </Text>
         </Box>
       </Container>
@@ -47,6 +52,11 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
   return {
     props: {
       user: context.req.session.user ?? null,
+      contactName: process.env.CONTACT_NAME ?? '',
+      contactAddress: process.env.CONTACT_ADDRESS ?? '',
+      contactAddressCity: process.env.CONTACT_ADDRESS_CITY ?? '',
+      contactAddressCountry: process.env.CONTACT_ADDRESS_COUNTRY ?? '',
+      contactEmail: process.env.CONTACT_EMAIL ?? '',
     },
   }
 })

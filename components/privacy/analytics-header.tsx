@@ -1,11 +1,15 @@
 import React from 'react'
 
-const AnalyticsHeader = () => {
+type Props = {
+  googleAnalyticsId: string
+}
+
+const AnalyticsHeader = (props: Props) => {
   return (
     <>
       <script
         async
-        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}`}
+        src={`https://www.googletagmanager.com/gtag/js?id=${props.googleAnalyticsId}`}
       />
       <script
         dangerouslySetInnerHTML={{
@@ -13,7 +17,7 @@ const AnalyticsHeader = () => {
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
-              gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}', { 'anonymize_ip': true });
+              gtag('config', '${props.googleAnalyticsId}', { 'anonymize_ip': true });
                   `,
         }}
       />
