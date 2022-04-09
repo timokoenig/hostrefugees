@@ -5,7 +5,7 @@ import prisma from 'prisma/client'
 import { newAuthenticatedHandler, withErrorHandler, withHandlers } from 'utils/api/helper'
 import HttpError, { HTTP_STATUS_CODE } from 'utils/api/http-error'
 import HTTP_METHOD from 'utils/api/http-method'
-import { deleteFile, S3_BUCKET_DOCUMENTS } from 'utils/aws/s3'
+import { deleteFile, S3_BUCKET_DOCUMENT } from 'utils/aws/s3'
 import { withSessionRoute } from 'utils/session'
 
 const allowedTypes = ['front', 'back', 'selfie']
@@ -22,7 +22,7 @@ async function handleDocumentDelete(req: NextApiRequest, res: NextApiResponse) {
     throw new HttpError('Wrong document type', HTTP_STATUS_CODE.BAD_REQUEST)
 
   const fileKey = `${user.id}/${req.query.type as string}`
-  await deleteFile(fileKey, S3_BUCKET_DOCUMENTS)
+  await deleteFile(fileKey, S3_BUCKET_DOCUMENT)
 
   res.status(200).end()
 }

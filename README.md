@@ -44,6 +44,10 @@ AWS_S3_REGION=eu-central-1
 AWS_S3_ACCESS_KEY=xxx
 AWS_S3_ACCESS_SECRET=xxx
 
+AWS_S3_BUCKET_DOCUMENT=xxx
+AWS_S3_BUCKET_PLACE=xxx
+AWS_S3_BUCKET_USER=xxx
+
 SECRET_COOKIE_PASSWORD=complex_password_at_least_32_characters_long
 NODE_ENV=development
 ```

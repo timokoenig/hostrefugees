@@ -26,7 +26,7 @@ import prisma from 'prisma/client'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import sharp from 'sharp'
-import { readFile, S3_BUCKET_DOCUMENTS, S3_BUCKET_USER } from 'utils/aws/s3'
+import { readFile, S3_BUCKET_DOCUMENT, S3_BUCKET_USER } from 'utils/aws/s3'
 import { MappedUser } from 'utils/models'
 import { withSessionSsr } from 'utils/session'
 
@@ -181,7 +181,7 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
   const documents: string[] = []
   for (let i = 0; i < verificationDocuments.length; i++) {
     try {
-      const file = await readFile(`${user.id}/${verificationDocuments[i]}`, S3_BUCKET_DOCUMENTS)
+      const file = await readFile(`${user.id}/${verificationDocuments[i]}`, S3_BUCKET_DOCUMENT)
       const resizedFile = await sharp(file.data).resize(300).toBuffer()
       documents.push(`data:${file.contentType};base64, ${resizedFile.toString('base64')}`)
     } catch {}
