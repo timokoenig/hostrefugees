@@ -127,3 +127,12 @@ $RECYCLE.BIN/
 **/public/workbox-*.js.map
 **/public/worker-*.js.map
 **/public/fallback-*.js
+
+# Jekyll
+# =========================
+
+_site
+.sass-cache
+.jekyll-cache
+.jekyll-metadata
+vendor

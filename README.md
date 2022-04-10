@@ -9,144 +9,28 @@
 
 </div>
 
-<div align="center">
-Want to join or help out? Send me a message on Twitter <a href="https://twitter.com/timokoenig">@timokoenig</a>
-</div>
+**Ukrainians need our help!** This is why we build the Open-Source platform [HostRefugees](https://hostrefugees.eu/) to bring free accommodations and refugees together.
 
-## Development
+Coming to Germany, the state-run reception centers provide a place to sleep, food, and other necessities. Due to the number of people arriving, it is only a short-term solution. Ukrainians may even have to leave their pets at an animal shelter because the receptions don't allow them there.
 
-### Getting Started
+**We can do more!**
 
-Add the following variables to your _.env_ file:
+On HostRefugees.eu, hosts can offer their apartment or room to people and pets in need. Guests can search and find free places to stay, and the platform matches them with the host. Additionally, we provide important and valuable information for guests and hosts. For us, safety is the highest priority.
 
-```sh
-CONTACT_NAME=xxx
-CONTACT_ADDRESS=xxx
-CONTACT_ADDRESS_CITY=xxx
-CONTACT_ADDRESS_COUNTRY=xxx
-CONTACT_EMAIL=xxx
-CONTACT_WEBSITE=hostrefugees.eu
+- **Safety Before Check-In**: Every person who wants to offer accommodations on the platform has to identify themselves with a valid ID document
+- **Simple Process**: Automatic matching relieves the burden on helpers and helps refugees find a suitable accommodation more quickly. Contact details are only shared after a match to coordinate the check-in
+- **Safety After Check-In**: The guest and host must perform a safety check after check-in to ensure the safety of both parties
+- **Transparency**: The source code of the platform is publicly available on [Github](https://github.com/timokoenig/hostrefugees)([https://github.com/timokoenig/hostrefugees](https://github.com/timokoenig/hostrefugees))
 
-GOOGLE_MAP_KEY=xxx
-GOOGLE_ANALYTICS_ID=xxx
-GOOGLE_TRANSLATE_KEY=xxx
+## Documentation
 
-DATABASE_URL=postgresql://postgres:@127.0.0.1:5432/hostrefugees?sslmode=disable
-
-EMAIL_ENABLE=true
-EMAIL_NAME=xxx
-EMAIL_EMAIL=xxx
-SMTP_USERNAME=user
-SMTP_PASSWORD=password
-SMTP_HOST=smtp.your-email.com
-
-AWS_S3_REGION=eu-central-1
-AWS_S3_ACCESS_KEY=xxx
-AWS_S3_ACCESS_SECRET=xxx
-
-AWS_S3_BUCKET_DOCUMENT=xxx
-AWS_S3_BUCKET_PLACE=xxx
-AWS_S3_BUCKET_USER=xxx
-
-SECRET_COOKIE_PASSWORD=complex_password_at_least_32_characters_long
-NODE_ENV=development
-```
-
-Then run the following two commands to start your local server:
-
-```sh
-npm install
-npm run dev
-```
-
-### Production Build
-
-Make sure to set the **NODE_ENV** to `production` to secure the iron session.
-
-### Iron Session
-
-https://github.com/vvo/iron-session
-
-### Prisma
-
-// To migrate the schema file and generate the client
-npx prisma migrate dev --skip-seed
-
-// To generate the client
-npx prisma generate
-
-#### Seeding Development Database
-
-After applying all migration, run the following command to seed the database once:
-
-```sh
-npx prisma db seed
-```
-
-### Securing Passwords
-
-https://auth0.com/blog/hashing-in-action-understanding-bcrypt/
-
-### Google Maps
-
-Sign up at Google to get an API Key for Maps.
-
-### Google Translate API
-
-The platform uses the Google Translate API to translate free text fields for places.
-
-```sh
-GOOGLE_TRANSLATE_KEY=xxx
-```
-
-### Snapshot Tests
-
-We use [Jest Snapshot Testing](https://jestjs.io/docs/snapshot-testing) for our components.
-
-To add a new snapshot test, follow [the instructions](https://jestjs.io/docs/snapshot-testing) or use [this example](./tests/components/external-link.test.tsx) and then run `npm run test` to automatically create the snapshot file.
-
-To update an existing snapshot, adjust the test case and run `npm run snapshot-update`.
-
-### Email Template
-
-Every email uses a base [responsive template](https://github.com/leemunroe/responsive-html-email-template) that is located in `material/email-template.html`. Before we send an email, we need to inline the css styles with a tool like [htmlemail.io/inline](https://htmlemail.io/inline/).
-
-Set environment variable `EMAIL_ENABLE=true` to enable the emailing.
-
-### Docker Build
-
-```sh
-docker build -t hostrefugees .
-docker run -p 3000:3000 hostrefugees
-```
-
-### i18n
-
-The app uses [i18next](https://www.i18next.com/) for internationalization. We want to offer this website to as many people as possible therefore native translations are important. We welcome anyone to help us translate this app. To do so, follow these steps:
-
-1. If the language does not exist, create a folder in _/translations_ and copy the files _/translations/en/common.json_ and _/translations/en/country.json_ in that folder
-2. Translate the existing values in those files and make sure you do not change the key
-3. Save and commit your changes
-
-Note: If you do not add a translation in any given language, the app will default to English.
-
-### Deployment
-
-Deployment to the Development and Production environment will be triggered via Github Action workflow and need to be approved by [timokoenig](https://github.com/timokoenig). The worklow requires the following secrets to publish the Docker image to ECR and deploy the new task definition with ECS.
-
-```
-AWS_REGION
-AWS_ACCESS_KEY_ID
-AWS_SECRET_ACCESS_KEY
-AWS_ECR_REPO
-AWS_ECS_TASK_DEFINITION
-AWS_ECS_SERVICE
-AWS_ECS_CLUSTER
-```
+The documentation for this project is available on [timokoenig.github.io/hostrefugees](https://timokoenig.github.io/hostrefugees/)
 
 ## Contributors
 
 Special thanks to [Katerina Limpitsouni](https://twitter.com/ninaLimpi) and [undraw.co](https://undraw.co) for providing the illustrations for this project.
+
+Thinking of contributing to this project but don't know where to start? Send me a message on Twitter <a href="https://twitter.com/timokoenig">@timokoenig</a>
 
 ---
 
