@@ -32,6 +32,10 @@ Special thanks to [Katerina Limpitsouni](https://twitter.com/ninaLimpi) and [und
 
 Thinking of contributing to this project but don't know where to start? Send me a message on Twitter <a href="https://twitter.com/timokoenig">@timokoenig</a>
 
+## Sponsor
+
+We are looking for a project sponsor to cover the development costs. If you are interested in supporting the project, send me a message on <a href="https://twitter.com/timokoenig">Twitter</a> or go directly to our [fundraiser on GoFundMe](https://gofund.me/c60deb9a).
+
 ---
 
 <p align="center">Made with <span style="color: red">♥</span> for the people</p>
