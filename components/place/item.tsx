@@ -37,6 +37,7 @@ const PlaceItem = (props: Props) => {
                 w="100%"
                 h="100%"
                 maxH="130"
+                loading="lazy"
               />
             )}
           </GridItem>

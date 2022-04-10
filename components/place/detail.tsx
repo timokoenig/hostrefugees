@@ -88,6 +88,7 @@ export default function Detail(props: Props) {
                   align="center"
                   w="100%"
                   h={{ base: '100%', sm: '400px', lg: '500px' }}
+                  loading="lazy"
                 />
               </GridItem>
             ))
