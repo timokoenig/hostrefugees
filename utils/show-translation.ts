@@ -2,6 +2,18 @@
 import { Prisma } from '@prisma/client'
 import { Translation } from './translate-all'
 
+export const isOrignal = (translation: Prisma.JsonValue): boolean => {
+  if (translation == null || typeof localStorage == 'undefined') {
+    return true
+  }
+  let lang = localStorage.getItem('i18nextLng')?.substring(0, 2)
+  if (lang == 'ua') {
+    lang = 'uk' // temporary workaround for stupid google things
+  }
+  const trans = translation as Translation
+  return lang == undefined || trans.sourceLanguage == lang
+}
+
 const showTranslation = (original: string, translation: Prisma.JsonValue): string => {
   if (translation == null || typeof localStorage == 'undefined') {
     return original
