@@ -18,13 +18,11 @@ const createBucketIfNeeded = async (bucket: string): Promise<void> => {
 }
 
 export const uploadCacheFile = async (key: string, file: Buffer, bucket: string): Promise<void> => {
-  console.log('S3 Cache - uploadCacheFile')
   await createBucketIfNeeded(bucket)
   fs.writeFileSync(filePath(bucket, key), file)
 }
 
 export const listCacheFiles = async (prefix: string, bucket: string): Promise<string[]> => {
-  console.log('S3 Cache - listCacheFiles')
   await createBucketIfNeeded(bucket)
   const files = fs.readdirSync(bucketPath(bucket))
   return files.filter(file => file.startsWith(prefix))
@@ -34,14 +32,12 @@ export const readCacheFile = async (
   key: string,
   bucket: string
 ): Promise<{ data: Buffer; contentType: string }> => {
-  console.log('S3 Cache - readCacheFile')
   if (!fs.existsSync(filePath(bucket, key))) throw new Error('Cache file not found')
   const data = fs.readFileSync(filePath(bucket, key))
   return { data, contentType: '' }
 }
 
 export const deleteCacheFile = async (key: string, bucket: string): Promise<void> => {
-  console.log('S3 Cache - deleteCacheFile')
   if (fs.existsSync(filePath(bucket, key))) {
     fs.unlinkSync(filePath(bucket, key))
   }
