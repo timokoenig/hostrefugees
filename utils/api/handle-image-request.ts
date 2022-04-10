@@ -45,8 +45,11 @@ const handleImageRequest = async (
   bucket: string
 ): Promise<void> => {
   const size = getRequestedSize(req)
-  const filename = file.replace('/', '-')
-  const cacheFilename = [filename, `w${size.width ?? ''}`, `h${size.height ?? ''}`].join('-')
+  const cacheFilename = [
+    file.replace('/', '-'),
+    `w${size.width ?? ''}`,
+    `h${size.height ?? ''}`,
+  ].join('-')
 
   let image: { data: Buffer; contentType: string } | null = null
 
@@ -55,7 +58,7 @@ const handleImageRequest = async (
     image = await readCacheFile(cacheFilename, CACHE_BUCKET)
   } catch {
     // if not, try to load from S3 bucket
-    image = await readFile(filename, bucket)
+    image = await readFile(file, bucket)
 
     // resize image and save it as webp in cache
     const resizedImage = await sharp(image.data)
