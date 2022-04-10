@@ -6,3 +6,6 @@ README.md
 .next
 .git
 .env
+docs
+.github
+.vscode
