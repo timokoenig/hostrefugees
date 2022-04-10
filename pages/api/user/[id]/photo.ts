@@ -59,7 +59,7 @@ async function handleGetUserPhoto(req: NextApiRequest, res: NextApiResponse) {
   try {
     const image = await readFile(user.id, S3_BUCKET_USER)
     const resizedImage = await sharp(image.data).resize(100).toBuffer()
-    const compressedImage = await compress(resizedImage)
+    const compressedImage = await compress('gzip', resizedImage)
     res.setHeader('Content-Type', image.contentType)
     res.setHeader('Content-Encoding', 'gzip')
     res.send(compressedImage)
