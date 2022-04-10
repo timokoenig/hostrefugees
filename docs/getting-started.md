@@ -108,3 +108,9 @@ Set environment variable `EMAIL_ENABLE=true` to enable the emailing.
 docker build -t hostrefugees .
 docker run -p 3000:3000 hostrefugees
 ```
+
+### AWS S3
+
+S3 is used to store documents for user profile photos, user verification documents, and place photos.
+
+If you set NODE_ENV to 'development' the platform will use a local cache implementation instead of the S3 buckets. You can find the stored files in the `hostrefugees` temp directory.
