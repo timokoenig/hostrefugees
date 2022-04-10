@@ -83,7 +83,7 @@ export default function Detail(props: Props) {
                 <Image
                   rounded="md"
                   alt="place image"
-                  src={`/api/place/${props.place.id}/photo/${photo}`}
+                  src={`/api/place/${props.place.id}/photo/${photo}?width=600&height=600`}
                   fit="cover"
                   align="center"
                   w="100%"

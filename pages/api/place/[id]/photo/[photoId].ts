@@ -3,8 +3,7 @@
 import { UserRole } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from 'prisma/client'
-import sharp from 'sharp'
-import compress from 'utils/api/compress'
+import handleImageRequest, { deleteCachedImages } from 'utils/api/handle-image-request'
 import {
   newAuthenticatedHandler,
   newHandler,
@@ -13,7 +12,7 @@ import {
 } from 'utils/api/helper'
 import HttpError, { HTTP_STATUS_CODE } from 'utils/api/http-error'
 import HTTP_METHOD from 'utils/api/http-method'
-import { deleteFile, readFile, S3_BUCKET_PLACE } from 'utils/aws/s3'
+import { deleteFile, S3_BUCKET_PLACE } from 'utils/aws/s3'
 import { withSessionRoute } from 'utils/session'
 
 async function handlePlacePhotoDelete(req: NextApiRequest, res: NextApiResponse) {
@@ -38,6 +37,7 @@ async function handlePlacePhotoDelete(req: NextApiRequest, res: NextApiResponse)
   }
 
   await deleteFile(`${place.id}/${photoId}`, S3_BUCKET_PLACE)
+  await deleteCachedImages(`${place.id}/${photoId}`)
 
   const newPhotos = place.photos.filter(p => p != photoId)
   await prisma.place.update({
@@ -62,16 +62,7 @@ async function handleGetPlacePhoto(req: NextApiRequest, res: NextApiResponse) {
   })
   if (place == null) throw new HttpError('Place not found', HTTP_STATUS_CODE.NOT_FOUND)
 
-  try {
-    const image = await readFile(`${place.id}/${req.query.photoId}`, S3_BUCKET_PLACE)
-    const resizedImage = await sharp(image.data).resize(600).toBuffer()
-    const compressedImage = await compress(resizedImage)
-    res.setHeader('Content-Type', image.contentType)
-    res.setHeader('Content-Encoding', 'gzip')
-    res.send(compressedImage)
-  } catch (err: unknown) {
-    res.status(400).end()
-  }
+  await handleImageRequest(req, res, `${place.id}/${req.query.photoId}`, S3_BUCKET_PLACE)
 }
 
 export default withErrorHandler(

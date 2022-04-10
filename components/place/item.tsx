@@ -31,7 +31,7 @@ const PlaceItem = (props: Props) => {
               <Image
                 rounded="md"
                 alt="place image"
-                src={`/api/place/${props.place.id}/photo/${props.place.photos[0]}`}
+                src={`/api/place/${props.place.id}/photo/${props.place.photos[0]}?width=300&height=300`}
                 fit="cover"
                 align="center"
                 w="100%"
