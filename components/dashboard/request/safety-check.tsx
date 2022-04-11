@@ -71,7 +71,7 @@ const SafetyCheckComponent = (props: Props): JSX.Element => {
       p="5"
       color="white"
     >
-      <Image src="/svg/undraw_security_on_re_e491.svg" />
+      <Image src="/svg/undraw_security_on_re_e491.svg" alt="safety check icon" />
       <Box color={useColorModeValue('gray.900', 'gray.100')}>
         <Heading size="md" mb="2">
           {t('request.safety')}

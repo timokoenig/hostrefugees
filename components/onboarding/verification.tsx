@@ -37,7 +37,11 @@ const VerificationOnboarding = (props: Props) => {
         {t('onboarding.verification')}
       </Heading>
       <Center mb={10}>
-        <Image src="/svg/undraw_personal_information_re_vw8a.svg" maxWidth="250" />
+        <Image
+          src="/svg/undraw_personal_information_re_vw8a.svg"
+          maxWidth="250"
+          alt="verification icon"
+        />
       </Center>
       <Text mb="10">
         <b>{t('onboarding.verification.subtitle')}</b>

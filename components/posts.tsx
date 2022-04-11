@@ -36,7 +36,7 @@ const Posts = (props: Props) => {
       <SimpleGrid templateColumns={{ sm: '1fr', md: '1fr 1fr' }} spacing={8}>
         <Box mb="5" textAlign="center">
           <Center mb="5">
-            <Image src="/svg/undraw_taking_notes_re_bnaf.svg" maxWidth="200" />
+            <Image src="/svg/undraw_taking_notes_re_bnaf.svg" maxWidth="200" alt="posts icon" />
           </Center>
           <Heading mb="2">{t('posts')}</Heading>
           <Center>

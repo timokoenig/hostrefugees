@@ -108,7 +108,7 @@ const NewPost = () => {
       <SimpleGrid templateColumns={{ md: '1fr', lg: '1fr 1fr' }} spacing="10">
         <Stack align="center" spacing="20">
           <HStack maxWidth="xl" spacing="10">
-            <Image src="/svg/undraw_taking_notes_re_bnaf.svg" maxHeight="100" />
+            <Image src="/svg/undraw_taking_notes_re_bnaf.svg" maxHeight="100" alt="new post icon" />
             <VStack alignItems="right" flex="1">
               <Heading as="h4" size="md" textAlign="right" flex="1">
                 {t('post.new.1')}
@@ -126,11 +126,11 @@ const NewPost = () => {
               </Heading>
               <Text color={useColorModeValue('gray.600', 'gray.400')}>{t('post.new.2.info')}</Text>
             </VStack>
-            <Image src="/svg/undraw_exams_g-4-ow.svg" maxHeight="100" />
+            <Image src="/svg/undraw_exams_g-4-ow.svg" maxHeight="100" alt="new post icon" />
           </HStack>
 
           <HStack maxWidth="xl" spacing="10">
-            <Image src="/svg/undraw_basketball_agx4.svg" maxHeight="100" />
+            <Image src="/svg/undraw_basketball_agx4.svg" maxHeight="100" alt="new post icon" />
             <VStack alignItems="right" flex="1">
               <Heading as="h4" size="md" textAlign="right" flex="1">
                 {t('post.new.3')}

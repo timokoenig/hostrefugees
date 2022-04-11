@@ -152,6 +152,7 @@ const PlacePage = (props: Props) => {
                   <Image
                     key={photo}
                     src={`/api/place/${props.place.id}/photo/${photo}`}
+                    alt="place photo"
                     rounded="lg"
                     backgroundColor="gray"
                     h="100"

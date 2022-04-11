@@ -62,7 +62,11 @@ const LanguageOnboarding = (props: Props) => {
         </Trans>
       </Heading>
       <Center mb={10}>
-        <Image src="/svg/undraw_audio_conversation_re_ptsl.svg" maxWidth="250" />
+        <Image
+          src="/svg/undraw_audio_conversation_re_ptsl.svg"
+          maxWidth="250"
+          alt="select language icon"
+        />
       </Center>
       <Text mb="5">{t('onboarding.language.text')}</Text>
       <LanguagePicker onChange={setLanguages} isDisabled={isLoading} />

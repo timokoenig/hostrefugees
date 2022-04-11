@@ -29,7 +29,7 @@ const RequestPage = (props: Props) => {
       </Head>
       <Container maxW="7xl" textAlign="center" maxWidth="700">
         <Center>
-          <Image src="/svg/undraw_completing_re_i7ap.svg" maxWidth="250" />
+          <Image src="/svg/undraw_completing_re_i7ap.svg" maxWidth="250" alt="request sent icon" />
         </Center>
         <Heading as="h2" size="xl" mt={6} mb={2}>
           {t('request.title')}

@@ -43,8 +43,16 @@ const DocumentsPage = (props: Props) => {
               {t('documents.flyer.desc')}
             </Text>
             <SimpleGrid columns={2} spacing={5}>
-              <Image src="/docs/BusinessCard_HostRefugees_Front.png" rounded="xl" />
-              <Image src="/docs/BusinessCard_HostRefugees_Back.png" rounded="xl" />
+              <Image
+                src="/docs/BusinessCard_HostRefugees_Front.png"
+                rounded="xl"
+                alt="HostRefugees Flyer Front"
+              />
+              <Image
+                src="/docs/BusinessCard_HostRefugees_Back.png"
+                rounded="xl"
+                alt="HostRefugees Flyer Back"
+              />
             </SimpleGrid>
             <Button as={Link} my="5" href="/docs/BusinessCard_HostRefugees.pdf" target="_blank">
               {t('documents.flyer.download')}

@@ -98,7 +98,7 @@ const Register = () => {
       <SimpleGrid templateColumns={{ md: '1fr', lg: '1fr 1fr' }} spacing="10">
         <Stack align="center" spacing="20">
           <HStack maxWidth="xl" spacing="10">
-            <Image src="/svg/undraw_secure_login_pdn4.svg" maxHeight="100" />
+            <Image src="/svg/undraw_secure_login_pdn4.svg" maxHeight="100" alt="become host icon" />
             <VStack alignItems="right" flex="1">
               <Heading as="h4" size="md" textAlign="right" flex="1">
                 1. {t('becomehost.1')}
@@ -118,11 +118,19 @@ const Register = () => {
                 {t('becomehost.2.info')}
               </Text>
             </VStack>
-            <Image src="/svg/undraw_authentication_re_svpt.svg" maxHeight="100" />
+            <Image
+              src="/svg/undraw_authentication_re_svpt.svg"
+              maxHeight="100"
+              alt="become host icon"
+            />
           </HStack>
 
           <HStack maxWidth="xl" spacing="10">
-            <Image src="/svg/undraw_best_place_re_lne9.svg" maxHeight="100" />
+            <Image
+              src="/svg/undraw_best_place_re_lne9.svg"
+              maxHeight="100"
+              alt="become host icon"
+            />
             <VStack alignItems="right" flex="1">
               <Heading as="h4" size="md" textAlign="right" flex="1">
                 3. {t('becomehost.3')}
@@ -142,11 +150,19 @@ const Register = () => {
                 {t('becomehost.4.info')}
               </Text>
             </VStack>
-            <Image src="/svg/undraw_mobile_messages_re_yx8w.svg" maxHeight="100" />
+            <Image
+              src="/svg/undraw_mobile_messages_re_yx8w.svg"
+              maxHeight="100"
+              alt="become host icon"
+            />
           </HStack>
 
           <HStack maxWidth="xl" spacing="10">
-            <Image src="/svg/undraw_social_networking_re_i1ex.svg" maxHeight="100" />
+            <Image
+              src="/svg/undraw_social_networking_re_i1ex.svg"
+              maxHeight="100"
+              alt="become host icon"
+            />
             <VStack alignItems="right" flex="1">
               <Heading as="h4" size="md" textAlign="right" flex="1">
                 5. {t('becomehost.5')}

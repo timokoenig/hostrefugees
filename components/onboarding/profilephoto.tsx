@@ -53,7 +53,7 @@ const ProfilePhotoOnboarding = (props: Props) => {
         {t('onboarding.photo')}
       </Heading>
       <Center mb={10}>
-        <Image src="/svg/undraw_selfie_re_h9um.svg" maxWidth="250" />
+        <Image src="/svg/undraw_selfie_re_h9um.svg" maxWidth="250" alt="profile photo icon" />
       </Center>
       <Text mb="10">
         <b>{t('onboarding.photo.subtitle')}</b>

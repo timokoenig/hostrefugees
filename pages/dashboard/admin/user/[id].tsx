@@ -122,7 +122,7 @@ const UserPage = (props: Props) => {
               <FormLabel htmlFor="documents">Documents ({props.documents.length})</FormLabel>
               <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={5}>
                 {props.documents.map((doc, i) => (
-                  <Image key={i} src={doc} />
+                  <Image key={i} src={doc} alt="document" />
                 ))}
               </SimpleGrid>
             </FormControl>

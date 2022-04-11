@@ -66,7 +66,7 @@ export default function Hero() {
           </Stack>
         </Stack>
         <Flex flex={1} justify="center" align="center" position="relative" w="full">
-          <Image src="/svg/undraw_ukraine_biyg.svg" />
+          <Image src="/svg/undraw_ukraine_biyg.svg" alt="thank you icon" />
         </Flex>
       </Stack>
     </Container>

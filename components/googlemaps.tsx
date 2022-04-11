@@ -66,6 +66,7 @@ const Placeholder = ({ height }: { height: string }) => {
       </Flex>
       <Image
         src="/googlemaps-placeholder.webp"
+        alt="Google Maps placeholder"
         width="100%"
         height="100%"
         fit="cover"

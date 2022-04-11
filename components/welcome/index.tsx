@@ -99,7 +99,7 @@ const Overview = () => {
         </Stack>
       </Stack>
       <Flex>
-        <Image src="/svg/undraw_a_whole_year_vnfm.svg" />
+        <Image src="/svg/undraw_a_whole_year_vnfm.svg" alt="Welcome To Germany icon" />
       </Flex>
     </SimpleGrid>
   )
