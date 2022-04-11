@@ -64,7 +64,13 @@ const Placeholder = ({ height }: { height: string }) => {
           </Button>
         </Stack>
       </Flex>
-      <Image src="/googlemaps-placeholder.png" width="100%" height="100%" fit="cover" />
+      <Image
+        src="/googlemaps-placeholder.webp"
+        width="100%"
+        height="100%"
+        fit="cover"
+        loading="lazy"
+      />
     </Box>
   )
 }
