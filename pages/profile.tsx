@@ -1,3 +1,4 @@
+/* eslint-disable no-empty */
 import {
   Alert,
   AlertIcon,
@@ -28,6 +29,7 @@ type Props = {
     lastname: string
     email: string
     verified: boolean
+    waitlist: boolean
   }
 }
 
@@ -35,8 +37,27 @@ const ProfilePage = (props: Props) => {
   const { t } = useTranslation('common')
   const { t: tLang } = useTranslation('languages')
   const { toggleColorMode, newColorMode } = useColorMode()
+  const [isLoading, setLoading] = useState<boolean>(false)
   const [firstname, setFirstname] = useState<string>(props.user.firstname)
   const [lastname, setLastname] = useState<string>(props.user.lastname)
+  const [waitlist, setWaitlist] = useState<boolean>(props.user.waitlist)
+
+  const toggleWaitlist = async () => {
+    if (isLoading) return
+    setLoading(true)
+    try {
+      const res = await fetch(`/api/user/${props.user.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ waitlist: !waitlist }),
+      })
+      if (!res.ok) throw new Error(res.statusText)
+      setWaitlist(!waitlist)
+    } catch {}
+    setLoading(false)
+  }
 
   return (
     <Layout user={props.user}>
@@ -93,11 +114,12 @@ const ProfilePage = (props: Props) => {
             </FormControl>
           </GridItem>
           <GridItem>
-            <Box>
+            <Box mb="20">
               <Heading size="md" mb="5">
-                {t('info')}
+                {t('waitlist')}
               </Heading>
-              <Text mb="20">{t('profile.info')}</Text>
+              <Text mb="5">{t('waitlist.text')}</Text>
+              <Switch size="lg" isChecked={waitlist} onChange={toggleWaitlist} />
             </Box>
             <Box>
               <Heading size="md" mb="5">
@@ -144,6 +166,7 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
         lastname: user.lastname,
         email: user.email,
         verified: user.verified,
+        waitlist: user.waitlist,
       },
     },
   }

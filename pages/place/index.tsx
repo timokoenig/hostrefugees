@@ -9,6 +9,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react'
 import PlaceItem from 'components/place/item'
+import Waitlist from 'components/waitlist'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import prisma from 'prisma/client'
@@ -27,7 +28,7 @@ const GoogleMaps = dynamic(() => import('components/googlemaps'), {
 
 type Props = {
   googleMapsKey: string
-  user?: MappedUser
+  user?: MappedUser & { waitlist: boolean }
   places: MappedPlace[]
 }
 
@@ -93,6 +94,9 @@ const PlacePage = (props: Props) => {
             />
           </Box>
         </SimpleGrid>
+        <Box mt="20">
+          <Waitlist user={props.user} />
+        </Box>
       </Container>
       <FilterModal
         filter={appState.filter}
@@ -123,10 +127,17 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
       },
     },
   })
+
+  const user = await prisma.user.findFirst({
+    where: {
+      id: context.req.session.user?.id,
+    },
+  })
+
   return {
     props: {
       googleMapsKey: process.env.GOOGLE_MAP_KEY ?? '',
-      user: context.req.session.user ?? null,
+      user: user ? { ...context.req.session.user, waitlist: user.waitlist } : null,
       places: places.map(mapPlace),
     },
   }

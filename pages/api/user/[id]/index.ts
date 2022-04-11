@@ -11,6 +11,7 @@ interface UpdateRequest extends NextApiRequest {
   body: {
     verified?: boolean
     languages?: string[]
+    waitlist?: boolean
   }
 }
 
@@ -35,11 +36,15 @@ async function handleUpdateUser(req: UpdateRequest, res: NextApiResponse) {
     updatedAt: Date
     verified?: boolean
     languages?: string[]
+    waitlist?: boolean
   } = {
     updatedAt: new Date(),
   }
   if (req.body.languages !== undefined) {
     data.languages = req.body.languages
+  }
+  if (req.body.waitlist !== undefined) {
+    data.waitlist = req.body.waitlist
   }
 
   if (req.session.user!.role == UserRole.ADMIN) {

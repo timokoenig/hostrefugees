@@ -85,6 +85,13 @@
 
   "hostrefugees.subtitle": "at your place!",
 
+  "waitlist": "Waiting List",
+  "waitlist.title": "Did not find a suitable accommodation?",
+  "waitlist.text": "Subscribe to our waiting list and get notified when a new accommodation becomes available",
+  "waitlist.confirmation": "You have been added to the waiting list",
+  "waitlist.button": "Subscribe To Waiting List",
+  "waitlist.button.unsubscribe": "Unsubscribe from Waiting List",
+
   "page.title.dashboard": "HostRefugees - Dashboard",
   "page.title.dashboard.places": "HostRefugees - Dashboard Places",
   "page.title.dashboard.place": "HostRefugees - Dashboard Place",

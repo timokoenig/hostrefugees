@@ -45,9 +45,13 @@ const Login = () => {
           body: JSON.stringify(values),
         })
         if (res.ok) {
-          await router.push(
-            router.query.place === undefined ? '/dashboard' : `/place/${router.query.place}/request`
-          )
+          let path = '/dashboard'
+          if (router.query.place !== undefined) {
+            path = `/place/${router.query.place}/request`
+          } else if (router.query.page !== undefined) {
+            path = `/${router.query.page}`
+          }
+          await router.push(path)
         } else {
           toast({
             title: 'Login failed',

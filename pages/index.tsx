@@ -1,5 +1,6 @@
 import { Post } from '@prisma/client'
 import Layout from 'components/layout'
+import Waitlist from 'components/waitlist'
 import Head from 'next/head'
 import prisma from 'prisma/client'
 import React from 'react'
@@ -14,7 +15,7 @@ import Posts from '../components/posts'
 
 type Props = {
   googleMapsKey: string
-  user?: MappedUser
+  user?: MappedUser & { waitlist: boolean }
   places: MappedPlace[]
   posts: Post[]
 }
@@ -29,6 +30,7 @@ const IndexPage = (props: Props) => {
       <Hero />
       <Introduction />
       <MapPlaces googleMapsKey={props.googleMapsKey} places={props.places} />
+      <Waitlist user={props.user} />
       <Posts posts={props.posts} />
     </Layout>
   )
@@ -68,10 +70,16 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
     take: 4,
   })
 
+  const user = await prisma.user.findFirst({
+    where: {
+      id: context.req.session.user?.id,
+    },
+  })
+
   return {
     props: {
       googleMapsKey: process.env.GOOGLE_MAP_KEY ?? '',
-      user: context.req.session.user ?? null,
+      user: user ? { ...context.req.session.user, waitlist: user.waitlist } : null,
       places: places.map(mapPlace),
       posts,
     },

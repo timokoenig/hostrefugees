@@ -28,6 +28,7 @@ model User {
   verified                Boolean       @default(false)
   verificationSubmittedAt DateTime?     @map("verification_submitted_at")
   photoUpdatedAt          DateTime?     @map("photo_updated_at")
+  waitlist                Boolean       @default(false)
   places                  Place[]
   requests                Request[]
   safetyChecks            SafetyCheck[]
