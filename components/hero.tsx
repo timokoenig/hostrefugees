@@ -60,8 +60,6 @@ export default function Hero() {
               fontWeight="normal"
               px={6}
               colorScheme="blue"
-              bg="blue.500"
-              _hover={{ bg: 'blue.600' }}
               onClick={() => router.push('/place')}
             >
               {t('place.available')}
