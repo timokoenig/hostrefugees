@@ -1,4 +1,13 @@
-import { Button, Container, Flex, Heading, Image, Stack, Text } from '@chakra-ui/react'
+import {
+  Button,
+  Container,
+  Flex,
+  Heading,
+  Image,
+  Stack,
+  Text,
+  useColorModeValue,
+} from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -41,6 +50,10 @@ export default function Hero() {
               {t('hostrefugees.subtitle')}
             </Text>
           </Heading>
+          <Text fontSize="lg" color={useColorModeValue('gray.600', 'gray.400')}>
+            Ukrainians need our help! This is why we build the Open-Source platform HostRefugees to
+            bring free accommodations and refugees together.
+          </Text>
           <Stack spacing={{ base: 4, sm: 6 }} direction={{ base: 'column', sm: 'row' }}>
             <Button
               rounded="full"
@@ -66,7 +79,7 @@ export default function Hero() {
           </Stack>
         </Stack>
         <Flex flex={1} justify="center" align="center" position="relative" w="full">
-          <Image src="/svg/undraw_ukraine_biyg.svg" alt="thank you icon" />
+          <Image src="/svg/undraw_ukraine_pet_biyg.svg" alt="thank you icon" />
         </Flex>
       </Stack>
     </Container>
