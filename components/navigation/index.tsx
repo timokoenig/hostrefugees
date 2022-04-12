@@ -1,3 +1,4 @@
+/* eslint-disable no-negated-condition */
 import { Box, Button, Center, Flex, Heading, HStack, Link } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React from 'react'
@@ -22,7 +23,7 @@ export default function Navigation(props: Props) {
               <Link href="/">HostRefugees</Link>
             </Heading>
           </HStack>
-          {props.user ? (
+          {props.user?.id != undefined ? (
             <Flex alignItems="center">
               <Menu user={props.user} />
             </Flex>
