@@ -41,10 +41,20 @@ enum PlaceType {
   SHARED
 }
 
+enum HostType {
+  PEOPLE
+  PETS
+}
+
 enum BathroomType {
   YES
   NO
   SHARED
+}
+
+enum Feature {
+  PET_CAT
+  PET_DOG
 }
 
 model Place {
@@ -60,16 +70,19 @@ model Place {
   description                    String
   descriptionTranslation         Json?        @map("description_translation")
   type                           PlaceType
+  hostType                       HostType     @default(PEOPLE)
   placeAdults                    Int          @default(0) @map("place_adults")
   placeChildren                  Int          @default(0) @map("place_children")
   placeAdultWomen                Boolean      @default(false) @map("place_adult_women")
   placeAdultMen                  Boolean      @default(false) @map("place_adult_men")
-  rooms                          Int
-  beds                           Int
-  bathroom                       BathroomType
-  adults                         Int
-  children                       Int
+  rooms                          Int          @default(0)
+  beds                           Int          @default(0)
+  bathroom                       BathroomType @default(SHARED)
+  adults                         Int          @default(0)
+  children                       Int          @default(0)
   pets                           Boolean      @default(false)
+  petsNumber                     Int?         @map("pets_number")
+  features                       Feature[]
   addressStreet                  String       @map("address_street")
   addressHouseNumber             String       @map("address_house_number")
   addressZip                     String       @map("address_zip")
@@ -101,9 +114,10 @@ model Request {
   updatedAt        DateTime       @default(now()) @map("updated_at")
   author           User           @relation(fields: [userId], references: [id])
   place            Place          @relation(fields: [placeId], references: [id])
-  adults           Int
-  children         Int
+  adults           Int            @default(0)
+  children         Int            @default(0)
   pets             Boolean        @default(false)
+  petsNumber       Int?           @map("pets_number")
   startDate        DateTime       @map("start_date")
   endDate          DateTime?      @map("end_date")
   about            String
