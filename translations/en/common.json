@@ -277,6 +277,7 @@
   "becomehost.4.info": "You will receive an email as soon as a guest applies for your place. You can choose to accept or decline the request",
   "becomehost.5": "Contact and Arrival",
   "becomehost.5.info": "You and the guest will receive an email with all contact information. Please get in touch with the other person to arrange the arrival",
+  "becomehost.showinformation": "Show Host Information",
 
   "onboarding.language": "We are happy to welcome you at <1>HostRefugees</1>",
   "onboarding.language.text": "To improve the communication for hosts and guests, please select all languages you speak",
