@@ -15,7 +15,7 @@ import {
 import React, { ReactNode, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Github from './common/github'
-import Kofi from './common/kofi'
+import GoFundMe from './common/gofundme'
 
 const ListHeader = ({ children }: { children: ReactNode }) => {
   return (
@@ -55,7 +55,7 @@ export default function Footer() {
             <Text fontSize="sm">© 2022 Timo Koenig. All rights reserved</Text>
             <HStack spacing={5}>
               <Github />
-              <Kofi />
+              <GoFundMe />
             </HStack>
           </Stack>
           <Stack align="flex-start">
