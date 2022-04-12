@@ -51,8 +51,7 @@ export default function Hero() {
             </Text>
           </Heading>
           <Text fontSize="lg" color={useColorModeValue('gray.600', 'gray.400')}>
-            Ukrainians need our help! This is why we build the Open-Source platform HostRefugees to
-            bring free accommodations and refugees together.
+            {t('hostrefugees.hero')}
           </Text>
           <Stack spacing={{ base: 4, sm: 6 }} direction={{ base: 'column', sm: 'row' }}>
             <Button
