@@ -23,7 +23,7 @@ const Register = () => {
               leftIcon={<ArrowBackIcon />}
               onClick={() => setShowForm(false)}
             >
-              Show Host Information
+              {t('becomehost.back')}
             </Button>
           </Box>
           <HostForm />
