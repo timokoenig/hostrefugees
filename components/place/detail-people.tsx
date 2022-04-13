@@ -132,13 +132,13 @@ export default function DetailPeople(props: Props) {
             </ListItem>
             <ListItem>
               <Text as="span" fontWeight="bold">
-                {t('rooms')}:
+                {t('rooms', { count: props.place.rooms })}:
               </Text>{' '}
               {props.place.rooms}
             </ListItem>
             <ListItem>
               <Text as="span" fontWeight="bold">
-                {t('Beds')}:
+                {t('beds', { count: props.place.beds })}:
               </Text>{' '}
               {props.place.beds}
             </ListItem>
