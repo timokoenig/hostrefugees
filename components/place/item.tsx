@@ -1,4 +1,6 @@
 import { Box, GridItem, Image, ListItem, SimpleGrid, useColorModeValue } from '@chakra-ui/react'
+import { Feature, HostType } from '@prisma/client'
+import parse from 'html-react-parser'
 import { useRouter } from 'next/router'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -14,6 +16,29 @@ type Props = {
 const PlaceItem = (props: Props) => {
   const { t } = useTranslation('common')
   const router = useRouter()
+
+  const info = () => {
+    if (props.place.hostType == HostType.PETS) {
+      const arr = ['Pets', '&bull;']
+      if (props.place.features.includes(Feature.PET_CAT)) {
+        arr.push('Cats')
+        arr.push('&bull;')
+      }
+      if (props.place.features.includes(Feature.PET_DOG)) {
+        arr.push('Dogs')
+      }
+      return arr.join(' ')
+    }
+
+    return [
+      props.place.rooms,
+      t('rooms', { count: props.place.rooms }),
+      '&bull;',
+      props.place.beds,
+      t('beds', { count: props.place.beds }),
+    ].join(' ')
+  }
+
   return (
     <ListItem onClick={props.onClick ?? (() => router.push(`/place/${props.place.id}`))}>
       <Box
@@ -50,8 +75,7 @@ const PlaceItem = (props: Props) => {
                 fontSize="xs"
                 textTransform="uppercase"
               >
-                {props.place.rooms} {t('rooms', { count: props.place.rooms })} &bull;{' '}
-                {props.place.beds} {t('beds', { count: props.place.beds })}
+                {parse(info())}
               </Box>
             </Box>
             <Box mt="1" fontWeight="semibold" as="h4" lineHeight="tight" isTruncated>

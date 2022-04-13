@@ -1,4 +1,4 @@
-import { BathroomType, PlaceType, UserRole } from '@prisma/client'
+import { BathroomType, Feature, HostType, PlaceType, UserRole } from '@prisma/client'
 import { Translation } from './translate-all'
 
 export type MappedUser = {
@@ -24,12 +24,15 @@ export type MappedPlace = {
   placeAdultWomen: boolean
   placeAdultMen: boolean
   type: PlaceType
+  hostType: HostType
   rooms: number
   beds: number
   bathroom: BathroomType
   adults: number
   children: number
   pets: boolean
+  petsNumber: number
+  features: Feature[]
   addressCity: string
   addressCityLat: string | null
   addressCityLng: string | null

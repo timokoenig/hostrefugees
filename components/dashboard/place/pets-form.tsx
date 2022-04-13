@@ -4,15 +4,13 @@ import {
   FormErrorMessage,
   FormLabel,
   Input,
-  Select,
   StackDivider,
-  Switch,
   Text,
   Textarea,
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react'
-import { BathroomType, Place, PlaceType } from '@prisma/client'
+import { BathroomType, HostType, Place, PlaceType } from '@prisma/client'
 import DatePicker from 'components/common/datepicker'
 import NumberInput from 'components/place/number-input'
 import { useFormik } from 'formik'
@@ -20,21 +18,18 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import * as Yup from 'yup'
 import Button from '../../common/button'
+import PetPicker from './pet-picker'
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().min(2, 'Too Short').max(100, 'Too Long').required('Required'),
   description: Yup.string().min(2, 'Too Short').max(1000, 'Too Long').required('Required'),
-  rooms: Yup.number().required('Required'),
-  beds: Yup.number().required('Required'),
-  adults: Yup.number().required('Required'),
-  children: Yup.number().required('Required'),
+  petsNumber: Yup.number().required('Required'),
+  features: Yup.array().min(1, 'Nothing selected').required('Required'),
   addressStreet: Yup.string().min(2, 'Too Short').max(100, 'Too Long').required('Required'),
   addressHouseNumber: Yup.string().min(1, 'Too Short').max(100, 'Too Long').required('Required'),
   addressZip: Yup.string().min(5, 'Too Short').max(5, 'Too Long').required('Required'),
   addressCity: Yup.string().min(2, 'Too Short').max(100, 'Too Long').required('Required'),
-  houseRules: Yup.string().max(1000, 'Too Long'),
   phoneNumber: Yup.string().min(2, 'Too Short').max(100, 'Too Long').required('Required'),
-  arrivalInstructions: Yup.string().max(1000, 'Too Long'),
 })
 
 type Props = {
@@ -43,7 +38,7 @@ type Props = {
   onChange: (place: Place) => void
 }
 
-const Form = (props: Props) => {
+const PetsForm = (props: Props) => {
   const { t } = useTranslation('common')
   const formik = useFormik({
     initialValues: props.place ?? {
@@ -62,6 +57,7 @@ const Form = (props: Props) => {
       description: '',
       descriptionTranslation: null,
       type: PlaceType.PRIVATE,
+      hostType: HostType.PETS,
       placeAdults: 1,
       placeChildren: 0,
       placeAdultWomen: false,
@@ -72,6 +68,8 @@ const Form = (props: Props) => {
       adults: 1,
       children: 0,
       pets: false,
+      petsNumber: 1,
+      features: [],
       addressStreet: '',
       addressHouseNumber: '',
       addressZip: '',
@@ -139,76 +137,6 @@ const Form = (props: Props) => {
               />
               <FormErrorMessage>{formik.errors.description}</FormErrorMessage>
             </FormControl>
-
-            <FormControl
-              isDisabled={formik.isSubmitting}
-              isInvalid={formik.errors.houseRules !== undefined && formik.touched.houseRules}
-            >
-              <FormLabel htmlFor="houseRules">{t('houserules')}</FormLabel>
-              <Textarea
-                id="houseRules"
-                type="text"
-                value={formik.values.houseRules}
-                onChange={formik.handleChange}
-              />
-              <FormErrorMessage>{formik.errors.houseRules}</FormErrorMessage>
-            </FormControl>
-          </VStack>
-
-          <VStack spacing={4} width="100%" align="flex-start">
-            <Text
-              fontSize={{ base: '16px', lg: '18px' }}
-              color={useColorModeValue('blue.500', 'blue.300')}
-              fontWeight="500"
-              textTransform="uppercase"
-              mb="4"
-            >
-              {t('residents')}
-            </Text>
-
-            <FormControl isRequired isDisabled={formik.isSubmitting}>
-              <FormLabel htmlFor="placeAdults">{t('dashboard.place.howmanyadults')}</FormLabel>
-              <NumberInput
-                active={false}
-                value={formik.values.placeAdults}
-                onChange={newVal => formik.setFieldValue('placeAdults', newVal)}
-              />
-              <FormErrorMessage>{formik.errors.type}</FormErrorMessage>
-            </FormControl>
-
-            <FormControl isDisabled={formik.isSubmitting}>
-              <FormLabel htmlFor="placeAdultWomen">{t('dashboard.place.anywomen')}</FormLabel>
-              <Switch
-                id="placeAdultWomen"
-                size="lg"
-                isChecked={formik.values.placeAdultWomen}
-                onChange={() =>
-                  formik.setFieldValue('placeAdultWomen', !formik.values.placeAdultWomen)
-                }
-              />
-              <FormErrorMessage>{formik.errors.type}</FormErrorMessage>
-            </FormControl>
-
-            <FormControl isDisabled={formik.isSubmitting}>
-              <FormLabel htmlFor="placeAdultMen">{t('dashboard.place.anymen')}</FormLabel>
-              <Switch
-                id="placeAdultMen"
-                size="lg"
-                isChecked={formik.values.placeAdultMen}
-                onChange={() => formik.setFieldValue('placeAdultMen', !formik.values.placeAdultMen)}
-              />
-              <FormErrorMessage>{formik.errors.type}</FormErrorMessage>
-            </FormControl>
-
-            <FormControl isRequired isDisabled={formik.isSubmitting}>
-              <FormLabel htmlFor="placeChildren">{t('dashboard.place.howmanychildren')}</FormLabel>
-              <NumberInput
-                active={false}
-                value={formik.values.placeChildren}
-                onChange={newVal => formik.setFieldValue('placeChildren', newVal)}
-              />
-              <FormErrorMessage>{formik.errors.type}</FormErrorMessage>
-            </FormControl>
           </VStack>
 
           <VStack spacing={4} width="100%" align="flex-start">
@@ -222,107 +150,29 @@ const Form = (props: Props) => {
               {t('place.detail')}
             </Text>
 
-            <FormControl isRequired isDisabled={formik.isSubmitting}>
-              <FormLabel htmlFor="type">{t('place.detail.type')}</FormLabel>
-              <Select
-                id="type"
-                name="type"
-                value={formik.values.type}
-                onChange={formik.handleChange}
-              >
-                <option value={PlaceType.PLACE}>{t('place.entire')}</option>
-                <option value={PlaceType.PRIVATE}>{t('place.private')}</option>
-                <option value={PlaceType.SHARED}>{t('place.shared')}</option>
-              </Select>
-              <FormErrorMessage>{formik.errors.type}</FormErrorMessage>
-            </FormControl>
-
             <FormControl
               textAlign="left"
               isRequired
               isDisabled={formik.isSubmitting}
-              isInvalid={formik.errors.rooms !== undefined && formik.touched.rooms}
+              isInvalid={formik.errors.petsNumber !== undefined && formik.touched.petsNumber}
             >
-              <FormLabel htmlFor="rooms">{t('rooms')}</FormLabel>
+              <FormLabel htmlFor="petsNumber">{t('place.pets')}</FormLabel>
               <NumberInput
                 active={false}
                 min={1}
-                value={formik.values.rooms}
-                onChange={newVal => formik.setFieldValue('rooms', newVal)}
+                value={formik.values.petsNumber ?? 1}
+                onChange={newVal => formik.setFieldValue('petsNumber', newVal)}
               />
-              <FormErrorMessage>{formik.errors.rooms}</FormErrorMessage>
+              <FormErrorMessage>{formik.errors.petsNumber}</FormErrorMessage>
             </FormControl>
 
-            <FormControl
-              textAlign="left"
-              isRequired
-              isDisabled={formik.isSubmitting}
-              isInvalid={formik.errors.beds !== undefined && formik.touched.beds}
-            >
-              <FormLabel htmlFor="beds">{t('beds')}</FormLabel>
-              <NumberInput
-                active={false}
-                min={1}
-                value={formik.values.beds}
-                onChange={newVal => formik.setFieldValue('beds', newVal)}
+            <FormControl isRequired>
+              <FormLabel htmlFor="features">{t('place.pets.type')}</FormLabel>
+              <PetPicker
+                value={formik.values.features}
+                isDisabled={formik.isSubmitting}
+                onChange={values => formik.setFieldValue('features', values)}
               />
-              <FormErrorMessage>{formik.errors.beds}</FormErrorMessage>
-            </FormControl>
-
-            <FormControl isRequired isDisabled={formik.isSubmitting}>
-              <FormLabel htmlFor="bathroom">{t('bathroom')}</FormLabel>
-              <Select
-                id="bathroom"
-                name="bathroom"
-                value={formik.values.bathroom}
-                onChange={formik.handleChange}
-              >
-                <option value={BathroomType.YES}>{t('bathroom.private')}</option>
-                <option value={BathroomType.SHARED}>{t('bathroom.shared')}</option>
-              </Select>
-              <FormErrorMessage>{formik.errors.bathroom}</FormErrorMessage>
-            </FormControl>
-
-            <FormControl
-              textAlign="left"
-              isRequired
-              isDisabled={formik.isSubmitting}
-              isInvalid={formik.errors.adults !== undefined && formik.touched.adults}
-            >
-              <FormLabel htmlFor="adults">{t('dashboard.place.hostadults')}</FormLabel>
-              <NumberInput
-                active={false}
-                min={1}
-                value={formik.values.adults}
-                onChange={newVal => formik.setFieldValue('adults', newVal)}
-              />
-              <FormErrorMessage>{formik.errors.adults}</FormErrorMessage>
-            </FormControl>
-
-            <FormControl
-              textAlign="left"
-              isRequired
-              isDisabled={formik.isSubmitting}
-              isInvalid={formik.errors.children !== undefined && formik.touched.children}
-            >
-              <FormLabel htmlFor="children">{t('dashboard.place.hostchildren')}</FormLabel>
-              <NumberInput
-                active={false}
-                value={formik.values.children}
-                onChange={newVal => formik.setFieldValue('children', newVal)}
-              />
-              <FormErrorMessage>{formik.errors.children}</FormErrorMessage>
-            </FormControl>
-
-            <FormControl isDisabled={formik.isSubmitting}>
-              <FormLabel htmlFor="pets">{t('dashboard.place.pets')}</FormLabel>
-              <Switch
-                id="pets"
-                size="lg"
-                isChecked={formik.values.pets}
-                onChange={() => formik.setFieldValue('pets', !formik.values.pets)}
-              />
-              <FormErrorMessage>{formik.errors.type}</FormErrorMessage>
             </FormControl>
           </VStack>
 
@@ -434,23 +284,6 @@ const Form = (props: Props) => {
               />
               <FormErrorMessage>{formik.errors.phoneNumber}</FormErrorMessage>
             </FormControl>
-
-            <FormControl
-              isDisabled={formik.isSubmitting}
-              isInvalid={
-                formik.errors.arrivalInstructions !== undefined &&
-                formik.touched.arrivalInstructions
-              }
-            >
-              <FormLabel htmlFor="arrivalInstructions">{t('dashboard.place.arrival')}</FormLabel>
-              <Textarea
-                id="arrivalInstructions"
-                placeholder={t('dashboard.place.arrival.info')}
-                value={formik.values.arrivalInstructions}
-                onChange={formik.handleChange}
-              />
-              <FormErrorMessage>{formik.errors.arrivalInstructions}</FormErrorMessage>
-            </FormControl>
           </VStack>
 
           <VStack spacing={4} width="100%" align="flex-start">
@@ -511,4 +344,4 @@ const Form = (props: Props) => {
   )
 }
 
-export default Form
+export default PetsForm

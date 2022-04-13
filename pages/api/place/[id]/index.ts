@@ -1,4 +1,4 @@
-import { BathroomType, PlaceType, UserRole } from '@prisma/client'
+import { BathroomType, Feature, HostType, PlaceType, UserRole } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from 'prisma/client'
 import { newAuthenticatedHandler, withErrorHandler, withHandlers } from 'utils/api/helper'
@@ -16,6 +16,7 @@ interface Request extends NextApiRequest {
     title?: string
     description?: string
     type?: PlaceType
+    hostType?: HostType
     placeAdults?: number
     placeChildren?: number
     placeAdultWomen?: boolean
@@ -26,6 +27,8 @@ interface Request extends NextApiRequest {
     adults?: number
     children?: number
     pets?: boolean
+    petsNumber?: number
+    features?: Feature[]
     addressStreet?: string
     addressHouseNumber?: string
     addressZip?: string
@@ -114,6 +117,7 @@ async function handleUpdatePlace(req: Request, res: NextApiResponse) {
       description: req.body.description,
       descriptionTranslation,
       type: req.body.type,
+      hostType: req.body.hostType,
       placeAdults: req.body.placeAdults,
       placeChildren: req.body.placeChildren,
       placeAdultWomen: req.body.placeAdultWomen,
@@ -124,6 +128,8 @@ async function handleUpdatePlace(req: Request, res: NextApiResponse) {
       adults: req.body.adults,
       children: req.body.children,
       pets: req.body.pets,
+      petsNumber: req.body.petsNumber,
+      features: req.body.features,
       addressStreet: req.body.addressStreet,
       addressHouseNumber: req.body.addressHouseNumber,
       addressZip: req.body.addressZip,

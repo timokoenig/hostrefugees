@@ -10,6 +10,7 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Switch,
   Text,
 } from '@chakra-ui/react'
 import React from 'react'
@@ -63,11 +64,23 @@ const FilterModal = (props: Props) => {
               onChange={e => props.onChange({ ...props.filter, city: e.target.value })}
             />
           </Flex>
+          <Flex py="5">
+            <Text flex="1" fontSize="lg" pr="10">
+              {t('pets')}
+            </Text>
+            <Switch
+              size="lg"
+              isChecked={props.filter.petsOnly}
+              onChange={() => props.onChange({ ...props.filter, petsOnly: !props.filter.petsOnly })}
+            />
+          </Flex>
         </ModalBody>
         <ModalFooter>
           <Button
             variant="ghost"
-            onClick={() => props.onChange({ adults: null, children: null, city: null })}
+            onClick={() =>
+              props.onChange({ adults: null, children: null, city: null, petsOnly: false })
+            }
           >
             {t('clearall')}
           </Button>

@@ -1,6 +1,7 @@
 import { ArrowBackIcon } from '@chakra-ui/icons'
 import { Box, Button, Container, GridItem, Heading, SimpleGrid, useToast } from '@chakra-ui/react'
 import { Place, UserRole } from '@prisma/client'
+import FormSelection from 'components/dashboard/place/form-selection'
 import Layout from 'components/layout'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
@@ -8,7 +9,6 @@ import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { MappedUser } from 'utils/models'
 import { withSessionSsr } from 'utils/session'
-import Form from '../../../components/dashboard/place/form'
 
 type Props = {
   user: MappedUser
@@ -70,7 +70,7 @@ const NewPage = (props: Props) => {
         </Heading>
         <SimpleGrid templateColumns={{ sm: '1fr', md: '3fr 1fr' }} spacing={5}>
           <GridItem>
-            <Form onChange={onCreate} isLoading={isLoading} />
+            <FormSelection onChange={onCreate} isLoading={isLoading} />
           </GridItem>
           <Box />
         </SimpleGrid>

@@ -82,6 +82,8 @@
   "outdoor": "Outdoor",
   "other": "Others",
   "help": "Help",
+  "pet_cat": "Cats",
+  "pet_dog": "Dogs",
 
   "hostrefugees.subtitle": "at your place!",
   "hostrefugees.hero": "Whether you are looking for temporary accommodation for yourself, your family, or even your pet, you will find helpful people here to assist you.",
@@ -220,6 +222,7 @@
   "place.detail.show": "Show Request",
   "place.detail.request": "Request to stay",
   "place.detail.pets": "Pets Allowed",
+  "place.detail.pets.types": "Capable To Host",
   "place.detail.address.info": "exact location will be shared when the stay gets accepted",
   "place.detail.noresidents": "No residents at the place",
   "place.detail.reserved": "The accommodation is currently reserved for one of our guests",
@@ -229,6 +232,9 @@
   "place.availability.fromto": "Available from {{start}} to {{end}}",
   "place.availability.from": "Available from {{start}}",
   "place.availability.now": "Available now",
+  "place.pets": "How many pets can you host?",
+  "place.pets.type": "What pets do you like to host?",
+  "place.pets.picker": "Select at least one option",
 
   "signup": "Sign Up",
   "signup.accept": "I accept the <1>Privacy Policy</1>",

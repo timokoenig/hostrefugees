@@ -8,6 +8,7 @@ import {
   Text,
   useDisclosure,
 } from '@chakra-ui/react'
+import { HostType } from '@prisma/client'
 import PlaceItem from 'components/place/item'
 import Waitlist from 'components/waitlist'
 import dynamic from 'next/dynamic'
@@ -55,6 +56,9 @@ const PlacePage = (props: Props) => {
       appState.filter.city !== null &&
       !place.addressCity.toLowerCase().includes(appState.filter.city.toLowerCase())
     ) {
+      return false
+    }
+    if (appState.filter.petsOnly && place.hostType == HostType.PEOPLE) {
       return false
     }
     return true

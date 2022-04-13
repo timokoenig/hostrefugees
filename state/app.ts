@@ -4,6 +4,7 @@ export type Filter = {
   adults: number | null
   children: number | null
   city: string | null
+  petsOnly: boolean
 }
 
 export type AppState = {
@@ -16,6 +17,7 @@ export const app = entity<AppState>(
       adults: null,
       children: null,
       city: null,
+      petsOnly: false,
     },
   },
   [persistence('app')]

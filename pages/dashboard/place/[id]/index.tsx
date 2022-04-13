@@ -13,7 +13,9 @@ import {
   Text,
   useToast,
 } from '@chakra-ui/react'
-import { Place, UserRole } from '@prisma/client'
+import { HostType, Place, UserRole } from '@prisma/client'
+import PeopleForm from 'components/dashboard/place/people-form'
+import PetsForm from 'components/dashboard/place/pets-form'
 import Layout from 'components/layout'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
@@ -22,7 +24,6 @@ import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { MappedUser } from 'utils/models'
 import { withSessionSsr } from 'utils/session'
-import Form from '../../../../components/dashboard/place/form'
 
 type Props = {
   user: MappedUser
@@ -128,7 +129,11 @@ const PlacePage = (props: Props) => {
                 - {t('place.nophoto.text')}
               </Alert>
             )}
-            <Form place={props.place} onChange={onUpdate} isLoading={isLoading} />
+            {props.place.hostType == HostType.PETS ? (
+              <PetsForm place={props.place} onChange={onUpdate} isLoading={isLoading} />
+            ) : (
+              <PeopleForm place={props.place} onChange={onUpdate} isLoading={isLoading} />
+            )}
           </GridItem>
           <Box>
             <Box mb="20">
