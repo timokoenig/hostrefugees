@@ -55,6 +55,7 @@ enum BathroomType {
 enum Feature {
   PET_CAT
   PET_DOG
+  PET_OTHER
 }
 
 model Place {

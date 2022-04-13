@@ -14,7 +14,7 @@ interface PetOption extends OptionBase {
   value: string
 }
 
-const availableTypes = [Feature.PET_CAT, Feature.PET_DOG]
+const availableTypes = [Feature.PET_CAT, Feature.PET_DOG, Feature.PET_OTHER]
 
 const PetPicker = (props: Props) => {
   const { t } = useTranslation('common')
