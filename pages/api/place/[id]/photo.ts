@@ -5,6 +5,7 @@ import { newAuthenticatedHandler, withErrorHandler, withHandlers } from 'utils/a
 import HttpError, { HTTP_STATUS_CODE } from 'utils/api/http-error'
 import HTTP_METHOD from 'utils/api/http-method'
 import parsePhotoRequest from 'utils/api/parse-photo-request'
+import { validateUUIDQueryParam } from 'utils/api/validate-query-param'
 import { S3_BUCKET_PLACE, uploadFile } from 'utils/aws/s3'
 import { withSessionRoute } from 'utils/session'
 import { v4 as uuidv4 } from 'uuid'
@@ -16,9 +17,11 @@ export const config = {
 }
 
 async function handlePlacePhotoUpload(req: NextApiRequest, res: NextApiResponse) {
+  const placeId = await validateUUIDQueryParam(req, 'id')
+
   const place = await prisma.place.findUnique({
     where: {
-      id: req.query.id as string,
+      id: placeId,
     },
     include: {
       author: true,

@@ -13,6 +13,7 @@ import {
 import HttpError, { HTTP_STATUS_CODE } from 'utils/api/http-error'
 import HTTP_METHOD from 'utils/api/http-method'
 import parsePhotoRequest from 'utils/api/parse-photo-request'
+import { validateUUIDQueryParam } from 'utils/api/validate-query-param'
 import { readFile, S3_BUCKET_USER, uploadFile } from 'utils/aws/s3'
 import { withSessionRoute } from 'utils/session'
 
@@ -48,9 +49,11 @@ async function handleProfilePhotoUpload(req: NextApiRequest, res: NextApiRespons
 }
 
 async function handleGetUserPhoto(req: NextApiRequest, res: NextApiResponse) {
+  const userId = await validateUUIDQueryParam(req, 'id')
+
   const user = await prisma.user.findUnique({
     where: {
-      id: req.query.id as string,
+      id: userId,
     },
   })
   if (user == null || (user.id != req.session.user!.id && req.session.user!.role != UserRole.ADMIN))

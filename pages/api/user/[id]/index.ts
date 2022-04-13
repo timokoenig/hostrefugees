@@ -4,6 +4,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from 'prisma/client'
 import { newAuthenticatedHandler, withErrorHandler, withHandlers } from 'utils/api/helper'
 import HTTP_METHOD from 'utils/api/http-method'
+import { validateUUIDQueryParam } from 'utils/api/validate-query-param'
 import { emailApprovedUser, sendEmail } from 'utils/email'
 import { withSessionRoute } from 'utils/session'
 
@@ -16,7 +17,9 @@ interface UpdateRequest extends NextApiRequest {
 }
 
 async function handleUpdateUser(req: UpdateRequest, res: NextApiResponse) {
-  if (req.query.id !== req.session.user!.id && req.session.user!.role !== UserRole.ADMIN) {
+  const userId = await validateUUIDQueryParam(req, 'id')
+
+  if (userId !== req.session.user!.id && req.session.user!.role !== UserRole.ADMIN) {
     // Users can only edit their own profile, except users with role ADMIN
     res.status(400).end()
     return
@@ -24,7 +27,7 @@ async function handleUpdateUser(req: UpdateRequest, res: NextApiResponse) {
 
   const user = await prisma.user.findUnique({
     where: {
-      id: req.query.id as string,
+      id: userId,
     },
   })
   if (user === null) {
@@ -55,7 +58,7 @@ async function handleUpdateUser(req: UpdateRequest, res: NextApiResponse) {
 
   await prisma.user.update({
     where: {
-      id: req.query.id as string,
+      id: userId,
     },
     data,
   })

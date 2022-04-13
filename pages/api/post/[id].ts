@@ -4,6 +4,7 @@ import prisma from 'prisma/client'
 import { newAuthenticatedHandler, withErrorHandler, withHandlers } from 'utils/api/helper'
 import HttpError, { HTTP_STATUS_CODE } from 'utils/api/http-error'
 import HTTP_METHOD from 'utils/api/http-method'
+import { validateUUIDQueryParam } from 'utils/api/validate-query-param'
 import geocode, { LatLngLiteral } from 'utils/geocode'
 import { withSessionRoute } from 'utils/session'
 import translateAll, { Translation } from 'utils/translate-all'
@@ -17,13 +18,15 @@ interface RequestAdmin extends NextApiRequest {
 }
 
 async function handleUpdatePostAdmin(req: RequestAdmin, res: NextApiResponse) {
+  const postId = await validateUUIDQueryParam(req, 'id')
+
   await prisma.post.update({
     data: {
       updatedAt: new Date(),
       approved: req.body.approved,
     },
     where: {
-      id: req.query.id as string,
+      id: postId,
     },
   })
   res.status(200).end()
@@ -44,9 +47,11 @@ interface Request extends NextApiRequest {
 }
 
 async function handleUpdatePost(req: Request, res: NextApiResponse) {
+  const postId = await validateUUIDQueryParam(req, 'id')
+
   const post = await prisma.post.findFirst({
     where: {
-      id: req.query.id as string,
+      id: postId,
       author: {
         id: req.session.user?.id,
       },
@@ -95,7 +100,7 @@ async function handleUpdatePost(req: Request, res: NextApiResponse) {
       addressCityLng: latLng.lng,
     },
     where: {
-      id: req.query.id as string,
+      id: postId,
     },
   })
   res.status(200).end()

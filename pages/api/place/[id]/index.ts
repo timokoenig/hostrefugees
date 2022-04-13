@@ -4,6 +4,7 @@ import prisma from 'prisma/client'
 import { newAuthenticatedHandler, withErrorHandler, withHandlers } from 'utils/api/helper'
 import HttpError, { HTTP_STATUS_CODE } from 'utils/api/http-error'
 import HTTP_METHOD from 'utils/api/http-method'
+import { validateUUIDQueryParam } from 'utils/api/validate-query-param'
 import geocode from 'utils/geocode'
 import { withSessionRoute } from 'utils/session'
 import translateAll, { Translation } from 'utils/translate-all'
@@ -43,9 +44,11 @@ interface Request extends NextApiRequest {
 }
 
 async function handleUpdatePlace(req: Request, res: NextApiResponse) {
+  const placeId = await validateUUIDQueryParam(req, 'id')
+
   const place = await prisma.place.findUnique({
     where: {
-      id: req.query.id as string,
+      id: placeId,
     },
     include: {
       author: true,
@@ -107,7 +110,7 @@ async function handleUpdatePlace(req: Request, res: NextApiResponse) {
 
   await prisma.place.update({
     where: {
-      id: req.query.id as string,
+      id: placeId,
     },
     data: {
       updatedAt: new Date(),

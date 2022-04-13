@@ -12,13 +12,17 @@ import {
 } from 'utils/api/helper'
 import HttpError, { HTTP_STATUS_CODE } from 'utils/api/http-error'
 import HTTP_METHOD from 'utils/api/http-method'
+import { validateUUIDQueryParam } from 'utils/api/validate-query-param'
 import { deleteFile, S3_BUCKET_PLACE } from 'utils/aws/s3'
 import { withSessionRoute } from 'utils/session'
 
 async function handlePlacePhotoDelete(req: NextApiRequest, res: NextApiResponse) {
+  const placeId = await validateUUIDQueryParam(req, 'id')
+  const photoId = await validateUUIDQueryParam(req, 'photoId')
+
   const place = await prisma.place.findUnique({
     where: {
-      id: req.query.id as string,
+      id: placeId,
     },
     include: {
       author: true,
@@ -31,7 +35,6 @@ async function handlePlacePhotoDelete(req: NextApiRequest, res: NextApiResponse)
     throw new HttpError('Not allowed', HTTP_STATUS_CODE.UNAUTHORIZED)
   }
 
-  const photoId = req.query.photoId as string
   if (!place.photos.includes(photoId)) {
     throw new HttpError('Photo not found', HTTP_STATUS_CODE.NOT_FOUND)
   }
@@ -55,14 +58,17 @@ async function handlePlacePhotoDelete(req: NextApiRequest, res: NextApiResponse)
 }
 
 async function handleGetPlacePhoto(req: NextApiRequest, res: NextApiResponse) {
+  const placeId = await validateUUIDQueryParam(req, 'id')
+  const photoId = await validateUUIDQueryParam(req, 'photoId')
+
   const place = await prisma.place.findUnique({
     where: {
-      id: req.query.id as string,
+      id: placeId,
     },
   })
   if (place == null) throw new HttpError('Place not found', HTTP_STATUS_CODE.NOT_FOUND)
 
-  await handleImageRequest(req, res, `${place.id}/${req.query.photoId}`, S3_BUCKET_PLACE)
+  await handleImageRequest(req, res, `${place.id}/${photoId}`, S3_BUCKET_PLACE)
 }
 
 export default withErrorHandler(
