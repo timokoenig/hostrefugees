@@ -1,6 +1,8 @@
-import { Box, Container, GridItem, Image, SimpleGrid } from '@chakra-ui/react'
+import { Container, Flex, GridItem, Icon, Image, SimpleGrid } from '@chakra-ui/react'
 import { HostType, Request } from '@prisma/client'
 import React from 'react'
+import { BsHouse } from 'react-icons/bs'
+import { FaDog } from 'react-icons/fa'
 import { MappedPlace } from 'utils/models'
 import DetailPeople from './detail-people'
 import DetailPets from './detail-pets'
@@ -17,7 +19,14 @@ export default function Detail(props: Props) {
       <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={{ base: 8, md: 10 }}>
         <SimpleGrid columns={2} spacing="5">
           {props.place.photos.length == 0 ? (
-            <Box rounded="md" backgroundColor="gray" w="100%" h="100%" />
+            <Flex rounded="md" w="100%" h="100%" align="center" justify="center">
+              <Icon
+                as={props.place.hostType == HostType.PETS ? FaDog : BsHouse}
+                w="16"
+                h="16"
+                color="blue.500"
+              />
+            </Flex>
           ) : (
             props.place.photos.map((photo, i) => (
               <GridItem key={i} colSpan={i == 0 ? 2 : 1}>
