@@ -39,11 +39,11 @@ const IndexPage = (props: Props) => {
 export const getServerSideProps = withSessionSsr(async function getServerSideProps(context) {
   const places = await prisma.place.findMany({
     where: {
-      approved: true,
+      // approved: true,
       active: true,
-      author: {
-        verified: true,
-      },
+      // author: {
+      //   verified: true,
+      // },
     },
     include: {
       author: {

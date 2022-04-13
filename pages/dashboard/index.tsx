@@ -1,4 +1,4 @@
-import { Alert, AlertIcon, Box, Container, Heading, Text } from '@chakra-ui/react'
+import { Box, Container, Heading, Text } from '@chakra-ui/react'
 import { Place, Post, Request, UserRole } from '@prisma/client'
 import Guest from 'components/dashboard/guest'
 import Host from 'components/dashboard/host'
@@ -41,7 +41,7 @@ const DashboardPage = (props: Props) => {
         )}
         {props.user.role === UserRole.HOST && (
           <>
-            {props.user.verified !== true && (
+            {/* {props.user.verified !== true && (
               <Alert status="warning" variant="solid" rounded="lg" my="5">
                 <AlertIcon />
                 <Text as="span" fontWeight="semibold" mr="1">
@@ -49,7 +49,7 @@ const DashboardPage = (props: Props) => {
                 </Text>
                 - {t('profile.approval.text')}
               </Alert>
-            )}
+            )} */}
             <Host places={props.places} requests={props.requests} posts={props.posts} />
           </>
         )}
