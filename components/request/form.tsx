@@ -11,6 +11,7 @@ import {
   useColorModeValue,
   useToast,
 } from '@chakra-ui/react'
+import { HostType } from '@prisma/client'
 import { useFormik } from 'formik'
 import { useRouter } from 'next/router'
 import React from 'react'
@@ -97,77 +98,81 @@ const Form = (props: Props) => {
             {t('request.new')}
           </Text>
 
-          <Heading size="sm" mb="2">
-            {t('request.new.guests')}
-          </Heading>
-          <Box py="2" width="100%">
-            <Flex>
-              <Text flex="1" fontSize="lg" pt="1">
-                {t('adults')}{' '}
-                <Text as="span" fontSize="xs" fontWeight="bold">
-                  ({t('max')} {props.place.adults})
-                </Text>
-              </Text>
-              <Box>
-                <FormControl
-                  isRequired
-                  isDisabled={formik.isSubmitting}
-                  isInvalid={formik.errors.adults !== undefined && formik.touched.adults}
-                >
-                  <NumberInput
-                    active={true}
-                    value={formik.values.adults}
-                    min={1}
-                    max={props.place.adults}
-                    onChange={newVal => formik.setFieldValue('adults', newVal)}
-                  />
-                  <FormErrorMessage>{formik.errors.adults}</FormErrorMessage>
-                </FormControl>
+          {props.place.hostType == HostType.PEOPLE && (
+            <>
+              <Heading size="sm" mb="2">
+                {t('request.new.guests')}
+              </Heading>
+              <Box py="2" width="100%">
+                <Flex>
+                  <Text flex="1" fontSize="lg" pt="1">
+                    {t('adults')}{' '}
+                    <Text as="span" fontSize="xs" fontWeight="bold">
+                      ({t('max')} {props.place.adults})
+                    </Text>
+                  </Text>
+                  <Box>
+                    <FormControl
+                      isRequired
+                      isDisabled={formik.isSubmitting}
+                      isInvalid={formik.errors.adults !== undefined && formik.touched.adults}
+                    >
+                      <NumberInput
+                        active={true}
+                        value={formik.values.adults}
+                        min={1}
+                        max={props.place.adults}
+                        onChange={newVal => formik.setFieldValue('adults', newVal)}
+                      />
+                      <FormErrorMessage>{formik.errors.adults}</FormErrorMessage>
+                    </FormControl>
+                  </Box>
+                </Flex>
               </Box>
-            </Flex>
-          </Box>
-          <Box py="2">
-            <Flex>
-              <Text flex="1" fontSize="lg" pt="1">
-                {t('children')}{' '}
-                <Text as="span" fontSize="xs" fontWeight="bold">
-                  ({t('max')} {props.place.children})
-                </Text>
-              </Text>
-              <Box>
-                <FormControl
-                  isRequired
-                  isDisabled={formik.isSubmitting}
-                  isInvalid={formik.errors.children !== undefined && formik.touched.children}
-                >
-                  <NumberInput
-                    active={true}
-                    value={formik.values.children}
-                    max={props.place.children}
-                    onChange={newVal => formik.setFieldValue('children', newVal)}
-                  />
-                  <FormErrorMessage>{formik.errors.children}</FormErrorMessage>
-                </FormControl>
+              <Box py="2">
+                <Flex>
+                  <Text flex="1" fontSize="lg" pt="1">
+                    {t('children')}{' '}
+                    <Text as="span" fontSize="xs" fontWeight="bold">
+                      ({t('max')} {props.place.children})
+                    </Text>
+                  </Text>
+                  <Box>
+                    <FormControl
+                      isRequired
+                      isDisabled={formik.isSubmitting}
+                      isInvalid={formik.errors.children !== undefined && formik.touched.children}
+                    >
+                      <NumberInput
+                        active={true}
+                        value={formik.values.children}
+                        max={props.place.children}
+                        onChange={newVal => formik.setFieldValue('children', newVal)}
+                      />
+                      <FormErrorMessage>{formik.errors.children}</FormErrorMessage>
+                    </FormControl>
+                  </Box>
+                </Flex>
               </Box>
-            </Flex>
-          </Box>
-          <Box py="2">
-            <Flex>
-              <Text flex="1" fontSize="lg" pt="1">
-                {t('request.new.pets')}
-              </Text>
-              <Box pt="1">
-                <FormControl isDisabled={formik.isSubmitting}>
-                  <Switch
-                    id="pets"
-                    size="lg"
-                    isChecked={formik.values.pets}
-                    onChange={() => formik.setFieldValue('pets', !formik.values.pets)}
-                  />
-                </FormControl>
+              <Box py="2">
+                <Flex>
+                  <Text flex="1" fontSize="lg" pt="1">
+                    {t('request.new.pets')}
+                  </Text>
+                  <Box pt="1">
+                    <FormControl isDisabled={formik.isSubmitting}>
+                      <Switch
+                        id="pets"
+                        size="lg"
+                        isChecked={formik.values.pets}
+                        onChange={() => formik.setFieldValue('pets', !formik.values.pets)}
+                      />
+                    </FormControl>
+                  </Box>
+                </Flex>
               </Box>
-            </Flex>
-          </Box>
+            </>
+          )}
         </Box>
 
         <Box mb="10">
