@@ -42,6 +42,7 @@ const PlacePage = (props: Props) => {
     if (appState.filter.adults !== null) count += 1
     if (appState.filter.children !== null) count += 1
     if (appState.filter.city !== null) count += 1
+    if (appState.filter.petsOnly) count += 1
     return count
   })()
 
