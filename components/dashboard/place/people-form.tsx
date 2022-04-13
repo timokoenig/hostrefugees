@@ -23,7 +23,7 @@ import Button from '../../common/button'
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().min(2, 'Too Short').max(100, 'Too Long').required('Required'),
-  description: Yup.string().min(2, 'Too Short').max(1000, 'Too Long').required('Required'),
+  description: Yup.string().min(2, 'Too Short').max(5000, 'Too Long').required('Required'),
   rooms: Yup.number().required('Required'),
   beds: Yup.number().required('Required'),
   adults: Yup.number().required('Required'),
@@ -32,9 +32,9 @@ const validationSchema = Yup.object().shape({
   addressHouseNumber: Yup.string().min(1, 'Too Short').max(100, 'Too Long').required('Required'),
   addressZip: Yup.string().min(5, 'Too Short').max(5, 'Too Long').required('Required'),
   addressCity: Yup.string().min(2, 'Too Short').max(100, 'Too Long').required('Required'),
-  houseRules: Yup.string().max(1000, 'Too Long'),
+  houseRules: Yup.string().max(5000, 'Too Long'),
   phoneNumber: Yup.string().min(2, 'Too Short').max(100, 'Too Long').required('Required'),
-  arrivalInstructions: Yup.string().max(1000, 'Too Long'),
+  arrivalInstructions: Yup.string().max(5000, 'Too Long'),
 })
 
 type Props = {

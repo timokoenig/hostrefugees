@@ -24,7 +24,7 @@ import NumberInput from '../place/number-input'
 const validationSchema = Yup.object().shape({
   adults: Yup.number().required('Required'),
   children: Yup.number().required('Required'),
-  about: Yup.string().required('Required'),
+  about: Yup.string().max(5000, 'Too Long').required('Required'),
   phoneNumber: Yup.string().required('Required'),
 })
 

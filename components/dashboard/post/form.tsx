@@ -16,7 +16,7 @@ import CustomButton from '../../common/button'
 import CategoryPicker from '../../post/category-picker'
 
 const validationSchema = Yup.object().shape({
-  title: Yup.string().min(2, 'Too Short').max(50, 'Too Long').required('Required'),
+  title: Yup.string().min(2, 'Too Short').max(100, 'Too Long').required('Required'),
   description: Yup.string().min(2, 'Too Short').max(5000, 'Too Long').required('Required'),
   website: Yup.string().min(2, 'Too Short').max(200, 'Too Long'),
   phoneNumber: Yup.string().min(2, 'Too Short').max(50, 'Too Long'),

@@ -22,7 +22,7 @@ import PetPicker from './pet-picker'
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().min(2, 'Too Short').max(100, 'Too Long').required('Required'),
-  description: Yup.string().min(2, 'Too Short').max(1000, 'Too Long').required('Required'),
+  description: Yup.string().min(2, 'Too Short').max(5000, 'Too Long').required('Required'),
   petsNumber: Yup.number().required('Required'),
   features: Yup.array().min(1, 'Nothing selected').required('Required'),
   addressStreet: Yup.string().min(2, 'Too Short').max(100, 'Too Long').required('Required'),
