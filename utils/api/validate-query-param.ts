@@ -9,5 +9,5 @@ export const validateUUIDQueryParam = async (
   const param = req.query[name] as string | undefined
   if (param == undefined)
     throw new HttpError(`Query param ${name} not set`, HTTP_STATUS_CODE.BAD_REQUEST)
-  return Yup.string().uuid().required().validate(param)
+  return Yup.string().uuid().required().trim().validate(param)
 }

@@ -19,6 +19,7 @@ async function handlePasswordReset(req: PasswordResetRequest, res: NextApiRespon
   const queryHash = await Yup.string()
     .required()
     .length(64)
+    .trim()
     .validate(req.query.hash as string)
 
   const user = await prisma.user.findFirst({
