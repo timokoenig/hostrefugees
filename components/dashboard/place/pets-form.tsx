@@ -10,7 +10,7 @@ import {
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react'
-import { BathroomType, HostType, Place, PlaceType } from '@prisma/client'
+import { BathroomType, Feature, HostType, Place, PlaceType } from '@prisma/client'
 import DatePicker from 'components/common/datepicker'
 import NumberInput from 'components/place/number-input'
 import { useFormik } from 'formik'
@@ -40,6 +40,7 @@ type Props = {
 
 const PetsForm = (props: Props) => {
   const { t } = useTranslation('common')
+  const textColor = useColorModeValue('gray.600', 'gray.400')
   const formik = useFormik({
     initialValues: props.place ?? {
       id: '',
@@ -174,6 +175,11 @@ const PetsForm = (props: Props) => {
                 onChange={values => formik.setFieldValue('features', values)}
               />
             </FormControl>
+            {formik.values.features.includes(Feature.PET_OTHER) && (
+              <Text fontSize="sm" color={textColor}>
+                {t('place.pets.type.other')}
+              </Text>
+            )}
           </VStack>
 
           <VStack spacing={4} width="100%" align="flex-start">

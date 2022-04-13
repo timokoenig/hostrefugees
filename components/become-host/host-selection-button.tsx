@@ -21,7 +21,7 @@ const HostSelectionButton = (props: Props) => {
       borderColor="gray.100"
       borderWidth="1px"
       textTransform="uppercase"
-      fontSize={{ base: 'md', sm: 'xl' }}
+      fontSize={{ base: 'md', sm: props.isSmall ? 'lg' : 'xl' }}
       p={{ base: 2, sm: 5 }}
       flexDirection="column"
       _hover={{

@@ -235,6 +235,7 @@
   "place.availability.now": "Available now",
   "place.pets": "How many pets can you host?",
   "place.pets.type": "What pets do you like to host?",
+  "place.pets.type.other": "Please specify what other pets you can host in the description above",
   "place.pets.picker": "Select at least one option",
 
   "signup": "Sign Up",
