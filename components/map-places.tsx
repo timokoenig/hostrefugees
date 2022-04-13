@@ -30,7 +30,7 @@ const MapPlaces = (props: Props) => {
                 {t('place.empty')}
               </Text>
             )}
-            {props.places.map((place, i) => (
+            {props.places.slice(3).map((place, i) => (
               <PlaceItem key={i} place={place} />
             ))}
             {props.places.length > 0 && <MoreItem />}

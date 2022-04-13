@@ -131,6 +131,9 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
         },
       },
     },
+    orderBy: {
+      createdAt: 'desc',
+    },
   })
 
   const user = await prisma.user.findFirst({
