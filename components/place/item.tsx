@@ -1,9 +1,20 @@
-import { Box, GridItem, Image, ListItem, SimpleGrid, useColorModeValue } from '@chakra-ui/react'
+import {
+  Box,
+  Flex,
+  GridItem,
+  Icon,
+  Image,
+  ListItem,
+  SimpleGrid,
+  useColorModeValue,
+} from '@chakra-ui/react'
 import { Feature, HostType } from '@prisma/client'
 import parse from 'html-react-parser'
 import { useRouter } from 'next/router'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+import { BsHouse } from 'react-icons/bs'
+import { FaDog } from 'react-icons/fa'
 import { formatAvailability } from 'utils/formatter'
 import { MappedPlace } from 'utils/models'
 import showTranslation from 'utils/show-translation'
@@ -51,7 +62,14 @@ const PlaceItem = (props: Props) => {
         <SimpleGrid columns={4}>
           <GridItem>
             {props.place.photos.length == 0 ? (
-              <Box rounded="md" backgroundColor="gray" w="100%" h="100%" />
+              <Flex rounded="md" w="100%" h="100%" align="center" justify="center">
+                <Icon
+                  as={props.place.hostType == HostType.PETS ? FaDog : BsHouse}
+                  w="16"
+                  h="16"
+                  color="blue.500"
+                />
+              </Flex>
             ) : (
               <Image
                 rounded="md"
