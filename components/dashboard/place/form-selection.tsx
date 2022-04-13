@@ -1,7 +1,7 @@
 import { HStack, Text, useColorModeValue } from '@chakra-ui/react'
 import { HostType, Place } from '@prisma/client'
+import HostSelectionButton from 'components/become-host/host-selection-button'
 import React, { useState } from 'react'
-import FormSelectionButton from './form-selection-button'
 import PeopleForm from './people-form'
 import PetsForm from './pets-form'
 
@@ -27,13 +27,17 @@ const FormSelection = (props: Props) => {
         Who do you like to host?
       </Text>
       <HStack spacing={5} mb="20">
-        <FormSelectionButton
-          title="Host People"
+        <HostSelectionButton
+          image="/svg/undraw_people_re_8spw.svg"
+          title="People"
+          isSmall={true}
           selected={isPeopleSelected}
           onClick={() => setPeopleSelected(true)}
         />
-        <FormSelectionButton
-          title="Host Pets"
+        <HostSelectionButton
+          image="/svg/undraw_cautious_dog_q-83-f.svg"
+          title="Pets"
+          isSmall={true}
           selected={!isPeopleSelected}
           onClick={() => setPeopleSelected(false)}
         />
