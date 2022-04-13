@@ -23,6 +23,9 @@ const Category = (props: { category: PostCategory }) => {
     case PostCategory.SPORT:
       color = 'blue'
       break
+    case PostCategory.INSURANCE:
+      color = 'cyan'
+      break
     default:
       break
   }

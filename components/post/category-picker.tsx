@@ -21,6 +21,7 @@ const availableCategories = [
   PostCategory.OTHER,
   PostCategory.OUTDOOR,
   PostCategory.SPORT,
+  PostCategory.INSURANCE,
 ]
 
 const CategoryPicker = (props: Props) => {

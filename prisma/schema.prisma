@@ -146,6 +146,7 @@ enum PostCategory {
   KIDS
   OUTDOOR
   HELP
+  INSURANCE
   OTHER
 }
 
