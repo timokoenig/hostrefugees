@@ -1,7 +1,5 @@
 import { ArrowBackIcon } from '@chakra-ui/icons'
 import {
-  Alert,
-  AlertIcon,
   Box,
   Button,
   Container,
@@ -120,7 +118,7 @@ const PlacePage = (props: Props) => {
         </Heading>
         <SimpleGrid templateColumns={{ sm: '1fr', md: '3fr 1fr' }} spacing={5}>
           <GridItem>
-            {props.place.photos.length == 0 && (
+            {/* {props.place.photos.length == 0 && (
               <Alert status="warning" variant="solid" rounded="lg" mb="5">
                 <AlertIcon />
                 <Text as="span" fontWeight="semibold" mr="1">
@@ -128,7 +126,7 @@ const PlacePage = (props: Props) => {
                 </Text>
                 - {t('place.nophoto.text')}
               </Alert>
-            )}
+            )} */}
             {props.place.hostType == HostType.PETS ? (
               <PetsForm place={props.place} onChange={onUpdate} isLoading={isLoading} />
             ) : (

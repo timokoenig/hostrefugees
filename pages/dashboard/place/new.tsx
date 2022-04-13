@@ -32,7 +32,7 @@ const NewPage = (props: Props) => {
       })
       if (res.ok) {
         const json = (await res.json()) as { id: string }
-        await router.replace(`/dashboard/place/${json.id}/photo`)
+        await router.replace(`/dashboard/place/${json.id}`)
       } else {
         toast({
           title: 'Request failed',
