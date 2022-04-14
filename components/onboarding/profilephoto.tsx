@@ -3,7 +3,7 @@ import { Button, Center, Heading, Image, Text, useToast } from '@chakra-ui/react
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { MappedUser } from 'utils/models'
-import VerificationButton from './verification-button'
+import ProfileButton from './profile-button'
 
 type Props = {
   user: MappedUser
@@ -61,7 +61,7 @@ const ProfilePhotoOnboarding = (props: Props) => {
         {t('onboarding.photo.text')}
       </Text>
       <Center>
-        <VerificationButton
+        <ProfileButton
           image={photo ? URL.createObjectURL(photo) : null}
           title={photo == null ? t('onboarding.photo.selfie') : ''}
           subtitle={photo == null ? t('onboarding.photo.upload') : ''}

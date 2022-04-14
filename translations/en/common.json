@@ -86,6 +86,9 @@
   "pet_cat": "Cats",
   "pet_dog": "Dogs",
   "pet_other": "Other",
+  "verified": "Verified",
+  "verified.host": "Verified Host",
+  "verified.awaiting": "Verification Awaiting",
 
   "hostrefugees.subtitle": "at your place!",
   "hostrefugees.hero": "Whether you are looking for temporary accommodation for yourself, your family, or even your pet, you will find helpful people here to assist you.",
@@ -123,6 +126,7 @@
   "page.title": "HostRefugees",
   "page.title.onboarding": "HostRefugees - Onboarding",
   "page.title.profile": "HostRefugees - Profile",
+  "page.title.profile.verification": "HostRefugees - Profile Verification",
   "page.title.registration": "HostRefugees - Registration",
   "page.title.welcome": "HostRefugees - Welcome To Germany",
 
@@ -154,6 +158,11 @@
   "profile.info": "You can not update your profile at the moment. We are working on a solution.",
   "profile.appearance": "Appearance",
   "profile.appearance.text": "Switch between Dark and Light Mode",
+  "profile.verification": "Profile Verification",
+  "profile.verification.verify": "Verify Now",
+  "profile.verification.subtitle": "The safety of our guests is important to us.",
+  "profile.verification.text": "Please upload the following three documents so we can verify your identity. We will manually check these documents and activate your account. Until then you can create places, but they won't appear in the search.",
+  "profile.verification.selfie.info": "Hold ID Card next to your face",
 
   "privacy": "Privacy Policy",
   "privacy.cookie": "Privacy - Cookies",
@@ -324,10 +333,6 @@
   "onboarding.photo.selfie": "Selfie",
   "onboarding.photo.upload": "Click to upload",
   "onboarding.photo.continuewithout": "Continue without photo",
-  "onboarding.verification": "Profile Verification",
-  "onboarding.verification.subtitle": "The safety of our guests is important to us.",
-  "onboarding.verification.text": "Please upload the following three documents so we can verify your identity. We will manually check these documents and activate your account. Until then you can create places, but they won't appear in the search.",
-  "onboarding.verification.selfie.info": "Hold ID Card next to your face",
 
   "dashboard.noplaces": "No Places",
   "dashboard.norequests": "No Requests",

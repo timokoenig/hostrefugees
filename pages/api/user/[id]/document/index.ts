@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { User, UserRole } from '@prisma/client'
+import { User } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from 'prisma/client'
 import {
@@ -63,9 +63,7 @@ async function handleDocumentUpload(req: NextApiRequest, res: NextApiResponse) {
 export default withLogHandler(
   withErrorHandler(
     withSessionRoute(
-      withHandlers([
-        newAuthenticatedHandler(HTTP_METHOD.POST, [UserRole.HOST], handleDocumentUpload),
-      ])
+      withHandlers([newAuthenticatedHandler(HTTP_METHOD.POST, [], handleDocumentUpload)])
     )
   )
 )

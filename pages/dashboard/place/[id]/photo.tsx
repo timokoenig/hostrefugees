@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react'
 import { Place, UserRole } from '@prisma/client'
 import Layout from 'components/layout'
-import VerificationButton from 'components/onboarding/verification-button'
+import ProfileButton from 'components/onboarding/profile-button'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import prisma from 'prisma/client'
@@ -86,7 +86,7 @@ const PhotoPage = (props: Props) => {
           {t('place.changephotos.info')}
         </Text>
         <SimpleGrid templateColumns={{ sm: '1fr', md: '1fr 1fr', lg: '1fr 1fr 1fr' }} spacing={10}>
-          <VerificationButton
+          <ProfileButton
             image={photoURL(photos[0])}
             title={photos[0] == '' ? t('place.uploadphoto') : ''}
             isDisabled={isLoading}
@@ -103,7 +103,7 @@ const PhotoPage = (props: Props) => {
               setPhotos(newPhotos)
             }}
           />
-          <VerificationButton
+          <ProfileButton
             image={photoURL(photos[1])}
             title={photos[1] == '' ? t('place.uploadphoto') : ''}
             isDisabled={isLoading}
@@ -120,7 +120,7 @@ const PhotoPage = (props: Props) => {
               setPhotos(newPhotos)
             }}
           />
-          <VerificationButton
+          <ProfileButton
             image={photoURL(photos[2])}
             title={photos[2] == '' ? t('place.uploadphoto') : ''}
             isDisabled={isLoading}

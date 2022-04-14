@@ -73,6 +73,7 @@
   "translate": "Übersetzen",
   "translate.original": "Original anzeigen",
   "translate.translation": "Übersetzung anzeigen",
+  "submit": "Abschicken",
   "website": "Webseite",
   "category": "Kategorie",
   "sport": "Sport",
@@ -85,6 +86,9 @@
   "pet_cat": "Katzen",
   "pet_dog": "Hunde",
   "pet_other": "Andere",
+  "verified": "Verifiziert",
+  "verified.host": "Verifizierter Gastgeber",
+  "verified.awaiting": "Verifizierung wird überprüft",
 
   "hostrefugees.subtitle": "at your place!",
   "hostrefugees.hero": "Ob Sie selber, Ihre Familie oder auch Ihr Haustier eine temporäre Unterkunft suchen, hier finden Sie hilfsbereite Menschen, die Ihnen zur Seite stehen.",
@@ -122,6 +126,7 @@
   "page.title": "HostRefugees",
   "page.title.onboarding": "HostRefugees - Onboarding",
   "page.title.profile": "HostRefugees - Profil",
+  "page.title.profile.verification": "HostRefugees - Profil Verifizierung",
   "page.title.registration": "HostRefugees - Registrierung",
   "page.title.welcome": "HostRefugees - Willkommen in Deutschland",
 
@@ -153,6 +158,11 @@
   "profile.info": "Sie können Ihr Profil im Moment nicht aktualisieren. Wir arbeiten an einer Lösung.",
   "profile.appearance": "Aussehen",
   "profile.appearance.text": "Switch zwischen Dark und Light Mode",
+  "profile.verification": "Profilverifizierung",
+  "profile.verification.verify": "Jetzt verifizieren",
+  "profile.verification.subtitle": "Die Sicherheit unserer Gäste ist uns wichtig.",
+  "profile.verification.text": "Bitte laden Sie die folgenden drei Dokumente hoch, damit Ihre Identität überprüft werden kann. Wir werden diese Dokumente manuell prüfen und dann Ihr Konto aktivieren. Bis dahin können Sie Unterkünfte hinzufügen, die jedoch noch nicht in der Suche erscheinen werden.",
+  "profile.verification.selfie.info": "Halten Sie Ihren Ausweis neben Ihr Gesicht",
 
   "privacy": "Datenschutzbestimmungen",
   "privacy.cookie": "Datenschutz - Cookies",
@@ -322,10 +332,6 @@
   "onboarding.photo.selfie": "Selfie",
   "onboarding.photo.upload": "Zum Hochladen klicken",
   "onboarding.photo.continuewithout": "Ohne Foto fortfahren",
-  "onboarding.verification": "Profilverifizierung",
-  "onboarding.verification.subtitle": "Die Sicherheit unserer Gäste ist uns wichtig.",
-  "onboarding.verification.text": "Bitte laden Sie die folgenden drei Dokumente hoch, damit Ihre Identität überprüft werden kann. Wir werden diese Dokumente manuell prüfen und dann Ihr Konto aktivieren. Bis dahin können Sie Unterkünfte hinzufügen, die jedoch noch nicht in der Suche erscheinen werden.",
-  "onboarding.verification.selfie.info": "Halten Sie Ihren Ausweis neben Ihr Gesicht",
 
   "dashboard.noplaces": "Keine Unterkünfte",
   "dashboard.norequests": "Keine Anfragen",

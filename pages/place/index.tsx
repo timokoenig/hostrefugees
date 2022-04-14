@@ -116,11 +116,7 @@ const PlacePage = (props: Props) => {
 export const getServerSideProps = withSessionSsr(async function getServerSideProps(context) {
   const places = await prisma.place.findMany({
     where: {
-      // approved: true,
       active: true,
-      // author: {
-      //   verified: true,
-      // },
     },
     include: {
       author: {
@@ -128,6 +124,7 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
           id: true,
           firstname: true,
           languages: true,
+          verified: true,
         },
       },
     },

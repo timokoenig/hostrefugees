@@ -1,7 +1,6 @@
 import { Container } from '@chakra-ui/react'
 import LanguageOnboarding from 'components/onboarding/language'
 import ProfilePhotoOnboarding from 'components/onboarding/profilephoto'
-import VerificationOnboarding from 'components/onboarding/verification'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
@@ -11,7 +10,6 @@ import {
   onboardingCheck,
   ONBOARDING_LANGUAGE,
   ONBOARDING_PROFILE_PHOTO,
-  ONBOARDING_VERIFICATION,
 } from 'utils/onboarding-check'
 import { withSessionSsr } from 'utils/session'
 import Layout from '../components/layout'
@@ -46,9 +44,6 @@ const OnboardingPage = (props: Props) => {
       <Container maxW="7xl" textAlign="center" maxWidth="700">
         {steps[0] === ONBOARDING_LANGUAGE && (
           <LanguageOnboarding user={props.user} onNext={onNext} />
-        )}
-        {steps[0] === ONBOARDING_VERIFICATION && (
-          <VerificationOnboarding user={props.user} onNext={onNext} />
         )}
         {steps[0] === ONBOARDING_PROFILE_PHOTO && (
           <ProfilePhotoOnboarding user={props.user} onNext={onNext} />

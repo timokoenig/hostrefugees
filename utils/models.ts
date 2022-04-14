@@ -5,6 +5,7 @@ export type MappedUser = {
   id: string
   firstname: string
   role: UserRole
+  verified: boolean
   languages: string[]
 }
 

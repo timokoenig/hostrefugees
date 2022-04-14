@@ -85,6 +85,9 @@
   "pet_cat": "Коти",
   "pet_dog": "Собаки",
   "pet_other": "Інше",
+  "verified": "перевірено",
+  "verified.host": "Перевірений хост",
+  "verified.awaiting": "Перевірка перевірена",
 
   "hostrefugees.subtitle": "at your place!",
   "hostrefugees.hero": "Незалежно від того, чи шукаєте ви тимчасове житло для себе, своєї родини чи навіть домашнього улюбленця, тут ви знайдете людей, які допоможуть вам.",
@@ -122,6 +125,7 @@
   "page.title": "HostRefugees",
   "page.title.onboarding": "HostRefugees - Onboarding",
   "page.title.profile": "HostRefugees - Профіль",
+  "page.title.profile.verification": "HostRefugees - Перевірка профілю",
   "page.title.registration": "HostRefugees - Реєстрація",
   "page.title.welcome": "HostRefugees - Ласкаво просимо до Німеччини",
 
@@ -153,6 +157,12 @@
   "profile.info": "Ви не можете оновити свій профіль на даний момент. Ми працюємо над рішенням.",
   "profile.appearance": "Зовнішній вигляд",
   "profile.appearance.text": "Перемикайтеся між темним і світлим режимом",
+  "profile.verification": "Перевірка профілю",
+  "profile.verification.verify": "перевірити зараз",
+  "profile.verification.subtitle": "Для нас важлива безпека наших гостей.",
+  "profile.verification.text": "Будь ласка, завантажте наступні три документи, щоб ми могли підтвердити вашу особу. Ми вручну перевіримо ці документи та активуємо ваш обліковий запис. До цього часу ви можете створювати місця, але вони не відображатимуться в пошуку.",
+  "profile.verification.selfie.info": "Тримайте ідентифікаційну картку біля свого обличчя",
+
   "privacy": "Політика конфіденційності",
   "privacy.cookie": "Конфіденційність - Cookies",
   "privacy.cookie.text1": "Ми використовуємо файли cookie та подібні технології для надання певних функцій, покращення користувацького досвіду та надання вмісту, який відповідає вашим інтересам. Залежно від їх призначення, аналітичні та маркетингові файли cookie можуть використовуватися на додаток до технічно необхідних файлів cookie.",
@@ -321,10 +331,6 @@
   "onboarding.photo.selfie": "Селфі",
   "onboarding.photo.upload": "Натисніть, щоб завантажити",
   "onboarding.photo.continuewithout": "Продовжуйте без фото",
-  "onboarding.verification": "Перевірка профілю",
-  "onboarding.verification.subtitle": "Для нас важлива безпека наших гостей.",
-  "onboarding.verification.text": "Будь ласка, завантажте наступні три документи, щоб ми могли підтвердити вашу особу. Ми вручну перевіримо ці документи та активуємо ваш обліковий запис. До цього часу ви можете створювати місця, але вони не відображатимуться в пошуку.",
-  "onboarding.verification.selfie.info": "Тримайте ідентифікаційну картку біля свого обличчя",
 
   "dashboard.noplaces": "Немає місць",
   "dashboard.norequests": "Немає запитів",

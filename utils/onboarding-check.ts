@@ -21,12 +21,6 @@ export const onboardingCheck = async (userId: string): Promise<string[]> => {
     steps.push(ONBOARDING_LANGUAGE)
   }
 
-  // Check if host needs to submit documents for the verification
-  // TODO disable verification for now
-  // if (user.role == UserRole.HOST && user.verificationSubmittedAt == null) {
-  //   steps.push(ONBOARDING_VERIFICATION)
-  // }
-
   // Check if user should to submit a photo
   if (user.role == UserRole.GUEST && user.photoUpdatedAt == null) {
     steps.push(ONBOARDING_PROFILE_PHOTO)

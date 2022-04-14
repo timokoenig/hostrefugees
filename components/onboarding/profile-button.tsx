@@ -11,7 +11,7 @@ type Props = {
   onRemove: () => Promise<void>
 }
 
-const VerificationButton = (props: Props) => {
+const ProfileButton = (props: Props) => {
   const { t } = useTranslation('common')
   const [isLoading, setLoading] = useState<boolean>(false)
   const inputFileRef = useRef<HTMLInputElement>(null)
@@ -107,4 +107,4 @@ const VerificationButton = (props: Props) => {
   )
 }
 
-export default VerificationButton
+export default ProfileButton

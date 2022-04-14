@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { UserRole } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from 'prisma/client'
 import {
@@ -23,6 +22,9 @@ async function handleDocumentDelete(req: NextApiRequest, res: NextApiResponse) {
   })
   if (user == null) throw new HttpError('User not found', HTTP_STATUS_CODE.NOT_FOUND)
 
+  if (user.verified)
+    throw new HttpError('Verified users can not delete documents', HTTP_STATUS_CODE.BAD_REQUEST)
+
   if (!allowedTypes.includes(req.query.type as string))
     throw new HttpError('Wrong document type', HTTP_STATUS_CODE.BAD_REQUEST)
 
@@ -35,9 +37,7 @@ async function handleDocumentDelete(req: NextApiRequest, res: NextApiResponse) {
 export default withLogHandler(
   withErrorHandler(
     withSessionRoute(
-      withHandlers([
-        newAuthenticatedHandler(HTTP_METHOD.DELETE, [UserRole.HOST], handleDocumentDelete),
-      ])
+      withHandlers([newAuthenticatedHandler(HTTP_METHOD.DELETE, [], handleDocumentDelete)])
     )
   )
 )

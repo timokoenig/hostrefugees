@@ -59,6 +59,7 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
           id: true,
           firstname: true,
           languages: true,
+          verified: true,
         },
       },
     },

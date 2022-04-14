@@ -1,8 +1,8 @@
 /* eslint-disable no-empty */
 import {
-  Alert,
-  AlertIcon,
+  Badge,
   Box,
+  Button,
   Container,
   FormControl,
   FormLabel,
@@ -13,9 +13,9 @@ import {
   Switch,
   Text,
 } from '@chakra-ui/react'
-import { UserRole } from '@prisma/client'
 import Layout from 'components/layout'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import prisma from 'prisma/client'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -29,6 +29,7 @@ type Props = {
     lastname: string
     email: string
     verified: boolean
+    verificationSubmitted: boolean
     waitlist: boolean
   }
 }
@@ -37,6 +38,7 @@ const ProfilePage = (props: Props) => {
   const { t } = useTranslation('common')
   const { t: tLang } = useTranslation('languages')
   const { toggleColorMode, newColorMode } = useColorMode()
+  const router = useRouter()
   const [isLoading, setLoading] = useState<boolean>(false)
   const [firstname, setFirstname] = useState<string>(props.user.firstname)
   const [lastname, setLastname] = useState<string>(props.user.lastname)
@@ -70,15 +72,6 @@ const ProfilePage = (props: Props) => {
         </Heading>
         <SimpleGrid templateColumns={{ sm: '1fr', md: '3fr 1fr' }} spacing="10">
           <GridItem>
-            {props.user.role == UserRole.HOST && !props.user.verified && (
-              <Alert status="warning" variant="solid" rounded="lg" mb="5">
-                <AlertIcon />
-                <Text as="span" fontWeight="semibold" mr="1">
-                  {t('profile.approval')}
-                </Text>
-                - {t('profile.approval.text')}
-              </Alert>
-            )}
             <FormControl mb="5">
               <FormLabel htmlFor="firstname">{t('firstname')}</FormLabel>
               <Input
@@ -120,6 +113,24 @@ const ProfilePage = (props: Props) => {
               </Heading>
               <Text mb="5">{t('waitlist.text')}</Text>
               <Switch size="lg" isChecked={waitlist} onChange={toggleWaitlist} />
+            </Box>
+            <Box mb="20">
+              <Heading size="md" mb="5">
+                {t('profile.verification')}
+              </Heading>
+              {props.user.verified ? (
+                <Badge fontSize="sm" colorScheme="green">
+                  {t('verified')}
+                </Badge>
+              ) : props.user.verificationSubmitted ? (
+                <Badge fontSize="sm" colorScheme="yellow">
+                  {t('verified.awaiting')}
+                </Badge>
+              ) : (
+                <Button onClick={() => router.push('/profile/verification')}>
+                  {t('profile.verification.verify')}
+                </Button>
+              )}
             </Box>
             <Box>
               <Heading size="md" mb="5">
@@ -166,6 +177,7 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
         lastname: user.lastname,
         email: user.email,
         verified: user.verified,
+        verificationSubmitted: user.verificationSubmittedAt != null,
         waitlist: user.waitlist,
       },
     },

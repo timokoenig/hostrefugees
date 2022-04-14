@@ -1,4 +1,5 @@
 import {
+  Badge,
   Box,
   Heading,
   Link,
@@ -180,6 +181,13 @@ export default function DetailPeople(props: Props) {
               </Text>{' '}
               {props.place.author.languages.map(lang => tLang(lang)).join(', ')}
             </ListItem>
+            {props.place.author.verified && (
+              <ListItem>
+                <Badge fontSize="sm" colorScheme="green">
+                  {t('verified.host')}
+                </Badge>
+              </ListItem>
+            )}
           </List>
         </Box>
         {props.place.houseRules !== '' && (

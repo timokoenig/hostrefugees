@@ -11,6 +11,7 @@ export const mapUser = (prismaUser: User): MappedUser => {
     id: prismaUser.id,
     firstname: prismaUser.firstname,
     role: prismaUser.role,
+    verified: prismaUser.verified,
     languages: prismaUser.languages,
   }
 }
@@ -23,6 +24,7 @@ export const mapPlace = (prismaPlace: any): MappedPlace => {
       id: prismaPlace.author.id,
       firstname: prismaPlace.author.firstname,
       role: prismaPlace.author.role,
+      verified: prismaPlace.author.verified,
       languages: prismaPlace.author.languages,
     },
     approved: prismaPlace.approved,
