@@ -35,7 +35,7 @@ type RequestBody = {
   houseRules?: string
   arrivalInstructions?: string
   availabilityStart: Date
-  availabilityEnd?: Date
+  availabilityEnd?: Date | null
 }
 
 interface Request extends NextApiRequest {
@@ -55,7 +55,7 @@ const validationSchemaPets = Yup.object()
     addressCity: Yup.string().min(1).max(100).required(),
     phoneNumber: Yup.string().min(1).max(100).required(),
     availabilityStart: Yup.date().required(),
-    availabilityEnd: Yup.date().optional(),
+    availabilityEnd: Yup.date().nullable().optional(),
   })
   .noUnknown()
 
@@ -83,7 +83,7 @@ const validationSchemaPeople = Yup.object()
     houseRules: Yup.string().max(5000),
     arrivalInstructions: Yup.string().max(5000),
     availabilityStart: Yup.date().required(),
-    availabilityEnd: Yup.date().optional(),
+    availabilityEnd: Yup.date().nullable().optional(),
   })
   .noUnknown()
 
