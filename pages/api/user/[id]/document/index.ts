@@ -37,6 +37,8 @@ async function handleDocumentUpload(req: NextApiRequest, res: NextApiResponse) {
   if (user == null) throw new HttpError('User not found', HTTP_STATUS_CODE.NOT_FOUND)
 
   const photo = await parsePhotoRequest(req)
+  if (photo == null) throw new HttpError('Missing image', HTTP_STATUS_CODE.BAD_REQUEST)
+
   if (photo.fields.type == undefined || !allowedTypes.includes(photo.fields.type as string))
     throw new HttpError('Document type not set', HTTP_STATUS_CODE.BAD_REQUEST)
 

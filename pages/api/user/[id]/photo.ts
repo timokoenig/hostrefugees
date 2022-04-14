@@ -33,8 +33,9 @@ async function handleProfilePhotoUpload(req: NextApiRequest, res: NextApiRespons
   if (user == null) throw new HttpError('User not found', HTTP_STATUS_CODE.NOT_FOUND)
 
   const photo = await parsePhotoRequest(req)
-
-  await uploadFile(user.id, photo.data, photo.mimetype, S3_BUCKET_USER)
+  if (photo != null) {
+    await uploadFile(user.id, photo.data, photo.mimetype, S3_BUCKET_USER)
+  }
 
   await prisma.user.update({
     where: {

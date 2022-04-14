@@ -13,8 +13,8 @@ export type PhotoFile = {
   fields: formidable.Fields
 }
 
-const parsePhotoRequest = (req: NextApiRequest): Promise<PhotoFile> => {
-  return new Promise<PhotoFile>((resolve, reject) => {
+const parsePhotoRequest = (req: NextApiRequest): Promise<PhotoFile | null> => {
+  return new Promise<PhotoFile | null>((resolve, reject) => {
     const form = new IncomingForm({
       maxFiles: 1,
       maxFileSize: 20 * 1024 * 1024,
@@ -36,7 +36,8 @@ const parsePhotoRequest = (req: NextApiRequest): Promise<PhotoFile> => {
       try {
         // @ts-ignore
         if (files.file == undefined) {
-          throw new Error('no file')
+          resolve(null)
+          return
         }
         const formFile = files.file as unknown as formidable.File
         let file = fs.readFileSync(formFile.filepath)

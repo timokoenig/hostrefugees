@@ -40,6 +40,8 @@ async function handlePlacePhotoUpload(req: NextApiRequest, res: NextApiResponse)
   }
 
   const photo = await parsePhotoRequest(req)
+  if (photo == null) throw new HttpError('Missing image', HTTP_STATUS_CODE.BAD_REQUEST)
+
   const photoId = uuidv4()
   await uploadFile(`${place.id}/${photoId}`, photo.data, photo.mimetype, S3_BUCKET_PLACE)
 

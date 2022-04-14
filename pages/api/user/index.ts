@@ -24,6 +24,7 @@ const validationSchema = Yup.object()
     lastname: Yup.string().min(1).max(100).trim().required(),
     email: Yup.string().trim().email().required(),
     password: Yup.string().min(1).max(100).trim().required(),
+    role: Yup.mixed<UserRole>().oneOf(Object.values(UserRole)).required(),
   })
   .noUnknown()
 
