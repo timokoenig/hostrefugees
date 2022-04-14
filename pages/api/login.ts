@@ -17,8 +17,8 @@ interface Request extends NextApiRequest {
 
 const validationSchema = Yup.object()
   .shape({
-    email: Yup.string().email().required(),
-    password: Yup.string().min(1).max(100).required(),
+    email: Yup.string().email().trim().required(),
+    password: Yup.string().min(1).max(100).trim().required(),
   })
   .noUnknown()
 
@@ -26,7 +26,7 @@ async function handleLogin(req: Request, res: NextApiResponse) {
   const body = await validationSchema.validate(req.body)
   const user = await prisma.user.findFirst({
     where: {
-      email: body.email,
+      email: body.email.toLowerCase(),
     },
   })
   if (user == null) throw new HttpError('User not found', HTTP_STATUS_CODE.NOT_FOUND)

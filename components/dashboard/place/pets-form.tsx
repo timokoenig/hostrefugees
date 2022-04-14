@@ -21,15 +21,19 @@ import Button from '../../common/button'
 import PetPicker from './pet-picker'
 
 const validationSchema = Yup.object().shape({
-  title: Yup.string().min(2, 'Too Short').max(100, 'Too Long').required('Required'),
-  description: Yup.string().min(2, 'Too Short').max(5000, 'Too Long').required('Required'),
+  title: Yup.string().min(2, 'Too Short').max(100, 'Too Long').trim().required('Required'),
+  description: Yup.string().min(2, 'Too Short').max(5000, 'Too Long').trim().required('Required'),
   petsNumber: Yup.number().required('Required'),
   features: Yup.array().min(1, 'Nothing selected').required('Required'),
-  addressStreet: Yup.string().min(2, 'Too Short').max(100, 'Too Long').required('Required'),
-  addressHouseNumber: Yup.string().min(1, 'Too Short').max(100, 'Too Long').required('Required'),
-  addressZip: Yup.string().min(5, 'Too Short').max(5, 'Too Long').required('Required'),
-  addressCity: Yup.string().min(2, 'Too Short').max(100, 'Too Long').required('Required'),
-  phoneNumber: Yup.string().min(2, 'Too Short').max(100, 'Too Long').required('Required'),
+  addressStreet: Yup.string().min(2, 'Too Short').max(100, 'Too Long').trim().required('Required'),
+  addressHouseNumber: Yup.string()
+    .min(1, 'Too Short')
+    .max(100, 'Too Long')
+    .trim()
+    .required('Required'),
+  addressZip: Yup.string().min(5, 'Too Short').max(5, 'Too Long').trim().required('Required'),
+  addressCity: Yup.string().min(2, 'Too Short').max(100, 'Too Long').trim().required('Required'),
+  phoneNumber: Yup.string().min(2, 'Too Short').max(100, 'Too Long').trim().required('Required'),
 })
 
 type Props = {

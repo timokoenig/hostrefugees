@@ -26,15 +26,15 @@ interface Request extends NextApiRequest {
 
 const validationSchema = Yup.object()
   .shape({
-    title: Yup.string().min(1).max(100).required(),
-    description: Yup.string().min(1).max(5000).required(),
+    title: Yup.string().min(1).max(100).trim().required(),
+    description: Yup.string().min(1).max(5000).trim().required(),
     category: Yup.mixed<PostCategory[]>().required(),
-    website: Yup.string().max(1000),
-    phoneNumer: Yup.string().max(100),
-    addressStreet: Yup.string().min(1).max(100),
-    addressHouseNumber: Yup.string().min(1).max(100),
-    addressZip: Yup.string().length(5),
-    addressCity: Yup.string().min(1).max(100),
+    website: Yup.string().max(1000).trim(),
+    phoneNumer: Yup.string().max(100).trim(),
+    addressStreet: Yup.string().min(1).max(100).trim(),
+    addressHouseNumber: Yup.string().min(1).max(100).trim(),
+    addressZip: Yup.string().length(5).trim(),
+    addressCity: Yup.string().min(1).max(100).trim(),
   })
   .noUnknown()
 

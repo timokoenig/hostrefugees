@@ -18,7 +18,7 @@ interface PasswordHashRequest extends NextApiRequest {
 
 const validationSchema = Yup.object()
   .shape({
-    email: Yup.string().email().required(),
+    email: Yup.string().trim().email().required(),
   })
   .noUnknown()
 
@@ -27,7 +27,7 @@ async function handleRequestPasswordReset(req: PasswordHashRequest, res: NextApi
 
   const user = await prisma.user.findFirst({
     where: {
-      email: body.email,
+      email: body.email.toLowerCase(),
     },
   })
   if (user === null || user.role === UserRole.ADMIN)

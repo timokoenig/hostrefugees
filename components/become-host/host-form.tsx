@@ -25,10 +25,14 @@ import * as Yup from 'yup'
 import Button from '../common/button'
 
 const validationSchema = Yup.object().shape({
-  firstname: Yup.string().min(2, 'Too Short').max(50, 'Too Long').required('Required'),
-  lastname: Yup.string().min(2, 'Too Short').max(50, 'Too Long').required('Required'),
-  email: Yup.string().email('Invalid email').required('Required'),
-  password: Yup.string().min(6, 'At least 6 characters').max(50, 'Too Long').required('Required'),
+  firstname: Yup.string().min(2, 'Too Short').max(50, 'Too Long').trim().required('Required'),
+  lastname: Yup.string().min(2, 'Too Short').max(50, 'Too Long').trim().required('Required'),
+  email: Yup.string().email('Invalid email').required('Required').trim(),
+  password: Yup.string()
+    .min(6, 'At least 6 characters')
+    .max(50, 'Too Long')
+    .trim()
+    .required('Required'),
 })
 
 const HostForm = () => {

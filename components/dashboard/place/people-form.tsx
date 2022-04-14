@@ -22,19 +22,23 @@ import * as Yup from 'yup'
 import Button from '../../common/button'
 
 const validationSchema = Yup.object().shape({
-  title: Yup.string().min(2, 'Too Short').max(100, 'Too Long').required('Required'),
-  description: Yup.string().min(2, 'Too Short').max(5000, 'Too Long').required('Required'),
+  title: Yup.string().min(2, 'Too Short').max(100, 'Too Long').trim().required('Required'),
+  description: Yup.string().min(2, 'Too Short').max(5000, 'Too Long').trim().required('Required'),
   rooms: Yup.number().required('Required'),
   beds: Yup.number().required('Required'),
   adults: Yup.number().required('Required'),
   children: Yup.number().required('Required'),
-  addressStreet: Yup.string().min(2, 'Too Short').max(100, 'Too Long').required('Required'),
-  addressHouseNumber: Yup.string().min(1, 'Too Short').max(100, 'Too Long').required('Required'),
-  addressZip: Yup.string().min(5, 'Too Short').max(5, 'Too Long').required('Required'),
-  addressCity: Yup.string().min(2, 'Too Short').max(100, 'Too Long').required('Required'),
-  houseRules: Yup.string().max(5000, 'Too Long'),
-  phoneNumber: Yup.string().min(2, 'Too Short').max(100, 'Too Long').required('Required'),
-  arrivalInstructions: Yup.string().max(5000, 'Too Long'),
+  addressStreet: Yup.string().min(2, 'Too Short').max(100, 'Too Long').trim().required('Required'),
+  addressHouseNumber: Yup.string()
+    .min(1, 'Too Short')
+    .max(100, 'Too Long')
+    .trim()
+    .required('Required'),
+  addressZip: Yup.string().min(5, 'Too Short').max(5, 'Too Long').trim().required('Required'),
+  addressCity: Yup.string().min(2, 'Too Short').max(100, 'Too Long').trim().required('Required'),
+  houseRules: Yup.string().max(5000, 'Too Long').trim(),
+  phoneNumber: Yup.string().min(2, 'Too Short').max(100, 'Too Long').trim().required('Required'),
+  arrivalInstructions: Yup.string().max(5000, 'Too Long').trim(),
 })
 
 type Props = {

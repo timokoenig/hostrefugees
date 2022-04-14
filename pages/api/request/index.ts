@@ -29,13 +29,13 @@ interface CreateRequest extends NextApiRequest {
 
 const validationSchema = Yup.object()
   .shape({
-    placeId: Yup.string().uuid().required(),
+    placeId: Yup.string().trim().uuid().required(),
     adults: Yup.number().min(0).max(100),
     children: Yup.number().min(0).max(100),
     pets: Yup.boolean(),
     startDate: Yup.date().required(),
     endDate: Yup.date(),
-    about: Yup.string().max(5000).required(),
+    about: Yup.string().max(5000).trim().required(),
   })
   .noUnknown()
 

@@ -18,7 +18,7 @@ import * as Yup from 'yup'
 import Button from './common/button'
 
 const validationSchema = Yup.object().shape({
-  email: Yup.string().email('Invalid email').required('Required'),
+  email: Yup.string().email('Invalid email').trim().required('Required'),
 })
 
 const ForgotPassword = () => {

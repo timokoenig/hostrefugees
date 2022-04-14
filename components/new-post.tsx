@@ -28,14 +28,14 @@ import CustomButton from './common/button'
 import CategoryPicker from './post/category-picker'
 
 const validationSchema = Yup.object().shape({
-  title: Yup.string().min(2, 'Too Short').max(100, 'Too Long').required('Required'),
-  description: Yup.string().min(2, 'Too Short').max(5000, 'Too Long').required('Required'),
-  website: Yup.string().min(2, 'Too Short').max(200, 'Too Long'),
-  phoneNumber: Yup.string().min(2, 'Too Short').max(50, 'Too Long'),
-  addressStreet: Yup.string().min(2, 'Too Short').max(100, 'Too Long'),
-  addressHouseNumber: Yup.string().min(1, 'Too Short').max(100, 'Too Long'),
-  addressZip: Yup.string().min(5, 'Too Short').max(5, 'Too Long'),
-  addressCity: Yup.string().min(2, 'Too Short').max(100, 'Too Long'),
+  title: Yup.string().min(2, 'Too Short').max(100, 'Too Long').trim().required('Required'),
+  description: Yup.string().min(2, 'Too Short').max(5000, 'Too Long').trim().required('Required'),
+  website: Yup.string().min(2, 'Too Short').max(200, 'Too Long').trim(),
+  phoneNumber: Yup.string().min(2, 'Too Short').max(50, 'Too Long').trim(),
+  addressStreet: Yup.string().min(2, 'Too Short').max(100, 'Too Long').trim(),
+  addressHouseNumber: Yup.string().min(1, 'Too Short').max(100, 'Too Long').trim(),
+  addressZip: Yup.string().min(5, 'Too Short').max(5, 'Too Long').trim(),
+  addressCity: Yup.string().min(2, 'Too Short').max(100, 'Too Long').trim(),
 })
 
 const NewPost = () => {

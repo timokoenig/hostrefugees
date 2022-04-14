@@ -20,10 +20,10 @@ interface RegistrationRequest extends NextApiRequest {
 
 const validationSchema = Yup.object()
   .shape({
-    firstname: Yup.string().min(1).max(100).required(),
-    lastname: Yup.string().min(1).max(100).required(),
-    email: Yup.string().email().required(),
-    password: Yup.string().min(1).max(100).required(),
+    firstname: Yup.string().min(1).max(100).trim().required(),
+    lastname: Yup.string().min(1).max(100).trim().required(),
+    email: Yup.string().trim().email().required(),
+    password: Yup.string().min(1).max(100).trim().required(),
   })
   .noUnknown()
 
@@ -32,7 +32,7 @@ async function handleRegistration(req: RegistrationRequest, res: NextApiResponse
 
   const user = await prisma.user.findFirst({
     where: {
-      email: body.email,
+      email: body.email.toLowerCase(),
     },
   })
   if (user !== null) throw new HttpError('Email already exists', HTTP_STATUS_CODE.BAD_REQUEST)
@@ -45,7 +45,7 @@ async function handleRegistration(req: RegistrationRequest, res: NextApiResponse
       updatedAt: new Date(),
       firstname: body.firstname,
       lastname: body.lastname,
-      email: body.email,
+      email: body.email.toLowerCase(),
       password: hashedPassword,
       role: body.role === UserRole.HOST ? UserRole.HOST : UserRole.GUEST,
     },
