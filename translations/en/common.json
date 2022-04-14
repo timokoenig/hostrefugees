@@ -161,7 +161,7 @@
   "profile.verification": "Profile Verification",
   "profile.verification.verify": "Verify Now",
   "profile.verification.subtitle": "The safety of our guests is important to us.",
-  "profile.verification.text": "Please upload the following three documents so we can verify your identity. We will manually check these documents and activate your account. Until then you can create places, but they won't appear in the search.",
+  "profile.verification.text": "Please upload the following three documents so we can verify your identity.",
   "profile.verification.selfie.info": "Hold ID Card next to your face",
 
   "privacy": "Privacy Policy",
