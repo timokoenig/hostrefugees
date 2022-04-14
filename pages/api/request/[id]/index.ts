@@ -2,7 +2,12 @@
 import { RequestStatus, UserRole } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from 'prisma/client'
-import { newAuthenticatedHandler, withErrorHandler, withHandlers } from 'utils/api/helper'
+import {
+  newAuthenticatedHandler,
+  withErrorHandler,
+  withHandlers,
+  withLogHandler,
+} from 'utils/api/helper'
 import HTTP_METHOD from 'utils/api/http-method'
 import { validateUUIDQueryParam } from 'utils/api/validate-query-param'
 import {
@@ -150,14 +155,16 @@ async function handleUpdateRequest(req: UpdateRequest, res: NextApiResponse) {
   res.status(200).end()
 }
 
-export default withErrorHandler(
-  withSessionRoute(
-    withHandlers([
-      newAuthenticatedHandler(
-        HTTP_METHOD.PUT,
-        [UserRole.GUEST, UserRole.HOST],
-        handleUpdateRequest
-      ),
-    ])
+export default withLogHandler(
+  withErrorHandler(
+    withSessionRoute(
+      withHandlers([
+        newAuthenticatedHandler(
+          HTTP_METHOD.PUT,
+          [UserRole.GUEST, UserRole.HOST],
+          handleUpdateRequest
+        ),
+      ])
+    )
   )
 )

@@ -1,4 +1,5 @@
 /* eslint-disable no-await-in-loop */
+import logger from './logger'
 import translate from './translate'
 
 type Trans = {
@@ -28,7 +29,7 @@ const translateAll = async (text: string): Promise<Translation | undefined> => {
         text: transRes.translatedText,
       })
     } catch (err: unknown) {
-      console.log(err)
+      logger.error({ lang: languages[i] }, 'Translation failed')
     }
   }
   if (res.sourceLanguage == '') {

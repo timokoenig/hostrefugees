@@ -1,7 +1,7 @@
 import { PostCategory } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from 'prisma/client'
-import { newHandler, withErrorHandler, withHandlers } from 'utils/api/helper'
+import { newHandler, withErrorHandler, withHandlers, withLogHandler } from 'utils/api/helper'
 import HTTP_METHOD from 'utils/api/http-method'
 import geocode, { LatLngLiteral } from 'utils/geocode'
 import { withSessionRoute } from 'utils/session'
@@ -80,6 +80,6 @@ async function handleCreatePost(req: Request, res: NextApiResponse) {
   res.status(201).send({ id: post.id })
 }
 
-export default withErrorHandler(
-  withSessionRoute(withHandlers([newHandler(HTTP_METHOD.POST, handleCreatePost)]))
+export default withLogHandler(
+  withErrorHandler(withSessionRoute(withHandlers([newHandler(HTTP_METHOD.POST, handleCreatePost)])))
 )

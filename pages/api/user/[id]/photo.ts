@@ -9,6 +9,7 @@ import {
   newHandler,
   withErrorHandler,
   withHandlers,
+  withLogHandler,
 } from 'utils/api/helper'
 import HttpError, { HTTP_STATUS_CODE } from 'utils/api/http-error'
 import HTTP_METHOD from 'utils/api/http-method'
@@ -71,11 +72,13 @@ async function handleGetUserPhoto(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-export default withErrorHandler(
-  withSessionRoute(
-    withHandlers([
-      newAuthenticatedHandler(HTTP_METHOD.POST, [], handleProfilePhotoUpload),
-      newHandler(HTTP_METHOD.GET, handleGetUserPhoto),
-    ])
+export default withLogHandler(
+  withErrorHandler(
+    withSessionRoute(
+      withHandlers([
+        newAuthenticatedHandler(HTTP_METHOD.POST, [], handleProfilePhotoUpload),
+        newHandler(HTTP_METHOD.GET, handleGetUserPhoto),
+      ])
+    )
   )
 )

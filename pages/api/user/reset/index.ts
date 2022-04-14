@@ -3,7 +3,7 @@ import { UserRole } from '@prisma/client'
 import crypto from 'crypto'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from 'prisma/client'
-import { newHandler, withErrorHandler, withHandlers } from 'utils/api/helper'
+import { newHandler, withErrorHandler, withHandlers, withLogHandler } from 'utils/api/helper'
 import HttpError, { HTTP_STATUS_CODE } from 'utils/api/http-error'
 import HTTP_METHOD from 'utils/api/http-method'
 import { emailPasswordReset, sendEmail } from 'utils/email'
@@ -52,6 +52,8 @@ async function handleRequestPasswordReset(req: PasswordHashRequest, res: NextApi
   })
 }
 
-export default withErrorHandler(
-  withSessionRoute(withHandlers([newHandler(HTTP_METHOD.POST, handleRequestPasswordReset)]))
+export default withLogHandler(
+  withErrorHandler(
+    withSessionRoute(withHandlers([newHandler(HTTP_METHOD.POST, handleRequestPasswordReset)]))
+  )
 )

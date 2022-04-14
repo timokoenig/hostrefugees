@@ -9,6 +9,7 @@ import {
   newHandler,
   withErrorHandler,
   withHandlers,
+  withLogHandler,
 } from 'utils/api/helper'
 import HttpError, { HTTP_STATUS_CODE } from 'utils/api/http-error'
 import HTTP_METHOD from 'utils/api/http-method'
@@ -71,11 +72,13 @@ async function handleGetPlacePhoto(req: NextApiRequest, res: NextApiResponse) {
   await handleImageRequest(req, res, `${place.id}/${photoId}`, S3_BUCKET_PLACE)
 }
 
-export default withErrorHandler(
-  withSessionRoute(
-    withHandlers([
-      newHandler(HTTP_METHOD.GET, handleGetPlacePhoto),
-      newAuthenticatedHandler(HTTP_METHOD.DELETE, [UserRole.HOST], handlePlacePhotoDelete),
-    ])
+export default withLogHandler(
+  withErrorHandler(
+    withSessionRoute(
+      withHandlers([
+        newHandler(HTTP_METHOD.GET, handleGetPlacePhoto),
+        newAuthenticatedHandler(HTTP_METHOD.DELETE, [UserRole.HOST], handlePlacePhotoDelete),
+      ])
+    )
   )
 )

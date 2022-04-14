@@ -2,7 +2,12 @@
 import { UserRole } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from 'prisma/client'
-import { newAuthenticatedHandler, withErrorHandler, withHandlers } from 'utils/api/helper'
+import {
+  newAuthenticatedHandler,
+  withErrorHandler,
+  withHandlers,
+  withLogHandler,
+} from 'utils/api/helper'
 import HttpError, { HTTP_STATUS_CODE } from 'utils/api/http-error'
 import HTTP_METHOD from 'utils/api/http-method'
 import { deleteFile, S3_BUCKET_DOCUMENT } from 'utils/aws/s3'
@@ -27,10 +32,12 @@ async function handleDocumentDelete(req: NextApiRequest, res: NextApiResponse) {
   res.status(200).end()
 }
 
-export default withErrorHandler(
-  withSessionRoute(
-    withHandlers([
-      newAuthenticatedHandler(HTTP_METHOD.DELETE, [UserRole.HOST], handleDocumentDelete),
-    ])
+export default withLogHandler(
+  withErrorHandler(
+    withSessionRoute(
+      withHandlers([
+        newAuthenticatedHandler(HTTP_METHOD.DELETE, [UserRole.HOST], handleDocumentDelete),
+      ])
+    )
   )
 )

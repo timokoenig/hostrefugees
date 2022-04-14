@@ -3,7 +3,12 @@
 import { UserRole } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from 'prisma/client'
-import { newAuthenticatedHandler, withErrorHandler, withHandlers } from 'utils/api/helper'
+import {
+  newAuthenticatedHandler,
+  withErrorHandler,
+  withHandlers,
+  withLogHandler,
+} from 'utils/api/helper'
 import HTTP_METHOD from 'utils/api/http-method'
 import { emailNewRequest, sendEmail } from 'utils/email'
 import { withSessionRoute } from 'utils/session'
@@ -76,8 +81,10 @@ async function handleNewRequest(req: CreateRequest, res: NextApiResponse) {
   res.status(200).end()
 }
 
-export default withErrorHandler(
-  withSessionRoute(
-    withHandlers([newAuthenticatedHandler(HTTP_METHOD.POST, [UserRole.GUEST], handleNewRequest)])
+export default withLogHandler(
+  withErrorHandler(
+    withSessionRoute(
+      withHandlers([newAuthenticatedHandler(HTTP_METHOD.POST, [UserRole.GUEST], handleNewRequest)])
+    )
   )
 )
