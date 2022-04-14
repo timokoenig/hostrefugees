@@ -7,6 +7,7 @@ import HTTP_METHOD from 'utils/api/http-method'
 import { validateUUIDQueryParam } from 'utils/api/validate-query-param'
 import { emailApprovedUser, sendEmail } from 'utils/email'
 import { withSessionRoute } from 'utils/session'
+import * as Yup from 'yup'
 
 interface UpdateRequest extends NextApiRequest {
   body: {
@@ -16,8 +17,17 @@ interface UpdateRequest extends NextApiRequest {
   }
 }
 
+const validationSchema = Yup.object()
+  .shape({
+    verified: Yup.boolean(),
+    languages: Yup.mixed<string[]>(),
+    waitlist: Yup.boolean(),
+  })
+  .noUnknown()
+
 async function handleUpdateUser(req: UpdateRequest, res: NextApiResponse) {
   const userId = await validateUUIDQueryParam(req, 'id')
+  const body = await validationSchema.validate(req.body)
 
   if (userId !== req.session.user!.id && req.session.user!.role !== UserRole.ADMIN) {
     // Users can only edit their own profile, except users with role ADMIN
@@ -43,16 +53,16 @@ async function handleUpdateUser(req: UpdateRequest, res: NextApiResponse) {
   } = {
     updatedAt: new Date(),
   }
-  if (req.body.languages !== undefined) {
-    data.languages = req.body.languages
+  if (body.languages !== undefined) {
+    data.languages = body.languages
   }
-  if (req.body.waitlist !== undefined) {
-    data.waitlist = req.body.waitlist
+  if (body.waitlist !== undefined) {
+    data.waitlist = body.waitlist
   }
 
   if (req.session.user!.role == UserRole.ADMIN) {
-    if (req.body.verified !== undefined) {
-      data.verified = req.body.verified
+    if (body.verified !== undefined) {
+      data.verified = body.verified
     }
   }
 
@@ -65,8 +75,8 @@ async function handleUpdateUser(req: UpdateRequest, res: NextApiResponse) {
 
   if (
     req.session.user!.role === UserRole.ADMIN &&
-    user.verified !== req.body.verified &&
-    req.body.verified
+    user.verified !== body.verified &&
+    body.verified
   ) {
     await sendEmail(emailApprovedUser(user))
   }

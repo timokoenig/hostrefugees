@@ -8,6 +8,7 @@ import { validateUUIDQueryParam } from 'utils/api/validate-query-param'
 import geocode from 'utils/geocode'
 import { withSessionRoute } from 'utils/session'
 import translateAll, { Translation } from 'utils/translate-all'
+import * as Yup from 'yup'
 
 const DEFAULT_COUNTRY = 'Germany'
 
@@ -34,7 +35,6 @@ interface Request extends NextApiRequest {
     addressHouseNumber?: string
     addressZip?: string
     addressCity?: string
-    addressCountry?: string
     phoneNumber?: string
     houseRules?: string
     arrivalInstructions?: string
@@ -43,8 +43,40 @@ interface Request extends NextApiRequest {
   }
 }
 
+const validationSchema = Yup.object()
+  .shape({
+    active: Yup.boolean(),
+    title: Yup.string().min(1).max(100).trim(),
+    description: Yup.string().min(1).max(5000).trim(),
+    type: Yup.mixed<PlaceType>().oneOf(Object.values(PlaceType)),
+    hostType: Yup.mixed<HostType>().oneOf(Object.values(HostType)),
+    placeAdults: Yup.number().min(0).max(100),
+    placeChildren: Yup.number().min(0).max(100),
+    placeAdultWomen: Yup.boolean(),
+    placeAdultMen: Yup.boolean(),
+    rooms: Yup.number().min(0).max(100),
+    beds: Yup.number().min(0).max(100),
+    bathroom: Yup.mixed<BathroomType>().oneOf(Object.values(BathroomType)),
+    adults: Yup.number().min(0).max(100),
+    children: Yup.number().min(0).max(100),
+    pets: Yup.boolean(),
+    petsNumber: Yup.number().min(0).max(100).nullable(),
+    features: Yup.mixed<Feature[]>(),
+    addressStreet: Yup.string().min(1).max(100).trim(),
+    addressHouseNumber: Yup.string().min(1).max(100).trim(),
+    addressZip: Yup.string().length(5).trim(),
+    addressCity: Yup.string().min(1).max(100).trim(),
+    phoneNumber: Yup.string().min(1).max(100).trim(),
+    houseRules: Yup.string().max(5000).trim(),
+    arrivalInstructions: Yup.string().max(5000).trim(),
+    availabilityStart: Yup.date(),
+    availabilityEnd: Yup.date().nullable(),
+  })
+  .noUnknown()
+
 async function handleUpdatePlace(req: Request, res: NextApiResponse) {
   const placeId = await validateUUIDQueryParam(req, 'id')
+  const body = await validationSchema.validate(req.body)
 
   const place = await prisma.place.findUnique({
     where: {
@@ -63,35 +95,35 @@ async function handleUpdatePlace(req: Request, res: NextApiResponse) {
 
   let lat = place.addressCityLat
   let lng = place.addressCityLng
-  if (req.body.addressCity && req.body.addressCity != place.addressCity) {
+  if (body.addressCity && body.addressCity != place.addressCity) {
     // City changed, therefore we need to refresh the coordinates as well
-    const latLng = await geocode(req.body.addressCity, DEFAULT_COUNTRY)
+    const latLng = await geocode(body.addressCity, DEFAULT_COUNTRY)
     lat = latLng.lat
     lng = latLng.lng
   }
 
   let titleTranslation = place.titleTranslation as Translation | undefined | null
-  if (req.body.title && req.body.title != place.title) {
+  if (body.title && body.title != place.title) {
     // Title changed, therefore we need to update the translation
-    titleTranslation = await translateAll(req.body.title)
+    titleTranslation = await translateAll(body.title)
   }
   if (titleTranslation == null) {
     titleTranslation = undefined
   }
 
   let descriptionTranslation = place.descriptionTranslation as Translation | undefined
-  if (req.body.description && req.body.description != place.description) {
+  if (body.description && body.description != place.description) {
     // Description changed, therefore we need to update the translation
-    descriptionTranslation = await translateAll(req.body.description)
+    descriptionTranslation = await translateAll(body.description)
   }
   if (descriptionTranslation == null) {
     descriptionTranslation = undefined
   }
 
   let houseRulesTranslation = place.houseRulesTranslation as Translation | undefined
-  if (req.body.houseRules && req.body.houseRules != place.houseRules) {
+  if (body.houseRules && body.houseRules != place.houseRules) {
     // HouseRules changed, therefore we need to update the translation
-    houseRulesTranslation = await translateAll(req.body.houseRules)
+    houseRulesTranslation = await translateAll(body.houseRules)
   }
   if (houseRulesTranslation == null) {
     houseRulesTranslation = undefined
@@ -100,9 +132,9 @@ async function handleUpdatePlace(req: Request, res: NextApiResponse) {
   let arrivalInstructionsTranslation = place.arrivalInstructionsTranslation as
     | Translation
     | undefined
-  if (req.body.arrivalInstructions && req.body.arrivalInstructions != place.arrivalInstructions) {
+  if (body.arrivalInstructions && body.arrivalInstructions != place.arrivalInstructions) {
     // ArrivalInstructions changed, therefore we need to update the translation
-    arrivalInstructionsTranslation = await translateAll(req.body.arrivalInstructions)
+    arrivalInstructionsTranslation = await translateAll(body.arrivalInstructions)
   }
   if (arrivalInstructionsTranslation == null) {
     arrivalInstructionsTranslation = undefined
@@ -114,37 +146,37 @@ async function handleUpdatePlace(req: Request, res: NextApiResponse) {
     },
     data: {
       updatedAt: new Date(),
-      active: req.body.active,
-      title: req.body.title,
+      active: body.active,
+      title: body.title,
       titleTranslation,
-      description: req.body.description,
+      description: body.description,
       descriptionTranslation,
-      type: req.body.type,
-      hostType: req.body.hostType,
-      placeAdults: req.body.placeAdults,
-      placeChildren: req.body.placeChildren,
-      placeAdultWomen: req.body.placeAdultWomen,
-      placeAdultMen: req.body.placeAdultMen,
-      rooms: req.body.rooms,
-      beds: req.body.beds,
-      bathroom: req.body.bathroom,
-      adults: req.body.adults,
-      children: req.body.children,
-      pets: req.body.pets,
-      petsNumber: req.body.petsNumber,
-      features: req.body.features,
-      addressStreet: req.body.addressStreet,
-      addressHouseNumber: req.body.addressHouseNumber,
-      addressZip: req.body.addressZip,
-      addressCity: req.body.addressCity,
+      type: body.type,
+      hostType: body.hostType,
+      placeAdults: body.placeAdults,
+      placeChildren: body.placeChildren,
+      placeAdultWomen: body.placeAdultWomen,
+      placeAdultMen: body.placeAdultMen,
+      rooms: body.rooms,
+      beds: body.beds,
+      bathroom: body.bathroom,
+      adults: body.adults,
+      children: body.children,
+      pets: body.pets,
+      petsNumber: body.petsNumber,
+      features: body.features,
+      addressStreet: body.addressStreet,
+      addressHouseNumber: body.addressHouseNumber,
+      addressZip: body.addressZip,
+      addressCity: body.addressCity,
       addressCityLat: lat,
       addressCityLng: lng,
-      houseRules: req.body.houseRules,
+      houseRules: body.houseRules,
       houseRulesTranslation,
-      arrivalInstructions: req.body.arrivalInstructions,
+      arrivalInstructions: body.arrivalInstructions,
       arrivalInstructionsTranslation,
-      availabilityStart: req.body.availabilityStart,
-      availabilityEnd: req.body.availabilityEnd,
+      availabilityStart: body.availabilityStart,
+      availabilityEnd: body.availabilityEnd,
     },
   })
   res.status(200).end()

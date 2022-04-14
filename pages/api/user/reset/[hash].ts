@@ -15,7 +15,15 @@ interface PasswordResetRequest extends NextApiRequest {
   }
 }
 
+const validationSchema = Yup.object()
+  .shape({
+    email: Yup.string().email().required(),
+    password: Yup.string().min(1).max(100).required(),
+  })
+  .noUnknown()
+
 async function handlePasswordReset(req: PasswordResetRequest, res: NextApiResponse) {
+  const body = await validationSchema.validate(req.body)
   const queryHash = await Yup.string()
     .required()
     .length(64)
@@ -24,7 +32,7 @@ async function handlePasswordReset(req: PasswordResetRequest, res: NextApiRespon
 
   const user = await prisma.user.findFirst({
     where: {
-      email: req.body.email,
+      email: body.email,
     },
   })
   if (user == null || user.passwordResetHash != queryHash)
@@ -44,7 +52,7 @@ async function handlePasswordReset(req: PasswordResetRequest, res: NextApiRespon
     throw new HttpError('Password Reset has expired', HTTP_STATUS_CODE.BAD_REQUEST)
   }
 
-  const hashedPassword = await hash(req.body.password, 14)
+  const hashedPassword = await hash(body.password, 14)
   await prisma.user.update({
     data: {
       updatedAt: new Date(),

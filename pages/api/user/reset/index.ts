@@ -8,6 +8,7 @@ import HttpError, { HTTP_STATUS_CODE } from 'utils/api/http-error'
 import HTTP_METHOD from 'utils/api/http-method'
 import { emailPasswordReset, sendEmail } from 'utils/email'
 import { withSessionRoute } from 'utils/session'
+import * as Yup from 'yup'
 
 interface PasswordHashRequest extends NextApiRequest {
   body: {
@@ -15,10 +16,18 @@ interface PasswordHashRequest extends NextApiRequest {
   }
 }
 
+const validationSchema = Yup.object()
+  .shape({
+    email: Yup.string().email().required(),
+  })
+  .noUnknown()
+
 async function handleRequestPasswordReset(req: PasswordHashRequest, res: NextApiResponse) {
+  const body = await validationSchema.validate(req.body)
+
   const user = await prisma.user.findFirst({
     where: {
-      email: req.body.email,
+      email: body.email,
     },
   })
   if (user === null || user.role === UserRole.ADMIN)

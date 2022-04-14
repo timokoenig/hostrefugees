@@ -6,6 +6,7 @@ import HttpError, { HTTP_STATUS_CODE } from 'utils/api/http-error'
 import HTTP_METHOD from 'utils/api/http-method'
 import { validateUUIDQueryParam } from 'utils/api/validate-query-param'
 import { withSessionRoute } from 'utils/session'
+import * as Yup from 'yup'
 
 interface Request extends NextApiRequest {
   body: {
@@ -13,8 +14,15 @@ interface Request extends NextApiRequest {
   }
 }
 
+const validationSchema = Yup.object()
+  .shape({
+    isSafe: Yup.boolean().required(),
+  })
+  .noUnknown()
+
 async function handleSafetyCheck(req: Request, res: NextApiResponse) {
   const safetyCheckId = await validateUUIDQueryParam(req, 'id')
+  const body = await validationSchema.validate(req.body)
 
   const safetyCheck = await prisma.safetyCheck.findFirst({
     where: {
@@ -42,7 +50,7 @@ async function handleSafetyCheck(req: Request, res: NextApiResponse) {
           id: safetyCheckId,
         },
       },
-      safe: req.body.isSafe,
+      safe: body.isSafe,
     },
   })
 

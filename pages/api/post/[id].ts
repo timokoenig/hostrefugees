@@ -8,6 +8,7 @@ import { validateUUIDQueryParam } from 'utils/api/validate-query-param'
 import geocode, { LatLngLiteral } from 'utils/geocode'
 import { withSessionRoute } from 'utils/session'
 import translateAll, { Translation } from 'utils/translate-all'
+import * as Yup from 'yup'
 
 const DEFAULT_COUNTRY = 'Germany'
 
@@ -17,13 +18,20 @@ interface RequestAdmin extends NextApiRequest {
   }
 }
 
+const validationSchemaAdmin = Yup.object()
+  .shape({
+    approved: Yup.boolean().required(),
+  })
+  .noUnknown()
+
 async function handleUpdatePostAdmin(req: RequestAdmin, res: NextApiResponse) {
   const postId = await validateUUIDQueryParam(req, 'id')
+  const body = await validationSchemaAdmin.validate(req.body)
 
   await prisma.post.update({
     data: {
       updatedAt: new Date(),
-      approved: req.body.approved,
+      approved: body.approved,
     },
     where: {
       id: postId,
@@ -46,8 +54,23 @@ interface Request extends NextApiRequest {
   }
 }
 
+const validationSchema = Yup.object()
+  .shape({
+    title: Yup.string().min(1).max(100),
+    description: Yup.string().min(1).max(5000),
+    category: Yup.mixed<PostCategory[]>(),
+    website: Yup.string().max(1000),
+    phoneNumer: Yup.string().max(100),
+    addressStreet: Yup.string().min(1).max(100),
+    addressHouseNumber: Yup.string().min(1).max(100),
+    addressZip: Yup.string().length(5),
+    addressCity: Yup.string().min(1).max(100),
+  })
+  .noUnknown()
+
 async function handleUpdatePost(req: Request, res: NextApiResponse) {
   const postId = await validateUUIDQueryParam(req, 'id')
+  const body = await validationSchema.validate(req.body)
 
   const post = await prisma.post.findFirst({
     where: {
@@ -60,23 +83,23 @@ async function handleUpdatePost(req: Request, res: NextApiResponse) {
   if (post == null) throw new HttpError('Post not found', HTTP_STATUS_CODE.NOT_FOUND)
 
   let latLng: LatLngLiteral = { lat: post.addressCityLat ?? '', lng: post.addressCityLng ?? '' }
-  if (req.body.addressCity && req.body.addressCity != post.addressCity) {
-    latLng = await geocode(req.body.addressCity, DEFAULT_COUNTRY)
+  if (body.addressCity && body.addressCity != post.addressCity) {
+    latLng = await geocode(body.addressCity, DEFAULT_COUNTRY)
   }
 
   let titleTranslation = post.titleTranslation as Translation | undefined
-  if (req.body.title && req.body.title != post.title) {
+  if (body.title && body.title != post.title) {
     // Title changed, therefore we need to update the translation
-    titleTranslation = await translateAll(req.body.title)
+    titleTranslation = await translateAll(body.title)
   }
   if (titleTranslation == null) {
     titleTranslation = undefined
   }
 
   let descriptionTranslation = post.descriptionTranslation as Translation | undefined
-  if (req.body.description && req.body.description != post.description) {
+  if (body.description && body.description != post.description) {
     // Description changed, therefore we need to update the translation
-    descriptionTranslation = await translateAll(req.body.description)
+    descriptionTranslation = await translateAll(body.description)
   }
   if (descriptionTranslation == null) {
     descriptionTranslation = undefined
@@ -85,17 +108,17 @@ async function handleUpdatePost(req: Request, res: NextApiResponse) {
   await prisma.post.update({
     data: {
       updatedAt: new Date(),
-      title: req.body.title,
+      title: body.title,
       titleTranslation,
-      description: req.body.description,
+      description: body.description,
       descriptionTranslation,
-      category: req.body.category,
-      website: req.body.website,
-      phoneNumber: req.body.phoneNumber,
-      addressStreet: req.body.addressStreet,
-      addressHouseNumber: req.body.addressHouseNumber,
-      addressZip: req.body.addressZip,
-      addressCity: req.body.addressCity,
+      category: body.category,
+      website: body.website,
+      phoneNumber: body.phoneNumber,
+      addressStreet: body.addressStreet,
+      addressHouseNumber: body.addressHouseNumber,
+      addressZip: body.addressZip,
+      addressCity: body.addressCity,
       addressCityLat: latLng.lat,
       addressCityLng: latLng.lng,
     },

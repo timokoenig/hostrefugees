@@ -53,12 +53,10 @@ const Form = (props: Props) => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            request: {
-              ...values,
-              placeId: props.place.id,
-              startDate: new Date(),
-              endDate: new Date(),
-            },
+            ...values,
+            placeId: props.place.id,
+            startDate: new Date(),
+            endDate: new Date(),
           }),
         })
         if (res.ok) {

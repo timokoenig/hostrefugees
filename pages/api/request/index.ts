@@ -1,36 +1,42 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable no-await-in-loop */
-import { Request, RequestStatus, UserRole } from '@prisma/client'
+import { UserRole } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from 'prisma/client'
 import { newAuthenticatedHandler, withErrorHandler, withHandlers } from 'utils/api/helper'
 import HTTP_METHOD from 'utils/api/http-method'
-import {
-  emailAcceptRequestGuest,
-  emailAcceptRequestHost,
-  emailCancelRequest,
-  emailDeclineRequest,
-  emailNewRequest,
-  sendEmail,
-} from 'utils/email'
+import { emailNewRequest, sendEmail } from 'utils/email'
 import { withSessionRoute } from 'utils/session'
 import translateAll from 'utils/translate-all'
+import * as Yup from 'yup'
 
 interface CreateRequest extends NextApiRequest {
   body: {
-    request: Request
+    placeId: string
+    adults?: number
+    children?: number
+    pets?: boolean
+    startDate: Date
+    endDate?: Date
+    about: string
   }
 }
 
-interface UpdateRequest extends NextApiRequest {
-  body: {
-    id: string
-    status: RequestStatus
-  }
-}
+const validationSchema = Yup.object()
+  .shape({
+    placeId: Yup.string().uuid().required(),
+    adults: Yup.number().min(0).max(100),
+    children: Yup.number().min(0).max(100),
+    pets: Yup.boolean(),
+    startDate: Yup.date().required(),
+    endDate: Yup.date(),
+    about: Yup.string().max(5000).required(),
+  })
+  .noUnknown()
 
 async function handleNewRequest(req: CreateRequest, res: NextApiResponse) {
-  const aboutTranslation = await translateAll(req.body.request.about)
+  const body = await validationSchema.validate(req.body)
+  const aboutTranslation = await translateAll(body.about)
 
   const request = await prisma.request.create({
     data: {
@@ -43,15 +49,15 @@ async function handleNewRequest(req: CreateRequest, res: NextApiResponse) {
       },
       place: {
         connect: {
-          id: req.body.request.placeId,
+          id: body.placeId,
         },
       },
-      adults: req.body.request.adults,
-      children: req.body.request.children,
-      pets: req.body.request.pets,
-      startDate: req.body.request.startDate,
-      endDate: req.body.request.endDate,
-      about: req.body.request.about,
+      adults: body.adults,
+      children: body.children,
+      pets: body.pets,
+      startDate: body.startDate,
+      endDate: body.endDate,
+      about: body.about,
       aboutTranslation,
     },
     include: {
@@ -70,138 +76,8 @@ async function handleNewRequest(req: CreateRequest, res: NextApiResponse) {
   res.status(200).end()
 }
 
-async function handleUpdateRequest(req: UpdateRequest, res: NextApiResponse) {
-  const request = await prisma.request.findUnique({
-    where: {
-      id: req.body.id,
-    },
-    include: {
-      author: true,
-      place: {
-        include: {
-          author: true,
-        },
-      },
-    },
-  })
-  if (request === null) {
-    res.status(400).end()
-    return
-  }
-  if (
-    request.author.id !== req.session.user?.id &&
-    request.place.author.id !== req.session.user?.id
-  ) {
-    // user must be author of request (GUEST) or author of place (HOST) to update the status
-    res.status(400).end()
-    return
-  }
-
-  if (request.author.id === req.session.user.id && req.body.status !== RequestStatus.CANCELED) {
-    // guest can only cancel the request
-    res.status(400).end()
-    return
-  }
-  if (
-    request.place.author.id === req.session.user.id &&
-    req.body.status === RequestStatus.CANCELED
-  ) {
-    // host can only accept and decline requests
-    res.status(400).end()
-    return
-  }
-
-  const updatedRequest = await prisma.request.update({
-    where: {
-      id: req.body.id,
-    },
-    data: {
-      updatedAt: new Date(),
-      status: req.body.status,
-    },
-    include: {
-      author: true,
-      place: {
-        include: {
-          author: true,
-        },
-      },
-    },
-  })
-
-  // Send email to guest and host based on the request status, only if the status has changed
-  if (request.status !== updatedRequest.status) {
-    switch (updatedRequest.status) {
-      case RequestStatus.ACCEPTED:
-        await sendEmail(emailAcceptRequestGuest(updatedRequest))
-        await sendEmail(emailAcceptRequestHost(updatedRequest))
-        break
-      case RequestStatus.DECLINED:
-        await sendEmail(emailDeclineRequest(updatedRequest))
-        break
-      case RequestStatus.CANCELED:
-        await sendEmail(emailCancelRequest(updatedRequest))
-        break
-      default:
-        break
-    }
-  }
-
-  if (updatedRequest.status === RequestStatus.ACCEPTED) {
-    // Set place inactive so it doesn't appear in the search anymore
-    await prisma.place.update({
-      where: {
-        id: request.place.id,
-      },
-      data: {
-        updatedAt: new Date(),
-        active: false,
-      },
-    })
-
-    // Decline all pending requests for this place
-    const pendingRequests = await prisma.request.findMany({
-      where: {
-        status: null,
-        place: {
-          id: request.place.id,
-        },
-      },
-      include: {
-        author: true,
-        place: {
-          include: {
-            author: true,
-          },
-        },
-      },
-    })
-    for (let i = 0; i < pendingRequests.length; i++) {
-      await prisma.request.update({
-        where: {
-          id: pendingRequests[i].id,
-        },
-        data: {
-          updatedAt: new Date(),
-          status: RequestStatus.DECLINED,
-        },
-      })
-      await sendEmail(emailDeclineRequest(updatedRequest))
-    }
-  }
-
-  res.status(200).end()
-}
-
 export default withErrorHandler(
   withSessionRoute(
-    withHandlers([
-      newAuthenticatedHandler(HTTP_METHOD.POST, [UserRole.GUEST], handleNewRequest),
-      newAuthenticatedHandler(
-        HTTP_METHOD.PUT,
-        [UserRole.GUEST, UserRole.HOST],
-        handleUpdateRequest
-      ),
-    ])
+    withHandlers([newAuthenticatedHandler(HTTP_METHOD.POST, [UserRole.GUEST], handleNewRequest)])
   )
 )

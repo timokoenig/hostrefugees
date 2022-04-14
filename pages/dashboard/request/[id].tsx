@@ -41,13 +41,12 @@ const RequestPage = (props: Props) => {
 
   const updateRequestStatus = async (status: RequestStatus) => {
     try {
-      const res = await fetch('/api/request', {
+      const res = await fetch(`/api/request/${props.request.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          id: props.request.id,
           status,
         }),
       })

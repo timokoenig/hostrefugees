@@ -6,6 +6,7 @@ import { newHandler, withErrorHandler, withHandlers } from 'utils/api/helper'
 import HttpError, { HTTP_STATUS_CODE } from 'utils/api/http-error'
 import HTTP_METHOD from 'utils/api/http-method'
 import { withSessionRoute } from 'utils/session'
+import * as Yup from 'yup'
 
 interface RegistrationRequest extends NextApiRequest {
   body: {
@@ -17,25 +18,36 @@ interface RegistrationRequest extends NextApiRequest {
   }
 }
 
+const validationSchema = Yup.object()
+  .shape({
+    firstname: Yup.string().min(1).max(100).required(),
+    lastname: Yup.string().min(1).max(100).required(),
+    email: Yup.string().email().required(),
+    password: Yup.string().min(1).max(100).required(),
+  })
+  .noUnknown()
+
 async function handleRegistration(req: RegistrationRequest, res: NextApiResponse) {
+  const body = await validationSchema.validate(req.body)
+
   const user = await prisma.user.findFirst({
     where: {
-      email: req.body.email,
+      email: body.email,
     },
   })
   if (user !== null) throw new HttpError('Email already exists', HTTP_STATUS_CODE.BAD_REQUEST)
 
-  const hashedPassword = await hash(req.body.password, 14)
+  const hashedPassword = await hash(body.password, 14)
 
   await prisma.user.create({
     data: {
       createdAt: new Date(),
       updatedAt: new Date(),
-      firstname: req.body.firstname,
-      lastname: req.body.lastname,
-      email: req.body.email,
+      firstname: body.firstname,
+      lastname: body.lastname,
+      email: body.email,
       password: hashedPassword,
-      role: req.body.role === UserRole.HOST ? UserRole.HOST : UserRole.GUEST,
+      role: body.role === UserRole.HOST ? UserRole.HOST : UserRole.GUEST,
     },
   })
   res.status(201).end()
