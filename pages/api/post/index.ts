@@ -28,13 +28,13 @@ const validationSchema = Yup.object()
   .shape({
     title: Yup.string().min(1).max(100).trim().required(),
     description: Yup.string().min(1).max(5000).trim().required(),
-    category: Yup.mixed<PostCategory[]>().required(),
+    category: Yup.mixed<PostCategory[]>(),
     website: Yup.string().max(1000).trim(),
     phoneNumer: Yup.string().max(100).trim(),
-    addressStreet: Yup.string().min(1).max(100).trim(),
-    addressHouseNumber: Yup.string().min(1).max(100).trim(),
-    addressZip: Yup.string().length(5).trim(),
-    addressCity: Yup.string().min(1).max(100).trim(),
+    addressStreet: Yup.string().max(100).trim(),
+    addressHouseNumber: Yup.string().max(100).trim(),
+    addressZip: Yup.string().max(5).trim(),
+    addressCity: Yup.string().max(100).trim(),
   })
   .noUnknown()
 
