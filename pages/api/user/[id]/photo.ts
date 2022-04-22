@@ -15,6 +15,7 @@ import HTTP_METHOD from 'utils/api/http-method'
 import parsePhotoRequest from 'utils/api/parse-photo-request'
 import { validateUUIDQueryParam } from 'utils/api/validate-query-param'
 import { S3_BUCKET_USER, uploadFile } from 'utils/aws/s3'
+import { deleteCacheFile } from 'utils/aws/s3-cache'
 import { withSessionRoute } from 'utils/session'
 
 export const config = {
@@ -34,6 +35,7 @@ async function handleProfilePhotoUpload(req: NextApiRequest, res: NextApiRespons
   const photo = await parsePhotoRequest(req)
   if (photo != null) {
     await uploadFile(user.id, photo.data, photo.mimetype, S3_BUCKET_USER)
+    await deleteCacheFile(user.id, S3_BUCKET_USER)
   }
 
   await prisma.user.update({
