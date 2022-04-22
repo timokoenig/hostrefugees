@@ -23,12 +23,14 @@ import * as Yup from 'yup'
 interface UpdateRequest extends NextApiRequest {
   body: {
     status: RequestStatus
+    message: string | null
   }
 }
 
 const validationSchema = Yup.object()
   .shape({
     status: Yup.mixed<RequestStatus>().oneOf(Object.values(RequestStatus)).required(),
+    message: Yup.string().nullable().optional(),
   })
   .noUnknown()
 
@@ -75,11 +77,12 @@ async function handleUpdateRequest(req: UpdateRequest, res: NextApiResponse) {
 
   const updatedRequest = await prisma.request.update({
     where: {
-      id: body.id,
+      id: requestId,
     },
     data: {
       updatedAt: new Date(),
       status: body.status,
+      message: body.message,
     },
     include: {
       author: true,

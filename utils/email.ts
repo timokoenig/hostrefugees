@@ -170,6 +170,7 @@ export const emailDeclineRequest = (
       'Stay Request Declined',
       'We are sorry but your stay request has been declined. This can happend due to the amount of requests a host receives at the moment.'
     ),
+    request.message ? paragraph(`Message from the host:<br>${request.message}`) : '',
     button('Look for other places', 'https://hostrefugees.eu/place'),
   ].join('')
 

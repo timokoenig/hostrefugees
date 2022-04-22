@@ -29,6 +29,7 @@
   "city": "City",
   "clearall": "Clear All",
   "apply": "Apply",
+  "cancel": "Cancel",
   "residents": "Residents",
   "womenmen": "Women & Men",
   "onlywomen": "Only Women",
@@ -217,6 +218,8 @@
   "request.status.host.accepted": "Thanks for accepting this application.<br />You will receive an email with further details.",
   "request.status.host.declined": "The application has been declined",
   "request.status.host.canceled": "The application has been canceled by the user",
+  "request.decline.modal.title": "Decline Request",
+  "request.decline.modal.subtitle": "You are about to decline the guests request. Do you want to leave the person a message?",
 
   "place.new": "Create New Place",
   "place.more": "See More Places",

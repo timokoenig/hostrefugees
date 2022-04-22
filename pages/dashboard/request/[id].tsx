@@ -40,7 +40,7 @@ const RequestPage = (props: Props) => {
   const router = useRouter()
   const toast = useToast()
 
-  const updateRequestStatus = async (status: RequestStatus) => {
+  const updateRequestStatus = async (status: RequestStatus, message: string | null) => {
     try {
       const res = await fetch(`/api/request/${props.request.id}`, {
         method: 'PUT',
@@ -49,6 +49,7 @@ const RequestPage = (props: Props) => {
         },
         body: JSON.stringify({
           status,
+          message,
         }),
       })
       if (res.ok) {
@@ -153,14 +154,14 @@ const RequestPage = (props: Props) => {
               {props.user.role === UserRole.HOST && (
                 <StatusHost
                   status={props.request.status}
-                  onAccept={() => updateRequestStatus(RequestStatus.ACCEPTED)}
-                  onDecline={() => updateRequestStatus(RequestStatus.DECLINED)}
+                  onAccept={() => updateRequestStatus(RequestStatus.ACCEPTED, null)}
+                  onDecline={message => updateRequestStatus(RequestStatus.DECLINED, message)}
                 />
               )}
               {props.user.role === UserRole.GUEST && (
                 <StatusGuest
                   status={props.request.status}
-                  onCancelRequest={() => updateRequestStatus(RequestStatus.CANCELED)}
+                  onCancelRequest={() => updateRequestStatus(RequestStatus.CANCELED, null)}
                 />
               )}
             </Box>

@@ -128,6 +128,7 @@ model Request {
   aboutTranslation Json?          @map("about_translation")
   phoneNumber      String?        @map("phone_number")
   status           RequestStatus?
+  message          String?
   userId           String         @map("user_id")
   placeId          String         @map("place_id")
   safetyChecks     SafetyCheck[]
