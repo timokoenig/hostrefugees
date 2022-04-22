@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next'
 import { mapPlace } from 'utils/mapper'
 import { MappedPlace, MappedUser } from 'utils/models'
 import { withSessionSsr } from 'utils/session'
+import { getOptionalSessionUser } from 'utils/session-user'
 import Hero from '../components/hero'
 import Introduction from '../components/introduction'
 import MapPlaces from '../components/map-places'
@@ -65,16 +66,17 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
     take: 4,
   })
 
-  const user = await prisma.user.findFirst({
-    where: {
-      id: context.req.session.user?.id,
-    },
-  })
+  const sessionUser = await getOptionalSessionUser(context.req.session)
+  let waitlist = false
+  if (sessionUser) {
+    const user = await prisma.user.findUnique({ where: { id: sessionUser.id } })
+    waitlist = user?.waitlist ?? false
+  }
 
   return {
     props: {
       googleMapsKey: process.env.GOOGLE_MAP_KEY ?? '',
-      user: user ? { ...context.req.session.user, waitlist: user.waitlist } : null,
+      user: sessionUser ? { ...sessionUser, waitlist } : null,
       places: places.map(mapPlace),
       posts,
     },

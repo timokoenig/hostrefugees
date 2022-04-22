@@ -11,6 +11,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { MappedUser } from 'utils/models'
 import { withSessionSsr } from 'utils/session'
+import { getSessionUser } from 'utils/session-user'
 
 type Props = {
   user: MappedUser
@@ -59,6 +60,8 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
     }
   }
 
+  const sessionUser = await getSessionUser(context.req.session)
+
   // The archive has all requests older than 14 days
   const requests = await prisma.request.findMany({
     where: {
@@ -85,7 +88,7 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
 
   return {
     props: {
-      user: context.req.session.user,
+      user: sessionUser,
       requests,
     },
   }

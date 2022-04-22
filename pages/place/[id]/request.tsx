@@ -11,6 +11,7 @@ import { mapPlace } from 'utils/mapper'
 import { MappedPlace, MappedUser } from 'utils/models'
 import { onboardingCheck } from 'utils/onboarding-check'
 import { withSessionSsr } from 'utils/session'
+import { getSessionUser } from 'utils/session-user'
 import Layout from '../../../components/layout'
 import Summary from '../../../components/place/summary'
 
@@ -75,6 +76,8 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
     }
   }
 
+  const sessionUser = await getSessionUser(context.req.session)
+
   const place = await prisma.place.findUnique({
     where: {
       id: context.query.id as string,
@@ -100,7 +103,7 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
 
   return {
     props: {
-      user: context.req.session.user,
+      user: sessionUser,
       place: mapPlace(place),
     },
   }

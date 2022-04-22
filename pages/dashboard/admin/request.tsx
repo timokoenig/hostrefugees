@@ -21,6 +21,7 @@ import prisma from 'prisma/client'
 import React from 'react'
 import { MappedUser } from 'utils/models'
 import { withSessionSsr } from 'utils/session'
+import { getSessionUser } from 'utils/session-user'
 
 type Props = {
   user: MappedUser
@@ -85,6 +86,8 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
     }
   }
 
+  const sessionUser = await getSessionUser(context.req.session)
+
   const requests = await prisma.request.findMany({
     include: {
       author: {
@@ -106,7 +109,7 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
 
   return {
     props: {
-      user: context.req.session.user,
+      user: sessionUser,
       requests,
     },
   }

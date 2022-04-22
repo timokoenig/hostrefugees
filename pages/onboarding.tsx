@@ -12,6 +12,7 @@ import {
   ONBOARDING_PROFILE_PHOTO,
 } from 'utils/onboarding-check'
 import { withSessionSsr } from 'utils/session'
+import { getSessionUser } from 'utils/session-user'
 import Layout from '../components/layout'
 
 type Props = {
@@ -63,6 +64,8 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
     }
   }
 
+  const sessionUser = await getSessionUser(context.req.session)
+
   // Check if user really needs to do the onboarding
   const steps = await onboardingCheck(context.req.session.user.id)
   if (steps.length === 0) {
@@ -79,7 +82,7 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
 
   return {
     props: {
-      user: context.req.session.user,
+      user: sessionUser,
       steps,
     },
   }

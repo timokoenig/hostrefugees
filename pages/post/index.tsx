@@ -7,6 +7,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { MappedUser } from 'utils/models'
 import { withSessionSsr } from 'utils/session'
+import { getOptionalSessionUser } from 'utils/session-user'
 
 type Props = {
   user?: MappedUser
@@ -27,6 +28,8 @@ const PostPage = (props: Props) => {
 }
 
 export const getServerSideProps = withSessionSsr(async function getServerSideProps(context) {
+  const sessionUser = await getOptionalSessionUser(context.req.session)
+
   const posts = await prisma.post.findMany({
     where: {
       approved: true,
@@ -35,9 +38,10 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
       createdAt: 'desc',
     },
   })
+
   return {
     props: {
-      user: context.req.session.user ?? null,
+      user: sessionUser,
       posts,
     },
   }

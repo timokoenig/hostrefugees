@@ -24,6 +24,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { MappedUser } from 'utils/models'
 import { withSessionSsr } from 'utils/session'
+import { getSessionUser } from 'utils/session-user'
 import StatusGuest from '../../../components/dashboard/request/status-guest'
 import StatusHost from '../../../components/dashboard/request/status-host'
 
@@ -188,6 +189,8 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
     }
   }
 
+  const sessionUser = await getSessionUser(context.req.session)
+
   const request = await prisma.request.findUnique({
     where: {
       id: context.query.id as string,
@@ -246,7 +249,7 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
 
   return {
     props: {
-      user: context.req.session.user,
+      user: sessionUser,
       request,
       safetyCheck,
     },

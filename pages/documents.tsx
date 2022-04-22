@@ -15,6 +15,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { MappedUser } from 'utils/models'
 import { withSessionSsr } from 'utils/session'
+import { getOptionalSessionUser } from 'utils/session-user'
 import Layout from '../components/layout'
 
 type Props = {
@@ -65,9 +66,11 @@ const DocumentsPage = (props: Props) => {
 }
 
 export const getServerSideProps = withSessionSsr(async function getServerSideProps(context) {
+  const sessionUser = await getOptionalSessionUser(context.req.session)
+
   return {
     props: {
-      user: context.req.session.user ?? null,
+      user: sessionUser,
     },
   }
 })

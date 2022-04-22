@@ -14,6 +14,7 @@ import {
   Text,
 } from '@chakra-ui/react'
 import Layout from 'components/layout'
+import Photo from 'components/profile/photo'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import prisma from 'prisma/client'
@@ -107,6 +108,7 @@ const ProfilePage = (props: Props) => {
             </FormControl>
           </GridItem>
           <GridItem>
+            <Photo user={props.user} />
             <Box mb="20">
               <Heading size="md" mb="5">
                 {t('waitlist')}

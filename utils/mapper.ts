@@ -13,6 +13,7 @@ export const mapUser = (prismaUser: User): MappedUser => {
     role: prismaUser.role,
     verified: prismaUser.verified,
     languages: prismaUser.languages,
+    photo: prismaUser.photoUpdatedAt == null ? null : `/api/user/${prismaUser.id}/photo`,
   }
 }
 
@@ -20,13 +21,7 @@ export const mapPlace = (prismaPlace: any): MappedPlace => {
   return {
     id: prismaPlace.id,
     createdAt: prismaPlace.createdAt,
-    author: {
-      id: prismaPlace.author.id,
-      firstname: prismaPlace.author.firstname,
-      role: prismaPlace.author.role,
-      verified: prismaPlace.author.verified,
-      languages: prismaPlace.author.languages,
-    },
+    author: mapUser(prismaPlace.author),
     approved: prismaPlace.approved,
     active: prismaPlace.active,
     reserved: prismaPlace.reserved,

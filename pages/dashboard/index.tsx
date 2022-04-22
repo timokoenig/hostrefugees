@@ -12,6 +12,7 @@ import { mapPlace } from 'utils/mapper'
 import { MappedUser } from 'utils/models'
 import { onboardingCheck } from 'utils/onboarding-check'
 import { withSessionSsr } from 'utils/session'
+import { getSessionUser } from 'utils/session-user'
 
 type Props = {
   user: MappedUser & { verified?: boolean }
@@ -77,11 +78,7 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
     }
   }
 
-  const user = await prisma.user.findUnique({
-    where: {
-      id: context.req.session.user.id,
-    },
-  })
+  const sessionUser = await getSessionUser(context.req.session)
 
   const onboardingSteps = await onboardingCheck(context.req.session.user.id)
   if (onboardingSteps.length > 0) {
@@ -152,7 +149,7 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
 
   return {
     props: {
-      user: { ...context.req.session.user, verified: user?.verified },
+      user: sessionUser,
       places: places.map(mapPlace),
       requests,
       posts,
