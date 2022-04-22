@@ -29,6 +29,7 @@ model User {
   verificationSubmittedAt DateTime?     @map("verification_submitted_at")
   photoUpdatedAt          DateTime?     @map("photo_updated_at")
   waitlist                Boolean       @default(false)
+  deleted                 Boolean       @default(false)
   places                  Place[]
   requests                Request[]
   safetyChecks            SafetyCheck[]
@@ -65,6 +66,7 @@ model Place {
   author                         User         @relation(fields: [userId], references: [id])
   approved                       Boolean
   active                         Boolean
+  deleted                        Boolean      @default(false)
   reserved                       Boolean      @default(false)
   title                          String
   titleTranslation               Json?        @map("title_translation")
@@ -156,6 +158,7 @@ model Post {
   updatedAt              DateTime       @default(now()) @map("updated_at")
   author                 User?          @relation(fields: [userId], references: [id])
   approved               Boolean        @default(false)
+  deleted                Boolean        @default(false)
   category               PostCategory[]
   title                  String
   titleTranslation       Json?          @map("title_translation")
