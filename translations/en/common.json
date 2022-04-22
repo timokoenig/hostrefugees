@@ -164,6 +164,9 @@
   "profile.verification.text": "Please upload the following three documents so we can verify your identity.",
   "profile.verification.selfie.info": "Hold ID Card next to your face",
   "profile.photo": "Change Photo",
+  "profile.account": "Account",
+  "profile.account.delete": "Delete Account",
+  "profile.account.delete.info": "Caution! You are about to delete your account. By pressing YES, we will irrevocably delete your data. Are you sure to continue?",
 
   "privacy": "Privacy Policy",
   "privacy.cookie": "Privacy - Cookies",

@@ -14,6 +14,7 @@ import {
   Text,
 } from '@chakra-ui/react'
 import Layout from 'components/layout'
+import DeleteAccount from 'components/profile/delete-account'
 import Photo from 'components/profile/photo'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
@@ -134,13 +135,14 @@ const ProfilePage = (props: Props) => {
                 </Button>
               )}
             </Box>
-            <Box>
+            <Box mb="20">
               <Heading size="md" mb="5">
                 {t('profile.appearance')}
               </Heading>
               <Text mb="5">{t('profile.appearance.text')}</Text>
               <Switch size="lg" isChecked={newColorMode == 'light'} onChange={toggleColorMode} />
             </Box>
+            <DeleteAccount user={props.user} />
           </GridItem>
         </SimpleGrid>
       </Container>
