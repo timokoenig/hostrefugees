@@ -1,6 +1,7 @@
 import { UserRole } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from 'prisma/client'
+import { deleteCachedImages } from 'utils/api/handle-image-request'
 import {
   newAuthenticatedHandler,
   withErrorHandler,
@@ -44,6 +45,7 @@ async function handlePlacePhotoUpload(req: NextApiRequest, res: NextApiResponse)
 
   const photoId = uuidv4()
   await uploadFile(`${place.id}/${photoId}`, photo.data, photo.mimetype, S3_BUCKET_PLACE)
+  await deleteCachedImages(`${place.id}/${photoId}`)
 
   await prisma.place.update({
     where: {
