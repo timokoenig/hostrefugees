@@ -91,6 +91,7 @@ const PeopleForm = (props: Props) => {
       availabilityStart: new Date(),
       availabilityEnd: null,
       photos: [],
+      deleted: false,
     },
     validationSchema,
     onSubmit: values => {

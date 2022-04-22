@@ -55,6 +55,7 @@ const Form = (props: Props) => {
       addressCityLng: null,
       addressCountry: '',
       userId: '',
+      deleted: false,
     },
     validationSchema,
     onSubmit: async values => {

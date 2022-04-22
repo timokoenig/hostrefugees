@@ -87,6 +87,7 @@ const PetsForm = (props: Props) => {
       availabilityStart: new Date(),
       availabilityEnd: null,
       photos: [],
+      deleted: false,
     },
     validationSchema,
     onSubmit: values => {
