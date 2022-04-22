@@ -34,6 +34,11 @@ const VerifiedBadge = (props: { user: User }) => {
   return <Badge colorScheme="red">Not Verified</Badge>
 }
 
+const DeletedBadge = (props: { user: User }) => {
+  if (!props.user.deleted) return null
+  return <Badge colorScheme="red">Deleted</Badge>
+}
+
 const UserPage = (props: Props) => {
   const router = useRouter()
   const hoverColor = useColorModeValue('gray.100', 'gray.900')
@@ -74,7 +79,9 @@ const UserPage = (props: Props) => {
                 _hover={{ backgroundColor: hoverColor }}
                 cursor="pointer"
               >
-                <Td>{user.email}</Td>
+                <Td>
+                  {user.email} <DeletedBadge user={user} />
+                </Td>
                 <Td>{user.firstname}</Td>
                 <Td>{user.lastname}</Td>
                 <Td>{user.role}</Td>
