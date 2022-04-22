@@ -36,14 +36,11 @@ const PostItem = (props: Props) => {
   const router = useRouter()
   const backgroundColor = useColorModeValue('gray.100', 'gray.700')
   const backgroundColorActive = useColorModeValue('blue.100', 'blue.700')
+  const dateColor = useColorModeValue('gray.400', 'gray.600')
   const [showOriginal, setShowOriginal] = useState<boolean>(false)
 
   const onClick = async () => {
-    await router.push(
-      router.query.id == props.post.id ? '/post' : `/post?id=${props.post.id}`,
-      undefined,
-      { shallow: true }
-    )
+    await router.push(router.query.id == props.post.id ? '/post' : `/post/${props.post.id}`)
   }
 
   return (
@@ -107,7 +104,7 @@ const PostItem = (props: Props) => {
           </Link>
         </Text>
       )}
-      <Text fontSize="xs" color={useColorModeValue('gray.400', 'gray.600')} textAlign="right">
+      <Text fontSize="xs" color={props.active ? 'white' : dateColor} textAlign="right">
         {moment(props.post.createdAt).format('DD.MM.YYYY')}
       </Text>
     </Box>

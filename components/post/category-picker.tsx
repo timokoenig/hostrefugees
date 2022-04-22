@@ -1,10 +1,11 @@
 import { PostCategory } from '@prisma/client'
-import { OptionBase, Select } from 'chakra-react-select'
+import { OptionBase, Select, Size } from 'chakra-react-select'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 type Props = {
   value: string[]
+  size?: Size
   isDisabled?: boolean
   onChange: (categories: string[]) => void
 }
@@ -46,7 +47,7 @@ const CategoryPicker = (props: Props) => {
         .sort((a, b) => (a.label > b.label ? 1 : -1))}
       placeholder={t('post.category.picker')}
       closeMenuOnSelect={false}
-      size="md"
+      size={props.size ?? 'md'}
       isDisabled={props.isDisabled}
       onChange={values => props.onChange(values.map(val => val.value))}
     />

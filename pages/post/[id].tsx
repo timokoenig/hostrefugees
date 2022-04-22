@@ -11,9 +11,10 @@ import { withSessionSsr } from 'utils/session'
 type Props = {
   user?: MappedUser
   posts: Post[]
+  selectedPostId: string
 }
 
-const PostPage = (props: Props) => {
+const PostDetailPage = (props: Props) => {
   const { t } = useTranslation('common')
 
   return (
@@ -21,7 +22,7 @@ const PostPage = (props: Props) => {
       <Head>
         <title>{t('page.title.posts')}</title>
       </Head>
-      <PostComponent posts={props.posts} />
+      <PostComponent posts={props.posts} selectedPostId={props.selectedPostId} />
     </Layout>
   )
 }
@@ -39,8 +40,9 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
     props: {
       user: context.req.session.user ?? null,
       posts,
+      selectedPostId: context.query.id as string,
     },
   }
 })
 
-export default PostPage
+export default PostDetailPage
