@@ -444,6 +444,7 @@
   "post.category.picker": "Select a category",
   "post.city.picker": "Select a city",
   "post.city.picker.all": "All Cities",
+  "post.address.countrywide": "Show post for all of Germany",
   "post.new.hint": "Note: You need to log into your account before submitting your post, if you would like to edit it at a later time.",
   "post.update": "Update Post"
 }

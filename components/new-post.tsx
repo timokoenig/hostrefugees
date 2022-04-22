@@ -7,12 +7,14 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
+  GridItem,
   Heading,
   HStack,
   Image,
   Input,
   SimpleGrid,
   Stack,
+  Switch,
   Text,
   Textarea,
   useColorModeValue,
@@ -43,6 +45,7 @@ const NewPost = () => {
   const toast = useToast()
   const router = useRouter()
   const [success, setSuccess] = useState<boolean>(false)
+  const [countryWide, setCountryWide] = useState<boolean>(true)
   const formik = useFormik({
     initialValues: {
       title: '',
@@ -202,74 +205,95 @@ const NewPost = () => {
                     />
                   </FormControl>
 
-                  <SimpleGrid templateColumns={{ base: '1fr', md: '2fr 1fr' }} spacing={5}>
-                    <FormControl
-                      isDisabled={formik.isSubmitting}
-                      isInvalid={
-                        formik.errors.addressStreet !== undefined && formik.touched.addressStreet
-                      }
-                    >
-                      <FormLabel htmlFor="addressStreet">{t('street')}</FormLabel>
-                      <Input
-                        id="addressStreet"
-                        type="text"
-                        value={formik.values.addressStreet}
-                        onChange={formik.handleChange}
-                      />
-                      <FormErrorMessage>{formik.errors.addressStreet}</FormErrorMessage>
-                    </FormControl>
+                  <FormControl>
+                    <FormLabel htmlFor="address">{t('address')}</FormLabel>
+                    <SimpleGrid columns={3}>
+                      <GridItem colSpan={2}>
+                        <Text>{t('post.address.countrywide')}</Text>
+                      </GridItem>
+                      <GridItem textAlign="right">
+                        <Switch
+                          size="lg"
+                          isChecked={countryWide}
+                          onChange={() => setCountryWide(!countryWide)}
+                        />
+                      </GridItem>
+                    </SimpleGrid>
+                  </FormControl>
 
-                    <FormControl
-                      isDisabled={formik.isSubmitting}
-                      isInvalid={
-                        formik.errors.addressHouseNumber !== undefined &&
-                        formik.touched.addressHouseNumber
-                      }
-                    >
-                      <FormLabel htmlFor="addressHouseNumber">{t('housenumber')}</FormLabel>
-                      <Input
-                        id="addressHouseNumber"
-                        type="text"
-                        value={formik.values.addressHouseNumber}
-                        onChange={formik.handleChange}
-                      />
-                      <FormErrorMessage>{formik.errors.addressHouseNumber}</FormErrorMessage>
-                    </FormControl>
-                  </SimpleGrid>
+                  {!countryWide && (
+                    <>
+                      <SimpleGrid templateColumns={{ base: '1fr', md: '2fr 1fr' }} spacing={5}>
+                        <FormControl
+                          isDisabled={formik.isSubmitting}
+                          isInvalid={
+                            formik.errors.addressStreet !== undefined &&
+                            formik.touched.addressStreet
+                          }
+                        >
+                          <FormLabel htmlFor="addressStreet">{t('street')}</FormLabel>
+                          <Input
+                            id="addressStreet"
+                            type="text"
+                            value={formik.values.addressStreet}
+                            onChange={formik.handleChange}
+                          />
+                          <FormErrorMessage>{formik.errors.addressStreet}</FormErrorMessage>
+                        </FormControl>
 
-                  <SimpleGrid templateColumns={{ base: '1fr', md: '1fr 2fr' }} spacing={5}>
-                    <FormControl
-                      isDisabled={formik.isSubmitting}
-                      isInvalid={
-                        formik.errors.addressZip !== undefined && formik.touched.addressZip
-                      }
-                    >
-                      <FormLabel htmlFor="addressZip">{t('zipcode')}</FormLabel>
-                      <Input
-                        id="addressZip"
-                        type="text"
-                        value={formik.values.addressZip}
-                        onChange={formik.handleChange}
-                      />
-                      <FormErrorMessage>{formik.errors.addressZip}</FormErrorMessage>
-                    </FormControl>
+                        <FormControl
+                          isDisabled={formik.isSubmitting}
+                          isInvalid={
+                            formik.errors.addressHouseNumber !== undefined &&
+                            formik.touched.addressHouseNumber
+                          }
+                        >
+                          <FormLabel htmlFor="addressHouseNumber">{t('housenumber')}</FormLabel>
+                          <Input
+                            id="addressHouseNumber"
+                            type="text"
+                            value={formik.values.addressHouseNumber}
+                            onChange={formik.handleChange}
+                          />
+                          <FormErrorMessage>{formik.errors.addressHouseNumber}</FormErrorMessage>
+                        </FormControl>
+                      </SimpleGrid>
 
-                    <FormControl
-                      isDisabled={formik.isSubmitting}
-                      isInvalid={
-                        formik.errors.addressCity !== undefined && formik.touched.addressCity
-                      }
-                    >
-                      <FormLabel htmlFor="addressCity">{t('city')}</FormLabel>
-                      <Input
-                        id="addressCity"
-                        type="text"
-                        value={formik.values.addressCity}
-                        onChange={formik.handleChange}
-                      />
-                      <FormErrorMessage>{formik.errors.addressCity}</FormErrorMessage>
-                    </FormControl>
-                  </SimpleGrid>
+                      <SimpleGrid templateColumns={{ base: '1fr', md: '1fr 2fr' }} spacing={5}>
+                        <FormControl
+                          isDisabled={formik.isSubmitting}
+                          isInvalid={
+                            formik.errors.addressZip !== undefined && formik.touched.addressZip
+                          }
+                        >
+                          <FormLabel htmlFor="addressZip">{t('zipcode')}</FormLabel>
+                          <Input
+                            id="addressZip"
+                            type="text"
+                            value={formik.values.addressZip}
+                            onChange={formik.handleChange}
+                          />
+                          <FormErrorMessage>{formik.errors.addressZip}</FormErrorMessage>
+                        </FormControl>
+
+                        <FormControl
+                          isDisabled={formik.isSubmitting}
+                          isInvalid={
+                            formik.errors.addressCity !== undefined && formik.touched.addressCity
+                          }
+                        >
+                          <FormLabel htmlFor="addressCity">{t('city')}</FormLabel>
+                          <Input
+                            id="addressCity"
+                            type="text"
+                            value={formik.values.addressCity}
+                            onChange={formik.handleChange}
+                          />
+                          <FormErrorMessage>{formik.errors.addressCity}</FormErrorMessage>
+                        </FormControl>
+                      </SimpleGrid>
+                    </>
+                  )}
 
                   <FormControl
                     isDisabled={formik.isSubmitting}
