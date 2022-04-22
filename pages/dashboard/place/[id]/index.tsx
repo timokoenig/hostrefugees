@@ -204,6 +204,7 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
   })
   if (
     place === null ||
+    place.deleted ||
     (context.req.session.user.role !== UserRole.ADMIN &&
       place.author.id !== context.req.session.user.id)
   ) {

@@ -98,6 +98,7 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
       author: {
         id: context.req.session.user.id,
       },
+      deleted: false,
     },
   })
   if (post == null) {

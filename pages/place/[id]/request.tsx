@@ -92,7 +92,7 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
       },
     },
   })
-  if (place == null || !place.active) {
+  if (place == null || !place.active || place.deleted) {
     return {
       redirect: {
         destination: '/',

@@ -118,6 +118,7 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
   const places = await prisma.place.findMany({
     where: {
       active: true,
+      deleted: false,
     },
     include: {
       author: {

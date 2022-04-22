@@ -41,6 +41,7 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
   const places = await prisma.place.findMany({
     where: {
       active: true,
+      deleted: false,
     },
     include: {
       author: {
@@ -59,6 +60,7 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
   const posts = await prisma.post.findMany({
     where: {
       approved: true,
+      deleted: false,
     },
     orderBy: {
       createdAt: 'desc',

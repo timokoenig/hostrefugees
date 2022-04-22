@@ -33,6 +33,7 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
   const posts = await prisma.post.findMany({
     where: {
       approved: true,
+      deleted: false,
     },
     orderBy: {
       createdAt: 'desc',
