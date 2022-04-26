@@ -18,7 +18,8 @@
     "test": "jest --silent",
     "type-check": "tsc --noEmit",
     "snapshot-update": "jest --updateSnapshot --silent",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "script-update-translations": "npx ts-node --skip-project --transpile-only scripts/update-translations.ts"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
@@ -31,6 +32,7 @@
     "@prisma/client": "^3.11.0",
     "@types/lodash": "^4.14.178",
     "aws-sdk": "^2.1098.0",
+    "axios": "^0.27.1",
     "babel-plugin-superjson-next": "^0.4.3",
     "bcrypt": "^5.0.1",
     "chakra-react-select": "^3.1.2",

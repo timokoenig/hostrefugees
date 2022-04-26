@@ -40,6 +40,7 @@
     "**/*.ts",
     "**/*.tsx",
     "pages/index.tsx",
-    "tests/setup-tests.js"
-, "next.config.js"  ]
+    "tests/setup-tests.js",
+    "next.config.js",
+  ]
 }

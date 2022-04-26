@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 type Translation = {
   translatedText: string
   detectedSourceLanguage: string
@@ -16,27 +18,20 @@ const translate = async (text: string, targetLanguage: string): Promise<Translat
   if (apiKey === undefined) {
     throw new Error('GOOGLE_TRANSLATE_KEY env not set')
   }
-  const res = await fetch(
+  const res = await axios.post(
     `https://translation.googleapis.com/language/translate/v2?key=${apiKey}`,
+    JSON.stringify({
+      q: text,
+      target: targetLanguage,
+      format: 'text',
+    }),
     {
-      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        q: text,
-        target: targetLanguage,
-        format: 'text',
-      }),
     }
   )
-  if (!res.ok) {
-    throw new Error(res.statusText)
-  }
-  if (res.body === null) {
-    throw new Error('Translation failed')
-  }
-  const data = (await res.json()) as Response
+  const data = res.data as Response
   if (data.data.translations.length === 0) {
     throw new Error('No Translation available')
   }

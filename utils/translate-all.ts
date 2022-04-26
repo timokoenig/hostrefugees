@@ -2,7 +2,7 @@
 import logger from './logger'
 import translate from './translate'
 
-type Trans = {
+export type Trans = {
   lang: string
   text: string
 }
@@ -12,8 +12,9 @@ export type Translation = {
   translations: Trans[]
 }
 
+export const languages = ['en', 'de', 'uk', 'ru', 'pl']
+
 const translateAll = async (text: string): Promise<Translation | undefined> => {
-  const languages = ['en', 'de', 'uk', 'ru', 'pl']
   const res: Translation = {
     sourceLanguage: '',
     translations: [],
