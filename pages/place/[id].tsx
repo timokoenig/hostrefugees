@@ -2,6 +2,7 @@ import { ArrowBackIcon } from '@chakra-ui/icons'
 import { Box, Button, Center } from '@chakra-ui/react'
 import { Request, UserRole } from '@prisma/client'
 import Detail from 'components/place/detail'
+import moment from 'moment'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import prisma from 'prisma/client'
@@ -67,7 +68,12 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
       },
     },
   })
-  if (place == null || !place.active || place.deleted) {
+  if (
+    place == null ||
+    !place.active ||
+    place.deleted ||
+    (place.availabilityEnd !== null && moment(place.availabilityEnd).isBefore(moment()))
+  ) {
     return {
       redirect: {
         destination: '/',

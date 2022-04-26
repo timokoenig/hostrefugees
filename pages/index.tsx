@@ -1,6 +1,7 @@
 import { Post } from '@prisma/client'
 import Layout from 'components/layout'
 import Waitlist from 'components/waitlist'
+import moment from 'moment'
 import Head from 'next/head'
 import prisma from 'prisma/client'
 import React from 'react'
@@ -42,6 +43,16 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
     where: {
       active: true,
       deleted: false,
+      OR: [
+        {
+          availabilityEnd: null,
+        },
+        {
+          availabilityEnd: {
+            gte: moment().toDate(),
+          },
+        },
+      ],
     },
     include: {
       author: {

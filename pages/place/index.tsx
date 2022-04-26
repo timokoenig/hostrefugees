@@ -11,6 +11,7 @@ import {
 import { HostType } from '@prisma/client'
 import PlaceItem from 'components/place/item'
 import Waitlist from 'components/waitlist'
+import moment from 'moment'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import prisma from 'prisma/client'
@@ -119,6 +120,16 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
     where: {
       active: true,
       deleted: false,
+      OR: [
+        {
+          availabilityEnd: null,
+        },
+        {
+          availabilityEnd: {
+            gte: moment().toDate(),
+          },
+        },
+      ],
     },
     include: {
       author: {
