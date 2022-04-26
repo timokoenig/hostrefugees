@@ -1,11 +1,10 @@
-import { Box, Heading, Text } from '@chakra-ui/react'
+import { HStack } from '@chakra-ui/react'
 import React from 'react'
-import { useTranslation } from 'react-i18next'
 import CategoryPicker from './category-picker'
 import CityPicker from './city-picker'
 
 type Filter = {
-  city: string
+  city: string[]
   category: string[]
 }
 
@@ -15,34 +14,20 @@ type Props = {
   onChange: (newFilter: Filter) => void
 }
 
-const ActivityFilter = (props: Props) => {
-  const { t } = useTranslation('common')
-  return (
-    <Box>
-      <Heading size="md">{t('filter')}</Heading>
-      <Box py="5">
-        <Text mb="2" fontSize="lg">
-          {t('city')}
-        </Text>
-        <CityPicker
-          availableValues={props.availableCities}
-          value={props.filter.city}
-          onChange={value => props.onChange({ ...props.filter, city: value })}
-          size="sm"
-        />
-      </Box>
-      <Box py="5">
-        <Text mb="2" fontSize="lg">
-          {t('category')}
-        </Text>
-        <CategoryPicker
-          value={props.filter.category}
-          onChange={value => props.onChange({ ...props.filter, category: value })}
-          size="sm"
-        />
-      </Box>
-    </Box>
-  )
-}
+const ActivityFilter = (props: Props) => (
+  <HStack mb="10">
+    <CityPicker
+      availableValues={props.availableCities}
+      value={props.filter.city}
+      onChange={value => props.onChange({ ...props.filter, city: value })}
+      size="sm"
+    />
+    <CategoryPicker
+      value={props.filter.category}
+      onChange={value => props.onChange({ ...props.filter, category: value })}
+      size="sm"
+    />
+  </HStack>
+)
 
 export default ActivityFilter

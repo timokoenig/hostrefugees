@@ -1,4 +1,4 @@
-import { Box, Center, Container, Flex, Heading, SimpleGrid, Spacer } from '@chakra-ui/react'
+import { Box, Container, Heading, SimpleGrid } from '@chakra-ui/react'
 import { Post, PostCategory } from '@prisma/client'
 import CustomButton from 'components/common/button'
 import ActivityFilter from 'components/post/activity-filter'
@@ -13,19 +13,19 @@ type Props = {
 }
 
 type Filter = {
-  city: string
+  city: string[]
   category: string[]
 }
 
 const PostComponent = (props: Props) => {
   const { t } = useTranslation('common')
   const router = useRouter()
-  const [filter, setFilter] = useState<Filter>({ city: '', category: [] })
+  const [filter, setFilter] = useState<Filter>({ city: [], category: [] })
 
   const filteredPosts = props.posts
     .filter(post => {
-      if (filter.city != '') {
-        return post.addressCity == filter.city
+      if (filter.city.length > 0 && post.addressCity) {
+        return filter.city.includes(post.addressCity)
       }
       return true
     })
@@ -43,14 +43,13 @@ const PostComponent = (props: Props) => {
 
   return (
     <Container maxW="7xl">
-      <Center mb="2">
+      <SimpleGrid mb="10" columns={{ base: 1, md: 2 }}>
         <Heading fontSize="4xl">{t('posts')}</Heading>
-      </Center>
-      <Flex mb="10">
-        <Spacer />
-        <CustomButton size="md" title={t('post.new')} onClick={() => router.push('/post/new')} />
-      </Flex>
-      <SimpleGrid templateColumns={{ sm: '1fr', md: '1fr 3fr', lg: '1fr 4fr' }} spacing={5}>
+        <Box textAlign="right">
+          <CustomButton size="md" title={t('post.new')} onClick={() => router.push('/post/new')} />
+        </Box>
+      </SimpleGrid>
+      <Box>
         <ActivityFilter
           availableCities={[
             ...new Set(
@@ -62,14 +61,12 @@ const PostComponent = (props: Props) => {
           filter={filter}
           onChange={setFilter}
         />
-        <Box>
-          <Box sx={{ columnCount: { base: 1, md: 2, lg: 3 }, columnGap: '8px' }}>
-            {filteredPosts.map(post => (
-              <PostItem key={post.id} post={post} active={props.selectedPostId == post.id} />
-            ))}
-          </Box>
+        <Box sx={{ columnCount: { base: 1, md: 2, lg: 3 }, columnGap: '8px' }}>
+          {filteredPosts.map(post => (
+            <PostItem key={post.id} post={post} active={props.selectedPostId == post.id} />
+          ))}
         </Box>
-      </SimpleGrid>
+      </Box>
     </Container>
   )
 }
