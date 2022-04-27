@@ -436,5 +436,27 @@
   "post.new.success.button": "Weiteren Beitrag erstellen",
   "post.category.picker": "Kategorie auswählen",
   "post.new.hint": "Hinweis: Sie müssen sich vor dem Absenden Ihres Beitrags mit Ihrem Benutzerdaten anmelden, wenn Sie den Beitrag zu einem späteren Zeitpunkt bearbeiten möchten.",
-  "post.update": "Aktivität aktualisieren"
+  "post.update": "Aktivität aktualisieren",
+
+  "email.password.reset": "Passwort zurücksetzen",
+  "email.password.reset.message": "Bitte klicken Sie auf den Link unten, um ein neues Passwort festzulegen.",
+  "email.password.reset.button": "Passwort zurücksetzen",
+  "email.approved": "Sie wurden verifiziert",
+  "email.approved.message": "Sie können jetzt Unterkünfte auf {{link}} anbieten",
+  "email.approved.button": "Neue Unterkunft hinzufügen",
+  "email.stayrequest": "Neue Aufenthaltsanfrage",
+  "email.stayrequest.message": "Sie haben eine neue Aufenthaltsanfrage für einen Ihrer Unterkünfte",
+  "email.stayrequest.button": "Anfrage anzeigen",
+  "email.stayrequest.accepted.guest": "Aufenthaltsanfrage angenommen",
+  "email.stayrequest.accepted.guest.message": "Ihre Aufenthaltsanfrage wurde angenommen.",
+  "email.stayrequest.accepted.guest.message.name": "Bitte kontaktieren Sie <b>{{name}}</b>",
+  "email.stayrequest.accepted.host": "Aufenthaltsanfrage angenommen",
+  "email.stayrequest.accepted.host.message": "Sie haben eine Aufenthaltsanfrage angenommen.",
+  "email.stayrequest.accepted.host.message.name": "Bitte kontaktieren Sie <b>{{name}}</b>",
+  "email.stayrequest.declined": "Aufenthaltsanfrage abgelehnt",
+  "email.stayrequest.declined.message": "Es tut uns leid, aber Ihre Aufenthaltsanfrage wurde abgelehnt. Dies kann aufgrund der Menge an Anfragen passieren, die ein Gastgeber im Moment erhält.",
+  "email.stayrequest.declined.message.host": "Nachricht vom Gastgeber",
+  "email.stayrequest.declined.button": "Nach anderen Orten suchen",
+  "email.stayrequest.canceled": "Aufenthaltsanfrage storniert",
+  "email.stayrequest.canceled.message": "Der Gast hat eine Aufenthaltsanfrage für Ihre Unterkunft storniert."
 }

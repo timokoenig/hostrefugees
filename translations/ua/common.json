@@ -437,5 +437,27 @@
   "post.new.success.button": "Створіть ще одну публікацію",
   "post.category.picker": "Виберіть категорію",
   "post.new.hint": "Примітка: вам потрібно увійти у свій обліковий запис, перш ніж надсилати свою публікацію, якщо ви хочете відредагувати її пізніше.",
-  "post.update": "Оновити допис"
+  "post.update": "Оновити допис",
+
+  "email.password.reset": "Скинути пароль",
+  "email.password.reset.message": "Щоб встановити новий пароль, натисніть посилання нижче.",
+  "email.password.reset.button": "Скинути пароль",
+  "email.approved": "Вас підтверджено",
+  "email.approved.message": "Тепер ви можете запропонувати проживання на {{link}}",
+  "email.approved.button": "Додати нову властивість",
+  "email.stayrequest": "Новий запит на проживання",
+  "email.stayrequest.message": "У вас є новий запит на проживання для одного з ваших об'єктів",
+  "email.stayrequest.button": "Показати запит",
+  "email.stayrequest.accepted.guest": "Запит на перебування прийнято",
+  "email.stayrequest.accepted.guest.message": "Ваш запит на проживання прийнято.",
+  "email.stayrequest.accepted.guest.message.name": "Зв'яжіться з <b>{{name}}</b>",
+  "email.stayrequest.accepted.host": "Запит на перебування прийнято",
+  "email.stayrequest.accepted.host.message": "Ви прийняли запит на перебування.",
+  "email.stayrequest.accepted.host.message.name": "Зв'яжіться з <b>{{name}}</b>",
+  "email.stayrequest.declined": "Запит на перебування відхилено",
+  "email.stayrequest.declined.message": "Вибачте, але ваш запит на перебування було відхилено. Це може статися через велику кількість запитів, які отримує хост на даний момент.",
+  "email.stayrequest.declined.message.host": "Повідомлення від хоста",
+  "email.stayrequest.declined.button": "Шукати інші місця",
+  "email.stayrequest.canceled": "Запит на перебування скасовано",
+  "email.stayrequest.canceled.message": "Гість скасував запит на проживання для вашого запису."
 }

@@ -411,5 +411,27 @@
   "post.new.success.button": "Utwórz kolejny post",
   "post.category.picker": "Wybierz kategorię",
   "post.new.hint": "Uwaga: Musisz zalogować się na swoje konto przed przesłaniem swojego posta, jeśli chcesz go później edytować.",
-  "post.update": "Aktualizuj post"
+  "post.update": "Aktualizuj post",
+
+  "email.password.reset": "Zresetuj hasło",
+  "email.password.reset.message": "Kliknij poniższy link, aby ustawić nowe hasło.",
+  "email.password.reset.button": "Zresetuj hasło",
+  "email.approved": "Zostałeś zweryfikowany",
+  "email.approved.message": "Możesz teraz oferować zakwaterowanie na {{link}}",
+  "email.approved.button": "Dodaj nową właściwość",
+  "email.stayrequest": "Nowa prośba o pobyt",
+  "email.stayrequest.message": "Masz nowy wniosek o pobyt dla jednej ze swoich nieruchomości",
+  "email.stayrequest.button": "Pokaż prośbę",
+  "email.stayrequest.accepted.guest": "Prośba o pobyt zaakceptowana",
+  "email.stayrequest.accepted.guest.message": "Twoja prośba o pobyt została zaakceptowana.",
+  "email.stayrequest.accepted.guest.message.name": "Proszę o kontakt z <b>{{name}}</b>",
+  "email.stayrequest.accepted.host": "Prośba o pozostanie zaakceptowana",
+  "email.stayrequest.accepted.host.message": "Zaakceptowałeś prośbę o pobyt.",
+  "email.stayrequest.accepted.host.message.name": "Proszę o kontakt z <b>{{name}}</b>",
+  "email.stayrequest.declined": "Prośba o pobyt odrzucona",
+  "email.stayrequest.declined.message": "Przepraszamy, ale twoja prośba o pobyt została odrzucona. Może się to zdarzyć ze względu na ilość próśb otrzymywanych w tej chwili przez gospodarza.",
+  "email.stayrequest.declined.message.host": "Wiadomość od hosta",
+  "email.stayrequest.declined.button": "Wyszukaj inne lokalizacje",
+  "email.stayrequest.canceled": "Prośba o pobyt anulowana",
+  "email.stayrequest.canceled.message": "Gość anulował prośbę o pobyt dla Twojej oferty."
 }

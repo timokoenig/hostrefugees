@@ -437,5 +437,27 @@
   "post.new.success.button": "Создать другой пост",
   "post.category.picker": "Выберите категорию",
   "post.new.hint": "Примечание. Вам необходимо войти в свою учетную запись перед отправкой сообщения, если вы хотите отредактировать его позже.",
-  "post.update": "Обновить сообщение"
+  "post.update": "Обновить сообщение",
+
+  "email.password.reset": "Сбросить пароль",
+  "email.password.reset.message": "Пожалуйста, нажмите на ссылку ниже, чтобы установить новый пароль.",
+  "email.password.reset.button": "Сбросить пароль",
+  "email.approved": "Вы прошли проверку",
+  "email.approved.message": "Теперь вы можете предлагать размещение на {{link}}",
+  "email.approved.button": "Добавить новое свойство",
+  "email.stayrequest": "Новый запрос на пребывание",
+  "email.stayrequest.message": "У вас есть новый запрос на пребывание для одного из ваших объектов",
+  "email.stayrequest.button": "Показать запрос",
+  "email.stayrequest.accepted.guest": "Запрос на пребывание принят",
+  "email.stayrequest.accepted.guest.message": "Ваш запрос на пребывание принят.",
+  "email.stayrequest.accepted.guest.message.name": "Пожалуйста, свяжитесь с <b>{{name}}</b>",
+  "email.stayrequest.accepted.host": "Запрос на пребывание принят",
+  "email.stayrequest.accepted.host.message": "Вы приняли запрос на пребывание.",
+  "email.stayrequest.accepted.host.message.name": "Пожалуйста, свяжитесь с <b>{{name}}</b>",
+  "email.stayrequest.declined": "Запрос на пребывание отклонен",
+  "email.stayrequest.declined.message": "К сожалению, ваш запрос на пребывание был отклонен. Это может произойти из-за большого количества запросов, которые хост получает в данный момент.",
+  "email.stayrequest.declined.message.host": "Сообщение от хоста",
+  "email.stayrequest.declined.button": "Искать другие местоположения",
+  "email.stayrequest.canceled": "Запрос на пребывание отменен",
+  "email.stayrequest.canceled.message": "Гость отменил запрос на пребывание для вашего объявления."
 }

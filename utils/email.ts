@@ -3,6 +3,7 @@ import { Place, Request, User } from '@prisma/client'
 import { MessageHeaders, SMTPClient } from 'emailjs'
 import fs from 'fs'
 import path from 'path'
+import i18n from 'utils/i18next'
 
 const emailPath = path.resolve('utils/email-template.html')
 
@@ -44,11 +45,37 @@ const footer = (): string => {
   <br>${process.env.CONTACT_ADDRESS_CITY}, ${process.env.CONTACT_ADDRESS_COUNTRY}`
 }
 
+const translation = (user: User, key: string): string => {
+  let language = 'en'
+  if (user.languages.includes('pl')) {
+    language = 'pl'
+  }
+  if (user.languages.includes('ru')) {
+    language = 'ru'
+  }
+  if (user.languages.includes('ua')) {
+    language = 'ua'
+  }
+  if (user.languages.includes('en')) {
+    language = 'en'
+  }
+  if (user.languages.includes('de')) {
+    language = 'de'
+  }
+  return i18n.t(key, { ns: 'common', lng: language })
+}
+
 export const emailPasswordReset = (user: User, hash: string): MessageHeaders => {
-  const subject = 'HostRefugees - Password Reset'
+  const subject = `HostRefugees - ${translation(user, 'email.password.reset')}`
   const textHtml = [
-    titleAndParagraph('Password Reset', 'Please click the link below to set a new password.'),
-    button('Reset Password', `https://hostrefugees.eu/reset-password?hash=${hash}`),
+    titleAndParagraph(
+      translation(user, 'email.password.reset'),
+      translation(user, 'email.password.message')
+    ),
+    button(
+      translation(user, 'email.password.button'),
+      `https://hostrefugees.eu/reset-password?hash=${hash}`
+    ),
   ].join('')
 
   let content = fs.readFileSync(emailPath, 'utf-8')
@@ -65,13 +92,19 @@ export const emailPasswordReset = (user: User, hash: string): MessageHeaders => 
 }
 
 export const emailApprovedUser = (user: User): MessageHeaders => {
-  const subject = 'You have been approved'
+  const subject = translation(user, 'email.approved')
   const textHtml = [
     titleAndParagraph(
-      'You have been approved',
-      `You can now offer places on ${link('HostRefugees.eu', 'https://hostrefugees.eu')}`
+      translation(user, 'email.approved'),
+      translation(user, 'email.approved.message').replace(
+        '{{link}}',
+        link('HostRefugees.eu', 'https://hostrefugees.eu')
+      )
     ),
-    button('Add new place', 'https://hostrefugees.eu/dashboard/place/new'),
+    button(
+      translation(user, 'email.approved.button'),
+      'https://hostrefugees.eu/dashboard/place/new'
+    ),
   ].join('')
 
   let content = fs.readFileSync(emailPath, 'utf-8')
@@ -90,10 +123,18 @@ export const emailApprovedUser = (user: User): MessageHeaders => {
 export const emailNewRequest = (
   request: Request & { place: Place & { author: User }; author: User }
 ): MessageHeaders => {
-  const subject = `New Stay Request - ${request.place.title}`
+  const subject = `${translation(request.place.author, 'email.stayrequest')} - ${
+    request.place.title
+  }`
   const textHtml = [
-    titleAndParagraph('New Stay Request', 'You have a new stay request for one of your places'),
-    button('Show Request', 'https://hostrefugees.eu/dashboard'),
+    titleAndParagraph(
+      translation(request.place.author, 'email.stayrequest'),
+      translation(request.place.author, 'email.stayrequest.message')
+    ),
+    button(
+      translation(request.place.author, 'email.stayrequest.button'),
+      'https://hostrefugees.eu/dashboard'
+    ),
   ].join('')
 
   let content = fs.readFileSync(emailPath, 'utf-8')
@@ -112,14 +153,28 @@ export const emailNewRequest = (
 export const emailAcceptRequestGuest = (
   request: Request & { place: Place & { author: User }; author: User }
 ): MessageHeaders => {
-  const subject = `Stay Request Accepted - ${request.place.title}`
+  const subject = `${translation(request.author, 'email.stayrequest.accepted.guest')} - ${
+    request.place.title
+  }`
   const textHtml = [
-    titleAndParagraph('Stay Request Accepted', 'Your stay request has been accepted.'),
-    paragraph(
-      `Please get in touch with <b>${request.place.author.firstname} ${request.place.author.lastname}</b>`
+    titleAndParagraph(
+      translation(request.author, 'email.stayrequest.accepted.guest'),
+      translation(request.author, 'email.stayrequest.accepted.guest.message')
     ),
     paragraph(
-      `Email: ${request.place.author.email}<br>Phone: ${request.place.phoneNumber}<br><br>Arrival Instructions:<br>${request.place.arrivalInstructions}`
+      translation(request.author, 'email.stayrequest.accepted.guest.message.name').replace(
+        '{{name}}',
+        `${request.place.author.firstname} ${request.place.author.lastname}`
+      )
+    ),
+    paragraph(
+      `${translation(request.author, 'email')}: ${request.place.author.email}<br>${translation(
+        request.author,
+        'phone'
+      )}: ${request.place.phoneNumber}<br><br>${translation(
+        request.author,
+        'dashboard.place.arrival'
+      )}:<br>${request.place.arrivalInstructions}`
     ),
   ].join('')
 
@@ -139,13 +194,26 @@ export const emailAcceptRequestGuest = (
 export const emailAcceptRequestHost = (
   request: Request & { place: Place & { author: User }; author: User }
 ): MessageHeaders => {
-  const subject = `Stay Request Accepted - ${request.place.title}`
+  const subject = `${translation(request.place.author, 'email.stayrequest.accepted.host')} - ${
+    request.place.title
+  }`
   const textHtml = [
-    titleAndParagraph('Stay Request Accepted', 'You accepted a stay request.'),
-    paragraph(
-      `Please get in touch with <b>${request.author.firstname} ${request.author.lastname}</b>`
+    titleAndParagraph(
+      translation(request.place.author, 'email.stayrequest.accepted.host'),
+      translation(request.place.author, 'email.stayrequest.accepted.host.message')
     ),
-    paragraph(`Email: ${request.author.email}<br>Phone: ${request.phoneNumber}`),
+    paragraph(
+      translation(request.place.author, 'email.stayrequest.accepted.host').replace(
+        '{{name}}',
+        `${request.author.firstname} ${request.author.lastname}`
+      )
+    ),
+    paragraph(
+      `${translation(request.place.author, 'email')}: ${request.author.email}<br>${translation(
+        request.place.author,
+        'phone'
+      )}: ${request.phoneNumber}`
+    ),
   ].join('')
 
   let content = fs.readFileSync(emailPath, 'utf-8')
@@ -164,14 +232,25 @@ export const emailAcceptRequestHost = (
 export const emailDeclineRequest = (
   request: Request & { place: Place & { author: User }; author: User }
 ): MessageHeaders => {
-  const subject = `Stay Request Declined - ${request.place.title}`
+  const subject = `${translation(request.author, 'email.stayrequest.declined')} - ${
+    request.place.title
+  }`
   const textHtml = [
     titleAndParagraph(
-      'Stay Request Declined',
-      'We are sorry but your stay request has been declined. This can happend due to the amount of requests a host receives at the moment.'
+      translation(request.author, 'email.stayrequest.declined'),
+      translation(request.author, 'email.stayrequest.declined.message')
     ),
-    request.message ? paragraph(`Message from the host:<br>${request.message}`) : '',
-    button('Look for other places', 'https://hostrefugees.eu/place'),
+    request.message
+      ? paragraph(
+          `${translation(request.author, 'email.stayrequest.declined.message.host')}:<br>${
+            request.message
+          }`
+        )
+      : '',
+    button(
+      translation(request.author, 'email.stayrequest.declined.button'),
+      'https://hostrefugees.eu/place'
+    ),
   ].join('')
 
   let content = fs.readFileSync(emailPath, 'utf-8')
@@ -190,9 +269,14 @@ export const emailDeclineRequest = (
 export const emailCancelRequest = (
   request: Request & { place: Place & { author: User }; author: User }
 ): MessageHeaders => {
-  const subject = `Stay Request Canceled - ${request.place.title}`
+  const subject = `${translation(request.place.author, 'email.stayrequest.canceled')} - ${
+    request.place.title
+  }`
   const textHtml = [
-    titleAndParagraph('Stay Request Canceled', 'The guest canceled a stay request for your place.'),
+    titleAndParagraph(
+      translation(request.place.author, 'email.stayrequest.canceled'),
+      translation(request.place.author, 'email.stayrequest.canceled.message')
+    ),
   ].join('')
 
   let content = fs.readFileSync(emailPath, 'utf-8')
