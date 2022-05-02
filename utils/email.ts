@@ -292,6 +292,36 @@ export const emailCancelRequest = (
   }
 }
 
+export const emailRequestReminder = (
+  request: Request & { place: Place & { author: User }; author: User }
+): MessageHeaders => {
+  const subject = `${translation(request.place.author, 'email.stayrequest.reminder')} - ${
+    request.place.title
+  }`
+  const textHtml = [
+    titleAndParagraph(
+      translation(request.place.author, 'email.stayrequest.reminder'),
+      translation(request.place.author, 'email.stayrequest.reminder.message')
+    ),
+    button(
+      translation(request.place.author, 'email.stayrequest.reminder.button'),
+      `https://hostrefugees.eu/dashboard/request/${request.id}`
+    ),
+  ].join('')
+
+  let content = fs.readFileSync(emailPath, 'utf-8')
+  content = content.replace('{{BODY}}', textHtml)
+  content = content.replace('{{FOOTER}}', footer())
+
+  return {
+    text: '',
+    from: `${process.env.EMAIL_NAME} <${process.env.EMAIL_EMAIL}>`,
+    to: `${request.place.author.firstname} <${request.place.author.email}>`,
+    subject,
+    attachment: [{ data: content, alternative: true }],
+  }
+}
+
 export const sendEmail = async (msg: MessageHeaders) => {
   if (process.env.EMAIL_ENABLE != 'true') return
   try {

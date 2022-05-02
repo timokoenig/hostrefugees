@@ -39,6 +39,8 @@ AWS_S3_BUCKET_USER=xxx
 
 SECRET_COOKIE_PASSWORD=complex_password_at_least_32_characters_long
 NODE_ENV=development
+
+CRON_API_KEY=xxx
 ```
 
 Then run the following two commands to start your local server:

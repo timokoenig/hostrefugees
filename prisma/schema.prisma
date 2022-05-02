@@ -129,6 +129,7 @@ model Request {
   phoneNumber      String?        @map("phone_number")
   status           RequestStatus?
   message          String?
+  reminderSentAt   DateTime?      @map("reminder_sent_at")
   userId           String         @map("user_id")
   placeId          String         @map("place_id")
   safetyChecks     SafetyCheck[]

@@ -459,5 +459,8 @@
   "email.stayrequest.declined.message.host": "Сообщение от хоста",
   "email.stayrequest.declined.button": "Искать другие местоположения",
   "email.stayrequest.canceled": "Запрос на пребывание отменен",
-  "email.stayrequest.canceled.message": "Гость отменил запрос на пребывание для вашего объявления."
+  "email.stayrequest.canceled.message": "Гость отменил запрос на пребывание для вашего объявления.",
+  "email.stayrequest.reminder": "Напоминание о запросе на пребывание",
+  "email.stayrequest.reminder.message": "У вас есть открытый запрос от гостя. Пожалуйста, примите или отклоните запрос.",
+  "email.stayrequest.reminder.button": "Показать запрос"
 }

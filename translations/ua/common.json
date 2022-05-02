@@ -459,5 +459,8 @@
   "email.stayrequest.declined.message.host": "Повідомлення від хоста",
   "email.stayrequest.declined.button": "Шукати інші місця",
   "email.stayrequest.canceled": "Запит на перебування скасовано",
-  "email.stayrequest.canceled.message": "Гість скасував запит на проживання для вашого запису."
+  "email.stayrequest.canceled.message": "Гість скасував запит на проживання для вашого запису.",
+  "email.stayrequest.reminder": "Нагадування про запит на перебування",
+  "email.stayrequest.reminder.message": "У вас відкритий запит від гостя. Будь ласка, прийміть або відхиліть запит.",
+  "email.stayrequest.reminder.button": "Показати запит"
 }

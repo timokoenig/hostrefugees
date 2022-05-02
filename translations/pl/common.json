@@ -433,5 +433,8 @@
   "email.stayrequest.declined.message.host": "Wiadomość od hosta",
   "email.stayrequest.declined.button": "Wyszukaj inne lokalizacje",
   "email.stayrequest.canceled": "Prośba o pobyt anulowana",
-  "email.stayrequest.canceled.message": "Gość anulował prośbę o pobyt dla Twojej oferty."
+  "email.stayrequest.canceled.message": "Gość anulował prośbę o pobyt dla Twojej oferty.",
+  "email.stayrequest.reminder": "Przypomnienie o prośbie o pobyt",
+  "email.stayrequest.reminder.message": "Masz otwartą prośbę od gościa. Zaakceptuj lub odrzuć prośbę.",
+  "email.stayrequest.reminder.button": "Pokaż żądanie"
 }

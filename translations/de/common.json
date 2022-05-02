@@ -458,5 +458,8 @@
   "email.stayrequest.declined.message.host": "Nachricht vom Gastgeber",
   "email.stayrequest.declined.button": "Nach anderen Orten suchen",
   "email.stayrequest.canceled": "Aufenthaltsanfrage storniert",
-  "email.stayrequest.canceled.message": "Der Gast hat eine Aufenthaltsanfrage für Ihre Unterkunft storniert."
+  "email.stayrequest.canceled.message": "Der Gast hat eine Aufenthaltsanfrage für Ihre Unterkunft storniert.",
+  "email.stayrequest.reminder": "Aufenthaltsanfrage-Erinnerung",
+  "email.stayrequest.reminder.message": "Sie haben eine offene Anfrage von einem Gast. Bitte nehmen Sie die Anfrage an oder lehnen Sie diese ab.",
+  "email.stayrequest.reminder.button": "Anfrage anzeigen"
 }
