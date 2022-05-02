@@ -12,7 +12,7 @@ import {
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react'
-import { BathroomType, HostType, Place, PlaceType } from '@prisma/client'
+import { BathroomType, Feature, HostType, Place, PlaceType } from '@prisma/client'
 import DatePicker from 'components/common/datepicker'
 import NumberInput from 'components/place/number-input'
 import { useFormik } from 'formik'
@@ -251,7 +251,7 @@ const PeopleForm = (props: Props) => {
               isDisabled={formik.isSubmitting}
               isInvalid={formik.errors.rooms !== undefined && formik.touched.rooms}
             >
-              <FormLabel htmlFor="rooms">{t('rooms')}</FormLabel>
+              <FormLabel htmlFor="rooms">{t('rooms', { count: 2 })}</FormLabel>
               <NumberInput
                 active={false}
                 min={1}
@@ -267,7 +267,7 @@ const PeopleForm = (props: Props) => {
               isDisabled={formik.isSubmitting}
               isInvalid={formik.errors.beds !== undefined && formik.touched.beds}
             >
-              <FormLabel htmlFor="beds">{t('beds')}</FormLabel>
+              <FormLabel htmlFor="beds">{t('beds', { count: 2 })}</FormLabel>
               <NumberInput
                 active={false}
                 min={1}
@@ -320,6 +320,28 @@ const PeopleForm = (props: Props) => {
                 onChange={newVal => formik.setFieldValue('children', newVal)}
               />
               <FormErrorMessage>{formik.errors.children}</FormErrorMessage>
+            </FormControl>
+
+            <FormControl isDisabled={formik.isSubmitting}>
+              <FormLabel htmlFor="pets">{t('dashboard.place.onlywomen')}</FormLabel>
+              <Switch
+                id="onlywomen"
+                size="lg"
+                isChecked={formik.values.features.includes(Feature.ALLOW_ONLY_WOMEN)}
+                onChange={async () => {
+                  if (formik.values.features.includes(Feature.ALLOW_ONLY_WOMEN)) {
+                    await formik.setFieldValue(
+                      'features',
+                      formik.values.features.filter(f => f != Feature.ALLOW_ONLY_WOMEN)
+                    )
+                  } else {
+                    await formik.setFieldValue('features', [
+                      ...formik.values.features,
+                      Feature.ALLOW_ONLY_WOMEN,
+                    ])
+                  }
+                }}
+              />
             </FormControl>
 
             <FormControl isDisabled={formik.isSubmitting}>

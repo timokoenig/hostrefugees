@@ -354,6 +354,7 @@
   "dashboard.place.anymen": "Do any men live in the place?",
   "dashboard.place.hostadults": "How many adults can you host?",
   "dashboard.place.hostchildren": "How many children can you host?",
+  "dashboard.place.onlywomen": "Do you only allow women to stay at your place?",
   "dashboard.place.pets": "Are guests allowed to bring pets?",
   "dashboard.place.address": "Place Address",
   "dashboard.place.address.info": "Only the city will be visible to everyone. The exact location will only be shared with the guest when you accept a stay request.",

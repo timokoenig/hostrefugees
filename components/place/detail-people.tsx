@@ -10,7 +10,7 @@ import {
   Text,
   useColorModeValue,
 } from '@chakra-ui/react'
-import { BathroomType, Request } from '@prisma/client'
+import { BathroomType, Feature, Request } from '@prisma/client'
 import CustomButton from 'components/common/button'
 import { useRouter } from 'next/router'
 import React from 'react'
@@ -155,7 +155,8 @@ export default function DetailPeople(props: Props) {
               <Text as="span" fontWeight="bold">
                 {t('adults')}:
               </Text>{' '}
-              {props.place.adults}
+              {props.place.adults}{' '}
+              {props.place.features.includes(Feature.ALLOW_ONLY_WOMEN) ? `(${t('onlywomen')})` : ''}
             </ListItem>
             <ListItem>
               <Text as="span" fontWeight="bold">

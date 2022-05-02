@@ -58,6 +58,7 @@ enum Feature {
   PET_CAT
   PET_DOG
   PET_OTHER
+  ALLOW_ONLY_WOMEN
 }
 
 model Place {
