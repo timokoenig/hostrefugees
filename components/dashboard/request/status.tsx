@@ -9,7 +9,7 @@ type Props = {
 
 const Status = (props: Props): JSX.Element => (
   <Box backgroundColor={props.color} rounded="xl" textAlign="center" p="5" color="white">
-    <Heading size="md" mb="2">
+    <Heading size="sm" mb="2">
       {props.title}
     </Heading>
     {props.children}

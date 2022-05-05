@@ -1,27 +1,16 @@
-import { GridItem, SimpleGrid, Text, useDisclosure } from '@chakra-ui/react'
+import { Text } from '@chakra-ui/react'
 import { RequestStatus } from '@prisma/client'
 import parse from 'html-react-parser'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import Button from '../../common/button'
-import DeclineModal from './decline-modal'
 import Status from './status'
 
 type Props = {
   status: RequestStatus | null
-  onAccept: () => void
-  onDecline: (message: string | null) => void
 }
 
-const StatusHost = (props: Props): JSX.Element => {
+const StatusHost = (props: Props): JSX.Element | null => {
   const { t } = useTranslation('common')
-  const { isOpen, onOpen, onClose } = useDisclosure()
-
-  const onCloseDeclineModal = (confirm: boolean, message: string | null) => {
-    onClose()
-    if (!confirm) return
-    props.onDecline(message)
-  }
 
   switch (props.status) {
     case RequestStatus.ACCEPTED:
@@ -43,19 +32,7 @@ const StatusHost = (props: Props): JSX.Element => {
         </Status>
       )
     default:
-      return (
-        <>
-          <SimpleGrid columns={3} spacing={5}>
-            <GridItem>
-              <Button title={t('decline')} color="red.500" fullWidth onClick={onOpen} />
-            </GridItem>
-            <GridItem colSpan={2}>
-              <Button title={t('accept')} color="green.500" fullWidth onClick={props.onAccept} />
-            </GridItem>
-          </SimpleGrid>
-          <DeclineModal isOpen={isOpen} onClose={onCloseDeclineModal} />
-        </>
-      )
+      return null
   }
 }
 

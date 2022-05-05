@@ -195,7 +195,7 @@
   "request.dashboard": "Check out your pending requests",
   "request.archive": "Request Archive",
   "request.archive.empty": "No requests older than 14 days",
-  "request.detail": "Stay Request Details",
+  "request.detail": "Stay Request",
   "request.detail.requested": "Requested on",
   "request.new": "Request to stay",
   "request.new.guests": "How many people want to stay at this place?",
@@ -417,6 +417,7 @@
   "welcomegermany.covid.test.3": "Rapid tests are only valid for 24 hours",
 
   "chat.showlatest": "Show Latest Message",
+  "chat.info": "You can also exchange a few words with the guest before you make a decision",
 
   "email.host.approved": "You have been approved",
   "email.host.approved.message": "You can now offer places on",

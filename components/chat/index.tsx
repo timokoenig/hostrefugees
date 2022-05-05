@@ -1,19 +1,16 @@
-import { Box, Button, Flex, Input, List, useColorModeValue } from '@chakra-ui/react'
-import moment from 'moment'
+import { Box, Button, Flex, List, Textarea, useColorModeValue } from '@chakra-ui/react'
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import ChatBubble from './bubble'
-import ChatBubbleDate from './bubble-date'
-import ChatBubbleInfo from './bubble-info'
+import ScrollButton from './scroll-button'
 
 type Props = {
-  items: string[]
+  children: JSX.Element[]
+  chatEnabled: boolean
 }
 
 const Chat = (props: Props) => {
   const { t } = useTranslation('common')
   const listRef = useRef<HTMLUListElement>(null)
-  const [items, setItems] = useState<string[]>(props.items)
   const [showScrollButton, setShowScrollButton] = useState<boolean>(false)
   const [message, setMessage] = useState<string>('')
 
@@ -33,7 +30,7 @@ const Chat = (props: Props) => {
   }
 
   const onSend = () => {
-    setItems([...items, message])
+    // setItems([...items, message])
     setMessage('')
     setTimeout(() => {
       scrollToBottom(false)
@@ -42,58 +39,44 @@ const Chat = (props: Props) => {
 
   useEffect(() => {
     scrollToBottom(false)
-  }, [])
+  }, [props.children])
 
   return (
     <Box
       position="relative"
       borderWidth="1px"
-      borderColor={useColorModeValue('gray.300', 'gray.700')}
+      borderColor={useColorModeValue('gray.200', 'gray.700')}
       borderRadius="10"
       overflow="hidden"
       p="2"
+      mb="5"
     >
       <List
         ref={listRef}
         maxHeight="500px"
-        overflow="scroll"
+        overflowY="scroll"
+        overflowX="hidden"
         px="2"
         mb="5"
-        pt="10"
         onScroll={onScroll}
       >
-        <ChatBubbleDate date={moment().toDate()} />
-        <ChatBubbleInfo>Test</ChatBubbleInfo>
-        {items.map((item, key) => (
-          <ChatBubble key={key} position="right">
-            {item}
-          </ChatBubble>
-        ))}
-        {showScrollButton && (
-          <Flex width="100%" position="absolute" bottom="20">
-            <Button
-              colorScheme="blue"
-              onClick={() => scrollToBottom(true)}
-              marginLeft="auto"
-              marginRight="auto"
-              size="sm"
-            >
-              {t('chat.showlatest')}
-            </Button>
-          </Flex>
-        )}
+        {props.children}
+        {showScrollButton && <ScrollButton onClick={() => scrollToBottom(true)} />}
       </List>
-      <Flex flexDirection="row">
-        <Input
-          placeholder={t('send.message')}
-          mr="2"
-          value={message}
-          onChange={e => setMessage(e.target.value)}
-        />
-        <Button isDisabled={message.trim() == ''} onClick={onSend}>
-          {t('send')}
-        </Button>
-      </Flex>
+      {props.chatEnabled && (
+        <Flex flexDirection="row">
+          <Textarea
+            placeholder={t('send.message')}
+            mr="2"
+            rows={1}
+            value={message}
+            onChange={e => setMessage(e.target.value)}
+          />
+          <Button isDisabled={message.trim() == ''} onClick={onSend}>
+            {t('send')}
+          </Button>
+        </Flex>
+      )}
     </Box>
   )
 }

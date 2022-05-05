@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next'
 
 type Props = {
   request: Request
+  isSelected?: boolean
 }
 
 const StatusBadge = (props: { status: RequestStatus | null }): JSX.Element => {
@@ -44,6 +45,8 @@ const StatusBadge = (props: { status: RequestStatus | null }): JSX.Element => {
 const RequestItem = (props: Props) => {
   const { t } = useTranslation('common')
   const router = useRouter()
+  const hoverBackgroundColor = useColorModeValue('gray.100', 'gray.900')
+
   return (
     <ListItem onClick={() => router.push(`/dashboard/request/${props.request.id}`)}>
       <Box
@@ -51,7 +54,8 @@ const RequestItem = (props: Props) => {
         borderRadius="lg"
         overflow="hidden"
         cursor="pointer"
-        _hover={{ background: useColorModeValue('gray.100', 'gray.900') }}
+        _hover={{ background: hoverBackgroundColor }}
+        backgroundColor={props.isSelected === true ? hoverBackgroundColor : undefined}
       >
         <Box p="6">
           <Box display="flex" alignItems="baseline">

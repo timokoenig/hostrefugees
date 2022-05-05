@@ -8,7 +8,7 @@ type Props = {
 
 const ChatBubbleDate = (props: Props) => {
   return (
-    <Flex mb="4" position="relative">
+    <Flex mb="4" mt="8" position="relative">
       <Box flex="1" height="1px" backgroundColor={useColorModeValue('gray.300', 'gray.700')} />
       <Box position="absolute" top="-12px" textAlign="center" width="100%">
         <Text

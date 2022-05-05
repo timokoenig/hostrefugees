@@ -39,7 +39,7 @@ const ChatBubble = (props: Props) => {
       mb="2"
     >
       <Box
-        backgroundColor={alignLeft ? 'gray.200' : 'blue.500'}
+        backgroundColor={alignLeft ? 'gray.100' : 'blue.500'}
         position="relative"
         marginLeft={alignRight ? 'auto' : undefined}
         marginRight={alignLeft ? 'auto' : undefined}
@@ -50,7 +50,7 @@ const ChatBubble = (props: Props) => {
           content: '""',
           position: 'absolute',
           bottom: '0',
-          height: '25px',
+          height: '20px',
           width: '20px',
           backgroundColor: alignLeft ? 'gray.200' : 'blue.500',
           ...tailBefore,
@@ -59,7 +59,7 @@ const ChatBubble = (props: Props) => {
           content: '""',
           position: 'absolute',
           bottom: '0',
-          height: '25px',
+          height: '20px',
           width: '26px',
           backgroundColor: useColorModeValue('white', 'gray.800'),
           ...tailAfter,
@@ -67,7 +67,7 @@ const ChatBubble = (props: Props) => {
       >
         <Box position="relative" zIndex="10">
           {typeof props.children == 'string' ? (
-            <Text wordBreak="break-word" color={alignLeft ? 'gray.700' : 'white'}>
+            <Text wordBreak="break-word" color={alignLeft ? 'gray.700' : 'white'} fontSize="14">
               {props.children}
             </Text>
           ) : (
