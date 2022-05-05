@@ -114,26 +114,27 @@ enum RequestStatus {
 }
 
 model Request {
-  id               String         @id @default(uuid())
-  createdAt        DateTime       @default(now()) @map("created_at")
-  updatedAt        DateTime       @default(now()) @map("updated_at")
-  author           User           @relation(fields: [userId], references: [id])
-  place            Place          @relation(fields: [placeId], references: [id])
-  adults           Int            @default(0)
-  children         Int            @default(0)
-  pets             Boolean        @default(false)
-  petsNumber       Int?           @map("pets_number")
-  startDate        DateTime       @map("start_date")
-  endDate          DateTime?      @map("end_date")
-  about            String
-  aboutTranslation Json?          @map("about_translation")
-  phoneNumber      String?        @map("phone_number")
-  status           RequestStatus?
-  message          String?
-  reminderSentAt   DateTime?      @map("reminder_sent_at")
-  userId           String         @map("user_id")
-  placeId          String         @map("place_id")
-  safetyChecks     SafetyCheck[]
+  id                 String         @id @default(uuid())
+  createdAt          DateTime       @default(now()) @map("created_at")
+  updatedAt          DateTime       @default(now()) @map("updated_at")
+  author             User           @relation(fields: [userId], references: [id])
+  place              Place          @relation(fields: [placeId], references: [id])
+  adults             Int            @default(0)
+  children           Int            @default(0)
+  pets               Boolean        @default(false)
+  petsNumber         Int?           @map("pets_number")
+  startDate          DateTime       @map("start_date")
+  endDate            DateTime?      @map("end_date")
+  about              String
+  aboutTranslation   Json?          @map("about_translation")
+  phoneNumber        String?        @map("phone_number")
+  status             RequestStatus?
+  message            String?
+  messageTranslation Json?          @map("message_translation")
+  reminderSentAt     DateTime?      @map("reminder_sent_at")
+  userId             String         @map("user_id")
+  placeId            String         @map("place_id")
+  safetyChecks       SafetyCheck[]
 }
 
 model SafetyCheck {

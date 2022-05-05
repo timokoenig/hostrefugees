@@ -18,6 +18,7 @@ import {
   sendEmail,
 } from 'utils/email'
 import { withSessionRoute } from 'utils/session'
+import translateAll, { Translation } from 'utils/translate-all'
 import * as Yup from 'yup'
 
 interface UpdateRequest extends NextApiRequest {
@@ -75,6 +76,10 @@ async function handleUpdateRequest(req: UpdateRequest, res: NextApiResponse) {
     return
   }
 
+  const messageTranslation: Translation | undefined = body.message
+    ? await translateAll(body.message)
+    : undefined
+
   const updatedRequest = await prisma.request.update({
     where: {
       id: requestId,
@@ -83,6 +88,7 @@ async function handleUpdateRequest(req: UpdateRequest, res: NextApiResponse) {
       updatedAt: new Date(),
       status: body.status,
       message: body.message,
+      messageTranslation,
     },
     include: {
       author: true,

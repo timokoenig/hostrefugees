@@ -6,6 +6,7 @@ import moment from 'moment'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { MappedUser } from 'utils/models'
+import showTranslation from 'utils/show-translation'
 import Chat from '.'
 import ChatBubble from './bubble'
 import ChatBubbleDate from './bubble-date'
@@ -113,7 +114,9 @@ const RequestChat = (props: Props) => {
     }
     if (props.request.status == RequestStatus.DECLINED && props.request.message != null) {
       tmpItems[moment(props.request.updatedAt).add(1, 'minute').toISOString()] = (
-        <ChatBubble position="right">{props.request.message}</ChatBubble>
+        <ChatBubble position="right">
+          {showTranslation(props.request.message, props.request.messageTranslation)}
+        </ChatBubble>
       )
     }
     // tmpItems[moment().add(1, 'day').toISOString()] = <ChatBubble position="right">Test</ChatBubble>
