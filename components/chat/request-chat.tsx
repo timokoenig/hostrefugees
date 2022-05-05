@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { ListItem, useDisclosure, useToast } from '@chakra-ui/react'
-import { Place, Request, RequestStatus, User, UserRole } from '@prisma/client'
+import { Message, Place, Request, RequestStatus, User, UserRole } from '@prisma/client'
 import DeclineModal from 'components/dashboard/request/decline-modal'
 import moment from 'moment'
 import { useRouter } from 'next/router'
@@ -16,6 +16,7 @@ import ChatBubbleStatus from './bubble-status'
 type Props = {
   request: Request & { place: Place; author: User }
   user: MappedUser
+  messages: Message[]
 }
 
 type Items = {
@@ -65,13 +66,7 @@ const RequestChat = (props: Props) => {
       if (res.ok) {
         router.reload()
       } else {
-        toast({
-          title: 'Request failed',
-          description: 'Please try again',
-          status: 'error',
-          duration: 2000,
-          isClosable: true,
-        })
+        throw new Error(res.statusText)
       }
     } catch {
       toast({
@@ -90,7 +85,7 @@ const RequestChat = (props: Props) => {
     await updateRequestStatus(RequestStatus.DECLINED, message)
   }
 
-  useEffect(() => {
+  const reloadItems = () => {
     const tmpItems: Items = {}
     tmpItems[props.request.createdAt.toISOString()] = (
       <ChatBubbleInfo
@@ -119,9 +114,45 @@ const RequestChat = (props: Props) => {
         </ChatBubble>
       )
     }
-    // tmpItems[moment().add(1, 'day').toISOString()] = <ChatBubble position="right">Test</ChatBubble>
-    // TODO add chat messages
+    for (const msg of props.messages) {
+      tmpItems[msg.createdAt.toISOString()] = (
+        <ChatBubble position={msg.authorId == props.user.id ? 'right' : 'left'}>
+          {showTranslation(msg.message, msg.messageTranslation)}
+        </ChatBubble>
+      )
+    }
     setItems(groupItems(tmpItems))
+  }
+
+  const onNewMessage = async (message: string) => {
+    try {
+      const res = await fetch(`/api/request/${props.request.id}/message`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message,
+        }),
+      })
+      if (res.ok) {
+        router.reload()
+      } else {
+        throw new Error(res.statusText)
+      }
+    } catch {
+      toast({
+        title: 'Request failed',
+        description: 'Please try again',
+        status: 'error',
+        duration: 2000,
+        isClosable: true,
+      })
+    }
+  }
+
+  useEffect(() => {
+    reloadItems()
   }, [props])
 
   return (
@@ -131,6 +162,7 @@ const RequestChat = (props: Props) => {
           props.request.status != RequestStatus.CANCELED &&
           props.request.status != RequestStatus.DECLINED
         }
+        onMessage={onNewMessage}
       >
         {items.map((item, key) => (
           <ListItem key={key}>{item}</ListItem>

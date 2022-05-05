@@ -4,7 +4,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { ArrowBackIcon } from '@chakra-ui/icons'
 import { Box, Button, Container, List, SimpleGrid, Text } from '@chakra-ui/react'
-import { Place, Request, RequestStatus, SafetyCheck, User, UserRole } from '@prisma/client'
+import { Message, Place, Request, RequestStatus, SafetyCheck, User, UserRole } from '@prisma/client'
 import RequestChat from 'components/chat/request-chat'
 import RequestItem from 'components/dashboard/request-item'
 import SafetyCheckComponent from 'components/dashboard/request/safety-check'
@@ -22,6 +22,7 @@ type Props = {
   user: MappedUser
   request: Request & { place: Place; author: User }
   requests: Request[]
+  messages: Message[]
   safetyCheck: SafetyCheck | null
 }
 
@@ -60,8 +61,7 @@ const RequestPage = (props: Props) => {
             </List>
           </Box>
           <Box>
-            <RequestChat request={props.request} user={props.user} />
-
+            <RequestChat request={props.request} user={props.user} messages={props.messages} />
             {props.request.status == RequestStatus.ACCEPTED && (
               <SafetyCheckComponent
                 user={props.user}
@@ -172,12 +172,21 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
     },
   })
 
+  const messages = await prisma.message.findMany({
+    where: {
+      request: {
+        id: request.id,
+      },
+    },
+  })
+
   return {
     props: {
       user: sessionUser,
       request,
       requests,
       safetyCheck,
+      messages,
     },
   }
 })

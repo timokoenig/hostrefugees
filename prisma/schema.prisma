@@ -35,6 +35,7 @@ model User {
   requests                Request[]
   safetyChecks            SafetyCheck[]
   posts                   Post[]
+  messages                Message[]
 }
 
 enum PlaceType {
@@ -135,6 +136,7 @@ model Request {
   userId             String         @map("user_id")
   placeId            String         @map("place_id")
   safetyChecks       SafetyCheck[]
+  messages           Message[]
 }
 
 model SafetyCheck {
@@ -145,6 +147,17 @@ model SafetyCheck {
   safe      Boolean
   userId    String   @map("user_id")
   requestId String   @map("request_id")
+}
+
+model Message {
+  id                 String   @id @default(uuid())
+  createdAt          DateTime @default(now()) @map("created_at")
+  author             User     @relation(fields: [authorId], references: [id])
+  request            Request  @relation(fields: [requestId], references: [id])
+  message            String
+  messageTranslation Json?    @map("message_translation")
+  authorId           String   @map("user_id")
+  requestId          String   @map("request_id")
 }
 
 enum PostCategory {

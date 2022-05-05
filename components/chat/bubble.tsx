@@ -52,7 +52,7 @@ const ChatBubble = (props: Props) => {
           bottom: '0',
           height: '20px',
           width: '20px',
-          backgroundColor: alignLeft ? 'gray.200' : 'blue.500',
+          backgroundColor: alignLeft ? 'gray.100' : 'blue.500',
           ...tailBefore,
         }}
         _after={{

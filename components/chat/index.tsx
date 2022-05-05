@@ -6,6 +6,7 @@ import ScrollButton from './scroll-button'
 type Props = {
   children: JSX.Element[]
   chatEnabled: boolean
+  onMessage: (message: string) => Promise<void>
 }
 
 const Chat = (props: Props) => {
@@ -13,6 +14,7 @@ const Chat = (props: Props) => {
   const listRef = useRef<HTMLUListElement>(null)
   const [showScrollButton, setShowScrollButton] = useState<boolean>(false)
   const [message, setMessage] = useState<string>('')
+  const [isLoading, setLoading] = useState<boolean>(false)
 
   const scrollToBottom = (smooth: boolean) => {
     if (listRef.current == null) return
@@ -29,9 +31,11 @@ const Chat = (props: Props) => {
     setShowScrollButton(!shouldHideButton)
   }
 
-  const onSend = () => {
-    // setItems([...items, message])
+  const onSend = async () => {
+    setLoading(true)
+    await props.onMessage(message)
     setMessage('')
+    setLoading(false)
     setTimeout(() => {
       scrollToBottom(false)
     }, 100)
@@ -72,7 +76,7 @@ const Chat = (props: Props) => {
             value={message}
             onChange={e => setMessage(e.target.value)}
           />
-          <Button isDisabled={message.trim() == ''} onClick={onSend}>
+          <Button isDisabled={message.trim() == '' || isLoading} onClick={onSend}>
             {t('send')}
           </Button>
         </Flex>
