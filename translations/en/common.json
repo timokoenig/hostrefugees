@@ -90,6 +90,8 @@
   "verified": "Verified",
   "verified.host": "Verified Host",
   "verified.awaiting": "Verification Awaiting",
+  "send": "Send",
+  "send.message": "Send Message",
 
   "hostrefugees.subtitle": "at your place!",
   "hostrefugees.hero": "Whether you are looking for temporary accommodation for yourself, your family, or even your pet, you will find helpful people here to assist you.",
@@ -413,6 +415,8 @@
   "welcomegermany.covid.test.1": "Test Result must be NEGATIVE",
   "welcomegermany.covid.test.2": "PCR tests are only valid for 48 hours",
   "welcomegermany.covid.test.3": "Rapid tests are only valid for 24 hours",
+
+  "chat.showlatest": "Show Latest Message",
 
   "email.host.approved": "You have been approved",
   "email.host.approved.message": "You can now offer places on",
