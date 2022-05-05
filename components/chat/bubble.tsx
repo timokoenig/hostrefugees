@@ -39,7 +39,7 @@ const ChatBubble = (props: Props) => {
       mb="2"
     >
       <Box
-        backgroundColor={alignLeft ? 'gray.300' : 'blue.500'}
+        backgroundColor={alignLeft ? 'gray.200' : 'blue.500'}
         position="relative"
         marginLeft={alignRight ? 'auto' : undefined}
         marginRight={alignLeft ? 'auto' : undefined}
@@ -52,7 +52,7 @@ const ChatBubble = (props: Props) => {
           bottom: '0',
           height: '25px',
           width: '20px',
-          backgroundColor: alignLeft ? 'gray.300' : 'blue.500',
+          backgroundColor: alignLeft ? 'gray.200' : 'blue.500',
           ...tailBefore,
         }}
         _after={{

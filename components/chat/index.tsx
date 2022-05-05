@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Input, List } from '@chakra-ui/react'
+import { Box, Button, Flex, Input, List, useColorModeValue } from '@chakra-ui/react'
 import moment from 'moment'
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -48,7 +48,7 @@ const Chat = (props: Props) => {
     <Box
       position="relative"
       borderWidth="1px"
-      borderColor="gray.700"
+      borderColor={useColorModeValue('gray.300', 'gray.700')}
       borderRadius="10"
       overflow="hidden"
       p="2"
@@ -65,7 +65,7 @@ const Chat = (props: Props) => {
         <ChatBubbleDate date={moment().toDate()} />
         <ChatBubbleInfo>Test</ChatBubbleInfo>
         {items.map((item, key) => (
-          <ChatBubble key={key} position="left">
+          <ChatBubble key={key} position="right">
             {item}
           </ChatBubble>
         ))}

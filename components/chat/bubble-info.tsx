@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from '@chakra-ui/react'
+import { Box, Flex, Text, useColorModeValue } from '@chakra-ui/react'
 import React from 'react'
 
 type Props = {
@@ -11,7 +11,7 @@ const ChatBubbleInfo = (props: Props) => {
       <Box
         py="1"
         px="2"
-        backgroundColor="gray.900"
+        backgroundColor={useColorModeValue('gray.100', 'gray.900')}
         borderRadius="10"
         marginLeft="auto"
         marginRight="auto"
