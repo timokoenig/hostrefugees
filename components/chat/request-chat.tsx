@@ -181,6 +181,13 @@ const RequestChat = (props: Props) => {
   }, [props])
 
   useEffect(() => {
+    if (
+      props.request.status == RequestStatus.CANCELED ||
+      props.request.status == RequestStatus.DECLINED
+    )
+      return
+
+    // Only activate refresh interval for new or accepted requests
     const interval = 10 // seconds
     const intervalId = setInterval(async () => {
       await refreshMessages()
