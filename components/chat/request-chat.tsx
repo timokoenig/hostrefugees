@@ -118,7 +118,9 @@ const RequestChat = (props: Props) => {
     for (const msg of msgs) {
       tmpItems[moment(msg.createdAt).toISOString()] = (
         <ChatBubble position={msg.authorId == props.user.id ? 'right' : 'left'}>
-          {showTranslation(msg.message, msg.messageTranslation)}
+          {props.user.id == msg.authorId
+            ? msg.message
+            : showTranslation(msg.message, msg.messageTranslation)}
         </ChatBubble>
       )
     }
