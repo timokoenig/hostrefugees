@@ -111,6 +111,7 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
           },
         },
       },
+      messages: true,
     },
   })
   if (
@@ -174,21 +175,13 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
     },
   })
 
-  const messages = await prisma.message.findMany({
-    where: {
-      request: {
-        id: request.id,
-      },
-    },
-  })
-
   return {
     props: {
       user: sessionUser,
       request,
       requests,
       safetyCheck,
-      messages,
+      messages: request.messages,
     },
   }
 })

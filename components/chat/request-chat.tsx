@@ -49,6 +49,7 @@ const RequestChat = (props: Props) => {
   const router = useRouter()
   const toast = useToast()
   const [items, setItems] = useState<JSX.Element[]>([])
+  const [messages, setMessages] = useState<Message[]>(props.messages)
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   const updateRequestStatus = async (status: RequestStatus, message: string | null) => {
@@ -114,8 +115,8 @@ const RequestChat = (props: Props) => {
         </ChatBubble>
       )
     }
-    for (const msg of props.messages) {
-      tmpItems[msg.createdAt.toISOString()] = (
+    for (const msg of messages) {
+      tmpItems[moment(msg.createdAt).toISOString()] = (
         <ChatBubble position={msg.authorId == props.user.id ? 'right' : 'left'}>
           {showTranslation(msg.message, msg.messageTranslation)}
         </ChatBubble>
@@ -151,9 +152,44 @@ const RequestChat = (props: Props) => {
     }
   }
 
+  const refreshMessages = async () => {
+    try {
+      const res = await fetch(`/api/request/${props.request.id}/message`)
+      if (res.ok) {
+        const newMessages = (await res.json()) as Message[]
+        const oldMessageIds = messages.map(msg => msg.id)
+        const diff = newMessages.map(msg => msg.id).filter(item => !oldMessageIds.includes(item))
+        if (diff.length == 0) return
+        setMessages(newMessages)
+        reloadItems()
+      } else {
+        throw new Error(res.statusText)
+      }
+    } catch {
+      toast({
+        title: 'Request failed',
+        description: 'Please try again',
+        status: 'error',
+        duration: 2000,
+        isClosable: true,
+      })
+    }
+  }
+
   useEffect(() => {
     reloadItems()
   }, [props])
+
+  useEffect(() => {
+    const interval = 10 // seconds
+    const intervalId = setInterval(async () => {
+      await refreshMessages()
+    }, interval * 1000)
+
+    return () => {
+      clearInterval(intervalId)
+    }
+  }, [])
 
   return (
     <>

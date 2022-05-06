@@ -95,6 +95,39 @@ async function handleMessageRequest(req: MessageRequest, res: NextApiResponse) {
   res.status(201).send(newMessage)
 }
 
+async function handleMessageRefresh(req: NextApiRequest, res: NextApiResponse) {
+  const requestId = await validateUUIDQueryParam(req, 'id')
+
+  const request = await prisma.request.findUnique({
+    where: {
+      id: requestId,
+    },
+    include: {
+      author: true,
+      place: {
+        include: {
+          author: true,
+        },
+      },
+      messages: true,
+    },
+  })
+  if (request === null) {
+    res.status(400).end()
+    return
+  }
+  if (
+    request.author.id !== req.session.user?.id &&
+    request.place.author.id !== req.session.user?.id
+  ) {
+    // user must be author of request (GUEST) or author of place (HOST) to read messages
+    res.status(400).end()
+    return
+  }
+
+  res.status(200).send(request.messages)
+}
+
 export default withLogHandler(
   withErrorHandler(
     withSessionRoute(
@@ -103,6 +136,11 @@ export default withLogHandler(
           HTTP_METHOD.POST,
           [UserRole.GUEST, UserRole.HOST],
           handleMessageRequest
+        ),
+        newAuthenticatedHandler(
+          HTTP_METHOD.GET,
+          [UserRole.GUEST, UserRole.HOST],
+          handleMessageRefresh
         ),
       ])
     )
