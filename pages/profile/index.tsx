@@ -16,6 +16,7 @@ import {
 import Layout from 'components/layout'
 import DeleteAccount from 'components/profile/delete-account'
 import Photo from 'components/profile/photo'
+import parse from 'html-react-parser'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import prisma from 'prisma/client'
@@ -45,6 +46,7 @@ const ProfilePage = (props: Props) => {
   const [firstname, setFirstname] = useState<string>(props.user.firstname)
   const [lastname, setLastname] = useState<string>(props.user.lastname)
   const [waitlist, setWaitlist] = useState<boolean>(props.user.waitlist)
+  const [translation, setTranslation] = useState<boolean>(props.user.messageTranslation)
 
   const toggleWaitlist = async () => {
     if (isLoading) return
@@ -59,6 +61,23 @@ const ProfilePage = (props: Props) => {
       })
       if (!res.ok) throw new Error(res.statusText)
       setWaitlist(!waitlist)
+    } catch {}
+    setLoading(false)
+  }
+
+  const toggleTranslation = async () => {
+    if (isLoading) return
+    setLoading(true)
+    try {
+      const res = await fetch(`/api/user/${props.user.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ messageTranslation: !translation }),
+      })
+      if (!res.ok) throw new Error(res.statusText)
+      setTranslation(!translation)
     } catch {}
     setLoading(false)
   }
@@ -116,6 +135,13 @@ const ProfilePage = (props: Props) => {
               </Heading>
               <Text mb="5">{t('waitlist.text')}</Text>
               <Switch size="lg" isChecked={waitlist} onChange={toggleWaitlist} />
+            </Box>
+            <Box mb="20">
+              <Heading size="md" mb="5">
+                {t('profile.translation')}
+              </Heading>
+              <Text mb="5">{parse(t('profile.translation.text'))}</Text>
+              <Switch size="lg" isChecked={translation} onChange={toggleTranslation} />
             </Box>
             <Box mb="20">
               <Heading size="md" mb="5">

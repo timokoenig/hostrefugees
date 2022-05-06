@@ -170,6 +170,8 @@
   "profile.account": "Account",
   "profile.account.delete": "Delete Account",
   "profile.account.delete.info": "Caution! You are about to delete your account. By pressing YES, we will irrevocably delete your data. Are you sure to continue?",
+  "profile.translation": "Message Translation",
+  "profile.translation.text": "We use the service \"Google Translate\" to translate messages between hosts and guests to remove the language barrier. The translation only works if both participants enabled this feature.<br/><br/>You can enable or disable it with the switch below.",
 
   "privacy": "Privacy Policy",
   "privacy.cookie": "Privacy - Cookies",
