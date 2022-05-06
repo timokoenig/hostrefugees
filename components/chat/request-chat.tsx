@@ -86,7 +86,7 @@ const RequestChat = (props: Props) => {
     await updateRequestStatus(RequestStatus.DECLINED, message)
   }
 
-  const reloadItems = () => {
+  const reloadItems = (msgs: Message[]) => {
     const tmpItems: Items = {}
     tmpItems[props.request.createdAt.toISOString()] = (
       <ChatBubbleInfo
@@ -115,7 +115,7 @@ const RequestChat = (props: Props) => {
         </ChatBubble>
       )
     }
-    for (const msg of messages) {
+    for (const msg of msgs) {
       tmpItems[moment(msg.createdAt).toISOString()] = (
         <ChatBubble position={msg.authorId == props.user.id ? 'right' : 'left'}>
           {showTranslation(msg.message, msg.messageTranslation)}
@@ -161,7 +161,7 @@ const RequestChat = (props: Props) => {
         const diff = newMessages.map(msg => msg.id).filter(item => !oldMessageIds.includes(item))
         if (diff.length == 0) return
         setMessages(newMessages)
-        reloadItems()
+        reloadItems(newMessages)
       } else {
         throw new Error(res.statusText)
       }
@@ -177,26 +177,21 @@ const RequestChat = (props: Props) => {
   }
 
   useEffect(() => {
-    reloadItems()
-  }, [props])
+    setMessages(props.messages)
+    reloadItems(props.messages)
 
-  useEffect(() => {
-    if (
-      props.request.status == RequestStatus.CANCELED ||
-      props.request.status == RequestStatus.DECLINED
-    )
-      return
+    if (props.request.status == null || props.request.status == RequestStatus.ACCEPTED) {
+      // Only activate refresh interval for new or accepted requests
+      const interval = 10 // seconds
+      const intervalId = setInterval(async () => {
+        await refreshMessages()
+      }, interval * 1000)
 
-    // Only activate refresh interval for new or accepted requests
-    const interval = 10 // seconds
-    const intervalId = setInterval(async () => {
-      await refreshMessages()
-    }, interval * 1000)
-
-    return () => {
-      clearInterval(intervalId)
+      return () => {
+        clearInterval(intervalId)
+      }
     }
-  }, [])
+  }, [props])
 
   return (
     <>
