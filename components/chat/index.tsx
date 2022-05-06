@@ -1,11 +1,16 @@
 import { Box, Button, Flex, List, Textarea, useColorModeValue } from '@chakra-ui/react'
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { MappedUser } from 'utils/models'
 import ScrollButton from './scroll-button'
+import TranslationSwitch from './translation-switch'
 
 type Props = {
   children: JSX.Element[]
+  user: MappedUser
   chatEnabled: boolean
+  translationEnabledSender: boolean
+  translationEnabledRecipient: boolean
   onMessage: (message: string) => Promise<void>
 }
 
@@ -68,18 +73,25 @@ const Chat = (props: Props) => {
         {showScrollButton && <ScrollButton onClick={() => scrollToBottom(true)} />}
       </List>
       {props.chatEnabled && (
-        <Flex flexDirection="row">
-          <Textarea
-            placeholder={t('send.message')}
-            mr="2"
-            rows={1}
-            value={message}
-            onChange={e => setMessage(e.target.value)}
+        <>
+          <Flex flexDirection="row">
+            <Textarea
+              placeholder={t('send.message')}
+              mr="2"
+              rows={1}
+              value={message}
+              onChange={e => setMessage(e.target.value)}
+            />
+            <Button isDisabled={message.trim() == '' || isLoading} onClick={onSend}>
+              {t('send')}
+            </Button>
+          </Flex>
+          <TranslationSwitch
+            user={props.user}
+            senderEnabled={props.translationEnabledSender}
+            recipientEnabled={props.translationEnabledRecipient}
           />
-          <Button isDisabled={message.trim() == '' || isLoading} onClick={onSend}>
-            {t('send')}
-          </Button>
-        </Flex>
+        </>
       )}
     </Box>
   )

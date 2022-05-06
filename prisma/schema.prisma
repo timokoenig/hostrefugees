@@ -31,6 +31,7 @@ model User {
   photoUpdatedAt          DateTime?     @map("photo_updated_at")
   waitlist                Boolean       @default(false)
   deleted                 Boolean       @default(false)
+  messageTranslation      Boolean       @default(true) @map("message_translation")
   places                  Place[]
   requests                Request[]
   safetyChecks            SafetyCheck[]

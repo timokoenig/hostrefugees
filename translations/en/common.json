@@ -418,6 +418,9 @@
 
   "chat.showlatest": "Show Latest Message",
   "chat.info": "You can also exchange a few words with the guest before you make a decision",
+  "chat.readmore": "Read More",
+  "chat.translation": "Automatic Translation with Google Translate",
+  "chat.translation.updated": "Settings Updated",
 
   "email.host.approved": "You have been approved",
   "email.host.approved.message": "You can now offer places on",

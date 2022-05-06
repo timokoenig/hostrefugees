@@ -22,7 +22,7 @@ interface MessageRequest extends NextApiRequest {
 
 const validationSchema = Yup.object()
   .shape({
-    message: Yup.string().max(5000).required(),
+    message: Yup.string().min(1).max(5000).required(),
   })
   .noUnknown()
 
@@ -62,7 +62,11 @@ async function handleMessageRequest(req: MessageRequest, res: NextApiResponse) {
     return
   }
 
-  const messageTranslation: Translation | undefined = body.message
+  // Check if we are allowed to translate the message
+  // This is the case when both users have enabled the messageTranslation
+  const translationActive =
+    request.author.messageTranslation && request.place.author.messageTranslation
+  const messageTranslation: Translation | undefined = translationActive
     ? await translateAll(body.message)
     : undefined
 

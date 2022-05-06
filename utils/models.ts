@@ -8,6 +8,7 @@ export type MappedUser = {
   verified: boolean
   photo: string | null
   languages: string[]
+  messageTranslation: boolean
 }
 
 export type MappedPlace = {

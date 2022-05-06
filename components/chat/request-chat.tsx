@@ -14,7 +14,7 @@ import ChatBubbleInfo from './bubble-info'
 import ChatBubbleStatus from './bubble-status'
 
 type Props = {
-  request: Request & { place: Place; author: User }
+  request: Request & { place: Place & { author: User }; author: User }
   user: MappedUser
   messages: Message[]
 }
@@ -161,6 +161,13 @@ const RequestChat = (props: Props) => {
         chatEnabled={
           props.request.status != RequestStatus.CANCELED &&
           props.request.status != RequestStatus.DECLINED
+        }
+        user={props.user}
+        translationEnabledSender={props.user.messageTranslation}
+        translationEnabledRecipient={
+          props.user.role == UserRole.GUEST
+            ? props.request.place.author.messageTranslation
+            : props.request.author.messageTranslation
         }
         onMessage={onNewMessage}
       >

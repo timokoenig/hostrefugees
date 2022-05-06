@@ -26,6 +26,7 @@ interface UpdateRequest extends NextApiRequest {
     verified?: boolean
     languages?: string[]
     waitlist?: boolean
+    messageTranslation?: boolean
   }
 }
 
@@ -34,6 +35,7 @@ const validationSchema = Yup.object()
     verified: Yup.boolean(),
     languages: Yup.mixed<string[]>(),
     waitlist: Yup.boolean(),
+    messageTranslation: Yup.boolean(),
   })
   .noUnknown()
 
@@ -62,6 +64,7 @@ async function handleUpdateUser(req: UpdateRequest, res: NextApiResponse) {
     verified?: boolean
     languages?: string[]
     waitlist?: boolean
+    messageTranslation?: boolean
   } = {
     updatedAt: new Date(),
   }
@@ -70,6 +73,9 @@ async function handleUpdateUser(req: UpdateRequest, res: NextApiResponse) {
   }
   if (body.waitlist !== undefined) {
     data.waitlist = body.waitlist
+  }
+  if (body.messageTranslation !== undefined) {
+    data.messageTranslation = body.messageTranslation
   }
 
   if (req.session.user!.role == UserRole.ADMIN) {

@@ -20,7 +20,7 @@ import { getSessionUser } from 'utils/session-user'
 
 type Props = {
   user: MappedUser
-  request: Request & { place: Place; author: User }
+  request: Request & { place: Place & { author: User }; author: User }
   requests: Request[]
   messages: Message[]
   safetyCheck: SafetyCheck | null
@@ -98,6 +98,7 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
           id: true,
           firstname: true,
           languages: true,
+          messageTranslation: true,
         },
       },
       place: {
@@ -105,6 +106,7 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
           author: {
             select: {
               id: true,
+              messageTranslation: true,
             },
           },
         },

@@ -14,6 +14,7 @@ export const mapUser = (prismaUser: User): MappedUser => {
     verified: prismaUser.verified,
     languages: prismaUser.languages,
     photo: prismaUser.photoUpdatedAt == null ? null : `/api/user/${prismaUser.id}/photo`,
+    messageTranslation: prismaUser.messageTranslation,
   }
 }
 
