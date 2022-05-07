@@ -139,7 +139,9 @@ const RequestChat = (props: Props) => {
         }),
       })
       if (res.ok) {
-        router.reload()
+        const newMessage = (await res.json()) as Message
+        setMessages([...messages, newMessage])
+        reloadItems([...messages, newMessage])
       } else {
         throw new Error(res.statusText)
       }
