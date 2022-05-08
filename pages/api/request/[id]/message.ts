@@ -96,11 +96,11 @@ async function handleMessageRequest(req: MessageRequest, res: NextApiResponse) {
 
   try {
     if (request.author.id === req.session.user.id) {
-      // GUEST
-      await sendEmail(emailChatMessage(newMessage, request.author))
-    } else if (request.place.author.id === req.session.user.id) {
-      // HOST
+      // GUEST; therefore host should receive the mail
       await sendEmail(emailChatMessage(newMessage, request.place.author))
+    } else if (request.place.author.id === req.session.user.id) {
+      // HOST; therefore guest should receive the mail
+      await sendEmail(emailChatMessage(newMessage, request.author))
     }
   } catch (err: unknown) {
     logger.error(err)
