@@ -161,20 +161,10 @@ export const emailAcceptRequestGuest = (
       translation(request.author, 'email.stayrequest.accepted.guest'),
       translation(request.author, 'email.stayrequest.accepted.guest.message')
     ),
-    paragraph(
-      translation(request.author, 'email.stayrequest.accepted.guest.message.name').replace(
-        '{{name}}',
-        `${request.place.author.firstname} ${request.place.author.lastname}`
-      )
-    ),
-    paragraph(
-      `${translation(request.author, 'email')}: ${request.place.author.email}<br>${translation(
-        request.author,
-        'phone'
-      )}: ${request.place.phoneNumber}<br><br>${translation(
-        request.author,
-        'dashboard.place.arrival'
-      )}:<br>${request.place.arrivalInstructions}`
+    paragraph(translation(request.author, 'email.stayrequest.accepted.guest.message.name')),
+    button(
+      translation(request.author, 'email.stayrequest.accepted.guest.message.button'),
+      `https://hostrefugees.eu/dashboard/request/${request.id}`
     ),
   ].join('')
 
@@ -202,17 +192,10 @@ export const emailAcceptRequestHost = (
       translation(request.place.author, 'email.stayrequest.accepted.host'),
       translation(request.place.author, 'email.stayrequest.accepted.host.message')
     ),
-    paragraph(
-      translation(request.place.author, 'email.stayrequest.accepted.host').replace(
-        '{{name}}',
-        `${request.author.firstname} ${request.author.lastname}`
-      )
-    ),
-    paragraph(
-      `${translation(request.place.author, 'email')}: ${request.author.email}<br>${translation(
-        request.place.author,
-        'phone'
-      )}: ${request.phoneNumber}`
+    paragraph(translation(request.place.author, 'email.stayrequest.accepted.host')),
+    button(
+      translation(request.author, 'email.stayrequest.accepted.host.message.button'),
+      `https://hostrefugees.eu/dashboard/request/${request.id}`
     ),
   ].join('')
 
