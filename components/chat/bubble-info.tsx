@@ -45,7 +45,6 @@ const ChatBubbleInfo = (props: Props) => {
         py="1"
         px="2"
         mb="2"
-        // backgroundColor={useColorModeValue('gray.100', 'gray.900')}
         borderRadius="10"
         marginLeft="auto"
         marginRight="auto"
@@ -60,7 +59,7 @@ const ChatBubbleInfo = (props: Props) => {
           ) : (
             <Image
               alt="place image"
-              src="https://picsum.photos/1000" //{`/api/place/${props.request.place.id}/photo/${props.request.place.photos[0]}`}
+              src={`/api/place/${props.request.place.id}/photo/${props.request.place.photos[0]}`}
               fit="cover"
               align="center"
               rounded="10"
