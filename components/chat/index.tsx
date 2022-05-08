@@ -62,7 +62,7 @@ const Chat = (props: Props) => {
     >
       <List
         ref={listRef}
-        maxHeight="500px"
+        maxHeight="550px"
         overflowY="scroll"
         overflowX="hidden"
         px="2"

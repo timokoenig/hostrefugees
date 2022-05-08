@@ -13,8 +13,8 @@ type Props = {
 
 const ChatBubbleStatus = (props: Props) => {
   return (
-    <Flex mb="2" px="10">
-      <Box py="5" px="10" marginLeft="auto" marginRight="auto">
+    <Flex mb="2" px="2" marginLeft="auto" marginRight="auto" width={{ base: '90%', md: '70%' }}>
+      <Box py="5" width="100%">
         {props.user.role === UserRole.HOST && <StatusHost status={props.request.status} />}
         {props.user.role === UserRole.GUEST && (
           <StatusGuest status={props.request.status} onCancelRequest={props.onCancel} />

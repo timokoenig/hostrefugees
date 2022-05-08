@@ -8,7 +8,14 @@ type Props = {
 }
 
 const Status = (props: Props): JSX.Element => (
-  <Box backgroundColor={props.color} rounded="xl" textAlign="center" p="5" color="white">
+  <Box
+    backgroundColor={props.color}
+    rounded="xl"
+    textAlign="center"
+    p="5"
+    color="white"
+    width="100%"
+  >
     <Heading size="sm" mb="2">
       {props.title}
     </Heading>

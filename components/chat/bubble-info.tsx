@@ -1,16 +1,6 @@
-import {
-  Box,
-  Button,
-  Center,
-  Flex,
-  Image,
-  SimpleGrid,
-  Text,
-  useColorModeValue,
-} from '@chakra-ui/react'
+import { Box, Button, Center, Flex, Image, Text } from '@chakra-ui/react'
 import { Feature, HostType, Place, Request, User, UserRole } from '@prisma/client'
 import parse from 'html-react-parser'
-import moment from 'moment'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { MappedUser } from 'utils/models'
@@ -55,50 +45,41 @@ const ChatBubbleInfo = (props: Props) => {
         py="1"
         px="2"
         mb="2"
-        backgroundColor={useColorModeValue('gray.100', 'gray.900')}
+        // backgroundColor={useColorModeValue('gray.100', 'gray.900')}
         borderRadius="10"
         marginLeft="auto"
         marginRight="auto"
         width={{ base: '90%', md: '70%' }}
       >
-        <SimpleGrid templateColumns={{ base: '1fr', sm: '1fr 3fr' }} spacing="2" mb="2">
+        <Box fontWeight="bold" as="h4" lineHeight="tight" isTruncated textAlign="center" mb="2">
+          {props.request.place.addressCity}: {props.request.place.title}
+        </Box>
+        <Box>
           {props.request.place.photos.length == 0 ? (
             <Box rounded="md" backgroundColor="gray" w="100%" h="100%" />
           ) : (
             <Image
               alt="place image"
-              src={`/api/place/${props.request.place.id}/photo/${props.request.place.photos[0]}`}
+              src="https://picsum.photos/1000" //{`/api/place/${props.request.place.id}/photo/${props.request.place.photos[0]}`}
               fit="cover"
               align="center"
               rounded="10"
+              maxHeight="150"
+              width="100%"
             />
           )}
-
-          <Box>
-            <Box display="flex" alignItems="baseline">
-              <Box
-                color="gray.500"
-                fontWeight="semibold"
-                letterSpacing="wide"
-                fontSize="xs"
-                textTransform="uppercase"
-              >
-                {parse(info())}
-              </Box>
-            </Box>
-            <Box fontWeight="semibold" as="h4" lineHeight="tight" isTruncated>
-              {props.request.place.addressCity}: {props.request.place.title}
-            </Box>
-            <Box>
-              {moment(props.request.place.availabilityStart).isBefore(moment())
-                ? t('availablenow')
-                : moment(props.request.place.availabilityStart).format('DD.MM.YYYY')}
-            </Box>
-          </Box>
-        </SimpleGrid>
-        <Text fontSize="14" fontWeight="semibold">
-          {t('request.detail')}
-        </Text>
+        </Box>
+        <Box
+          color="gray.500"
+          fontWeight="semibold"
+          letterSpacing="wide"
+          fontSize="11px"
+          textTransform="uppercase"
+          textAlign="center"
+          mt="2"
+        >
+          {parse(info())}
+        </Box>
         <Text fontSize="14">
           {t('adults')}:{' '}
           <Text as="span" fontWeight="semibold">
@@ -125,7 +106,7 @@ const ChatBubbleInfo = (props: Props) => {
             </Text>
           </Text>
         )}
-        <Text fontWeight="semibold" fontSize="14" mt="2">
+        <Text fontWeight="semibold" fontSize="14" mt="4">
           {t('about')}
         </Text>
         <Text fontSize="14">
