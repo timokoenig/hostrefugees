@@ -484,5 +484,8 @@
   "email.stayrequest.canceled.message": "The guest canceled a stay request for your place.",
   "email.stayrequest.reminder": "Stay Request Reminder",
   "email.stayrequest.reminder.message": "You have an open request from a guest. Please accept or decline the request.",
-  "email.stayrequest.reminder.button": "Show Request"
+  "email.stayrequest.reminder.button": "Show Request",
+  "email.stayrequest.chat": "New Message",
+  "email.stayrequest.chat.message": "You have received a new message.",
+  "email.stayrequest.chat.button": "Show Message"
 }

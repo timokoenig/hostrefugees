@@ -464,5 +464,8 @@
   "email.stayrequest.canceled.message": "Гість скасував запит на проживання для вашого запису.",
   "email.stayrequest.reminder": "Нагадування про запит на перебування",
   "email.stayrequest.reminder.message": "У вас відкритий запит від гостя. Будь ласка, прийміть або відхиліть запит.",
-  "email.stayrequest.reminder.button": "Показати запит"
+  "email.stayrequest.reminder.button": "Показати запит",
+  "email.stayrequest.chat": "Нове повідомлення",
+  "email.stayrequest.chat.message": "Ви отримали нове повідомлення",
+  "email.stayrequest.chat.button": "Показати повідомлення"
 }

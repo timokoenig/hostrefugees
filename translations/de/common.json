@@ -463,5 +463,8 @@
   "email.stayrequest.canceled.message": "Der Gast hat eine Aufenthaltsanfrage für Ihre Unterkunft storniert.",
   "email.stayrequest.reminder": "Aufenthaltsanfrage-Erinnerung",
   "email.stayrequest.reminder.message": "Sie haben eine offene Anfrage von einem Gast. Bitte nehmen Sie die Anfrage an oder lehnen Sie diese ab.",
-  "email.stayrequest.reminder.button": "Anfrage anzeigen"
+  "email.stayrequest.reminder.button": "Anfrage anzeigen",
+  "email.stayrequest.chat": "Neue Nachricht",
+  "email.stayrequest.chat.message": "Sie haben eine neue Nachricht erhalten.",
+  "email.stayrequest.chat.button": "Nachricht anzeigen"
 }

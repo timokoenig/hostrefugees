@@ -438,5 +438,8 @@
   "email.stayrequest.canceled.message": "Gość anulował prośbę o pobyt dla Twojej oferty.",
   "email.stayrequest.reminder": "Przypomnienie o prośbie o pobyt",
   "email.stayrequest.reminder.message": "Masz otwartą prośbę od gościa. Zaakceptuj lub odrzuć prośbę.",
-  "email.stayrequest.reminder.button": "Pokaż żądanie"
+  "email.stayrequest.reminder.button": "Pokaż żądanie",
+  "email.stayrequest.chat": "Nowa wiadomość",
+  "email.stayrequest.chat.message": "Otrzymałeś nową wiadomość",
+  "email.stayrequest.chat.button": "Pokaż wiadomość"
 }

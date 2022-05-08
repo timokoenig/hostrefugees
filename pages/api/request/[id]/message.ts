@@ -10,6 +10,8 @@ import {
 } from 'utils/api/helper'
 import HTTP_METHOD from 'utils/api/http-method'
 import { validateUUIDQueryParam } from 'utils/api/validate-query-param'
+import { emailChatMessage, sendEmail } from 'utils/email'
+import logger from 'utils/logger'
 import { withSessionRoute } from 'utils/session'
 import translateAll, { Translation } from 'utils/translate-all'
 import * as Yup from 'yup'
@@ -91,6 +93,18 @@ async function handleMessageRequest(req: MessageRequest, res: NextApiResponse) {
       },
     },
   })
+
+  try {
+    if (request.author.id === req.session.user.id) {
+      // GUEST
+      await sendEmail(emailChatMessage(newMessage, request.author))
+    } else if (request.place.author.id === req.session.user.id) {
+      // HOST
+      await sendEmail(emailChatMessage(newMessage, request.place.author))
+    }
+  } catch (err: unknown) {
+    logger.error(err)
+  }
 
   res.status(201).send(newMessage)
 }

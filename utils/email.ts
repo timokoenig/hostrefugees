@@ -1,5 +1,5 @@
 /* eslint-disable import/order */
-import { Place, Request, User } from '@prisma/client'
+import { Message, Place, Request, User } from '@prisma/client'
 import { MessageHeaders, SMTPClient } from 'emailjs'
 import fs from 'fs'
 import path from 'path'
@@ -300,6 +300,32 @@ export const emailRequestReminder = (
     text: '',
     from: `${process.env.EMAIL_NAME} <${process.env.EMAIL_EMAIL}>`,
     to: `${request.place.author.firstname} <${request.place.author.email}>`,
+    subject,
+    attachment: [{ data: content, alternative: true }],
+  }
+}
+
+export const emailChatMessage = (message: Message, user: User): MessageHeaders => {
+  const subject = translation(user, 'email.stayrequest.chat')
+  const textHtml = [
+    titleAndParagraph(
+      translation(user, 'email.stayrequest.chat'),
+      translation(user, 'email.stayrequest.chat.message')
+    ),
+    button(
+      translation(user, 'email.stayrequest.chat.button'),
+      `https://hostrefugees.eu/dashboard/request/${message.requestId}`
+    ),
+  ].join('')
+
+  let content = fs.readFileSync(emailPath, 'utf-8')
+  content = content.replace('{{BODY}}', textHtml)
+  content = content.replace('{{FOOTER}}', footer())
+
+  return {
+    text: '',
+    from: `${process.env.EMAIL_NAME} <${process.env.EMAIL_EMAIL}>`,
+    to: `${user.firstname} <${user.email}>`,
     subject,
     attachment: [{ data: content, alternative: true }],
   }
