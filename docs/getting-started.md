@@ -1,9 +1,3 @@
----
-layout: page
-title: Getting Started
-nav_order: 1
----
-
 # Getting Started
 
 Add the following variables to your _.env_ file:

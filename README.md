@@ -1,3 +1,7 @@
+<p align="center">⚠️ This project has been discontinued ⚠️</p>
+
+---
+
 <div align="center">
    <img src="./public/svg/undraw_ukraine_biyg.svg" width='300' />
    <h1>HostRefugees.eu</h1>
@@ -24,7 +28,9 @@ On HostRefugees.eu, hosts can offer their apartment or room to people and pets i
 
 ## Documentation
 
-The documentation for this project is available on [timokoenig.github.io/hostrefugees](https://timokoenig.github.io/hostrefugees/)
+- [Getting Started](./docs/getting-started.md)
+- [Deployment](./docs/deployment.md)
+- [i18n](./docs/i18n.md)
 
 ## Contributors
 
